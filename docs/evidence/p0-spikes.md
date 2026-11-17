@@ -309,6 +309,7 @@ Landed transactions:
 | # | Hash | Block | Gas used | Network fee | Result |
 | --- | --- | --- | --- | --- | --- |
 | 1 | `0xa601e844a8f5c8dc66b1eb5e89af388eeea51c0c945d1acb2e455accb745a96e` | 76,152,888 | 46,393 (estimate 46,776) | 0.000000928 OKB at 20,000,001 wei | success; Approval event 10,000,000 to the factory; allowance read back 0x989680 |
+| 2 | `0xe95c2ccfd5944f211bca5e89104bc80859290eab369f30326e65e76031046c5d` | 76,152,949 | 731,373 (estimate 750,194) | 0.0000146 OKB at 20,000,001 wei | success; 0.1 BEM transferred from the deployer to the protocol wallet `0x571d447f4f24688ec35ccf07f1d6993655f6af15`; CPUCreated: circuits `0x1900801e311184063b9d9c119c9d98aa4950e12c`, transistors `0x523161955d1963891640a111688678fe6a9523ea`, creator the deployer, supply 10,000,000, mint price 0, name Payproof; transistors proxy on beacon `0x41Cb2bfd1cccA8f505EEDad0181eef44f1B9Ce65`, circuits proxy on beacon `0xf70d1ed4f62CF3780157B0b421b7E2F45bD0991C`; both addresses match the pre-signing simulation |
 
 First attempt of transaction 1 was refused by the node before broadcast (`insufficient funds for gas`, balance 0). The owner then funded the deployer: 0.0229 OKB by exchange withdrawal on X Layer, and 0.129 BEM bridged from BNB Chain on tapeout.net (LayerZero fee 0.002026 BNB quoted, protocol fee 0.5%) and transferred to the deployer.
 
@@ -316,7 +317,7 @@ Story text for transaction 2, approved by the owner 2026-11-17: "Rules that deci
 
 | Spike | Result |
 | --- | --- |
-| Create the Payproof processor | not yet run |
+| Create the Payproof processor | done, transaction 2: circuits `0x1900801e311184063b9d9c119c9d98aa4950e12c`, transistors `0x523161955d1963891640a111688678fe6a9523ea` |
 | Mint the transistor supply | not yet run |
 | Tape out adder8 | not yet run |
 | Tape out a circuit that uses REF | not yet run |
