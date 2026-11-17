@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payproof</title>
+<meta name="description" content="Payproof checks whether you were paid what the rule says. In development for the X Layer TapeOut Accelerate hackathon; nothing on this site is live yet.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Figtree:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Values from brand/tokens.css */
+  :root {
+    --paper: #F6F5F1; --line: rgb(21 22 26 / 0.10);
+    --ink: #15161A; --ink-2: #4B4D55; --muted: #6B6D75;
+    --coral-text: #B23A17;
+    --font-display: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+    --font-text: "Figtree", system-ui, sans-serif;
+    --font-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15161A; --line: rgb(243 242 236 / 0.10);
+      --ink: #F3F2EC; --ink-2: #B9B8B1; --muted: #8D8F96;
+      --coral-text: #FF7A57;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--paper); color: var(--ink);
+    font: 400 16px/1.6 var(--font-text);
+  }
+  main { max-width: 680px; padding: 48px 24px 64px; margin: 0 auto; }
+  .logo { display: block; height: 40px; width: auto; }
+  .logo-dark { display: none; }
+  @media (prefers-color-scheme: dark) { .logo-light { display: none; } .logo-dark { display: block; } }
+  h1 {
+    font: 700 clamp(36px, 7vw, 56px)/1.05 var(--font-display); letter-spacing: -0.02em;
+    margin: 96px 0 12px;
+  }
+  .zh { font-family: var(--font-zh); }
+  .h1-zh { font-size: clamp(20px, 3.6vw, 26px); line-height: 1.4; color: var(--ink-2); margin: 0 0 40px; }
+  p { margin: 0 0 16px; color: var(--ink-2); font-size: 18px; }
+  p.zh { font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 40px; }
+  .status { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px 0; margin: 0 0 32px; }
+  .status p { font-size: 16px; margin: 0; color: var(--ink); }
+  .status p.zh { font-size: 15px; margin: 4px 0 0; color: var(--muted); }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 32px; }
+  a { color: var(--coral-text); font-weight: 500; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+  footer { margin-top: 96px; font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo logo-light" src="payproof-lockup.svg" alt="Payproof" width="181" height="40">
+  <img class="logo logo-dark" src="payproof-lockup-on-dark.svg" alt="Payproof" width="181" height="40">
+
+  <h1>Were you paid what the rule says?</h1>
+  <p class="h1-zh zh" lang="zh-Hans">你拿到的钱，符合规则吗？</p>
+
+  <p>Some rules decide money: China's year-end bonus tax, Nigeria's 2025 pay tax, the split a mining pool pays its members. Payproof puts each rule on X Layer as a circuit that cannot be changed, so anyone can check their own number in about a minute, and a solver can test the rule for every possible input and show where it has traps.</p>
+  <p class="zh" lang="zh-Hans">有些规则直接决定你拿多少钱：中国的年终奖个税、尼日利亚 2025 年的工资税、矿池给成员的分成。Payproof 把每条规则以不可更改的电路形式放到 X Layer 上，任何人大约一分钟就能核对自己的数字，求解器还能检验规则在所有输入下的结果，找出其中的陷阱。</p>
+
+  <div class="status">
+    <p>In development for the X Layer TapeOut Accelerate hackathon. Nothing on this site works yet.</p>
+    <p class="zh" lang="zh-Hans">正在为 X Layer TapeOut Accelerate 黑客松开发中，本站功能尚未上线。</p>
+  </div>
+
+  <ul>
+    <li><a href="https://github.com/Iziedking/payproof">Source code on GitHub</a></li>
+    <li><a href="https://x.com/payproofhq">Updates on X, @payproofhq</a></li>
+  </ul>
+
+  <footer>Payproof · 2026</footer>
+</main>
+</body>
+</html>
