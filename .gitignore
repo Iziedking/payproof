@@ -43,3 +43,6 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Design working notes stay local. Only the brand kit (brand/) goes in Git.
+docs/design/
