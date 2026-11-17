@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payproof · Were you paid what the rule says?</title>
+<meta name="description" content="Payproof puts tax, bonus and pool payout rules on X Layer where they cannot change, so you can check your own number. Built for X Layer TapeOut Accelerate; not live yet.">
+<meta name="theme-color" content="#F6F5F1">
+<meta property="og:title" content="Payproof">
+<meta property="og:description" content="Were you paid what the rule says? Check your own number against a rule that cannot change.">
+<meta property="og:image" content="media/poster.jpg">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="landing.css?v=2">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- The two halves of the Fit mark, 256 grid -->
+    <symbol id="half-ink" viewBox="40 40 120 120"><path d="M40 40H156V100H100Z" fill="#15161A"/><path d="M40 40L100 100V156H40Z" fill="#3A3C44"/></symbol>
+    <symbol id="half-coral" viewBox="96 96 120 120"><path d="M216 216V100H156V156Z" fill="#F2552C"/><path d="M216 216L156 156H100V216Z" fill="#C9401C"/></symbol>
+    <symbol id="half-paper" viewBox="40 40 120 120"><path d="M40 40H156V100H100Z" fill="#F3F2EC"/><path d="M40 40L100 100V156H40Z" fill="#C9C7BE"/></symbol>
+    <symbol id="mark" viewBox="40 40 176 176"><path d="M40 40H156V100H100Z" fill="#15161A"/><path d="M40 40L100 100V156H40Z" fill="#3A3C44"/><path d="M216 216V100H156V156Z" fill="#F2552C"/><path d="M216 216L156 156H100V216Z" fill="#C9401C"/></symbol>
+    <!-- Lucide icons (ISC) -->
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-pay" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 7v10"/><path d="M15 9.5a2.5 2.5 0 0 0-2.5-2h-1a2.5 2.5 0 0 0 0 5h1a2.5 2.5 0 0 1 0 5h-1A2.5 2.5 0 0 1 9 15"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="#top" aria-label="Payproof home"><img src="payproof-lockup.svg" alt="Payproof" width="136" height="30"></a>
+    <nav class="nav-links" aria-label="Page">
+      <a href="#product">Product</a>
+      <a href="#how">How it works</a>
+      <a href="#rules">Rules</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-ink" href="app/"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Open app</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-in wrap-hero">
+      <svg class="float f1" aria-hidden="true"><use href="#half-ink"/></svg>
+      <svg class="float f2" aria-hidden="true"><use href="#half-coral"/></svg>
+      <svg class="float f3" aria-hidden="true"><use href="#half-ink"/></svg>
+      <svg class="float f4" aria-hidden="true"><use href="#half-coral"/></svg>
+      <p class="eyebrow"><span class="dots" aria-hidden="true"><i></i><i></i></span>Built for X Layer TapeOut Accelerate · not live yet</p>
+      <h1 class="display">Were you paid what the rule says?</h1>
+      <p class="zh" lang="zh-Hans">你拿到的钱，符合规则吗？</p>
+      <p class="lede">Tax, bonuses and pool payouts follow written rules. Payproof puts each rule on X Layer where it cannot change, so you can check your own number.</p>
+      <div class="actions">
+        <a class="btn btn-ink btn-lg" href="app/"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Open app</a>
+        <a class="btn btn-soft btn-lg" href="#proofs">See the proofs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product showcase -->
+  <section class="showcase wrap" id="product" aria-label="What the app does">
+    <div class="tabs" role="tablist" aria-label="App views">
+      <span class="tab-pill" aria-hidden="true"></span>
+      <button role="tab" id="t-pay" aria-controls="v-pay" aria-selected="true"><svg class="ic"><use href="#i-pay"/></svg>Check my pay</button>
+      <button role="tab" id="t-proof" aria-controls="v-proof" aria-selected="false" tabindex="-1"><svg class="ic"><use href="#i-check"/></svg>Proofs and traps</button>
+      <button role="tab" id="t-split" aria-controls="v-split" aria-selected="false" tabindex="-1"><svg class="ic"><use href="#i-scale"/></svg>Pool splits</button>
+      <button role="tab" id="t-eng" aria-controls="v-eng" aria-selected="false" tabindex="-1"><svg class="ic"><use href="#i-ext"/></svg>Engines</button>
+    </div>
+
+    <div class="stage">
+      <div class="app">
+        <aside class="app-rail" aria-hidden="true">
+          <svg class="rail-mark"><use href="#mark"/></svg>
+          <span class="rail-i on" data-for="0"><svg class="ic"><use href="#i-pay"/></svg></span>
+          <span class="rail-i" data-for="1"><svg class="ic"><use href="#i-check"/></svg></span>
+          <span class="rail-i" data-for="2"><svg class="ic"><use href="#i-scale"/></svg></span>
+          <span class="rail-i" data-for="3"><svg class="ic"><use href="#i-ext"/></svg></span>
+        </aside>
+
+        <div class="views">
+          <!-- View 1: Check my pay -->
+          <div class="view on" role="tabpanel" id="v-pay" aria-labelledby="t-pay">
+            <div class="view-head">
+              <h3>Check my pay <span class="tag">Sample</span></h3>
+              <div class="seg" aria-hidden="true"><span class="on">China bonus</span><span>Nigeria pay tax</span><span>Pool split</span></div>
+            </div>
+            <div class="stats">
+              <div class="stat"><span class="k">Year-end bonus</span><span class="v mono">¥36,001.00</span><span class="s">You entered</span></div>
+              <div class="stat"><span class="k">You keep</span><span class="v mono">¥32,610.90</span><span class="s">after ¥3,390.10 tax by the rule</span></div>
+              <div class="stat trap"><span class="k">Trap</span><span class="v mono">−¥2,309.10</span><span class="s">¥36,000 would keep more</span></div>
+            </div>
+            <figure class="chart">
+              <svg viewBox="0 0 960 196" role="img" aria-label="What you keep rises with the bonus, drops by ¥2,309.10 just above ¥36,000, and only catches up at ¥38,566.66">
+                <rect x="490" y="10" width="192.5" height="160" fill="#FBE3DB"/>
+                <g stroke="rgb(21 22 26 / .08)" stroke-width="1"><path d="M40 33.6H940M40 60.9H940M40 88.2H940M40 115.5H940M40 142.7H940"/></g>
+                <path d="M490 75.6H682.5" stroke="#6B6D75" stroke-width="1.5" stroke-dasharray="5 5"/>
+                <path d="M40 155L490 75.6" stroke="#15161A" stroke-width="2.5" fill="none"/>
+                <path d="M490 107.1L940 33.5" stroke="#15161A" stroke-width="2.5" fill="none"/>
+                <path d="M490 75.6V107.1" stroke="#F2552C" stroke-width="2.5"/>
+                <circle cx="490" cy="107.1" r="6" fill="#F2552C"/>
+                <text x="40" y="8" class="ct">what you keep</text>
+                <text x="16" y="192" class="ct">¥30,000</text>
+                <text x="466" y="192" class="ct">¥36,000</text>
+                <text x="912" y="192" class="ct">¥42,000</text>
+              </svg>
+              <figcaption class="trap-note">Trap: every bonus from ¥36,000.01 to ¥38,566.66 keeps less than ¥36,000</figcaption>
+            </figure>
+            <p class="fine">Our reading of bonus rule 2023 No. 30; official text not yet checked. Runs on your device. Not tax advice.</p>
+          </div>
+
+          <!-- View 2: Proofs and traps -->
+          <div class="view" role="tabpanel" id="v-proof" aria-labelledby="t-proof" hidden>
+            <div class="view-head"><h3>Facts for the bonus rule <span class="tag">Sample</span></h3></div>
+            <ul class="rows">
+              <li><span>Tax never exceeds the bonus</span><span class="st">not yet run</span></li>
+              <li><span>A raise never lowers take-home</span><span class="st bad">fails near the ¥960,000 edge</span></li>
+              <li><span>Breakdown adds up</span><span class="st">not yet run</span></li>
+            </ul>
+            <div class="cex">
+              <span class="k">Counterexample from an early test on a draft circuit</span>
+              <p class="mono">¥951,563.55 keeps more than ¥975,850.91</p>
+            </div>
+            <p class="fine">Sample. The solver found a pair of bonuses either side of ¥960,000 where the larger one keeps less. Published proofs come later.</p>
+          </div>
+
+          <!-- View 3: Pool splits -->
+          <div class="view" role="tabpanel" id="v-split" aria-labelledby="t-split" hidden>
+            <div class="view-head"><h3>Round 1 <span class="tag">Planned</span></h3></div>
+            <div class="split">
+              <div class="pot"><span class="k">Round pot</span><span class="v mono">1,000.00</span></div>
+              <ul class="shares">
+                <li><span>Holder A · 50 shares</span><span class="mono">425.00</span></li>
+                <li><span>Holder B · 30 shares</span><span class="mono">255.00</span></li>
+                <li><span>Holder C · 20 shares</span><span class="mono">170.00</span></li>
+                <li class="fee"><span>Operator fee</span><span class="mono">100.00</span></li>
+              </ul>
+            </div>
+            <p class="fine">Example figures. Shares are read at a fixed block; the circuit decides each payout and the fee. No split is running yet.</p>
+          </div>
+
+          <!-- View 4: Engines -->
+          <div class="view" role="tabpanel" id="v-eng" aria-labelledby="t-eng" hidden>
+            <div class="view-head"><h3>Engine against the rule <span class="tag">Planned</span></h3></div>
+            <table class="eng">
+              <thead><tr><th>Bonus</th><th>You keep, by the rule</th><th>Listed engine</th><th></th></tr></thead>
+              <tbody>
+                <tr><td class="mono">¥120,000</td><td class="mono">¥108,210.00</td><td class="mono">¥108,210.00</td><td class="ok">same</td></tr>
+                <tr><td class="mono">¥360,000</td><td class="mono">¥272,660.00</td><td class="mono">¥272,660.00</td><td class="ok">same</td></tr>
+                <tr><td class="mono">¥960,000.01</td><td class="mono">¥543,160.01</td><td class="mono bad">different</td><td class="bad">bounty paid</td></tr>
+              </tbody>
+            </table>
+            <p class="fine">Example inputs. List a payroll engine against a rule; whoever finds an input where they differ is paid the bounty.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value cards -->
+  <section class="values wrap" id="how" aria-label="How it works">
+    <article class="vcard vcard-wide">
+      <div class="vtext">
+        <svg class="vmark" aria-hidden="true"><use href="#half-ink"/></svg>
+        <h3>Check in about a minute</h3>
+        <p>Pick a rule, type your figures, see what the rule gives and where its traps are. No sign-in. Nothing leaves your device.</p>
+      </div>
+      <div class="stack" aria-hidden="true">
+        <div class="note"><b>Bonus checked</b><span class="mono">¥36,001.00 · on this device</span></div>
+        <div class="note"><b class="c-coral">Trap found</b><span class="mono">¥36,000.01 to ¥38,566.66</span></div>
+        <div class="note"><b class="c-green">Matches your payslip</b><span class="mono">Tax ¥3,390.10 by the rule</span></div>
+      </div>
+    </article>
+    <article class="vcard">
+      <svg class="vmark" aria-hidden="true"><use href="#half-coral"/></svg>
+      <h3>Proven for every input</h3>
+      <p>A solver tests the rule for every possible number, or returns the exact input where it fails.</p>
+    </article>
+    <article class="vcard">
+      <svg class="vmark" aria-hidden="true"><use href="#mark"/></svg>
+      <h3>Paid by the rule</h3>
+      <p>A pool split runs from the circuit itself, so the published rule is the rule that pays.</p>
+    </article>
+  </section>
+
+  <!-- Film -->
+  <section class="film wrap" aria-labelledby="film-h">
+    <h2 id="film-h" class="sr-only">The whole idea, at a glance</h2>
+    <div class="film-frame">
+      <!-- Plays on its own, muted, while on screen; part of the page, not a player. -->
+      <video muted loop playsinline preload="metadata" poster="media/poster.jpg" width="1920" height="1080" aria-label="Animation: a one-yuan bonus trap, the rule as a circuit on X Layer, a solver check, a pool split and an engine bounty">
+        <source src="media/payproof-film.mp4" type="video/mp4">
+      </video>
+      <div class="film-progress" aria-hidden="true"><i></i></div>
+      <button class="film-sound" type="button" aria-pressed="false">
+        <svg class="ic snd-off" viewBox="0 0 24 24"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5Z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></svg>
+        <svg class="ic snd-on" viewBox="0 0 24 24"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5Z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.4 18.4a9 9 0 0 0 0-12.8"/></svg>
+        <span>Sound</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Built on -->
+  <section class="built" aria-labelledby="built-h">
+    <h2 id="built-h">Built on open tools you can check</h2>
+    <ul class="logos"><li>X Layer</li><li>TapeOut</li><li>Yosys</li><li>ABC</li><li>Foundry</li><li>viem</li></ul>
+    <p class="fine">Names only. Tools we use, not partners or endorsements.</p>
+  </section>
+
+  <!-- Stacking feature deck -->
+  <section class="deck wrap" id="rules" aria-labelledby="deck-h">
+    <h2 id="deck-h" class="h2">One engine for every rule that decides money</h2>
+
+    <article class="dcard">
+      <div class="dtext">
+        <h3>Check my pay</h3>
+        <p>China year-end bonus tax and Nigeria 2025 pay tax first. Type your figures, see the rule's answer, the difference from your payslip and the nearest trap.</p>
+        <ul class="pills"><li>China bonus tax</li><li>Nigeria pay tax</li><li>Runs on your device</li></ul>
+        <a class="link" href="app/"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Open app</a>
+      </div>
+      <div class="dshot tint-coral">
+        <div class="panel">
+          <h4>Nigeria pay tax</h4>
+          <ul class="rows">
+            <li><span>Annual gross</span><span class="mono">₦840,001</span></li>
+            <li><span>Pension, NHF, rent relief</span><span class="mono">₦0</span></li>
+            <li><span>Tax by the rule</span><span class="st">under review</span></li>
+          </ul>
+          <p class="fine">Sample. Waiting on a tax practitioner's reading of the minimum wage exemption.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="dcard" id="proofs">
+      <div class="dtext">
+        <h3>Proofs and traps</h3>
+        <p>Each fact about a rule is proven for every input, or the solver returns the input where it fails. Every result says which circuit it ran on and how to run it again.</p>
+        <ul class="pills"><li>Every possible input</li><li>Exact failing input</li><li>Repeat it yourself</li></ul>
+        <a class="link" href="app/"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>See the proofs</a>
+      </div>
+      <div class="dshot tint-grey">
+        <div class="panel">
+          <h4>Facts for the bonus rule</h4>
+          <ul class="rows">
+            <li><span>Tax never exceeds the bonus</span><span class="st">not yet run</span></li>
+            <li><span>A raise never lowers take-home</span><span class="st bad">fails near the ¥960,000 edge</span></li>
+            <li><span>Breakdown adds up</span><span class="st">not yet run</span></li>
+          </ul>
+          <p class="fine">Sample. From an early test on a draft circuit: the solver found a pair of bonuses either side of ¥960,000 where the larger one keeps less. Published proofs come later.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="dcard">
+      <div class="dtext">
+        <h3>Pool splits</h3>
+        <p>A pool or vault pays out through the circuit. Shares are read at a fixed block, the circuit decides every payout and the fee, and nobody can move the funds.</p>
+        <ul class="pills"><li>Snapshot block</li><li>Circuit decides each payout</li><li>No admin path to funds</li></ul>
+        <a class="link" href="app/"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>See a split</a>
+      </div>
+      <div class="dshot tint-green">
+        <div class="panel">
+          <h4>Round 1</h4>
+          <ul class="rows">
+            <li><span>Shares read at block</span><span class="st">not opened yet</span></li>
+            <li><span>Your payout</span><span class="st">not opened yet</span></li>
+            <li><span>Operator fee</span><span class="st strong">set by the circuit</span></li>
+          </ul>
+          <p class="fine">Sample. No split is running yet.</p>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq wrap" id="faq" aria-labelledby="faq-h">
+    <h2 id="faq-h" class="h2c">Straight answers to the hard questions</h2>
+    <div class="fan">
+      <article class="qcard q1">
+        <h3>Is this tax advice?</h3>
+        <p>No. Payproof shows how a published rule computes your number and where the rule came from. For advice, ask a tax practitioner.</p>
+        <footer><span>Everyone</span><svg class="qm" aria-hidden="true"><use href="#mark"/></svg></footer>
+      </article>
+      <article class="qcard q2">
+        <h3>Do my figures leave my device?</h3>
+        <p>No. The rule is read from X Layer and run in your browser. Nothing you type is sent to us or saved on a server.</p>
+        <footer><span>Privacy</span><svg class="qm" aria-hidden="true"><use href="#mark"/></svg></footer>
+      </article>
+      <article class="qcard q3">
+        <h3>Is it live?</h3>
+        <p>Not yet. Payproof is being built for the X Layer TapeOut Accelerate hackathon. Everything on this page marked sample is not real data.</p>
+        <footer><span>Status</span><svg class="qm" aria-hidden="true"><use href="#mark"/></svg></footer>
+      </article>
+    </div>
+    <div class="more">
+      <details>
+        <summary>Who can change a rule?</summary>
+        <p>Nobody can edit a rule once its circuit is taped out on X Layer. A new law means a new circuit, published next to the old one, so past results still point to the rule they ran on.</p>
+      </details>
+      <details>
+        <summary>What does a trap mean?</summary>
+        <p>A range where earning more leaves you with less. Under the China bonus rule, every bonus from ¥36,000.01 to ¥38,566.66 keeps less than a bonus of exactly ¥36,000.</p>
+      </details>
+      <details>
+        <summary>Who pays the network fee?</summary>
+        <p>Checking your own number only reads the chain. Publishing a rule or paying out a pool round is an X Layer transaction, and whoever sends it pays its fee.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Dark band -->
+  <section class="band" aria-labelledby="band-h">
+    <svg class="float b1" aria-hidden="true"><use href="#half-paper"/></svg>
+    <svg class="float b2" aria-hidden="true"><use href="#half-coral"/></svg>
+    <div class="band-in">
+      <h2 id="band-h">Built to be checked</h2>
+      <p>Every result names the rule circuit it ran on, the block it was read at, and the command to run it again yourself.</p>
+      <dl class="receipt mono">
+        <div><dt>rule</dt><dd>cn-bonus-2023-30</dd></div>
+        <div><dt>circuit</dt><dd>not yet on X Layer</dd></div>
+        <div><dt>read at block</dt><dd>not yet</dd></div>
+        <div><dt>repeat</dt><dd>payproof prove cn-bonus-2023-30 raise-never-lowers-take-home</dd></div>
+      </dl>
+      <p class="fine">Sample. The command and circuit appear here once the rule is on chain.</p>
+      <a class="btn btn-paper btn-lg" href="app/"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Open app</a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <div class="foot-brand"><img src="payproof-lockup.svg" alt="Payproof" width="118" height="26"><span>Built for X Layer TapeOut Accelerate, 2026</span></div>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#rules">Rules</a>
+      <a href="#how">How it works</a>
+      <a href="https://github.com/Iziedking/payproof">GitHub</a>
+      <a href="https://x.com/payproofhq">X @payproofhq</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="landing.js?v=2" defer></script>
+</body>
+</html>
