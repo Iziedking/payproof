@@ -108,9 +108,10 @@ Command on host-service (inside the workdir after `bash setup-yosys.sh`), one ta
 | --- | --- | --- |
 | `p0-synth-all` (first try, stopped by hand) | `bash synth-all.sh tools/yosys` (old version: `synth` ran its own ABC, then `abc -g NAND`) | Wage circuits done; stopped after 13 min inside the first ABC pass of `split_compute_24`. Outputs kept in `out/run1/` |
 | `p0-synth-wage-check` | `bash synth-all.sh tools/yosys wage check` (5,400 s limit) | Wage circuits, `split_check_24` (34 s) and `split_check_32` (3,118 s) done. `split_check_40` was still in ABC when the limit was reached |
-| `p0-synth-check-narrow` | `bash synth-all.sh tools/yosys check-narrow` | queued |
-| `p0-synth-check-40` | `bash synth-all.sh tools/yosys check-40` (21,600 s limit) | queued |
-| `p0-synth-compute-24`, `-32`, `-40` | `bash synth-all.sh tools/yosys compute-<w>` (14,400 s limit each) | queued |
+| `p0-synth-check-narrow` | `bash synth-all.sh tools/yosys check-narrow` | Widths 8, 12 and 16 done (0.9 s, 244 s, 127 s) |
+| `p0-synth-check-40` | `bash synth-all.sh tools/yosys check-40` (21,600 s limit) | Done in 5,493 s |
+| `p0-synth-compute-24` | `bash synth-all.sh tools/yosys compute-24` (14,400 s limit) | Running: still in ABC after 3 h 16 min (checked 15:05 UTC). The local SSH session dropped; the remote job kept running |
+| `p0-synth-compute-32`, `-40` | `bash synth-all.sh tools/yosys compute-<w>` (14,400 s limit each) | Not started: the SSH connection from the owner's PC was refused at 15:02 UTC while the host was briefly unreachable. To be re-queued after compute-24 |
 
 Sources: `spikes/p0/rtl/*.v`. Flow per circuit:
 `read_verilog; chparam -set W <w>; synth -flatten -top <top> -noabc; abc -g NAND; opt_clean -purge; stat`.
@@ -125,8 +126,15 @@ flat, before splitting into REF modules.
 | ng_paye mutant (19%) | | 5,697 | 2,900 | 8,597 | 60,179 | 12.0 s |
 | split_check | 24 | 14,607 | 6,834 | 21,441 | 150,087 | 34 s |
 | split_check | 32 | 23,733 | 11,143 | 34,876 | 244,132 | 3,118 s |
-| split_check | 40 | not yet measured | | | | |
-| split_compute | 24, 32, 40 | not yet measured | | | | |
+| split_check | 40 | 34,875 | 16,331 | 51,206 | 358,442 | 5,493 s |
+| split_check | 8 | 2,720 | 1,259 | 3,979 | 27,853 | 0.9 s |
+| split_check | 12 | 4,845 | 2,292 | 7,137 | 49,959 | 244 s |
+| split_check | 16 | 7,584 | 3,584 | 11,168 | 78,176 | 127 s |
+| split_compute | 24 | running (see above) | | | | |
+| split_compute | 32, 40 | not yet measured | | | | |
+
+The widths 8, 12 and 16 exist to find the widest width at which the split facts finish
+(section 5). The 12-bit run took longer than the 16-bit run; ABC run time does not follow size.
 
 Synthesis time grows far faster than size: ABC inside the WebAssembly build spent 52 minutes
 on the width-32 check circuit. The width-24 compute circuit had 40,671 internal cells before
@@ -187,8 +195,9 @@ Run `p0-prove-check-24`: `bash prove-all.sh 900 2 'check_unique-24|check_more_sh
 | Accepted payouts never fall when shares rise (`check_more_shares`) | undecided at 900 s | undecided at 900 s |
 
 Miter sizes: 21,896 and 28,660 AND nodes. Both facts compare products of two 24-bit
-multipliers, which is the known hard case for SAT solvers. Narrower widths (8, 12, 16) are
-queued to find the width at which these facts finish, as decision rule 2 needs.
+multipliers, which is the known hard case for SAT solvers. The netlists at widths 8, 12 and 16
+are now synthesised (section 4); the facts on them are not yet run. They find the width at
+which these facts finish, as decision rule 2 needs.
 
 Not yet measured: compute-circuit facts at any width; check-circuit facts at 32 and 40;
 longer time limits.
@@ -227,7 +236,13 @@ demo: one fen more, about 2,310 yuan less (2,309.99 here, with the draft's floor
 All six published trap points were found from the circuit alone and match the published
 tables. The proof that there is no seventh is not yet done. Run `p0-bonus-complete`
 (`bash bonus-complete.sh 600 2`) splits the 32-bit range into 64 equal slices by its top 6
-bits, which carries no bracket knowledge, and asks each slice separately. Status: running.
+bits, which carries no bracket knowledge, and asks each slice separately. Status at
+15:06 UTC: all 64 slice logs exist and none has a result line, neither `UNSATISFIABLE` nor
+`SATISFIABLE`. With 2 slices at a time and 600 s each, this is consistent with slices 0 to 61
+reaching the limit undecided; the last slices are still running in container
+`payproof-p0-complete`. Final counts are recorded when the run ends. If every slice is
+undecided, slicing by the top bits does not make the question easier, and "no seventh trap"
+stays unproven at this limit.
 
 These are trap edges (the first fen where pay drops). The full trap ranges (every bonus that
 takes home less than the edge) are the P3 trap finder's output.
@@ -310,6 +325,7 @@ Landed transactions:
 | --- | --- | --- | --- | --- | --- |
 | 1 | `0xa601e844a8f5c8dc66b1eb5e89af388eeea51c0c945d1acb2e455accb745a96e` | 76,152,888 | 46,393 (estimate 46,776) | 0.000000928 OKB at 20,000,001 wei | success; Approval event 10,000,000 to the factory; allowance read back 0x989680 |
 | 2 | `0xe95c2ccfd5944f211bca5e89104bc80859290eab369f30326e65e76031046c5d` | 76,152,949 | 731,373 (estimate 750,194) | 0.0000146 OKB at 20,000,001 wei | success; 0.1 BEM transferred from the deployer to the protocol wallet `0x571d447f4f24688ec35ccf07f1d6993655f6af15`; CPUCreated: circuits `0x1900801e311184063b9d9c119c9d98aa4950e12c`, transistors `0x523161955d1963891640a111688678fe6a9523ea`, creator the deployer, supply 10,000,000, mint price 0, name Payproof; transistors proxy on beacon `0x41Cb2bfd1cccA8f505EEDad0181eef44f1B9Ce65`, circuits proxy on beacon `0xf70d1ed4f62CF3780157B0b421b7E2F45bD0991C`; both addresses match the pre-signing simulation |
+| 3 | `0xb4ce2bb85c367f61a57907b05bdc1f9c4e69495531ac58421c14469abbe44bd8` | 76,153,337 | 46,393 (estimate 46,776) | 0.000000928 OKB at 20,000,001 wei | success; Approval event 1,000,000 (0.01 BEM) to our transistor contract |
 
 First attempt of transaction 1 was refused by the node before broadcast (`insufficient funds for gas`, balance 0). The owner then funded the deployer: 0.0229 OKB by exchange withdrawal on X Layer, and 0.129 BEM bridged from BNB Chain on tapeout.net (LayerZero fee 0.002026 BNB quoted, protocol fee 0.5%) and transferred to the deployer.
 
@@ -334,7 +350,10 @@ around the `eval` (share lookups, transfer) is not measured yet and is not inclu
 | --- | --- | --- | --- | --- |
 | Check, 24-bit | 21,441 | 49.7 M to 53.2 M | about 0.0010 to 0.0011 OKB | 24% to 25% |
 | Check, 32-bit | 34,876 | 80.8 M to 86.5 M | about 0.0016 to 0.0017 OKB | 38% to 41% |
-| Check, 40-bit | not yet measured | | | |
+| Check, 40-bit | 51,206 | 118.6 M to 127.0 M | about 0.0024 to 0.0025 OKB | 56% to 60% |
+| Check, 16-bit | 11,168 | 25.9 M to 27.7 M | about 0.0005 to 0.0006 OKB | 12% to 13% |
+| Check, 12-bit | 7,137 | 16.5 M to 17.7 M | about 0.0003 to 0.0004 OKB | 8% |
+| Check, 8-bit | 3,979 | 9.2 M to 9.9 M | about 0.0002 OKB | 4% to 5% |
 | Compute, any width | not yet measured | | | |
 
 Range of one W-bit amount: 0 to 2^W - 1 units. The unit is a design choice for the vault
