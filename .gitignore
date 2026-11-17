@@ -1,0 +1,45 @@
+# Secrets. Keys and tokens come from the environment, never from files in the repo.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.keystore
+keystore/
+secrets/
+
+# Foundry broadcast logs can hold RPC URLs with keys; publish deployments/xlayer.json instead.
+broadcast/
+cache/
+
+# Local agent state and private host details. Never published.
+.izie/
+.claude/
+
+# Planning files are internal and live outside this folder. Guard against copies.
+PLAN.md
+AGENTS.md
+HACKATHON_RESEARCH.md
+TAX_REVIEW_BRIEF.md
+OPERATIONS.md
+VERSIONS.local.md
+
+# Build output and dependencies
+node_modules/
+dist/
+out/
+coverage/
+.venv/
+__pycache__/
+*.pyc
+
+# Solver scratch. Published proof records live in docs/proofs/.
+*.aig.tmp
+work/
+
+# Editor and OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

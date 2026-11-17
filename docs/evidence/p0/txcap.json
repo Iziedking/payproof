@@ -1,0 +1,16 @@
+{
+  "head": 76135992,
+  "blocksSampled": 500,
+  "every": 6,
+  "txs": 8247,
+  "maxGasLimit": "17312972",
+  "above2pow24": [
+    {
+      "block": 76135632,
+      "hash": "0xc76e9300408905681f7ae4b96400cc63344668691e8731d1200aff1bb072155e",
+      "gasLimit": "17312972",
+      "gasUsed": "10649236",
+      "status": "0x1"
+    }
+  ]
+}

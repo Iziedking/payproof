@@ -1,0 +1,116 @@
+{
+  "statelessCircuitsSeen": 545,
+  "largestGates": 141755,
+  "rows": [
+    {
+      "cpu": "0xb00e17789f905234f1890c22e6c01015c10d2f54",
+      "id": 41,
+      "nIn": 162,
+      "nOut": 486,
+      "gates": 141755,
+      "evalGas": {
+        "error": "execution reverted"
+      },
+      "gasPerGate": null
+    },
+    {
+      "cpu": "0xb00e17789f905234f1890c22e6c01015c10d2f54",
+      "id": 40,
+      "nIn": 32,
+      "nOut": 162,
+      "gates": 14985,
+      "evalGas": 37156709,
+      "gasPerGate": 2479.6
+    },
+    {
+      "cpu": "0x69f663931209096037474d7c20402232e5c762ca",
+      "id": 1386,
+      "nIn": 2,
+      "nOut": 1,
+      "gates": 10000,
+      "evalGas": 23251463,
+      "gasPerGate": 2325.1
+    },
+    {
+      "cpu": "0x69f663931209096037474d7c20402232e5c762ca",
+      "id": 1387,
+      "nIn": 2,
+      "nOut": 1,
+      "gates": 10000,
+      "evalGas": 23251463,
+      "gasPerGate": 2325.1
+    },
+    {
+      "cpu": "0xa93e807fab41431827ebba57443fb687a95e2aa3",
+      "id": 3,
+      "nIn": 320,
+      "nOut": 32,
+      "gates": 3829,
+      "evalGas": 8979258,
+      "gasPerGate": 2345.1
+    },
+    {
+      "cpu": "0xaa13ae45b0b2d52f210ad7ef12997113a0ebaf21",
+      "id": 1,
+      "nIn": 128,
+      "nOut": 65,
+      "gates": 2371,
+      "evalGas": 5526257,
+      "gasPerGate": 2330.8
+    },
+    {
+      "cpu": "0xa4760c6c3251401ee8860c080b56499c693da707",
+      "id": 3,
+      "nIn": 30,
+      "nOut": 30,
+      "gates": 2355,
+      "evalGas": 5454408,
+      "gasPerGate": 2316.1
+    },
+    {
+      "cpu": "0xe689c4c445421ec3c60e444c6a87a579f2adfabe",
+      "id": 3,
+      "nIn": 30,
+      "nOut": 30,
+      "gates": 2355,
+      "evalGas": 5454408,
+      "gasPerGate": 2316.1
+    },
+    {
+      "cpu": "0x9e2849c04a513fe64db07521cbe52d078d905c0e",
+      "id": 4,
+      "nIn": 451,
+      "nOut": 8,
+      "gates": 1766,
+      "evalGas": 4223405,
+      "gasPerGate": 2391.5
+    },
+    {
+      "cpu": "0x526b96238cc418d909005e2e2d79e327da4bd0f7",
+      "id": 4,
+      "nIn": 16,
+      "nOut": 16,
+      "gates": 1204,
+      "evalGas": 2810947,
+      "gasPerGate": 2334.7
+    },
+    {
+      "cpu": "0x2046aa63bfb03f393ad85a518011fdf8af3ddb53",
+      "id": 3,
+      "nIn": 16,
+      "nOut": 16,
+      "gates": 1204,
+      "evalGas": 2810947,
+      "gasPerGate": 2334.7
+    },
+    {
+      "cpu": "0x8dff4c46c608aba7e48b77e213288d9f6bc36ef5",
+      "id": 1,
+      "nIn": 16,
+      "nOut": 16,
+      "gates": 1204,
+      "evalGas": 2810947,
+      "gasPerGate": 2334.7
+    }
+  ]
+}
