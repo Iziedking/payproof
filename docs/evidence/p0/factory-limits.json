@@ -1,0 +1,18 @@
+{
+ "factory.MAX_MINT_PRICE()": "1000000000000",
+ "factory.MAX_PROTOCOL_FEE()": "1000000000",
+ "factory.MAX_DEPLOY_FEE()": "10000000000",
+ "factory.protocolFee()": "1000000",
+ "factory.deployFee()": "10000000",
+ "factory.transistorBeacon()": "0x1059ad62cabb6a6925bb65aa617300556c60a51b",
+ "factory.circuitBeacon()": "0xf70d1ed4f62cf3780157b0b421b7e2f45bd0991c",
+ "factory.protocolWallet()": "0x571d447f4f24688ec35ccf07f1d6993655f6af15",
+ "factory.owner()": "0xb3d85b42a045c1a88d800cad0f55d2566a4d3138",
+ "transistorBeacon.owner()": "0x0000000000000000000000000000000000000000",
+ "transistorBeacon.implementation()": "0x265bf10fab9ddec0ee0a649c6b9db845f1b9a06b",
+ "circuitBeacon.owner()": "0x0000000000000000000000000000000000000000",
+ "circuitBeacon.implementation()": "0x977f217887e085d298cb3819cdad5a0ee35f29b2",
+ "sampleTransistors.NAND()": "0",
+ "sampleTransistors.LATCH()": "1",
+ "sampleTransistors.protocolFee()": "1000000"
+}

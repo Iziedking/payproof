@@ -1,0 +1,116 @@
+0xfce5366485140045e95ebdba88ad775fc4aad79f: beacon proxy, beacon 0x41cb2bfd1ccca8f505eedad0181eef44f1b9ce65, implementation 0x44ebf3345bcf9ab329e7a28e53fd8ecfad1a5efe
+{
+  "code": "0x44ebf3345bcf9ab329e7a28e53fd8ecfad1a5efe",
+  "bytes": 9487,
+  "selectors": [
+    "0x01ffc9a7 supportsInterface(bytes4)",
+    "0x02d05d3f creator()",
+    "0x06d6e63f ?",
+    "0x0e89341c uri(uint256)",
+    "0x124d91e5 ?",
+    "0x15f47f4f ?",
+    "0x1b2ef1ca mint(uint256,uint256)",
+    "0x2eb2c2d6 safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+    "0x3bcce6c9 ?",
+    "0x3ccfd60b withdraw()",
+    "0x46c922d1 story()",
+    "0x4e1273f4 balanceOfBatch(address[],uint256[])",
+    "0x4f02c420 minted()",
+    "0x5f48772d circuits()",
+    "0x65bcc02b BEM()",
+    "0x66209277 ?",
+    "0x6817c76c mintPrice()",
+    "0x700ed104 cpuName()",
+    "0x8f770ad0 supplyCap()",
+    "0x91254d67 cpuSymbol()",
+    "0xa22cb465 setApprovalForAll(address,bool)",
+    "0xb0e21e8a protocolFee()",
+    "0xdf18e047 owed(address)",
+    "0xe985e9c5 isApprovedForAll(address,address)",
+    "0xf242432a safeTransferFrom(address,address,uint256,uint256,bytes)"
+  ]
+}
+0xb57b56034e2dc25161e2512cfc40b24ea3bee1fb: beacon proxy, beacon 0xf70d1ed4f62cf3780157b0b421b7e2f45bd0991c, implementation 0x977f217887e085d298cb3819cdad5a0ee35f29b2
+{
+  "code": "0x977f217887e085d298cb3819cdad5a0ee35f29b2",
+  "bytes": 12562,
+  "selectors": [
+    "0x01ffc9a7 supportsInterface(bytes4)",
+    "0x06fdde03 name()",
+    "0x081812fc getApproved(uint256)",
+    "0x084d60f1 circuitInfo(uint256)",
+    "0x095ea7b3 approve(address,uint256)",
+    "0x23b872dd transferFrom(address,address,uint256)",
+    "0x2d2c5565 ?",
+    "0x36e07b61 ?",
+    "0x3fc4be56 netlist(uint256)",
+    "0x42842e0e safeTransferFrom(address,address,uint256)",
+    "0x61b8ce8c nextId()",
+    "0x6352211e ownerOf(uint256)",
+    "0x6fbd1719 transistors()",
+    "0x70a08231 balanceOf(address)",
+    "0x7bd3ac1d tapeout(bytes,uint32,uint32)",
+    "0x8f15b414 ?",
+    "0x934d06ea eval(uint256,bytes)",
+    "0x95d89b41 symbol()",
+    "0xa22cb465 setApprovalForAll(address,bool)",
+    "0xadfb2b69 TAPEOUT_FEE()",
+    "0xb88d4fde safeTransferFrom(address,address,uint256,bytes)",
+    "0xc45a0155 factory()",
+    "0xc87b56dd tokenURI(uint256)",
+    "0xd113b95c ?",
+    "0xe8281a1a step(uint256,bytes,bytes)",
+    "0xe985e9c5 isApprovedForAll(address,address)"
+  ]
+}
+0x1f09DAeFA827f02CBb40967cc91b259763760761: ERC-1967 proxy, implementation 0x336e9f0f4c3fee7c8c803377e4dea00293f4ae2a
+{
+  "code": "0x336e9f0f4c3fee7c8c803377e4dea00293f4ae2a",
+  "bytes": 9376,
+  "selectors": [
+    "0x06d6e63f ?",
+    "0x3659cfe6 ?",
+    "0x3ccfd60b withdraw()",
+    "0x3fb27b85 seal()",
+    "0x47f9b5fd createCPU(string,string,string,uint256,uint256)",
+    "0x4bc7cbbd cpuAt(uint256)",
+    "0x4f1ef286 upgradeToAndCall(address,bytes)",
+    "0x52d1902d proxiableUUID()",
+    "0x5405712c ?",
+    "0x5c60da1b implementation()",
+    "0x5f5a364f isCPU(address)",
+    "0x631f9852 isSealed()",
+    "0x715018a6 renounceOwnership()",
+    "0x787dce3d ?",
+    "0x8765cf7b bem()",
+    "0x88bac553 ?",
+    "0x8da5cb5b owner()",
+    "0x8efc9196 ?",
+    "0xa94da8a7 cpuCount()",
+    "0xa9e52987 ?",
+    "0xad3cb1cc ?",
+    "0xb0e21e8a protocolFee()",
+    "0xb3746a25 ?",
+    "0xb8ca3b83 ?",
+    "0xc5c4a614 ?",
+    "0xd2c26963 ?",
+    "0xd3a27932 ?",
+    "0xd7c41c79 ?",
+    "0xddcb22fa ?",
+    "0xdf18e047 owed(address)",
+    "0xeb2a5d2c deployFee()",
+    "0xf01e9a8b ?",
+    "0xf2fde38b transferOwnership(address)"
+  ]
+}
+{
+  "code": "0xf70d1ed4f62CF3780157B0b421b7E2F45bD0991C",
+  "bytes": 619,
+  "selectors": [
+    "0x3659cfe6 ?",
+    "0x5c60da1b implementation()",
+    "0x715018a6 renounceOwnership()",
+    "0x8da5cb5b owner()",
+    "0xf2fde38b transferOwnership(address)"
+  ]
+}

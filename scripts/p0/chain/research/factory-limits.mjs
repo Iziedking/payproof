@@ -1,0 +1,17 @@
+import { keccakHex } from '../../../../vendor/tapekit/keccak.js';
+const RPC='https://xlayerrpc.okx.com'; let i=1;
+const sel=(s)=>keccakHex(new TextEncoder().encode(s)).slice(0,10);
+const rpc=async(m,p)=>{const j=await (await fetch(RPC,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:i++,method:m,params:p})})).json(); return j.error?('ERR '+j.error.message):j.result;};
+const call=(to,s)=>rpc('eth_call',[{to,data:sel(s)},'latest']);
+const adr=(h)=>'0x'+h.slice(26,66); const n=(h)=>h.startsWith('0x')?BigInt(h).toString():h;
+const F='0x1f09DAeFA827f02CBb40967cc91b259763760761';
+const out={};
+for (const s of ['MAX_MINT_PRICE()','MAX_PROTOCOL_FEE()','MAX_DEPLOY_FEE()','protocolFee()','deployFee()']) out['factory.'+s]=n(await call(F,s));
+for (const s of ['transistorBeacon()','circuitBeacon()','protocolWallet()','owner()']) out['factory.'+s]=adr(await call(F,s));
+const tb=out['factory.transistorBeacon()'];
+out['transistorBeacon.owner()']=adr(await call(tb,'owner()')); out['transistorBeacon.implementation()']=adr(await call(tb,'implementation()'));
+const cb=out['factory.circuitBeacon()'];
+out['circuitBeacon.owner()']=adr(await call(cb,'owner()')); out['circuitBeacon.implementation()']=adr(await call(cb,'implementation()'));
+const tr='0xfce5366485140045e95ebdba88ad775fc4aad79f';
+for (const s of ['NAND()','LATCH()','protocolFee()']) out['sampleTransistors.'+s]=n(await call(tr,s));
+console.log(JSON.stringify(out,null,1));

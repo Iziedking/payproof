@@ -99,7 +99,7 @@ async function txcap() {
   show({ head, blocksSampled: blocks, every: 6, txs, maxGasLimit: maxGas, above2pow24: over });
 }
 
-if (cmd !== 'evalgas') await ({ state, 'create-sim': createSim, txcap }[cmd] ?? (() => { throw new Error('unknown command'); }))();
+if (!['evalgas','selectors'].includes(cmd)) await ({ state, 'create-sim': createSim, txcap }[cmd] ?? (() => { throw new Error('unknown command'); }))();
 
 // eval gas on circuits already taped out by anyone: scan processors, collect
 // stateless circuits with gateCount and nIn, then eth_estimateGas on eval(id, zeros).
@@ -131,3 +131,46 @@ async function evalgas() {
   show({ statelessCircuitsSeen: found.length, largestGates: found[0]?.gates, rows });
 }
 if (cmd === 'evalgas') await evalgas();
+
+// List the 4-byte selectors in a contract's dispatcher (PUSH4 followed by EQ), resolving
+// ERC-1967 / beacon proxies first, and name them from a signature list.
+// node scripts/p0/chain/xlayer-probe.mjs selectors [rpc] <address>
+const KNOWN = ['createCPU(string,string,string,uint256,uint256)','cpuCount()','cpuAt(uint256)','isCPU(address)',
+  'deployFee()','protocolFee()','bem()','transistors()','name()','symbol()','nextId()','factory()',
+  'tapeout(bytes,uint32,uint32)','TAPEOUT_FEE()','eval(uint256,bytes)','step(uint256,bytes,bytes)',
+  'circuitInfo(uint256)','ownerOf(uint256)','balanceOf(address)','getApproved(uint256)','approve(address,uint256)',
+  'isApprovedForAll(address,address)','setApprovalForAll(address,bool)','safeTransferFrom(address,address,uint256)',
+  'safeTransferFrom(address,address,uint256,bytes)','transferFrom(address,address,uint256)','netlist(uint256)',
+  'mintPrice()','BEM()','supplyCap()','minted()','creator()','circuits()','cpuName()','cpuSymbol()','story()',
+  'balanceOf(address,uint256)','mint(uint256,uint256)','safeTransferFrom(address,address,uint256,uint256,bytes)',
+  'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)','balanceOfBatch(address[],uint256[])',
+  'owed(address)','withdraw()','supportsInterface(bytes4)','tokenURI(uint256)','uri(uint256)','owner()',
+  'transferOwnership(address)','renounceOwnership()','upgradeToAndCall(address,bytes)','proxiableUUID()',
+  'implementation()','isSealed()','seal()','beat(address,uint256,bytes)','initialize()','totalSupply()'];
+async function selectors() {
+  const target = arg3 || process.argv[5];
+  let a = target;
+  for (let hop = 0; hop < 3; hop++) {
+    const impl = adr(await rpc('eth_getStorageAt', [a, IMPL_SLOT, 'latest']));
+    const beaconSlot = '0xa3f0ad74e5423aebfd80d3ef4346578335a9a72aeaee59ff6cb3582b35133d50';
+    const beacon = adr(await rpc('eth_getStorageAt', [a, beaconSlot, 'latest']));
+    const code = await rpc('eth_getCode', [a, 'latest']);
+    const m1167 = code.match(/^0x363d3d373d3d3d363d73([0-9a-f]{40})5af4/);
+    if (m1167) { console.log(`${a}: EIP-1167 clone of 0x${m1167[1]}`); a = '0x' + m1167[1]; continue; }
+    if (impl !== '0x0000000000000000000000000000000000000000') { console.log(`${a}: ERC-1967 proxy, implementation ${impl}`); a = impl; continue; }
+    if (beacon !== '0x0000000000000000000000000000000000000000') {
+      const bi = adr(await call(beacon, 'implementation()'));
+      console.log(`${a}: beacon proxy, beacon ${beacon}, implementation ${bi}`); a = bi; continue; }
+    break;
+  }
+  const code = (await rpc('eth_getCode', [a, 'latest'])).slice(2);
+  const sels = new Set();
+  for (let i = 0; i < code.length; i += 2) {
+    const op = parseInt(code.slice(i, i + 2), 16);
+    if (op === 0x63) { const s = code.slice(i + 2, i + 10); if (code.slice(i + 10, i + 12) === '14' || code.slice(i + 12, i + 14) === '14') sels.add('0x' + s); }
+    if (op >= 0x60 && op <= 0x7f) i += (op - 0x5f) * 2;
+  }
+  const names = Object.fromEntries(KNOWN.map((s) => [sel(s), s]));
+  show({ code: a, bytes: code.length / 2, selectors: [...sels].sort().map((s) => names[s] ? `${s} ${names[s]}` : `${s} ?`) });
+}
+if (cmd === 'selectors') await selectors();
