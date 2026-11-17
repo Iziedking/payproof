@@ -276,7 +276,7 @@ ours. If a vendor ever wanted ours, we could send them transistors (ERC-1155 tra
 
 ## 7. On-chain spikes with the owner's wallet
 
-Not yet run. Owner's deployer address: `0x5c807eA36fC11a72192d83ecff2b3D4746767612`. Signing:
+In progress. Owner's deployer address: `0x5c807eA36fC11a72192d83ecff2b3D4746767612`. Signing:
 `cast send ... --account payproof-deployer` on the owner's PC, one transaction at a time,
 printed by `node scripts/p0/tx/print-tx.mjs <owner> <step> ...`. The printer refuses any
 destination other than the BEM token, the factory, or a transistor or circuits contract the
@@ -303,6 +303,16 @@ Transaction list (one at a time, each printed only after the previous one landed
 | 4 | Our transistor contract | `mint(0, 10000000)` | pulls 0.01 BEM |
 | 5 | Our circuits contract | `tapeout(adder8)` | 0.0013 OKB |
 | 6 | Our circuits contract | `tapeout(one REF to adder8)` | 0.0013 OKB |
+
+Landed transactions:
+
+| # | Hash | Block | Gas used | Network fee | Result |
+| --- | --- | --- | --- | --- | --- |
+| 1 | `0xa601e844a8f5c8dc66b1eb5e89af388eeea51c0c945d1acb2e455accb745a96e` | 76,152,888 | 46,393 (estimate 46,776) | 0.000000928 OKB at 20,000,001 wei | success; Approval event 10,000,000 to the factory; allowance read back 0x989680 |
+
+First attempt of transaction 1 was refused by the node before broadcast (`insufficient funds for gas`, balance 0). The owner then funded the deployer: 0.0229 OKB by exchange withdrawal on X Layer, and 0.129 BEM bridged from BNB Chain on tapeout.net (LayerZero fee 0.002026 BNB quoted, protocol fee 0.5%) and transferred to the deployer.
+
+Story text for transaction 2, approved by the owner 2026-11-17: "Rules that decide money, as circuits anyone can check." createCPU gas estimate from the owner's address after transaction 1: 750,194.
 
 | Spike | Result |
 | --- | --- |
