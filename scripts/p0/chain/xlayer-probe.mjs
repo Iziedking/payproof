@@ -56,9 +56,9 @@ async function state() {
 
 // createCPU(name, symbol, story, supply, price) simulated from a dummy address with
 // a BEM balance and allowance written by state override. Slots were found by probing
-// balanceOf / allowance with overrides: balances at mapping slot 0, allowances at 6.
+// balanceOf / allowance with overrides: balances at mapping slot 5, allowances at 6 (slot 5 found with the owner's empty address on 2026-11-17; an earlier probe that reported slot 0 used 0x...dEaD, which really holds BEM).
 async function createSim() {
-  const from = '0x000000000000000000000000000000000000dEaD';
+  const from = process.argv[4] || '0x000000000000000000000000000000000000dEaD';
   const bem = adr(await call(FACTORY, 'bem()'));
   const map = (k, s) => hex(keccak256(h2b(k.padStart(64, '0') + s.padStart(64, '0'))));
   const o = from.slice(2).toLowerCase(), f = FACTORY.slice(2).toLowerCase();
@@ -68,7 +68,7 @@ async function createSim() {
     for (const p of parts) { heads.push(w(off)); off += p.length / 2; } return heads.join('') + w(sup) + w(pr) + parts.join(''); };
   const sig = 'createCPU(string,string,string,uint256,uint256)';
   const noFunds = await rpc('eth_call', [{ from, to: FACTORY, data: sel(sig) + enc('Payproof', 'PAYP', 'test', 1000000n, 0n) }, 'latest']);
-  const ov = { [bem]: { stateDiff: { ['0x' + map(o, w(0))]: big, ['0x' + map(f, map(o, w(6)))]: big } }, [from]: { balance: big } };
+  const ov = { [bem]: { stateDiff: { ['0x' + map(o, w(5))]: big, ['0x' + map(f, map(o, w(6)))]: big } }, [from]: { balance: big } };
   const rows = [];
   for (const [sup, price] of [[1000000n, 0n], [10000000n, 0n], [100000000n, 1000n]]) {
     const data = sel(sig) + enc('Payproof', 'PAYP', 'test', sup, price);

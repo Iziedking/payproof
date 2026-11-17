@@ -1,0 +1,27 @@
+{
+  "withoutBem": {
+    "error": "execution reverted",
+    "data": "0xfb8f41b20000000000000000000000001f09daefa827f02cbb40967cc91b25976376076100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000989680"
+  },
+  "withBemOverride": [
+    {
+      "supply": "1000000",
+      "mintPrice": "0",
+      "ok": true,
+      "gas": "704407"
+    },
+    {
+      "supply": "10000000",
+      "mintPrice": "0",
+      "ok": true,
+      "gas": "704407"
+    },
+    {
+      "supply": "100000000",
+      "mintPrice": "1000",
+      "ok": true,
+      "gas": "724647"
+    }
+  ],
+  "note": "0xfb8f41b2 is ERC20InsufficientAllowance(spender, allowance, needed)"
+}

@@ -206,15 +206,23 @@ version used Yosys `sat` and found 960,000 yuan in 40.6 s, then query 2 was unde
 600 s (kept in `proofs/bonus-traps-sat/`). The search was moved to ABC `iprove` with
 `write_cex`, and every point found is replayed with Yosys `sat -set b <value> -prove bad 0`:
 
-| Query | Bonus where one more fen lowers take-home | Solve time | Replay |
-| --- | --- | --- | --- |
-| 1 | 66,000,000 fen = 660,000.00 yuan | 0.3 s | Yosys FAIL at b (confirmed) |
-| 2 | 30,000,000 fen = 300,000.00 yuan | 0.4 s | confirmed |
-| 3 | 96,000,000 fen = 960,000.00 yuan | 0.3 s | confirmed |
-| 4 | 42,000,000 fen = 420,000.00 yuan | 0.3 s | confirmed |
-| 5 | 3,600,000 fen = 36,000.00 yuan | 0.5 s | confirmed |
-| 6 | 14,400,000 fen = 144,000.00 yuan | 0.5 s | confirmed |
-| 7 | "is there any other?" | undecided at 600 s | |
+The input each query returned, exactly as ABC wrote it (`proofs/bonus-traps/q<k>.cex`,
+32 input bits, least significant first), the time to solve, and the take-home pay either side
+of it. Take-home is computed from the same draft formula (`scripts/p0/check_tap.py`, whose
+netlist matches it on every bracket edge). The order is the solver's own.
+
+| Query | Input b returned (fen) | Hex | Yuan | Solve time | Take-home at b | Take-home at b + 1 fen | Loss from one fen more | Replay (Yosys `sat -set b`) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 66,000,000 | `0x03ef1480` | 660,000.00 | 0.3 s | 466,410.00 | 436,160.01 | 30,249.99 | FAIL at b: confirmed |
+| 2 | 30,000,000 | `0x01c9c380` | 300,000.00 | 0.4 s | 241,410.00 | 227,660.01 | 13,749.99 | confirmed |
+| 3 | 96,000,000 | `0x05b8d800` | 960,000.00 | 0.3 s | 631,160.00 | 543,160.01 | 87,999.99 | confirmed |
+| 4 | 42,000,000 | `0x0280de80` | 420,000.00 | 0.3 s | 317,660.00 | 298,410.01 | 19,249.99 | confirmed |
+| 5 | 3,600,000 | `0x0036ee80` | 36,000.00 | 0.5 s | 34,920.00 | 32,610.01 | 2,309.99 | confirmed |
+| 6 | 14,400,000 | `0x00dbba00` | 144,000.00 | 0.5 s | 129,810.00 | 116,610.01 | 13,199.99 | confirmed |
+| 7 | "is there any other?" | | | undecided at 600 s | | | | |
+
+Total solve time for the six: 2.3 s. The 36,000 yuan row matches the opening line of the
+demo: one fen more, about 2,310 yuan less (2,309.99 here, with the draft's floor to the fen).
 
 All six published trap points were found from the circuit alone and match the published
 tables. The proof that there is no seventh is not yet done. Run `p0-bonus-complete`
@@ -252,6 +260,19 @@ their implementations cannot change.
 | Factory (owner `0xb3d85b42a045c1a88d800cad0f55d2566a4d3138`, UUPS, not sealed) | Owner can upgrade it, `seal()` it, and set `deployFee` (cap 100 BEM), `protocolFee` for processors created later (cap 10 BEM per mint) and `protocolWallet`. `MAX_MINT_PRICE` 10,000 BEM per transistor |
 | `eval` and the factory | `eval` calls only the circuits beacon and the circuit implementation, for flat and REF circuits alike (trace of #40 and of a flat circuit). With the factory's code replaced by code that always reverts (state override), `eval` of REF-built circuit #40 still returned its result |
 | Tape-out and the factory | TAP-02 section 3 rule 6: a REF target must pass `isCPU` on the factory at tape-out time. Not traced here |
+| NAND and LATCH supply | One shared pool. On processor #423 with 999,185 left, `mint(1, 999185)` succeeds and `mint(1, 999186)` reverts `supply cap`, the same limit as `mint(0, 999186)` (`p0/mint-sim-owner.txt`). Minting the full supply as NAND leaves no LATCH. Every netlist we produce has NAND records only (`yosys2tap.py` emits opcode `0x00` only), and v1 rules are stateless |
+| Transistors are transferable | ERC-1155 `safeTransferFrom` and `safeBatchTransferFrom` are in the contract (`p0/selectors.txt`) |
+| Mint from the owner's address | Simulated on #423 from `0x5c807eA36fC11a72192d83ecff2b3D4746767612` with a BEM balance and allowance of exactly 1,000,000 units (0.01 BEM): `mint(0, 1)` 111,846 gas, `mint(0, 999185)` 111,870 gas. The amount does not change the fee and barely changes the gas |
+
+Correction, 2026-11-17: the first BEM balance override used mapping slot 0. It only worked
+because the dummy sender `0x…dEaD` really holds BEM. With the owner's empty address the real
+slot is 5 (allowances at 6). `xlayer-probe.mjs create-sim` now uses slot 5 and takes a sender:
+from the owner's address it succeeds at 704,407 gas (`p0/create-sim-owner.json`).
+
+Do vendors need our processor? No. An engine is named by `(processor, circuit id)`. A REF or
+an equality check can point at a circuit on any processor the factory lists (TAP-02 section 3
+rule 6), so a vendor tapes out on their own processor. Only our own simulated engines live on
+ours. If a vendor ever wanted ours, we could send them transistors (ERC-1155 transfer).
 
 ## 7. On-chain spikes with the owner's wallet
 
@@ -268,6 +289,20 @@ arguments; `cast send --help`), and Windows command lines stop at 32,767 charact
 `cast send` therefore carries at most about 16,000 bytes of netlist, about 2,280 gates.
 Larger circuits are measured with `print-tx.mjs estimate-tapeout` (simulation from the owner's
 address, which has no length limit) and are taped out as REF modules at P2.
+
+Owner decisions, 2026-11-17: name "Payproof", symbol PAYP, supply 10,000,000, mint price 0,
+and all 10,000,000 minted as NAND to the deployer in the first mint.
+
+Transaction list (one at a time, each printed only after the previous one landed):
+
+| # | Destination | Call | Amounts |
+| --- | --- | --- | --- |
+| 1 | BEM `0x60e62Efa9405d6873C5deaBD4E6CC91c25363952` | `approve(factory, 10000000)` | allowance 0.1 BEM, exact |
+| 2 | Factory `0x1f09DAeFA827f02CBb40967cc91b259763760761` | `createCPU("Payproof", "PAYP", story, 10000000, 0)` | pulls 0.1 BEM |
+| 3 | BEM | `approve(our transistors, 1000000)` | allowance 0.01 BEM, exact |
+| 4 | Our transistor contract | `mint(0, 10000000)` | pulls 0.01 BEM |
+| 5 | Our circuits contract | `tapeout(adder8)` | 0.0013 OKB |
+| 6 | Our circuits contract | `tapeout(one REF to adder8)` | 0.0013 OKB |
 
 | Spike | Result |
 | --- | --- |

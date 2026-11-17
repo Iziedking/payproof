@@ -1,0 +1,7 @@
+{"id":"0","amount":"1","gas":"111846"}
+{"id":"0","amount":"999185","gas":"111870"}
+{"id":"1","amount":"1","gas":"111882"}
+{"processor423":{"supplyCap":"1000000","minted":"815","mintPrice":"0","protocolFee":"1000000"},"bemGivenByOverride":"1000000","note":"balance and allowance set to exactly price*left + protocolFee: the full-supply mint needs nothing more"}
+{"id":"1","amount":"999185","result":"ok, gas 111906"}
+{"id":"1","amount":"999186","result":{"error":"execution reverted: supply cap"}}
+{"id":"0","amount":"999186","result":{"error":"execution reverted: supply cap"}}
