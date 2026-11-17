@@ -1,0 +1,72 @@
+/* Payproof design tokens. Source of truth: brand/README.md.
+   Contrast ratios are WCAG 2.x, measured against the background named. */
+
+:root {
+  /* Light surfaces */
+  --paper: #F6F5F1;       /* page background */
+  --surface: #FFFFFF;     /* cards */
+  --sunk: #EDEBE4;        /* fields, wells */
+  --line: rgb(21 22 26 / 0.10);
+
+  /* Light text */
+  --ink: #15161A;         /* 16.57:1 on paper */
+  --ink-2: #4B4D55;       /* 7.72:1 on paper */
+  --muted: #6B6D75;       /* 4.73:1 on paper */
+
+  /* Accent and meaning */
+  --coral: #F2552C;       /* graphics and buttons only; 3.15:1 on paper, never text */
+  --on-coral: #15161A;    /* 5.26:1 on coral */
+  --coral-text: #B23A17;  /* links and trap figures, 5.48:1 on paper */
+  --green: #1E7A4E;       /* "matches the rule", 4.87:1 on paper */
+
+  /* Type */
+  --font-display: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  --font-text: "Figtree", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  --size-display: 48px;
+  --size-h1: 32px;
+  --size-h2: 24px;
+  --size-h3: 20px;
+  --size-body: 16px;
+  --size-small: 14px;
+  --size-caption: 12px;
+
+  /* Spacing, 4 px steps */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* Radius */
+  --radius-xs: 4px;   /* tags, inputs inside cards */
+  --radius-sm: 8px;   /* buttons, inputs */
+  --radius-md: 12px;  /* cards */
+  --radius-lg: 16px;  /* panels, sheets */
+
+  /* Icons: Lucide, 20 px, stroke 1.8, colour of the text beside them */
+  --icon-size: 20px;
+  --icon-stroke: 1.8;
+}
+
+:root[data-theme="dark"] {
+  --paper: #15161A;       /* night */
+  --surface: #1D1F24;
+  --sunk: #272930;        /* raised */
+  --line: rgb(243 242 236 / 0.10);
+
+  --ink: #F3F2EC;         /* 16.12:1 on night, 14.70:1 on surface */
+  --ink-2: #B9B8B1;       /* 9.09:1 on night */
+  --muted: #8D8F96;       /* 5.60:1 on night */
+
+  --coral: #F2552C;       /* 5.26:1 on night */
+  --on-coral: #15161A;
+  --coral-text: #FF7A57;  /* 7.04:1 on night */
+  --green: #4CC38A;       /* 8.16:1 on night */
+}
