@@ -46,3 +46,6 @@ Thumbs.db
 
 # Design working notes stay local. Only the brand kit (brand/) goes in Git.
 docs/design/
+
+# The product film build is internal. Only finished brand files go in Git.
+brand/film/
