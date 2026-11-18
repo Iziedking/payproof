@@ -110,8 +110,9 @@ Command on host-service (inside the workdir after `bash setup-yosys.sh`), one ta
 | `p0-synth-wage-check` | `bash synth-all.sh tools/yosys wage check` (5,400 s limit) | Wage circuits, `split_check_24` (34 s) and `split_check_32` (3,118 s) done. `split_check_40` was still in ABC when the limit was reached |
 | `p0-synth-check-narrow` | `bash synth-all.sh tools/yosys check-narrow` | Widths 8, 12 and 16 done (0.9 s, 244 s, 127 s) |
 | `p0-synth-check-40` | `bash synth-all.sh tools/yosys check-40` (21,600 s limit) | Done in 5,493 s |
-| `p0-synth-compute-24` | `bash synth-all.sh tools/yosys compute-24` (14,400 s limit) | Running: still in ABC after 3 h 16 min (checked 15:05 UTC). The local SSH session dropped; the remote job kept running |
-| `p0-synth-compute-32`, `-40` | `bash synth-all.sh tools/yosys compute-<w>` (14,400 s limit each) | Not started: the SSH connection from the owner's PC was refused at 15:02 UTC while the host was briefly unreachable. To be re-queued after compute-24 |
+| `p0-synth-compute-24` | `bash synth-all.sh tools/yosys compute-24` (14,400 s limit) | No result: started 11:50 UTC, process gone at 18:32 UTC, the log still ends inside ABC (`Extracting gate netlist of module split_compute`, 40,671 cells). No netlist and no summary line were written. The local SSH session had dropped, so the exact end cause was not captured |
+| `p0-synth-compute-32` | `bash synth-all.sh tools/yosys compute-32` (14,400 s limit) | Running since 18:33 UTC, inside a remote `timeout 14400s` |
+| `p0-synth-compute-40` | `bash synth-all.sh tools/yosys compute-40` (14,400 s limit) | Queued after compute-32 (first attempt refused at SSH connect, 18:57 UTC) |
 
 Sources: `spikes/p0/rtl/*.v`. Flow per circuit:
 `read_verilog; chparam -set W <w>; synth -flatten -top <top> -noabc; abc -g NAND; opt_clean -purge; stat`.
@@ -130,8 +131,8 @@ flat, before splitting into REF modules.
 | split_check | 8 | 2,720 | 1,259 | 3,979 | 27,853 | 0.9 s |
 | split_check | 12 | 4,845 | 2,292 | 7,137 | 49,959 | 244 s |
 | split_check | 16 | 7,584 | 3,584 | 11,168 | 78,176 | 127 s |
-| split_compute | 24 | running (see above) | | | | |
-| split_compute | 32, 40 | not yet measured | | | | |
+| split_compute | 24 | no result: ABC did not finish in 6 h 42 min (see above) | | | | |
+| split_compute | 32, 40 | running / queued | | | | |
 
 The widths 8, 12 and 16 exist to find the widest width at which the split facts finish
 (section 5). The 12-bit run took longer than the 16-bit run; ABC run time does not follow size.
@@ -236,13 +237,12 @@ demo: one fen more, about 2,310 yuan less (2,309.99 here, with the draft's floor
 All six published trap points were found from the circuit alone and match the published
 tables. The proof that there is no seventh is not yet done. Run `p0-bonus-complete`
 (`bash bonus-complete.sh 600 2`) splits the 32-bit range into 64 equal slices by its top 6
-bits, which carries no bracket knowledge, and asks each slice separately. Status at
-15:06 UTC: all 64 slice logs exist and none has a result line, neither `UNSATISFIABLE` nor
-`SATISFIABLE`. With 2 slices at a time and 600 s each, this is consistent with slices 0 to 61
-reaching the limit undecided; the last slices are still running in container
-`payproof-p0-complete`. Final counts are recorded when the run ends. If every slice is
-undecided, slicing by the top bits does not make the question easier, and "no seventh trap"
-stays unproven at this limit.
+bits, which carries no bracket knowledge, and asks each slice separately. Result
+(`proofs/bonus-complete/totals.txt` and `summary.txt`, read at 18:59 UTC): all 64 slices
+undecided, each at 600.0 s (one at 600.1 s); none `UNSATISFIABLE`, none `SATISFIABLE`.
+Slicing by the top bits does not make the question easier for `iprove`, so "there is no
+seventh trap" is unproven at this limit. Six traps are proven to exist; that they are the
+only ones is not proven.
 
 These are trap edges (the first fen where pay drops). The full trap ranges (every bonus that
 takes home less than the edge) are the P3 trap finder's output.
@@ -326,6 +326,16 @@ Landed transactions:
 | 1 | `0xa601e844a8f5c8dc66b1eb5e89af388eeea51c0c945d1acb2e455accb745a96e` | 76,152,888 | 46,393 (estimate 46,776) | 0.000000928 OKB at 20,000,001 wei | success; Approval event 10,000,000 to the factory; allowance read back 0x989680 |
 | 2 | `0xe95c2ccfd5944f211bca5e89104bc80859290eab369f30326e65e76031046c5d` | 76,152,949 | 731,373 (estimate 750,194) | 0.0000146 OKB at 20,000,001 wei | success; 0.1 BEM transferred from the deployer to the protocol wallet `0x571d447f4f24688ec35ccf07f1d6993655f6af15`; CPUCreated: circuits `0x1900801e311184063b9d9c119c9d98aa4950e12c`, transistors `0x523161955d1963891640a111688678fe6a9523ea`, creator the deployer, supply 10,000,000, mint price 0, name Payproof; transistors proxy on beacon `0x41Cb2bfd1cccA8f505EEDad0181eef44f1B9Ce65`, circuits proxy on beacon `0xf70d1ed4f62CF3780157B0b421b7E2F45bD0991C`; both addresses match the pre-signing simulation |
 | 3 | `0xb4ce2bb85c367f61a57907b05bdc1f9c4e69495531ac58421c14469abbe44bd8` | 76,153,337 | 46,393 (estimate 46,776) | 0.000000928 OKB at 20,000,001 wei | success; Approval event 1,000,000 (0.01 BEM) to our transistor contract |
+| 4 | `0xc6cb5c011f37fb14f25aa0212706c4feb066003f5f89eeb2613d4dabb7e5e67e` | 76,160,277 | 171,423 (estimate 181,356) | 0.00000343 OKB at 20,000,001 wei | success; `mint(0, 10000000)`. Events: BEM Transfer 1,000,000 (0.01 BEM) from the deployer to our transistor contract; TransferSingle id 0 (NAND) 10,000,000 to the deployer; Minted(deployer, 0, 10,000,000, 1,000,000) |
+
+Checks after transaction 4 (read-only `cast call`, block after 76,160,277): `balanceOf(deployer, 0)` =
+10,000,000; `balanceOf(deployer, 1)` = 0; `minted()` = 10,000,000; a simulated `mint(0, 1)` from the
+deployer reverts `supply cap`, so no transistor of this processor is left to mint. Deployer balances
+left: 0.019 BEM (1,900,000 units) and 0.02288 OKB.
+
+The first mint on a new processor used 171,423 gas, against about 112,000 measured earlier on
+processor #423, which already had minted transistors: the first mint writes storage slots that
+were empty.
 
 First attempt of transaction 1 was refused by the node before broadcast (`insufficient funds for gas`, balance 0). The owner then funded the deployer: 0.0229 OKB by exchange withdrawal on X Layer, and 0.129 BEM bridged from BNB Chain on tapeout.net (LayerZero fee 0.002026 BNB quoted, protocol fee 0.5%) and transferred to the deployer.
 
@@ -334,7 +344,7 @@ Story text for transaction 2, approved by the owner 2026-11-17: "Rules that deci
 | Spike | Result |
 | --- | --- |
 | Create the Payproof processor | done, transaction 2: circuits `0x1900801e311184063b9d9c119c9d98aa4950e12c`, transistors `0x523161955d1963891640a111688678fe6a9523ea` |
-| Mint the transistor supply | not yet run |
+| Mint the transistor supply | done: transaction 4, all 10,000,000 as NAND to the deployer, 171,423 gas, 0.01 BEM |
 | Tape out adder8 | not yet run |
 | Tape out a circuit that uses REF | not yet run |
 | Tape-out gas for cn_bonus, ng_paye, split_check (simulation from the owner's address) | not yet run |
