@@ -205,10 +205,30 @@ host-service). They find the width at which these facts finish, as decision rule
 
 Run `p0-prove-check-narrow` (started 2026-11-19 10:04 UTC, container `payproof-p0-chk-narrow`,
 `--cpus 2 --memory 8g`): `bash prove-all.sh 900 2 'check_unique-(8|12|16)|check_more_shares-(8|12|16)'`.
-`prove-all.sh` now lists jobs for widths 8, 12, 16, 24, 32 and 40. Results: running.
+`prove-all.sh` now lists jobs for widths 8, 12, 16, 24, 32 and 40. The run ended
+2026-11-19 11:36 UTC. Limit 900 s per engine per fact.
 
-Not yet measured: compute-circuit facts at any width; check-circuit facts at 32 and 40;
-longer time limits.
+| Fact | Width | Yosys sat | Time (s) | ABC iprove | Time (s) |
+| --- | --- | --- | --- | --- | --- |
+| check_unique | 8 | undecided | 960.0 (killed) | holds | 278.6 |
+| check_more_shares | 8 | undecided | 960.0 (killed) | undecided | 900.0 |
+| check_unique | 12 | undecided | 960.0 (killed) | undecided | 900.0 |
+| check_more_shares | 12 | undecided | 960.0 (killed) | undecided | 900.0 |
+| check_unique | 16 | undecided | 905.9 | undecided | 900.0 |
+| check_more_shares | 16 | undecided | 906.9 | undecided | 900.0 |
+
+- "holds" for check_unique at 8 bits: the ABC log ends `UNSATISFIABLE  Time =   278.49 sec`
+  (1,537,254 conflicts).
+- At 8 and 12 bits Yosys sat did not stop at its own 900 s limit. The outer
+  `timeout` (limit + 60 s) killed it while the log still read
+  `Solving problem with 48316 variables and 123394 clauses..` (8 bits, check_unique).
+  At 16 bits it stopped itself after 900 s.
+- Only one of the six width-and-fact pairs proved. check_more_shares did not prove at any
+  width from 8 to 24 within 900 s. Decision rule 2 (the widest width the solver proves) has
+  no width where both check facts hold at this limit.
+
+Not yet measured: compute-circuit facts at any width; check-circuit facts at 32 and 40
+(not run: no narrower width proved both facts); time limits longer than 900 s.
 
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
