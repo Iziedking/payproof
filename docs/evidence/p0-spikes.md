@@ -327,6 +327,7 @@ Landed transactions:
 | 2 | `0xe95c2ccfd5944f211bca5e89104bc80859290eab369f30326e65e76031046c5d` | 76,152,949 | 731,373 (estimate 750,194) | 0.0000146 OKB at 20,000,001 wei | success; 0.1 BEM transferred from the deployer to the protocol wallet `0x571d447f4f24688ec35ccf07f1d6993655f6af15`; CPUCreated: circuits `0x1900801e311184063b9d9c119c9d98aa4950e12c`, transistors `0x523161955d1963891640a111688678fe6a9523ea`, creator the deployer, supply 10,000,000, mint price 0, name Payproof; transistors proxy on beacon `0x41Cb2bfd1cccA8f505EEDad0181eef44f1B9Ce65`, circuits proxy on beacon `0xf70d1ed4f62CF3780157B0b421b7E2F45bD0991C`; both addresses match the pre-signing simulation |
 | 3 | `0xb4ce2bb85c367f61a57907b05bdc1f9c4e69495531ac58421c14469abbe44bd8` | 76,153,337 | 46,393 (estimate 46,776) | 0.000000928 OKB at 20,000,001 wei | success; Approval event 1,000,000 (0.01 BEM) to our transistor contract |
 | 4 | `0xc6cb5c011f37fb14f25aa0212706c4feb066003f5f89eeb2613d4dabb7e5e67e` | 76,160,277 | 171,423 (estimate 181,356) | 0.00000343 OKB at 20,000,001 wei | success; `mint(0, 10000000)`. Events: BEM Transfer 1,000,000 (0.01 BEM) from the deployer to our transistor contract; TransferSingle id 0 (NAND) 10,000,000 to the deployer; Minted(deployer, 0, 10,000,000, 1,000,000) |
+| 5 | `0xfa9e1dac2b85bceed0109c0c206e9a7010ed744b7c0ae4c2e64826914945559f` | 76,226,071 | 495,622 (estimate 505,825) | 0.0013 OKB tape-out fee plus about 0.00000991 OKB network fee at 20,000,001 wei | success; `tapeout(adder8, 630 bytes, nIn 16, nOut 9)`. Events: on our transistor contract, TransferSingle id 0 (NAND) of 90 from the deployer to address 0 (the burn); on our circuits contract, ERC-721 Transfer of token 1 from address 0 to the deployer; and an event with topic `0xc11215e4…ce031` carrying circuit id 1, the deployer, and data (90, 0). The event name is not looked up here |
 
 Checks after transaction 4 (read-only `cast call`, block after 76,160,277): `balanceOf(deployer, 0)` =
 10,000,000; `balanceOf(deployer, 1)` = 0; `minted()` = 10,000,000; a simulated `mint(0, 1)` from the
@@ -337,6 +338,12 @@ The first mint on a new processor used 171,423 gas, against about 112,000 measur
 processor #423, which already had minted transistors: the first mint writes storage slots that
 were empty.
 
+Checks after transaction 5 (read-only `cast call`): `ownerOf(1)` = deployer; `circuitInfo(1)` returns
+16, 9, 0, 90 (inputs, outputs, third field 0, gates); `balanceOf(deployer, 0)` = 9,999,910 (90 burned);
+deployer OKB 0.021570 (down 0.00131 from 0.02288: the 0.0013 fee plus gas). `eval(1, 0x0305)` returns
+`0x0800` (3 + 5 = 8, carry 0) and `eval(1, 0xffff)` returns `0xfe01` (255 + 255 = 510: sum byte 0xfe,
+carry 1), so the on-chain circuit adds as the local reference evaluator does for these two cases.
+
 First attempt of transaction 1 was refused by the node before broadcast (`insufficient funds for gas`, balance 0). The owner then funded the deployer: 0.0229 OKB by exchange withdrawal on X Layer, and 0.129 BEM bridged from BNB Chain on tapeout.net (LayerZero fee 0.002026 BNB quoted, protocol fee 0.5%) and transferred to the deployer.
 
 Story text for transaction 2, approved by the owner 2026-11-17: "Rules that decide money, as circuits anyone can check." createCPU gas estimate from the owner's address after transaction 1: 750,194.
@@ -345,7 +352,7 @@ Story text for transaction 2, approved by the owner 2026-11-17: "Rules that deci
 | --- | --- |
 | Create the Payproof processor | done, transaction 2: circuits `0x1900801e311184063b9d9c119c9d98aa4950e12c`, transistors `0x523161955d1963891640a111688678fe6a9523ea` |
 | Mint the transistor supply | done: transaction 4, all 10,000,000 as NAND to the deployer, 171,423 gas, 0.01 BEM |
-| Tape out adder8 | not yet run |
+| Tape out adder8 | done: transaction 5, circuit #1, 90 gates burned, 495,622 gas, 0.0013 OKB fee; `eval` checked for 3 + 5 and 255 + 255 |
 | Tape out a circuit that uses REF | not yet run |
 | Tape-out gas for cn_bonus, ng_paye, split_check (simulation from the owner's address) | not yet run |
 | `eval` gas of our own circuits | not yet run |
