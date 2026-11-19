@@ -235,7 +235,15 @@ It reruns the five pairs left undecided at 900 s, with 3600 s per engine. check_
 bits is not rerun. The 900 s logs were copied to `proofs-900s/` on the host before the run.
 Results: running.
 
-Not yet measured: compute-circuit facts at any width; check-circuit facts at 24, 32 and 40
+### split-v1, check circuit, width 32
+
+Queued 2026-11-19 after the owner chose the 32-bit check circuit (section 9). Run
+`p0-prove-check-32`, container `payproof-p0-chk-32`, `--cpus 2 --memory 8g`:
+`bash prove-all.sh 3600 2 'check_unique-32|check_more_shares-32'`. It starts when
+`payproof-p0-chk-long` ends. Netlist `split_check_32.nand.v` copied from host-service to
+node-services; sha256 `81254c0a…7ae5f0` on both. Results: queued.
+
+Not yet measured: compute-circuit facts at any width; check-circuit facts at 24 and 40
 with limits longer than 900 s.
 
 ## 5a. Bonus rule: the six traps, found by the solver alone
@@ -447,9 +455,59 @@ Range of one W-bit amount: 0 to 2^W - 1 units. The unit is a design choice for t
 | 32 | 4,294,967,295 units | 4,294.967295 tokens | 42,949,672.95 tokens |
 | 40 | 1,099,511,627,775 units | 1,099,511.627775 tokens | 10,995,116,277.75 tokens |
 
+## 8a. Options for split-v1, side by side
+
+Built 2026-11-19 from the measurements above; nothing here is new data. How each column is made:
+
+- Gates and bytes: section 4 (bytes = 7 per gate, flat).
+- `eval` gas per claim: gates x 2,316 (low, flat) to gates x 2,345 x 1.06 (high, REF-split),
+  from sections 3 and 7. The vault's own work around the `eval` is not included (not measured).
+- Fee per claim: `eval` gas x 20,000,001 wei (base fee read 2026-11-17).
+- Share of block: `eval` gas against the 210,000,000 block gas limit.
+- Fits one transaction: the largest transaction seen on X Layer used 88,709,982 gas
+  (section 3). Above that, a single transaction is not yet shown to work; an estimate of a
+  141,755-gate REF circuit reverted at 200,000,000.
+- Tape-out, once per circuit: gates x 2,951 to 2,978 gas (section 7, simulation), network fee at
+  the same base fee. The 0.0013 OKB fee per tape-out transaction is on top, and circuits this
+  size are taped out as several REF modules, so the fee is paid once per module.
+- Largest pool: 2^W - 1 units. Shown for a smallest unit of 0.000001 token (6 decimals) and of
+  0.01 token. The unit is a vault setting; amounts are scaled to it before they reach the circuit.
+- Solver: `check_unique` / `check_more_shares`, best of the two engines, 900 s limit
+  (section 5). The 3,600 s rerun at 8, 12 and 16 bits is still running.
+
+| Option | Gates | Bytes | `eval` gas per claim | Fee per claim (OKB) | Share of block | Fits one transaction | Tape-out gas (network fee, OKB) | Largest pool, unit 0.000001 | Largest pool, unit 0.01 | Solver at 900 s |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Check, 8-bit | 3,979 | 27,853 | 9.2 M to 9.9 M | 0.00018 to 0.00020 | 4% to 5% | yes | 11.7 M to 11.8 M (0.00023 to 0.00024) | 0.000255 | 2.55 | holds (ABC, 278.6 s) / undecided |
+| Check, 12-bit | 7,137 | 49,959 | 16.5 M to 17.7 M | 0.00033 to 0.00035 | 8% | yes | 21.1 M to 21.3 M (0.00042 to 0.00043) | 0.004095 | 40.95 | undecided / undecided |
+| Check, 16-bit | 11,168 | 78,176 | 25.9 M to 27.8 M | 0.00052 to 0.00056 | 12% to 13% | yes | 33.0 M to 33.3 M (0.00066 to 0.00067) | 0.065535 | 655.35 | undecided / undecided |
+| Check, 24-bit | 21,441 | 150,087 | 49.7 M to 53.3 M | 0.00099 to 0.00107 | 24% to 25% | yes | 63.3 M to 63.9 M (0.00127 to 0.00128) | 16.777215 | 167,772.15 | undecided / undecided |
+| Check, 32-bit | 34,876 | 244,132 | 80.8 M to 86.7 M | 0.00162 to 0.00173 | 38% to 41% | yes, 2% to 9% under the largest seen; the vault's own gas is not counted | 102.9 M to 103.9 M (0.00206 to 0.00208) | 4,294.967295 | 42,949,672.95 | not run |
+| Check, 40-bit | 51,206 | 358,442 | 118.6 M to 127.3 M | 0.00237 to 0.00255 | 56% to 61% | not shown: above the largest transaction seen | 151.1 M to 152.5 M (0.00302 to 0.00305) | 1,099,511.627775 | 10,995,116,277.75 | not run |
+| Compute, 24, 32 or 40-bit | no gate count: synthesis did not finish at 24 or 32; 40 still running | | | | | | | | | not run |
+
+Pool sizes are in tokens. Solver times per engine, including every timeout, are in section 5.
+
 ## 9. Decisions
 
-Not yet taken. Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
+2026-11-19, the owner chose from section 8a: **split-v1 uses the check circuit at 32 bits.**
+
+2026-11-19, the owner chose the vault's smallest unit: **0.01 token.** One 32-bit amount then
+covers 0 to 4,294,967,295 units, that is 0 to 42,949,672.95 tokens. The vault scales amounts to
+this unit before they reach the circuit. How it handles a deposit or a remainder smaller than
+0.01 token is not decided yet; it is a P4 design item and will be stated in the threat model.
+
+- Rule 1: the compute circuit has no gate count at any width tried (section 4), so it cannot be
+  shown to fit; the check circuit is used.
+- What follows from the choice, still to be shown:
+  - A 32-bit claim costs 80.8 M to 86.7 M gas for the `eval` alone. That is 2% to 9% under the
+    largest transaction seen on X Layer (88,709,982 gas). The vault's own gas around the `eval` is
+    not measured. The first real 32-bit claim transaction is the test that it fits; if it does
+    not, the record will say so and the width will be revisited with the owner.
+  - Rule 2: the split facts have not been run at 32 bits. They are queued (section 5). If they do
+    not prove at 32 bits, the proof record states the width at which they do, and checking above
+    it is labelled as testing, not proof.
+
+Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
 narrow the widths and state the supported range; (2) publish split facts at the widest width
 the solver proves, state any narrower width in the proof record, and label random or
