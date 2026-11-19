@@ -227,8 +227,16 @@ Run `p0-prove-check-narrow` (started 2026-11-19 10:04 UTC, container `payproof-p
   width from 8 to 24 within 900 s. Decision rule 2 (the widest width the solver proves) has
   no width where both check facts hold at this limit.
 
-Not yet measured: compute-circuit facts at any width; check-circuit facts at 32 and 40
-(not run: no narrower width proved both facts); time limits longer than 900 s.
+### split-v1, check circuit, widths 8, 12 and 16, longer limit
+
+Run `p0-prove-check-long` (started 2026-11-19 11:43 UTC, container `payproof-p0-chk-long`,
+`--cpus 3 --memory 8g`): `bash prove-all.sh 3600 3 'check_unique-(12|16)|check_more_shares-(8|12|16)'`.
+It reruns the five pairs left undecided at 900 s, with 3600 s per engine. check_unique at 8
+bits is not rerun. The 900 s logs were copied to `proofs-900s/` on the host before the run.
+Results: running.
+
+Not yet measured: compute-circuit facts at any width; check-circuit facts at 24, 32 and 40
+with limits longer than 900 s.
 
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
