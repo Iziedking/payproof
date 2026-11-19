@@ -112,7 +112,7 @@ Command on host-service (inside the workdir after `bash setup-yosys.sh`), one ta
 | `p0-synth-check-40` | `bash synth-all.sh tools/yosys check-40` (21,600 s limit) | Done in 5,493 s |
 | `p0-synth-compute-24` | `bash synth-all.sh tools/yosys compute-24` (14,400 s limit) | No result: started 11:50 UTC, process gone at 18:32 UTC, the log still ends inside ABC (`Extracting gate netlist of module split_compute`, 40,671 cells). No netlist and no summary line were written. The local SSH session had dropped, so the exact end cause was not captured |
 | `p0-synth-compute-32` | `bash synth-all.sh tools/yosys compute-32` (14,400 s limit) | No result: started 2026-11-17 18:33 UTC inside a remote `timeout 14400s`; no process left when checked 2026-11-19 09:51 UTC; the log was last written 18:34 UTC and ends inside ABC (`Extracting gate netlist of module split_compute`). No netlist and no summary line. Consistent with the 4-hour limit; the exit status was not captured |
-| `p0-synth-compute-40` | `bash synth-all.sh tools/yosys compute-40` (14,400 s limit) | Started 2026-11-19 09:51 UTC (two earlier attempts never started: one refused at SSH connect, then the local watcher stopped without output) |
+| `p0-synth-compute-40` | `bash synth-all.sh tools/yosys compute-40` (14,400 s limit) | No result: started 2026-11-19 09:51 UTC (two earlier attempts never started: one refused at SSH connect, then the local watcher stopped without output). Still running at 13:42 UTC; no Yosys process left when checked 15:50 UTC. The log was last written 09:52 UTC and ends inside ABC (`Extracting gate netlist of module split_compute`, 97,376 cells). No netlist and no summary line. Consistent with the 4-hour limit (due about 13:51 UTC); the local SSH session dropped at 13:40 UTC, so the exit status was not captured |
 
 Sources: `spikes/p0/rtl/*.v`. Flow per circuit:
 `read_verilog; chparam -set W <w>; synth -flatten -top <top> -noabc; abc -g NAND; opt_clean -purge; stat`.
@@ -133,7 +133,7 @@ flat, before splitting into REF modules.
 | split_check | 16 | 7,584 | 3,584 | 11,168 | 78,176 | 127 s |
 | split_compute | 24 | no result: ABC did not finish in 6 h 42 min (see above) | | | | |
 | split_compute | 32 | no result: ABC did not finish within the 4-hour limit | | | | |
-| split_compute | 40 | running | | | | |
+| split_compute | 40 | no result: ABC did not finish within the 4-hour limit | | | | |
 
 The widths 8, 12 and 16 exist to find the widest width at which the split facts finish
 (section 5). The 12-bit run took longer than the 16-bit run; ABC run time does not follow size.
@@ -233,7 +233,22 @@ Run `p0-prove-check-long` (started 2026-11-19 11:43 UTC, container `payproof-p0-
 `--cpus 3 --memory 8g`): `bash prove-all.sh 3600 3 'check_unique-(12|16)|check_more_shares-(8|12|16)'`.
 It reruns the five pairs left undecided at 900 s, with 3600 s per engine. check_unique at 8
 bits is not rerun. The 900 s logs were copied to `proofs-900s/` on the host before the run.
-Results: running.
+The container was gone at 2026-11-19 15:48 UTC.
+
+| Fact | Width | Yosys sat | Time (s) | ABC iprove | Time (s) |
+| --- | --- | --- | --- | --- | --- |
+| check_more_shares | 8 | undecided | 3660.2 (killed) | undecided | 3600.1 (rc 124) |
+| check_unique | 12 | undecided | 3660.1 (killed) | undecided | 3600.1 (rc 124) |
+| check_more_shares | 12 | undecided | 3660.1 (killed) | undecided | 3600.0 (rc 124) |
+| check_unique | 16 | undecided | 3660.1 (killed) | undecided | 3600.0 (rc 124) |
+| check_more_shares | 16 | undecided | 3660.1 (killed) | undecided | 3600.1 (rc 124) |
+
+- All ten engine runs ran to the limit with no answer. Yosys sat was killed by the outer
+  `timeout` (limit + 60 s) in every case; ABC iprove was stopped by `timeout` (rc 124).
+- With four times the limit, nothing new proved. The only proved check fact is still
+  check_unique at 8 bits. check_more_shares has no result at any width from 8 to 24.
+- So decision rule 2 still has no width where both check facts hold, now at 3600 s as well
+  as 900 s.
 
 ### split-v1, check circuit, width 32
 
@@ -241,7 +256,8 @@ Queued 2026-11-19 after the owner chose the 32-bit check circuit (section 9). Ru
 `p0-prove-check-32`, container `payproof-p0-chk-32`, `--cpus 2 --memory 8g`:
 `bash prove-all.sh 3600 2 'check_unique-32|check_more_shares-32'`. It starts when
 `payproof-p0-chk-long` ends. Netlist `split_check_32.nand.v` copied from host-service to
-node-services; sha256 `81254c0a…7ae5f0` on both. Results: queued.
+node-services; sha256 `81254c0a…7ae5f0` on both. Container up at 2026-11-19 15:49 UTC, after
+`payproof-p0-chk-long` ended. Results: running.
 
 Not yet measured: compute-circuit facts at any width; check-circuit facts at 24 and 40
 with limits longer than 900 s.
@@ -473,17 +489,18 @@ Built 2026-11-19 from the measurements above; nothing here is new data. How each
 - Largest pool: 2^W - 1 units. Shown for a smallest unit of 0.000001 token (6 decimals) and of
   0.01 token. The unit is a vault setting; amounts are scaled to it before they reach the circuit.
 - Solver: `check_unique` / `check_more_shares`, best of the two engines, 900 s limit
-  (section 5). The 3,600 s rerun at 8, 12 and 16 bits is still running.
+  (section 5). The pairs undecided at 900 s at 8, 12 and 16 bits were rerun at 3,600 s and are
+  still undecided.
 
-| Option | Gates | Bytes | `eval` gas per claim | Fee per claim (OKB) | Share of block | Fits one transaction | Tape-out gas (network fee, OKB) | Largest pool, unit 0.000001 | Largest pool, unit 0.01 | Solver at 900 s |
+| Option | Gates | Bytes | `eval` gas per claim | Fee per claim (OKB) | Share of block | Fits one transaction | Tape-out gas (network fee, OKB) | Largest pool, unit 0.000001 | Largest pool, unit 0.01 | Solver (900 s; 3,600 s rerun) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Check, 8-bit | 3,979 | 27,853 | 9.2 M to 9.9 M | 0.00018 to 0.00020 | 4% to 5% | yes | 11.7 M to 11.8 M (0.00023 to 0.00024) | 0.000255 | 2.55 | holds (ABC, 278.6 s) / undecided |
-| Check, 12-bit | 7,137 | 49,959 | 16.5 M to 17.7 M | 0.00033 to 0.00035 | 8% | yes | 21.1 M to 21.3 M (0.00042 to 0.00043) | 0.004095 | 40.95 | undecided / undecided |
-| Check, 16-bit | 11,168 | 78,176 | 25.9 M to 27.8 M | 0.00052 to 0.00056 | 12% to 13% | yes | 33.0 M to 33.3 M (0.00066 to 0.00067) | 0.065535 | 655.35 | undecided / undecided |
+| Check, 8-bit | 3,979 | 27,853 | 9.2 M to 9.9 M | 0.00018 to 0.00020 | 4% to 5% | yes | 11.7 M to 11.8 M (0.00023 to 0.00024) | 0.000255 | 2.55 | holds (ABC, 278.6 s) / undecided at 900 s and 3,600 s |
+| Check, 12-bit | 7,137 | 49,959 | 16.5 M to 17.7 M | 0.00033 to 0.00035 | 8% | yes | 21.1 M to 21.3 M (0.00042 to 0.00043) | 0.004095 | 40.95 | undecided / undecided at 900 s and 3,600 s |
+| Check, 16-bit | 11,168 | 78,176 | 25.9 M to 27.8 M | 0.00052 to 0.00056 | 12% to 13% | yes | 33.0 M to 33.3 M (0.00066 to 0.00067) | 0.065535 | 655.35 | undecided / undecided at 900 s and 3,600 s |
 | Check, 24-bit | 21,441 | 150,087 | 49.7 M to 53.3 M | 0.00099 to 0.00107 | 24% to 25% | yes | 63.3 M to 63.9 M (0.00127 to 0.00128) | 16.777215 | 167,772.15 | undecided / undecided |
-| Check, 32-bit | 34,876 | 244,132 | 80.8 M to 86.7 M | 0.00162 to 0.00173 | 38% to 41% | yes, 2% to 9% under the largest seen; the vault's own gas is not counted | 102.9 M to 103.9 M (0.00206 to 0.00208) | 4,294.967295 | 42,949,672.95 | not run |
+| Check, 32-bit | 34,876 | 244,132 | 80.8 M to 86.7 M | 0.00162 to 0.00173 | 38% to 41% | yes, 2% to 9% under the largest seen; the vault's own gas is not counted | 102.9 M to 103.9 M (0.00206 to 0.00208) | 4,294.967295 | 42,949,672.95 | running at 3,600 s |
 | Check, 40-bit | 51,206 | 358,442 | 118.6 M to 127.3 M | 0.00237 to 0.00255 | 56% to 61% | not shown: above the largest transaction seen | 151.1 M to 152.5 M (0.00302 to 0.00305) | 1,099,511.627775 | 10,995,116,277.75 | not run |
-| Compute, 24, 32 or 40-bit | no gate count: synthesis did not finish at 24 or 32; 40 still running | | | | | | | | | not run |
+| Compute, 24, 32 or 40-bit | no gate count: synthesis did not finish at 24, 32 or 40 | | | | | | | | | not run |
 
 Pool sizes are in tokens. Solver times per engine, including every timeout, are in section 5.
 
@@ -503,7 +520,8 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
     largest transaction seen on X Layer (88,709,982 gas). The vault's own gas around the `eval` is
     not measured. The first real 32-bit claim transaction is the test that it fits; if it does
     not, the record will say so and the width will be revisited with the owner.
-  - Rule 2: the split facts have not been run at 32 bits. They are queued (section 5). If they do
+  - Rule 2: the split facts are running at 32 bits (section 5). At 8 to 16 bits only
+    check_unique at 8 proved (900 s); the other five pairs stayed undecided at 3,600 s. If they do
     not prove at 32 bits, the proof record states the width at which they do, and checking above
     it is labelled as testing, not proof.
 
@@ -522,6 +540,7 @@ options with cost per claim before any choice is made.
 - Processor creation and transistors are paid in BEM. The owner needs a small BEM balance.
 - Two Yosys builds (section 1). P1 picks one and records it in VERSIONS.md.
 - Standalone ABC is not in the YoWASP wheel; ABC proofs need the native suite.
-- Multiplier facts are undecided at 900 s even at 24 bits (section 5).
+- Multiplier facts are undecided at 900 s even at 24 bits. At 8, 12 and 16 bits every pair
+  except check_unique at 8 is also undecided at 3,600 s (section 5).
 - Synthesis of large circuits on host-service is slow (52 min for the 32-bit check circuit).
 - Tape-outs above about 2,280 gates do not fit one `cast send` on Windows (section 7).
