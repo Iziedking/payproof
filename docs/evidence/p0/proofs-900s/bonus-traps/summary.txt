@@ -1,0 +1,8 @@
+query 1: b = 66000000 fen (660000.00 yuan) in 0.3s; replayed: Yosys sat FAIL at b
+query 2: b = 30000000 fen (300000.00 yuan) in 0.4s; replayed: Yosys sat FAIL at b
+query 3: b = 96000000 fen (960000.00 yuan) in 0.3s; replayed: Yosys sat FAIL at b
+query 4: b = 42000000 fen (420000.00 yuan) in 0.3s; replayed: Yosys sat FAIL at b
+query 5: b = 3600000 fen (36000.00 yuan) in 0.5s; replayed: Yosys sat FAIL at b
+query 6: b = 14400000 fen (144000.00 yuan) in 0.5s; replayed: Yosys sat FAIL at b
+query 7: undecided after 600.0s (rc=124)
+found: 66000000 30000000 96000000 42000000 3600000 14400000

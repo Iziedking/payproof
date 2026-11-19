@@ -257,10 +257,23 @@ Queued 2026-11-19 after the owner chose the 32-bit check circuit (section 9). Ru
 `bash prove-all.sh 3600 2 'check_unique-32|check_more_shares-32'`. It starts when
 `payproof-p0-chk-long` ends. Netlist `split_check_32.nand.v` copied from host-service to
 node-services; sha256 `81254c0a…7ae5f0` on both. Container up at 2026-11-19 15:49 UTC, after
-`payproof-p0-chk-long` ended. Results: running.
+`payproof-p0-chk-long` ended. Both jobs ran in parallel; the result files were written at 16:48
+UTC (Yosys) and 17:49 UTC (ABC), and the container was gone afterwards. The local SSH session
+dropped at 16:25 UTC; the remote run was not affected.
 
-Not yet measured: compute-circuit facts at any width; check-circuit facts at 24 and 40
-with limits longer than 900 s.
+| Fact | Width | Yosys sat | Time (s) | ABC iprove | Time (s) |
+| --- | --- | --- | --- | --- | --- |
+| check_unique | 32 | undecided | 3660.2 (killed) | undecided | 3600.0 (rc 124) |
+| check_more_shares | 32 | undecided | 3660.3 (killed) | undecided | 3600.0 (rc 124) |
+
+- Yosys built problems of 424,261 variables and 1,083,537 clauses (check_unique) and 425,611
+  variables and 1,087,457 clauses (check_more_shares), about nine times the 8-bit size, and was
+  killed by the outer `timeout` while still solving.
+- Neither 32-bit fact proved. Across every run so far (900 s at 8 to 24 bits, 3,600 s at 8 to 16
+  and 32 bits), the only proved check fact is check_unique at 8 bits.
+
+Not yet measured: compute-circuit facts at any width (no compute netlist exists); check-circuit
+facts at 24 and 40 with limits longer than 900 s.
 
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
@@ -498,7 +511,7 @@ Built 2026-11-19 from the measurements above; nothing here is new data. How each
 | Check, 12-bit | 7,137 | 49,959 | 16.5 M to 17.7 M | 0.00033 to 0.00035 | 8% | yes | 21.1 M to 21.3 M (0.00042 to 0.00043) | 0.004095 | 40.95 | undecided / undecided at 900 s and 3,600 s |
 | Check, 16-bit | 11,168 | 78,176 | 25.9 M to 27.8 M | 0.00052 to 0.00056 | 12% to 13% | yes | 33.0 M to 33.3 M (0.00066 to 0.00067) | 0.065535 | 655.35 | undecided / undecided at 900 s and 3,600 s |
 | Check, 24-bit | 21,441 | 150,087 | 49.7 M to 53.3 M | 0.00099 to 0.00107 | 24% to 25% | yes | 63.3 M to 63.9 M (0.00127 to 0.00128) | 16.777215 | 167,772.15 | undecided / undecided |
-| Check, 32-bit | 34,876 | 244,132 | 80.8 M to 86.7 M | 0.00162 to 0.00173 | 38% to 41% | yes, 2% to 9% under the largest seen; the vault's own gas is not counted | 102.9 M to 103.9 M (0.00206 to 0.00208) | 4,294.967295 | 42,949,672.95 | running at 3,600 s |
+| Check, 32-bit | 34,876 | 244,132 | 80.8 M to 86.7 M | 0.00162 to 0.00173 | 38% to 41% | yes, 2% to 9% under the largest seen; the vault's own gas is not counted | 102.9 M to 103.9 M (0.00206 to 0.00208) | 4,294.967295 | 42,949,672.95 | undecided / undecided at 3,600 s (not run at 900 s) |
 | Check, 40-bit | 51,206 | 358,442 | 118.6 M to 127.3 M | 0.00237 to 0.00255 | 56% to 61% | not shown: above the largest transaction seen | 151.1 M to 152.5 M (0.00302 to 0.00305) | 1,099,511.627775 | 10,995,116,277.75 | not run |
 | Compute, 24, 32 or 40-bit | no gate count: synthesis did not finish at 24, 32 or 40 | | | | | | | | | not run |
 
@@ -520,10 +533,14 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
     largest transaction seen on X Layer (88,709,982 gas). The vault's own gas around the `eval` is
     not measured. The first real 32-bit claim transaction is the test that it fits; if it does
     not, the record will say so and the width will be revisited with the owner.
-  - Rule 2: the split facts are running at 32 bits (section 5). At 8 to 16 bits only
-    check_unique at 8 proved (900 s); the other five pairs stayed undecided at 3,600 s. If they do
-    not prove at 32 bits, the proof record states the width at which they do, and checking above
-    it is labelled as testing, not proof.
+  - Rule 2: both split facts are undecided at 32 bits at 3,600 s in both engines (section 5).
+    At 8 to 16 bits only check_unique at 8 proved (900 s); the other five pairs stayed undecided
+    at 3,600 s. So there is no width, from 8 to 32, where both check facts are proved with the
+    current fact formulation, engines and limits. Rule 2 cannot be applied as written: there is
+    no "widest width the solver proves" for the pair. Until that changes, nothing about the split
+    facts may be called proved at any width, and any checking of them is labelled testing, not
+    proof. How to get a proof (for example a different formulation of the facts, a different
+    engine or longer limits) is an open P0 question for the owner, recorded in section 10.
 
 Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
@@ -533,6 +550,22 @@ exhaustive checking above it as testing, not proof; (3) wage rules are proven wh
 solver finishes, otherwise per module, and the record says which. The owner has asked for the
 options with cost per claim before any choice is made.
 
+### Evidence copied from the hosts
+
+2026-11-19, kept in Git under `docs/evidence/p0/` (owner's choice):
+
+- From host-service `/tmp/izie-build-test.RK0bzkMu`: `netlists/` (every `.nand.v`, `.stat.txt`
+  and `synth-summary.tsv`) and `synth-logs/run1/`, `synth-logs/run2/`. 39 files, checksums in
+  `SHA256SUMS-host-service.txt`, all matched after the copy.
+- From node-services `/tmp/izie-build-test.XkZQkbd5`: `proofs/` and `proofs-900s/` (every
+  `sat.log`, `abc.log`, `aig.log`, `*.result`, `script.ys` and `summary.txt`, including the
+  bonus-rule runs). 492 files, checksums in `SHA256SUMS-node-services.txt`, all matched.
+- Not copied, because they can be rebuilt from the files above and the scripts: the Yosys JSON
+  netlists and the `miter.aig` files.
+
+Both workdirs are kept for now: decision rule 2 is open (above), and further proof attempts would
+run there. The `payproof-p0-chk-*` containers have all exited and been removed by their runs.
+
 ## 10. Open items found during P0
 
 - The factory implementation changed after the 2026-10-22 freeze (section 3). It cannot change
@@ -541,6 +574,8 @@ options with cost per claim before any choice is made.
 - Two Yosys builds (section 1). P1 picks one and records it in VERSIONS.md.
 - Standalone ABC is not in the YoWASP wheel; ABC proofs need the native suite.
 - Multiplier facts are undecided at 900 s even at 24 bits. At 8, 12 and 16 bits every pair
-  except check_unique at 8 is also undecided at 3,600 s (section 5).
+  except check_unique at 8 is also undecided at 3,600 s, and both are undecided at 32 bits at
+  3,600 s (section 5). No width from 8 to 32 has both check facts proved; decision rule 2 has no
+  width to publish (section 9). The owner decides how to proceed.
 - Synthesis of large circuits on host-service is slow (52 min for the 32-bit check circuit).
 - Tape-outs above about 2,280 gates do not fit one `cast send` on Windows (section 7).

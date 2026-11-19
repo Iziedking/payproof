@@ -1,0 +1,26 @@
+check_more_shares-12 abc undecided 3600.0 rc=124
+check_more_shares-12 sat undecided 3660.1
+check_more_shares-16 abc undecided 3600.1 rc=124
+check_more_shares-16 sat undecided 3660.1
+check_more_shares-24 abc undecided 900.1 rc=124
+check_more_shares-24 sat undecided 909.2
+check_more_shares-32 abc undecided 3600.0 rc=124
+check_more_shares-32 sat undecided 3660.3
+check_more_shares-8 abc undecided 3600.1 rc=124
+check_more_shares-8 sat undecided 3660.2
+check_unique-12 abc undecided 3600.1 rc=124
+check_unique-12 sat undecided 3660.1
+check_unique-16 abc undecided 3600.0 rc=124
+check_unique-16 sat undecided 3660.1
+check_unique-24 abc undecided 900.1 rc=124
+check_unique-24 sat undecided 909.2
+check_unique-32 abc undecided 3600.0 rc=124
+check_unique-32 sat undecided 3660.2
+check_unique-8 abc holds 278.6 rc=0
+check_unique-8 sat undecided 960.0
+cn_raise abc fails 0.7 rc=0
+cn_raise sat fails 1.1
+ng_mutant_equal abc fails 0.5 rc=0
+ng_mutant_equal sat fails 2.5
+ng_tax_within_income abc holds 0.1 rc=0
+ng_tax_within_income sat holds 1.1

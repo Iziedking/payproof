@@ -1,0 +1,18 @@
+======== ABC command line "read_aiger proofs/ng_mutant_equal/miter.aig; print_stats; strash; iprove -v"
+[1;37mproofs/ng_mutant_equal/miter  :[0m i/o =  195/    1  lat =    0  and =  10940  lev =489
+RESOURCE LIMITS: Iterations = 6. Rewriting = no. Fraiging = yes.
+Miter = 5000 (2.0).  Rwr = 3 (1.0).  Fraig = 2 (8.0).  Last = 0.
+ITERATION  1 : Confs =   5000. FraigBTL =   2. 
+SimWords = 32. Rounds = 2. Mem = 1.33 MB.  Classes: Beg = 2764. End = 2764.
+Proof = 0. Counter-example = 0. Fail = 0. FailReal = 0. Zero = 296.
+Final = 10686. Miter = 10686. Total = 10686. Mux = 0. (Exor = 0.) SatVars = 0.
+AIG simulation   =     0.00 sec
+AIG traversal    =     0.00 sec
+SAT solving      =     0.00 sec
+    Unsat        =     0.00 sec
+    Sat          =     0.00 sec
+    Fail         =     0.00 sec
+Class refining   =     0.00 sec
+TOTAL RUNTIME    =     0.00 sec
+Nodes =   10686.  Levels =  482.  Fraiging    =     0.00 sec
+SATISFIABLE (output = 0) Time =     0.47 sec

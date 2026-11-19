@@ -1,0 +1,127 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+
+-- Running command `read_verilog  facts/ng_mutant_equal.v; read_verilog nets/ng_paye.nand.v; rename ng_paye C; read_verilog nets/ng_paye_mutant19.nand.v; rename ng_paye_mutant19 K; hierarchy -top fact; proc; flatten; opt_clean; sat -prove bad 0 -timeout 300 -show-inputs' --
+
+1. Executing Verilog-2005 frontend: facts/ng_mutant_equal.v
+Parsing Verilog input from `facts/ng_mutant_equal.v' to AST representation.
+Generating RTLIL representation for module `\fact'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: nets/ng_paye.nand.v
+Parsing Verilog input from `nets/ng_paye.nand.v' to AST representation.
+Generating RTLIL representation for module `\ng_paye'.
+Successfully finished Verilog frontend.
+Renaming module \ng_paye to \C.
+
+3. Executing Verilog-2005 frontend: nets/ng_paye_mutant19.nand.v
+Parsing Verilog input from `nets/ng_paye_mutant19.nand.v' to AST representation.
+Generating RTLIL representation for module `\ng_paye_mutant19'.
+Successfully finished Verilog frontend.
+Renaming module \ng_paye_mutant19 to \K.
+
+4. Executing HIERARCHY pass (managing design hierarchy).
+
+4.1. Analyzing design hierarchy..
+Top module:  \fact
+Used module:     \K
+Used module:     \C
+
+4.2. Analyzing design hierarchy..
+Top module:  \fact
+Used module:     \K
+Used module:     \C
+Removed 0 unused modules.
+
+5. Executing PROC pass (convert processes to netlists).
+
+5.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+5.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+5.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+5.4. Executing PROC_INIT pass (extract init attributes).
+
+5.5. Executing PROC_ARST pass (detect async resets in processes).
+
+5.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+5.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+5.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+5.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+5.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+5.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+5.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module K.
+<suppressed ~2701 debug messages>
+Optimizing module C.
+<suppressed ~2654 debug messages>
+Optimizing module fact.
+
+6. Executing FLATTEN pass (flatten design).
+Deleting now unused module K.
+Deleting now unused module C.
+<suppressed ~2 debug messages>
+
+7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fact..
+Removed 740 unused cells and 23080 unused wires.
+<suppressed ~1481 debug messages>
+
+8. Executing SAT pass (solving SAT problems in the circuit).
+Using SAT solver `minisat`.
+
+Setting up SAT problem:
+Final constraint equation: { } = { }
+Imported 22133 cells to SAT database.
+Import proof-constraint: \bad = 1'0
+Final proof equation: \bad = 1'0
+Import show expression: \rent
+Import show expression: \mortgage
+Import show expression: \life
+Import show expression: \nhis
+Import show expression: \nhf
+Import show expression: \pension
+Import show expression: \gross
+
+Solving problem with 100067 variables and 255401 clauses..
+SAT proof finished - model found: FAIL!
+
+   ______                   ___       ___       _ _            _ _ 
+  (_____ \                 / __)     / __)     (_) |          | | |
+   _____) )___ ___   ___ _| |__    _| |__ _____ _| | _____  __| | |
+  |  ____/ ___) _ \ / _ (_   __)  (_   __|____ | | || ___ |/ _  |_|
+  | |   | |  | |_| | |_| || |       | |  / ___ | | || ____( (_| |_ 
+  |_|   |_|   \___/ \___/ |_|       |_|  \_____|_|\_)_____)\____|_|
+
+
+  Signal Name             Dec       Hex                               Bin
+  --------------- ----------- --------- ---------------------------------
+  \gross            964755312  3980ff70    111001100000001111111101110000
+  \life              29572803   1c33ec3       001110000110011111011000011
+  \mortgage         131284875   7d33f8b       111110100110011111110001011
+  \nhf               41076726   272c7f6       010011100101100011111110110
+  \nhis             115521195   6e2b6ab       110111000101011011010101011
+  \pension           40906742   2702ff6       010011100000010111111110110
+  \rent               1907895    1d1cb7    000000000111010001110010110111
+
+End of script. Logfile hash: c7d79f027c, time: 2.46s, user: 2.49s, system: 0.08s, MEM: 163.30 MB peak
+Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+Time spent: 35% 6x read_verilog (0 sec), 34% 1x sat (0 sec), ...

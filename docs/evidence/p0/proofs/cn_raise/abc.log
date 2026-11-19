@@ -1,0 +1,39 @@
+======== ABC command line "read_aiger proofs/cn_raise/miter.aig; print_stats; strash; iprove -v"
+[1;37mproofs/cn_raise/miter         :[0m i/o =   64/    1  lat =    0  and =   5073  lev =356
+RESOURCE LIMITS: Iterations = 6. Rewriting = no. Fraiging = yes.
+Miter = 5000 (2.0).  Rwr = 3 (1.0).  Fraig = 2 (8.0).  Last = 0.
+ITERATION  1 : Confs =   5000. FraigBTL =   2. 
+SimWords = 32. Rounds = 31. Mem = 0.61 MB.  Classes: Beg = 19. End = 2.
+Proof = 0. Counter-example = 23. Fail = 3. FailReal = 2. Zero = 29.
+Final = 4931. Miter = 4931. Total = 4931. Mux = 0. (Exor = 0.) SatVars = 3749.
+starts        :               51
+conflicts     :             5008
+decisions     :            33196
+propagations  :           776922
+AIG simulation   =     0.01 sec
+AIG traversal    =     0.00 sec
+SAT solving      =     0.12 sec
+    Unsat        =     0.00 sec
+    Sat          =     0.00 sec
+    Fail         =     0.12 sec
+Class refining   =     0.00 sec
+TOTAL RUNTIME    =     0.13 sec
+Nodes =    4931.  Levels =  353.  Fraiging    =     0.13 sec
+ITERATION  2 : Confs =  10000. FraigBTL =  16. 
+SimWords = 32. Rounds = 32. Mem = 0.61 MB.  Classes: Beg = 19. End = 1.
+Proof = 0. Counter-example = 25. Fail = 0. FailReal = 1. Zero = 29.
+Final = 4931. Miter = 4931. Total = 4931. Mux = 0. (Exor = 0.) SatVars = 3749.
+starts        :               55
+conflicts     :             5983
+decisions     :            36410
+propagations  :          1031113
+AIG simulation   =     0.01 sec
+AIG traversal    =     0.00 sec
+SAT solving      =     0.16 sec
+    Unsat        =     0.00 sec
+    Sat          =     0.16 sec
+    Fail         =     0.00 sec
+Class refining   =     0.00 sec
+TOTAL RUNTIME    =     0.17 sec
+Nodes =    4931.  Levels =  353.  Fraiging    =     0.17 sec
+SATISFIABLE (output = 0) Time =     0.61 sec

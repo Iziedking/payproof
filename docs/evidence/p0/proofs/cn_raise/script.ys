@@ -1,0 +1,1 @@
+read_verilog  facts/cn_raise.v; read_verilog nets/cn_bonus.nand.v; rename cn_bonus C; hierarchy -top fact; proc; flatten; opt_clean

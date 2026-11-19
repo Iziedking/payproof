@@ -1,0 +1,1 @@
+read_verilog -DW=12 facts/check_unique.v; read_verilog nets/split_check_12.nand.v; rename split_check_12 K; hierarchy -top fact; proc; flatten; opt_clean

@@ -1,0 +1,3 @@
+query 1: b = 96000000 fen (960000.00 yuan) in 40.6s
+query 2: undecided after 604.7s
+found: 96000000

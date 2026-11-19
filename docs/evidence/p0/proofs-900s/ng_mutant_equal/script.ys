@@ -1,0 +1,1 @@
+read_verilog  facts/ng_mutant_equal.v; read_verilog nets/ng_paye.nand.v; rename ng_paye C; read_verilog nets/ng_paye_mutant19.nand.v; rename ng_paye_mutant19 K; hierarchy -top fact; proc; flatten; opt_clean

@@ -1,0 +1,2 @@
+======== ABC command line "read_aiger proofs/bonus-traps/q2.aig; strash; iprove; write_cex -n proofs/bonus-traps/q2.cex"
+SATISFIABLE (output = 0) Time =     0.33 sec

@@ -1,0 +1,1 @@
+read_verilog  facts/ng_tax_within_income.v; read_verilog nets/ng_paye.nand.v; rename ng_paye C; hierarchy -top fact; proc; flatten; opt_clean

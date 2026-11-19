@@ -1,0 +1,106 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+
+-- Running command `read_verilog proofs/bonus-traps/fact-1.v; read_verilog nets/cn_bonus.nand.v; rename cn_bonus C; hierarchy -top fact; proc; flatten; opt_clean; sat -set b 66000000 -prove bad 0' --
+
+1. Executing Verilog-2005 frontend: proofs/bonus-traps/fact-1.v
+Parsing Verilog input from `proofs/bonus-traps/fact-1.v' to AST representation.
+Generating RTLIL representation for module `\fact'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: nets/cn_bonus.nand.v
+Parsing Verilog input from `nets/cn_bonus.nand.v' to AST representation.
+Generating RTLIL representation for module `\cn_bonus'.
+Successfully finished Verilog frontend.
+Renaming module \cn_bonus to \C.
+
+3. Executing HIERARCHY pass (managing design hierarchy).
+
+3.1. Analyzing design hierarchy..
+Top module:  \fact
+Used module:     \C
+
+3.2. Analyzing design hierarchy..
+Top module:  \fact
+Used module:     \C
+Removed 0 unused modules.
+
+4. Executing PROC pass (convert processes to netlists).
+
+4.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+4.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+4.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+4.4. Executing PROC_INIT pass (extract init attributes).
+
+4.5. Executing PROC_ARST pass (detect async resets in processes).
+
+4.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+4.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+4.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+4.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+4.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+4.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+4.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module C.
+<suppressed ~1100 debug messages>
+Optimizing module fact.
+<suppressed ~2 debug messages>
+
+5. Executing FLATTEN pass (flatten design).
+Deleting now unused module C.
+<suppressed ~2 debug messages>
+
+6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fact..
+Removed 410 unused cells and 9654 unused wires.
+<suppressed ~821 debug messages>
+
+7. Executing SAT pass (solving SAT problems in the circuit).
+Using SAT solver `minisat`.
+
+Setting up SAT problem:
+Import set-constraint: \b = 66000000
+Final constraint equation: \b = 66000000
+Imported 9212 cells to SAT database.
+Import proof-constraint: \bad = 1'0
+Final proof equation: \bad = 1'0
+
+Solving problem with 42238 variables and 108195 clauses..
+SAT proof finished - model found: FAIL!
+
+   ______                   ___       ___       _ _            _ _ 
+  (_____ \                 / __)     / __)     (_) |          | | |
+   _____) )___ ___   ___ _| |__    _| |__ _____ _| | _____  __| | |
+  |  ____/ ___) _ \ / _ (_   __)  (_   __|____ | | || ___ |/ _  |_|
+  | |   | |  | |_| | |_| || |       | |  / ___ | | || ____( (_| |_ 
+  |_|   |_|   \___/ \___/ |_|       |_|  \_____|_|\_)_____)\____|_|
+
+
+  Signal Name             Dec       Hex                                 Bin
+  --------------- ----------- --------- -----------------------------------
+  \b                 66000000   3ef1480    00000011111011110001010010000000
+  \bad                      1         1                                   1
+
+End of script. Logfile hash: 4bf52ff01b, time: 0.44s, user: 0.42s, system: 0.04s, MEM: 68.52 MB peak
+Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+Time spent: 36% 4x read_verilog (0 sec), 33% 1x sat (0 sec), ...

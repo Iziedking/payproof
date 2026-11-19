@@ -1,0 +1,1 @@
+read_verilog -DW=32 facts/check_more_shares.v; read_verilog nets/split_check_32.nand.v; rename split_check_32 K; hierarchy -top fact; proc; flatten; opt_clean
