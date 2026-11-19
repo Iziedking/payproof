@@ -111,8 +111,8 @@ Command on host-service (inside the workdir after `bash setup-yosys.sh`), one ta
 | `p0-synth-check-narrow` | `bash synth-all.sh tools/yosys check-narrow` | Widths 8, 12 and 16 done (0.9 s, 244 s, 127 s) |
 | `p0-synth-check-40` | `bash synth-all.sh tools/yosys check-40` (21,600 s limit) | Done in 5,493 s |
 | `p0-synth-compute-24` | `bash synth-all.sh tools/yosys compute-24` (14,400 s limit) | No result: started 11:50 UTC, process gone at 18:32 UTC, the log still ends inside ABC (`Extracting gate netlist of module split_compute`, 40,671 cells). No netlist and no summary line were written. The local SSH session had dropped, so the exact end cause was not captured |
-| `p0-synth-compute-32` | `bash synth-all.sh tools/yosys compute-32` (14,400 s limit) | Running since 18:33 UTC, inside a remote `timeout 14400s` |
-| `p0-synth-compute-40` | `bash synth-all.sh tools/yosys compute-40` (14,400 s limit) | Queued after compute-32 (first attempt refused at SSH connect, 18:57 UTC) |
+| `p0-synth-compute-32` | `bash synth-all.sh tools/yosys compute-32` (14,400 s limit) | No result: started 2026-11-17 18:33 UTC inside a remote `timeout 14400s`; no process left when checked 2026-11-19 09:51 UTC; the log was last written 18:34 UTC and ends inside ABC (`Extracting gate netlist of module split_compute`). No netlist and no summary line. Consistent with the 4-hour limit; the exit status was not captured |
+| `p0-synth-compute-40` | `bash synth-all.sh tools/yosys compute-40` (14,400 s limit) | Started 2026-11-19 09:51 UTC (two earlier attempts never started: one refused at SSH connect, then the local watcher stopped without output) |
 
 Sources: `spikes/p0/rtl/*.v`. Flow per circuit:
 `read_verilog; chparam -set W <w>; synth -flatten -top <top> -noabc; abc -g NAND; opt_clean -purge; stat`.
@@ -132,7 +132,8 @@ flat, before splitting into REF modules.
 | split_check | 12 | 4,845 | 2,292 | 7,137 | 49,959 | 244 s |
 | split_check | 16 | 7,584 | 3,584 | 11,168 | 78,176 | 127 s |
 | split_compute | 24 | no result: ABC did not finish in 6 h 42 min (see above) | | | | |
-| split_compute | 32, 40 | running / queued | | | | |
+| split_compute | 32 | no result: ABC did not finish within the 4-hour limit | | | | |
+| split_compute | 40 | running | | | | |
 
 The widths 8, 12 and 16 exist to find the widest width at which the split facts finish
 (section 5). The 12-bit run took longer than the 16-bit run; ABC run time does not follow size.
@@ -328,6 +329,7 @@ Landed transactions:
 | 3 | `0xb4ce2bb85c367f61a57907b05bdc1f9c4e69495531ac58421c14469abbe44bd8` | 76,153,337 | 46,393 (estimate 46,776) | 0.000000928 OKB at 20,000,001 wei | success; Approval event 1,000,000 (0.01 BEM) to our transistor contract |
 | 4 | `0xc6cb5c011f37fb14f25aa0212706c4feb066003f5f89eeb2613d4dabb7e5e67e` | 76,160,277 | 171,423 (estimate 181,356) | 0.00000343 OKB at 20,000,001 wei | success; `mint(0, 10000000)`. Events: BEM Transfer 1,000,000 (0.01 BEM) from the deployer to our transistor contract; TransferSingle id 0 (NAND) 10,000,000 to the deployer; Minted(deployer, 0, 10,000,000, 1,000,000) |
 | 5 | `0xfa9e1dac2b85bceed0109c0c206e9a7010ed744b7c0ae4c2e64826914945559f` | 76,226,071 | 495,622 (estimate 505,825) | 0.0013 OKB tape-out fee plus about 0.00000991 OKB network fee at 20,000,001 wei | success; `tapeout(adder8, 630 bytes, nIn 16, nOut 9)`. Events: on our transistor contract, TransferSingle id 0 (NAND) of 90 from the deployer to address 0 (the burn); on our circuits contract, ERC-721 Transfer of token 1 from address 0 to the deployer; and an event with topic `0xc11215e4…ce031` carrying circuit id 1, the deployer, and data (90, 0). The event name is not looked up here |
+| 6 | `0x9018862ebdac526f8d5802939b416e689ed5d2f0bcf50812f22aa28afdbb4757` | 76,312,738 | 227,855 (estimate 233,808) | 0.0013 OKB tape-out fee plus about 0.00000456 OKB network fee at 20,000,001 wei | success; `tapeout` of one REF record (79 bytes) to circuit #1 of our own processor, nIn 16, nOut 9. Events: ERC-721 Transfer of token 2 from address 0 to the deployer; the `0xc11215e4…ce031` event with circuit id 2, the deployer, and data (90, 0). No TransferSingle: no transistors burned |
 
 Checks after transaction 4 (read-only `cast call`, block after 76,160,277): `balanceOf(deployer, 0)` =
 10,000,000; `balanceOf(deployer, 1)` = 0; `minted()` = 10,000,000; a simulated `mint(0, 1)` from the
@@ -344,6 +346,35 @@ deployer OKB 0.021570 (down 0.00131 from 0.02288: the 0.0013 fee plus gas). `eva
 `0x0800` (3 + 5 = 8, carry 0) and `eval(1, 0xffff)` returns `0xfe01` (255 + 255 = 510: sum byte 0xfe,
 carry 1), so the on-chain circuit adds as the local reference evaluator does for these two cases.
 
+Checks after transaction 6 (read-only, 2026-11-19): `ownerOf(2)` = deployer; `circuitInfo(2)` returns
+16, 9, 0, 90, the same gate count as circuit #1 although its netlist is one REF record;
+`balanceOf(deployer, 0)` still 9,999,910; deployer OKB 0.020266. `eval` of #1 and #2 on inputs
+`0x0000`, `0x0305`, `0xffff`, `0x7f81`, `0xa55a` returns the same output for each: `0x0000`,
+`0x0800`, `0xfe01`, `0x0001` (127 + 129 = 256: sum 0, carry 1), `0xff00`.
+
+`eval` gas, `cast estimate --from <deployer> <circuits> "eval(uint256,bytes)" <id> 0x0305`
+(simulation; includes the 21,000 base cost of a transaction):
+
+| Circuit | Gates | Estimated gas |
+| --- | --- | --- |
+| #1 adder8, flat | 90 | 262,051 |
+| #2 one REF to #1 | 90 (through the REF) | 323,162 |
+
+At 90 gates the fixed cost of a call dominates (about 2,900 gas per gate here against 2,316 to
+2,345 on large flat circuits in section 3). One REF level added 61,111 gas.
+
+Tape-out gas for the larger circuits, `print-tx.mjs <owner> estimate-tapeout <circuits> <tap.json>`
+(simulation from the deployer, which holds the NAND to burn; read 2026-11-19, block gas limit
+210,000,000 read from block 76,312,821). Network fee at 20,000,001 wei per gas; the 0.0013 OKB tape-out
+fee is on top. None of these fits one `cast send` on Windows (section 7 above); these numbers are
+for planning the P2 tape-out as REF modules.
+
+| Circuit | Gates | Bytes | Estimated gas | Gas per gate | Network fee | Share of block gas limit |
+| --- | --- | --- | --- | --- | --- | --- |
+| cn_bonus | 3,573 | 25,011 | 10,641,930 | 2,978 | about 0.00021 OKB | 5% |
+| ng_paye | 8,482 | 59,374 | 25,031,740 | 2,951 | about 0.00050 OKB | 12% |
+| split_check_24 | 21,441 | 150,087 | 63,442,878 | 2,959 | about 0.00127 OKB | 30% |
+
 First attempt of transaction 1 was refused by the node before broadcast (`insufficient funds for gas`, balance 0). The owner then funded the deployer: 0.0229 OKB by exchange withdrawal on X Layer, and 0.129 BEM bridged from BNB Chain on tapeout.net (LayerZero fee 0.002026 BNB quoted, protocol fee 0.5%) and transferred to the deployer.
 
 Story text for transaction 2, approved by the owner 2026-11-17: "Rules that decide money, as circuits anyone can check." createCPU gas estimate from the owner's address after transaction 1: 750,194.
@@ -353,9 +384,9 @@ Story text for transaction 2, approved by the owner 2026-11-17: "Rules that deci
 | Create the Payproof processor | done, transaction 2: circuits `0x1900801e311184063b9d9c119c9d98aa4950e12c`, transistors `0x523161955d1963891640a111688678fe6a9523ea` |
 | Mint the transistor supply | done: transaction 4, all 10,000,000 as NAND to the deployer, 171,423 gas, 0.01 BEM |
 | Tape out adder8 | done: transaction 5, circuit #1, 90 gates burned, 495,622 gas, 0.0013 OKB fee; `eval` checked for 3 + 5 and 255 + 255 |
-| Tape out a circuit that uses REF | not yet run |
-| Tape-out gas for cn_bonus, ng_paye, split_check (simulation from the owner's address) | not yet run |
-| `eval` gas of our own circuits | not yet run |
+| Tape out a circuit that uses REF | done: transaction 6, circuit #2 = one REF to #1, no transistors burned, 227,855 gas; same outputs as #1 on five inputs |
+| Tape-out gas for cn_bonus, ng_paye, split_check (simulation from the owner's address) | done (simulation): 10.6 M, 25.0 M and 63.4 M gas, about 2,950 to 2,980 gas per gate |
+| `eval` gas of our own circuits | done (simulation): #1 262,051, #2 323,162; large-circuit eval gas still from section 3's per-gate rate |
 
 ## 8. Cost per claim (check circuit), from measured gas per gate
 
