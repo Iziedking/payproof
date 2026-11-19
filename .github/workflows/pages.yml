@@ -1,13 +1,13 @@
 # Publishes the static site to GitHub Pages (the mirror; DeWEB comes later).
-# Action inputs read from each action.yml at the pinned commit on 2026-11-17.
+# Action inputs read from each action.yml at the pinned commit on 2026-11-17
+# (setup-node on 2026-11-19).
 name: Publish site
 
 on:
   push:
     branches: [main]
     paths:
-      - "app/landing/**"
-      - "app/holding/**"
+      - "app/**"
       - "brand/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
@@ -27,14 +27,25 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.1
+          package-manager-cache: false
+      - name: Build the app
+        working-directory: app
+        run: |
+          npm ci --no-audit --no-fund
+          npx tsc -p tsconfig.json
+          npx vitest run
+          npx vite build
       - name: Assemble site
         run: |
           # The landing page is the ad page at the root. "Open app" goes to
-          # app/, which shows the holding page until the app ships.
+          # app/, the web app (Check my pay first).
           mkdir -p _site/media _site/app
           cp app/landing/index.html app/landing/landing.css app/landing/landing.js _site/
           cp app/landing/media/payproof-film.mp4 app/landing/media/poster.jpg _site/media/
-          cp app/holding/index.html _site/app/
+          cp -r app/dist/. _site/app/
           for d in _site _site/app; do
             cp brand/favicon/favicon.svg brand/favicon/favicon-32.png brand/favicon/apple-touch-icon-180.png "$d/"
             cp brand/logo/payproof-lockup.svg brand/logo/payproof-lockup-on-dark.svg "$d/"
