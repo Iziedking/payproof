@@ -1,0 +1,17 @@
+
+6. Printing statistics.
+
+=== split_check ===
+
+        +----------Local Count, excluding submodules.
+        | 
+    11172 wires
+    11232 wire bits
+        5 public wires
+       65 public wire bits
+        5 ports
+       65 port bits
+    11168 cells
+     7584   $_NAND_
+     3584   $_NOT_
+

@@ -1,0 +1,17 @@
+
+5. Printing statistics.
+
+=== adder8 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       84 wires
+      106 wire bits
+        3 public wires
+       25 public wire bits
+        3 ports
+       25 port bits
+       90 cells
+       52   $_NAND_
+       38   $_NOT_
+
