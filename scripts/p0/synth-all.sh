@@ -2,7 +2,7 @@
 # P0: synthesise spike circuits to NAND and NOT gates and record the counts.
 # Runs in the throwaway workdir on host-service after setup-yosys.sh.
 # Usage: bash synth-all.sh <yosys-binary> <group>...
-#   groups: wage | check | check-narrow | check-40 | compute-24 | compute-32 | compute-40
+#   groups: wage | check | check-narrow | check-40 | compute-24 | compute-32 | compute-40 | mul-8
 #
 # Flow per circuit (Yosys 0.70 help pages read on the host, 2026-11-17):
 #   read_verilog; chparam; synth -flatten -top -noabc; abc -g NAND; opt_clean -purge; stat
@@ -52,6 +52,8 @@ for g in "$@"; do
       synth split_check_40 split_check rtl/split_check.v 40 "" ;;
     compute-24|compute-32|compute-40)
       w="${g#compute-}"; synth "split_compute_$w" split_compute rtl/split_compute.v "$w" "" ;;
+    mul-8)
+      synth mul_8 mul rtl/mul.v 8 "" ;;
     *) echo "unknown group $g" >&2; exit 2 ;;
   esac
 done
