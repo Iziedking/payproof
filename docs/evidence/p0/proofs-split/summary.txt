@@ -1,0 +1,10 @@
+smt no_overflow z3 unsat 1.1 rc=0
+smt no_overflow cvc5 unsat 0.4 rc=0
+smt unique z3 unsat 0.8 rc=0
+smt unique cvc5 none 600.5 rc=134
+smt more_shares z3 unsat 1.2 rc=0
+smt more_shares cvc5 unsat 0.3 rc=0
+smt unique_wrong z3 sat 1.1 rc=0
+smt unique_wrong cvc5 sat 0.1 rc=0
+cec 8 mutant [Networks are NOT EQUIVALENT. Time = 2.88 sec] 3.1 rc=0
+cec 8 gold [no verdict line] 960.1 rc=124

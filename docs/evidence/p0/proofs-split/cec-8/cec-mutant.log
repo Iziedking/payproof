@@ -1,0 +1,6 @@
+======== ABC command line "cec -T 900 -C 1000000000 -v proofs-split/cec-8/mutant.aig proofs-split/cec-8/gate.aig"
+Networks are NOT EQUIVALENT.  Time =     2.88 sec
+INPUT: payout = 8'h6C, pot = 8'h9F, shares = 8'hB7, total = 8'hE5.  OUTPUT: ok = 1'h0 (mutant), ok = 1'h1 (gate).
+Verification failed for at least 1 outputs:  ok
+Output ok: Value in Network1 = 0. Value in Network2 = 1.
+Input pattern:  total[0]=1 total[1]=0 total[2]=1 total[3]=0 total[4]=0 total[5]=1 total[6]=1 total[7]=1 shares[7]=1 shares[6]=0 shares[5]=1 shares[4]=1 shares[3]=0 shares[2]=1 shares[1]=1 shares[0]=1 payout[6]=1 payout[7]=0 payout[5]=1 payout[4]=0 payout[3]=1 payout[2]=1 payout[1]=0 payout[0]=0 pot[6]=0 pot[7]=1 pot[5]=0 pot[4]=1 pot[3]=1 pot[2]=1 pot[1]=1 pot[0]=1

@@ -275,6 +275,63 @@ dropped at 16:25 UTC; the remote run was not affected.
 Not yet measured: compute-circuit facts at any width (no compute netlist exists); check-circuit
 facts at 24 and 40 with limits longer than 900 s.
 
+### split-v1 check facts, proof in parts (spikes A and B)
+
+The owner chose, 2026-11-19, to try a proof in three parts instead of one solver run on the
+netlist: (A) the facts hold for the integer predicate the RTL computes, at every width; (B) the
+NAND netlist equals the RTL; (C) only if B stalls, a per-module proof with arithmetic-aware
+checkers. If A and B both hold at a width, the facts hold on that netlist. This is a different
+method from the one decision rule 2 assumed, and the proof record will say so.
+
+Tools, all from oss-cad-suite 20261029 on node-services, versions and options read from their
+help text 2026-11-19: Z3 4.15.5, cvc5 1.0.1-dev (git 77d0bec48), Yosys 0.70+277, yosys-abc `cec`.
+Scripts: `scripts/p0/prove-split.sh`, `spikes/p0/split-proof/*.smt2`.
+
+**Spike A** (run `p0-split-smt`, 2026-11-19 19:40 to 19:50 UTC, container
+`payproof-p0-split-smt`, `--cpus 2`, 600 s per solver per file). Integers are unbounded, so a
+result holds at every width.
+
+| Claim | File | Z3 | cvc5 |
+| --- | --- | --- | --- |
+| No wire in `split_check.v` overflows, any W (N = 2^W) | `no_overflow.smt2` | holds (unsat), 1.1 s | holds (unsat), 0.4 s |
+| check_unique: two different payouts are never both accepted | `unique.smt2` | holds (unsat), 0.8 s | undecided: timed out at 600.5 s, then aborted (exit 134) |
+| check_more_shares: the payout never falls when shares rise | `more_shares.smt2` | holds (unsat), 1.2 s | holds (unsat), 0.3 s |
+| Calibration: a false claim (upper bound p+2) | `unique_wrong.smt2` | sat, 1.1 s (as required) | sat, 0.1 s (as required) |
+
+- Both solvers answered `sat` on the false claim, so neither is answering unsat blindly.
+- check_unique is proved by Z3 only; cvc5 gave no answer. check_more_shares and the no-overflow
+  bound are proved by both.
+- What spike A covers: the integer predicate
+  `total > 0, shares <= total, payout*total*10000 <= pot*8500*shares < (payout+1)*total*10000`,
+  and that the RTL's wire widths hold every value of it. It does not cover the netlist; that is
+  spike B.
+
+**Spike B, 8-bit calibration** (run `p0-split-cec-8`, 2026-11-19 19:50 to 20:06 UTC, container
+`payproof-p0-split-cec-8`, `--cpus 2`, limit 900 s). Yosys mapped the RTL to an AIG without ABC
+(`gold.aig`); the netlist `split_check_8.nand.v` was mapped the same way (`gate.aig`); ABC
+`cec -T 900 -C 1000000000 -v` compared them, matching ports by name.
+
+| Comparison | Result | Time (s) |
+| --- | --- | --- |
+| Mutant RTL (HOLDER_BPS 8499) against the netlist | not equivalent, as required | 3.1 |
+| RTL against the netlist | undecided: no verdict, killed by the outer `timeout` | 960.1 (rc 124) |
+
+- ABC prints `Networks are NOT EQUIVALENT` with a counterexample. For the mutant it gave
+  payout 108, pot 159, shares 183, total 229. Checked by hand: 159 x 183 x 8500 / (229 x 10000)
+  = 108.0019, so the netlist accepts 108; with 8499 it is 107.989, so the mutant rejects it.
+  The check does catch a one-unit change, and the netlist agrees with the correct formula there.
+- ABC did not stop at its own `-T 900` limit; the outer `timeout` (limit + 60 s) ended it, as
+  with Yosys `sat` in the earlier runs.
+- The netlist-against-RTL equivalence did not finish at 8 bits in 900 s. Spike B as built
+  (one flat `cec`) therefore stalls even at the narrowest width, and the 32-bit run
+  `p0-split-cec-32` was not started.
+
+Status after spikes A and B: the facts are proved for the integer predicate (both facts by Z3,
+one also by cvc5, the bound by both), and the RTL computes that predicate without overflow. That
+the NAND netlist equals the RTL is not proved at any width. So nothing is yet proved about the
+netlist that would be taped out. The trigger for spike C (B stalls) is met; spike C waits for the
+owner.
+
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
 The first fact (`cn_raise`: b1 < b2 gives net(b2) >= net(b1)) failed at the 960,000 yuan edge
@@ -541,6 +598,8 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
     facts may be called proved at any width, and any checking of them is labelled testing, not
     proof. How to get a proof (for example a different formulation of the facts, a different
     engine or longer limits) is an open P0 question for the owner, recorded in section 10.
+    The owner chose a proof in parts (section 5, spikes A and B): the integer facts and the
+    no-overflow bound are proved; netlist equals RTL is not proved at any width yet.
 
 Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
@@ -576,6 +635,7 @@ run there. The `payproof-p0-chk-*` containers have all exited and been removed b
 - Multiplier facts are undecided at 900 s even at 24 bits. At 8, 12 and 16 bits every pair
   except check_unique at 8 is also undecided at 3,600 s, and both are undecided at 32 bits at
   3,600 s (section 5). No width from 8 to 32 has both check facts proved; decision rule 2 has no
-  width to publish (section 9). The owner decides how to proceed.
+  width to publish (section 9). Proof in parts started: integer facts proved (spike A); netlist
+  against RTL equivalence undecided at 8 bits in 900 s (spike B). Spike C waits for the owner.
 - Synthesis of large circuits on host-service is slow (52 min for the 32-bit check circuit).
 - Tape-outs above about 2,280 gates do not fit one `cast send` on Windows (section 7).
