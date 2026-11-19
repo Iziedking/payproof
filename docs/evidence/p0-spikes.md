@@ -198,8 +198,14 @@ Run `p0-prove-check-24`: `bash prove-all.sh 900 2 'check_unique-24|check_more_sh
 
 Miter sizes: 21,896 and 28,660 AND nodes. Both facts compare products of two 24-bit
 multipliers, which is the known hard case for SAT solvers. The netlists at widths 8, 12 and 16
-are now synthesised (section 4); the facts on them are not yet run. They find the width at
-which these facts finish, as decision rule 2 needs.
+are synthesised (section 4) and were copied to node-services (sha256 checked against
+host-service). They find the width at which these facts finish, as decision rule 2 needs.
+
+### split-v1, check circuit, widths 8, 12 and 16
+
+Run `p0-prove-check-narrow` (started 2026-11-19 10:04 UTC, container `payproof-p0-chk-narrow`,
+`--cpus 2 --memory 8g`): `bash prove-all.sh 900 2 'check_unique-(8|12|16)|check_more_shares-(8|12|16)'`.
+`prove-all.sh` now lists jobs for widths 8, 12, 16, 24, 32 and 40. Results: running.
 
 Not yet measured: compute-circuit facts at any width; check-circuit facts at 32 and 40;
 longer time limits.

@@ -16,7 +16,9 @@ O=oss-cad-suite/bin
 mkdir -p proofs
 jobs=proofs/jobs.txt; : > "$jobs"
 # name|fact file|width|compute netlist|check netlist
-for w in 24 32 40; do
+# 8, 12 and 16 exist for the check circuit only (decision rule 2: the widest width the
+# solver proves); jobs that name a missing netlist are never selected.
+for w in 8 12 16 24 32 40; do
   for f in split_zero split_fee_fixed split_more_shares split_bigger_pot split_never_overpays split_one_unit_short split_splitting; do
     echo "$f-$w|facts/$f.v|$w|nets/split_compute_$w.nand.v|-" >> "$jobs"
   done
