@@ -1,0 +1,9 @@
+same base: per-module synthesis identical to out/split_check_mod_32.mods.nand.v
+same \m_x10000_narrow\ identical
+same \m_add\ identical
+same \m_cmp\ identical
+same \m_x10000_wide\ identical
+same \m_x8500  identical
+same m_mul_tmc_32 text differs from out/m_mul_tmc_32.nand.v (wire names); proved directly by prove-split.sh part ajoin
+instances: 2 of 2 use m_mul_tmc_32
+m_mul modules left: 0

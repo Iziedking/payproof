@@ -15,6 +15,7 @@
 #              &cec -m; third argument selects pairs by regex (see that block).
 #   part comp: module split steps 1 and 3 (joined RTL against original RTL; flat
 #              netlist against the hierarchical one); third argument selects pairs.
+#   part ajoin: AMulet on the multiplier block cut from the joined netlist (part anet).
 #   part amul: module split step 2 for m_mul: AMulet verify and certify, Pacheck check.
 #   part acec: &acec of the whole check netlist against the RTL at each width,
 #              plus the HOLDER_BPS 8499 mutant.
@@ -104,7 +105,11 @@ s1-32mut|rtl/split_check.v|split_check|-set W 32|rtl/split_check_mod.v|split_che
 s3-8|nets/split_check_mod_8.mods.nand.v|split_check_mod|-|nets/split_check_mod_8.nand.v|split_check_mod_8|-|
 s3-8mut|nets/split_check_mod_8.mods.nand.v|split_check_mod|-|MUT:nets/split_check_mod_8.nand.v|split_check_mod_8|-|
 s3-32|nets/split_check_mod_32.mods.nand.v|split_check_mod|-|nets/split_check_mod_32.nand.v|split_check_mod_32|-|
-s3-32mut|nets/split_check_mod_32.mods.nand.v|split_check_mod|-|MUT:nets/split_check_mod_32.nand.v|split_check_mod_32|-|"
+s3-32mut|nets/split_check_mod_32.mods.nand.v|split_check_mod|-|MUT:nets/split_check_mod_32.nand.v|split_check_mod_32|-|
+s3c-8|nets/split_check_modc_8.mods.nand.v|split_check_mod|-|nets/split_check_modc_8.nand.v|split_check_modc_8|-|
+s3c-8mut|nets/split_check_modc_8.mods.nand.v|split_check_mod|-|MUT:nets/split_check_modc_8.nand.v|split_check_modc_8|-|
+s3c-32|nets/split_check_modc_32.mods.nand.v|split_check_mod|-|nets/split_check_modc_32.nand.v|split_check_modc_32|-|
+s3c-32mut|nets/split_check_modc_32.mods.nand.v|split_check_mod|-|MUT:nets/split_check_modc_32.nand.v|split_check_modc_32|-|"
   SEL="${1:-.*}"
   d="$R/comp"; mkdir -p "$d"
   while IFS='|' read -r name s1 t1 p1 s2 t2 p2 f2; do
@@ -156,6 +161,19 @@ if [ "$PART" = lin ]; then
       v2=$(grep -iE 'equivalent|undecided|proved|disproved|SATISFIABLE' "$log" | tail -n 1 | tr -s ' ' | cut -c1-110)
       echo "lin $w $name &cec [${v2:-no verdict line}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
     done
+  done
+  exit 0
+fi
+if [ "$PART" = ajoin ]; then
+  # The multiplier block exactly as it sits in the joined netlist that would be taped out
+  # (nets/split_check_modc_<w>.mods.nand.v, module m_mul_tmc_<w>), cut out and renamed
+  # m_mul_tmcj_<w>, then checked by part anet (substitution, verify, certify, Pacheck,
+  # one-gate control). Usage: prove-split.sh ajoin <timeout> <width>...
+  for w in "$@"; do
+    awk -v w="$w" '$1 == "module" && index($2, "m_mul_tmc_" w "(") == 1 {on=1; print "module m_mul_tmcj_" w "(a, b, y);"; next}
+      on {print} on && /^endmodule/ {on=0}' "nets/split_check_modc_$w.mods.nand.v" > "nets/m_mul_tmcj_$w.nand.v"
+    echo "ajoin $w cut $(grep -c '= ~(' "nets/m_mul_tmcj_$w.nand.v") NAND $(grep -cE '= ~[^(]' "nets/m_mul_tmcj_$w.nand.v") NOT" | tee -a "$R/summary.txt"
+    bash "$0" anet "$T" "m_mul_tmcj_$w"
   done
   exit 0
 fi

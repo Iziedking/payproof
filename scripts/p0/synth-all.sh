@@ -4,6 +4,7 @@
 # Usage: bash synth-all.sh <yosys-binary> <group>...
 #   groups: wage | check | check-narrow | check-40 | compute-24 | compute-32 | compute-40 | mul-8
 #           | check-mod-8 | check-mod-32 | mul-tm-8 | mul-tm-32 | mul-tmc-8 | mul-tmc-32
+#           | check-modc-8 | check-modc-32
 #
 # Flow per circuit (Yosys 0.70 help pages read on the host, 2026-11-17):
 #   read_verilog; chparam; synth -flatten -top -noabc; abc -g NAND; opt_clean -purge; stat
@@ -113,6 +114,60 @@ synth_tmc() { # name width
     "$(( (nand + not) * 7 ))" "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
 }
 
+# Joined check circuit with the proved multiplier (module split, 2026-11-20). One Yosys
+# session: the per-module synthesis of synth_mod is repeated, and its hierarchical
+# netlist is written and compared with the step 0 file (identical text means the five
+# other modules are the ones proved there). The NOT-cleaned multiplier is then loaded
+# from its JSON (read_verilog of a written netlist would turn each NAND back into
+# word-level $and/$not cells), the two instances u_pt and u_ps are retyped to it with
+# chtype, `hierarchy -top` drops the unused ABC-mapped m_mul, and the design is joined
+# as in synth_mod: flatten, opt_clean -purge, nothing else. Comparisons go to
+# logs/same-<name>.log. Needs out/ of groups check-mod-<w> and mul-tmc-<w>.
+block() { # file module-pattern: print the lines of that module after its header
+  # pattern passed through the environment: awk -v would treat its backslashes as escapes
+  P="$2" awk '$1 == "module" && index($0, ENVIRON["P"]) {on=1; next} on {print} on && /^endmodule/ {on=0}' "$1"
+}
+synth_modc() { # name width
+  local name="$1" width="$2" t0 t1 tmc="m_mul_tmc_$2"
+  t0=$(date +%s.%N)
+  "$YOSYS" -q -l "logs/synth-$name.log" -p "
+    read_verilog rtl/split_check_mod.v; chparam -set W $width split_check_mod;
+    synth -top split_check_mod -noabc;
+    abc -g NAND; opt_clean -purge;
+    write_verilog -noattr out/$name.base.mods.nand.v;
+    read_json out/$tmc.json;
+    chtype -set $tmc split_check_mod/u_pt split_check_mod/u_ps;
+    hierarchy -top split_check_mod;
+    tee -o out/$name.mods.stat.txt stat -top split_check_mod;
+    write_verilog -noattr out/$name.mods.nand.v;
+    flatten; opt_clean -purge;
+    select -assert-none t:* t:\$_NAND_ t:\$_NOT_ %u %d;
+    tee -o out/$name.stat.txt stat;
+    rename split_check_mod ${name};
+    write_verilog -noattr out/$name.nand.v;
+    write_json out/$name.json"
+  t1=$(date +%s.%N)
+  {
+    if cmp -s "out/$name.base.mods.nand.v" "out/split_check_mod_$width.mods.nand.v"; then
+      echo "same base: per-module synthesis identical to out/split_check_mod_$width.mods.nand.v"
+    else echo "same base: DIFFERS from out/split_check_mod_$width.mods.nand.v"; fi
+    for m in '\m_x10000_narrow\' '\m_add\' '\m_cmp\' '\m_x10000_wide\' '\m_x8500 '; do
+      if cmp -s <(block "out/split_check_mod_$width.mods.nand.v" "$m") <(block "out/$name.mods.nand.v" "$m"); then
+        echo "same $m identical"; else echo "same $m DIFFERS"; fi
+    done
+    if cmp -s <(block "out/$tmc.nand.v" "module $tmc") <(block "out/$name.mods.nand.v" "module $tmc"); then
+      echo "same $tmc identical to out/$tmc.nand.v"
+    else echo "same $tmc text differs from out/$tmc.nand.v (wire names); proved directly by prove-split.sh part ajoin"; fi
+    echo "instances: $(grep -cE "^  $tmc +u_p[ts] " "out/$name.mods.nand.v") of 2 use $tmc"
+    echo "m_mul modules left: $(grep -cF '\m_mul' "out/$name.mods.nand.v")"
+  } | tee "logs/same-$name.log"
+  local nand not
+  nand=$(awk '/\$_NAND_/ {print $1; exit}' "out/$name.stat.txt"); nand=${nand:-0}
+  not=$(awk '/\$_NOT_/ {print $1; exit}' "out/$name.stat.txt"); not=${not:-0}
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$name" "$width" "$nand" "$not" "$((nand + not))" \
+    "$(( (nand + not) * 7 ))" "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
+}
+
 for g in "$@"; do
   case "$g" in
     wage)
@@ -134,6 +189,8 @@ for g in "$@"; do
       w="${g#mul-tm-}"; synth_tm "m_mul_tm_$w" "$w" ;;
     mul-tmc-8|mul-tmc-32)
       w="${g#mul-tmc-}"; synth_tmc "m_mul_tmc_$w" "$w" ;;
+    check-modc-8|check-modc-32)
+      w="${g#check-modc-}"; synth_modc "split_check_modc_$w" "$w" ;;
     check-mod-8|check-mod-32)
       w="${g#check-mod-}"; synth_mod "split_check_mod_$w" "$w" ;;
     *) echo "unknown group $g" >&2; exit 2 ;;
