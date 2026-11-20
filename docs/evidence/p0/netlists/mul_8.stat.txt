@@ -1,0 +1,17 @@
+
+6. Printing statistics.
+
+=== mul ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      676 wires
+      705 wire bits
+        3 public wires
+       32 public wire bits
+        3 ports
+       32 port bits
+      689 cells
+      463   $_NAND_
+      226   $_NOT_
+

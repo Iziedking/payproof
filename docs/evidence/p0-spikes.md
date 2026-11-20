@@ -422,6 +422,57 @@ circuit or on the mutant. Nothing about the
 split facts is proved on the 32-bit netlist. The next step in the plan is the module split, which
 waits for the owner.
 
+### split-v1 check circuit, module split, step 0: size
+
+The owner approved the module split on 2026-11-20 and asked for step 0 first: measure what the
+split costs in gates before any proof work. `spikes/p0/rtl/split_check_mod.v` cuts the check
+circuit into six modules, each computing one wire of `split_check.v` with the same expression and
+width: `m_mul` (used twice: payout x total, pot x shares), `m_x10000_wide` (pt x 10000),
+`m_x10000_narrow` (total x 10000), `m_x8500` (ps x HOLDER_BPS), `m_add` (lhs + t10k) and `m_cmp`
+(the input checks and both comparisons). The top module only wires them together.
+
+Synthesis (run `p0-synth-check-mod`, host-service, 2026-11-20 01:31 UTC, group `check-mod-8`
+then `check-mod-32` in `scripts/p0/synth-all.sh`): the same flow as the flat circuits but
+without `-flatten`, so `synth` and `abc -g NAND` work on each module alone. Yosys 0.70 help, read
+on host-service the same day: `synth` keeps the hierarchy without `-flatten`, and its `opt` steps
+cross modules only with `-hieropt`, which is not passed. The hierarchical netlist is written
+(`*.mods.nand.v`), then `flatten; opt_clean -purge` joins the modules without further
+optimisation. The flat file (`*.nand.v`) is the one that would be taped out.
+
+| Module | Gates at 8 bits | Gates at 32 bits |
+| --- | --- | --- |
+| `m_mul` (x2) | 689 each | 12,322 each |
+| `m_x10000_wide` | 799 | 3,306 |
+| `m_x10000_narrow` | 354 | 1,623 |
+| `m_x8500` | 870 | 3,624 |
+| `m_add` | 314 | 804 |
+| `m_cmp` | 616 | 1,833 |
+| **Joined** | **4,331** (2,834 NAND, 1,497 NOT) | **35,834** (24,033 NAND, 11,801 NOT) |
+| Flat `split_check`, for comparison | 3,979 | 34,876 |
+| Difference | +352 (+8.8%) | +958 (+2.7%) |
+
+- Synthesis took 1.0 s at 8 bits and 4.4 s at 32 bits, against 3,118 s for the flat 32-bit
+  circuit. ABC on the flat circuit spends its time optimising across the whole design.
+- The 8-bit `m_mul` has 689 gates, the same count as the calibration multiplier `mul_8`
+  (spike C). The two netlists have not been compared gate by gate.
+- Gas for the joined 32-bit circuit, from the measured cost per gate (section 3): 83.0 M to
+  84.0 M as a flat circuit (2,316 to 2,345 gas per gate), and 88.85 M at the REF-split rate
+  (2,479.6). Against the largest transaction seen on X Layer, 88,709,982 gas: 5.3% to 6.5% under
+  as a flat circuit, 0.16% over at the REF-split rate. Network fee at 20,000,001 wei per gas:
+  0.00166 to 0.00178 OKB. Share of a 210 M block: 39.5% to 42.3%. The vault's own gas around the
+  `eval` is still not counted. The largest transaction seen is a data point, not a cap (section
+  3 found no transaction gas cap below the block limit).
+- TAP-02 check (run `p0-convert-check-mod`, node-services, container `payproof-p0-conv-mod`,
+  `--cpus 2`): `yosys2tap.py` converted both joined netlists with no gates added for output
+  placement (4,331 gates, 30,317 bytes; 35,834 gates, 250,838 bytes), and the TAP-02 reference
+  evaluator matched the plain Python formula on every case: 2,024 cases at 8 bits and 424 at 32
+  bits, 0 mismatches. This is testing, not proof. Files: `spikes/p0/tap/split_check_mod_*.tap.json`.
+
+Step 0 result: the module split costs 958 gates at 32 bits. As a flat tape-out it stays under the
+largest transaction seen; built from REF modules at the measured REF rate it would be just over
+it. Steps 1 to 4 (the proofs) have not started; the multiplier checker for step 2 needs the
+owner's approval before it is downloaded.
+
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
 The first fact (`cn_raise`: b1 < b2 gives net(b2) >= net(b1)) failed at the 960,000 yuan edge
@@ -616,6 +667,7 @@ around the `eval` (share lookups, transfer) is not measured yet and is not inclu
 | --- | --- | --- | --- | --- |
 | Check, 24-bit | 21,441 | 49.7 M to 53.2 M | about 0.0010 to 0.0011 OKB | 24% to 25% |
 | Check, 32-bit | 34,876 | 80.8 M to 86.5 M | about 0.0016 to 0.0017 OKB | 38% to 41% |
+| Check, 32-bit, module split (section 5, step 0) | 35,834 | 83.0 M to 88.9 M | about 0.0017 to 0.0018 OKB | 40% to 42% |
 | Check, 40-bit | 51,206 | 118.6 M to 127.0 M | about 0.0024 to 0.0025 OKB | 56% to 60% |
 | Check, 16-bit | 11,168 | 25.9 M to 27.7 M | about 0.0005 to 0.0006 OKB | 12% to 13% |
 | Check, 12-bit | 7,137 | 16.5 M to 17.7 M | about 0.0003 to 0.0004 OKB | 8% |
@@ -691,7 +743,9 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
     The owner chose a proof in parts (section 5, spikes A, B and C): the integer facts and the
     no-overflow bound are proved; netlist equals RTL is proved at 8 bits (ABC, two routes) and
     undecided at 32 bits at 3,600 s. So the split facts hold on the 8-bit netlist only. At 32
-    bits nothing is proved yet; the module split is the next step and waits for the owner.
+    bits nothing is proved yet. The owner approved the module split on 2026-11-20; step 0
+    measured it at 35,834 gates at 32 bits (+958 over the flat circuit, section 5). Its proofs
+    have not started.
 
 Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
@@ -716,6 +770,10 @@ options with cost per claim before any choice is made.
   `p0-split-miter-32`, the mutant multiplier netlist, and `summary.txt`. 64 files, checksums in
   `SHA256SUMS-split.txt`, all matched after the copy on 2026-11-20. `summary.txt` keeps the two
   intermediate "UNDECIDED" lines for mul8 and check8 as the run wrote them (see spike C).
+- From host-service, 2026-11-20, added to `netlists/` and `synth-logs/run3/`: the module-split
+  netlists (`split_check_mod_8` and `_32`, flat and hierarchical, with `stat` files), the
+  calibration multiplier `mul_8`, their synthesis logs, and the updated `synth-summary.tsv`.
+  `SHA256SUMS-host-service.txt` now lists 52 files, all matched after the copy.
 - Not copied, because they can be rebuilt from the files above and the scripts: the Yosys JSON
   netlists and the `miter.aig` and other `.aig` files.
 
@@ -735,7 +793,9 @@ run there. The `payproof-p0-chk-*` containers have all exited and been removed b
   width to publish (section 9). Proof in parts: integer facts proved (spike A); netlist against
   RTL undecided at 8 bits in 900 s with plain `cec` (spike B); proved at 8 bits with `&acec`
   fallback and with a miter and `&cec` (spike C); undecided at 32 bits at 3,600 s, where even the
-  mutant is not caught, and `&acec` crashes at 32 bits. The module split waits for the owner.
+  mutant is not caught, and `&acec` crashes at 32 bits. Module split approved; step 0 done
+  (35,834 gates at 32 bits, 0.16% over the largest transaction seen if built from REF
+  modules); the proof steps have not started.
 - ABC `&acec` in this build gave a false "not equivalent" on a correct multiplier and crashes at
   32 bits (section 5, spike C). Not used as evidence on its own.
 - Synthesis of large circuits on host-service is slow (52 min for the 32-bit check circuit).

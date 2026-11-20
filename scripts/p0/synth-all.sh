@@ -3,6 +3,7 @@
 # Runs in the throwaway workdir on host-service after setup-yosys.sh.
 # Usage: bash synth-all.sh <yosys-binary> <group>...
 #   groups: wage | check | check-narrow | check-40 | compute-24 | compute-32 | compute-40 | mul-8
+#           | check-mod-8 | check-mod-32
 #
 # Flow per circuit (Yosys 0.70 help pages read on the host, 2026-11-17):
 #   read_verilog; chparam; synth -flatten -top -noabc; abc -g NAND; opt_clean -purge; stat
@@ -37,6 +38,35 @@ synth() { # name top file width defines
     "$(( (nand + not) * 7 ))" "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
 }
 
+# Module split (spike C): the same flow, but without -flatten, so synth and ABC work
+# on each module alone and nothing is optimised across a module boundary (synth's
+# `opt` only crosses modules with -hieropt, which is not passed; Yosys 0.70 help,
+# read on host-service 2026-11-20). The hierarchical netlist is written first (for
+# the per-module proofs), then the design is flattened with no further optimisation
+# beyond removing unused wires (opt_clean -purge). The flat netlist is the one that
+# would be taped out; out/<name>.mods.stat.txt has the gate count of each module.
+synth_mod() { # name width
+  local name="$1" width="$2" t0 t1
+  t0=$(date +%s.%N)
+  "$YOSYS" -q -l "logs/synth-$name.log" -p "
+    read_verilog rtl/split_check_mod.v; chparam -set W $width split_check_mod;
+    synth -top split_check_mod -noabc;
+    abc -g NAND; opt_clean -purge;
+    tee -o out/$name.mods.stat.txt stat -top split_check_mod;
+    write_verilog -noattr out/$name.mods.nand.v;
+    flatten; opt_clean -purge;
+    tee -o out/$name.stat.txt stat;
+    rename split_check_mod ${name};
+    write_verilog -noattr out/$name.nand.v;
+    write_json out/$name.json"
+  t1=$(date +%s.%N)
+  local nand not
+  nand=$(awk '/\$_NAND_/ {print $1; exit}' "out/$name.stat.txt"); nand=${nand:-0}
+  not=$(awk '/\$_NOT_/ {print $1; exit}' "out/$name.stat.txt"); not=${not:-0}
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$name" "$width" "$nand" "$not" "$((nand + not))" \
+    "$(( (nand + not) * 7 ))" "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
+}
+
 for g in "$@"; do
   case "$g" in
     wage)
@@ -54,6 +84,8 @@ for g in "$@"; do
       w="${g#compute-}"; synth "split_compute_$w" split_compute rtl/split_compute.v "$w" "" ;;
     mul-8)
       synth mul_8 mul rtl/mul.v 8 "" ;;
+    check-mod-8|check-mod-32)
+      w="${g#check-mod-}"; synth_mod "split_check_mod_$w" "$w" ;;
     *) echo "unknown group $g" >&2; exit 2 ;;
   esac
 done

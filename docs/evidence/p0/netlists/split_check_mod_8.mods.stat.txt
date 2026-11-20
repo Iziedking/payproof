@@ -1,0 +1,139 @@
+
+6. Printing statistics.
+
+=== split_check_mod ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       11 wires
+      178 wire bits
+       11 public wires
+      178 public wire bits
+        5 ports
+       33 port bits
+        7 submodules
+        1   $paramod$0108bbf9bbdf453340d701ef5c6bbfb855af75df\m_x8500
+        1   $paramod\m_add\W=s32'00000000000000000000000000001000
+        1   $paramod\m_cmp\W=s32'00000000000000000000000000001000
+        2   $paramod\m_mul\W=s32'00000000000000000000000000001000
+        1   $paramod\m_x10000_narrow\W=s32'00000000000000000000000000001000
+        1   $paramod\m_x10000_wide\W=s32'00000000000000000000000000001000
+
+=== $paramod\m_cmp\W=s32'00000000000000000000000000001000 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      621 wires
+      723 wire bits
+        6 public wires
+      108 public wire bits
+        6 ports
+      108 port bits
+      616 cells
+      358   $_NAND_
+      258   $_NOT_
+
+=== $paramod\m_add\W=s32'00000000000000000000000000001000 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      286 wires
+      366 wire bits
+        3 public wires
+       83 public wire bits
+        3 ports
+       83 port bits
+      314 cells
+      195   $_NAND_
+      119   $_NOT_
+
+=== $paramod$0108bbf9bbdf453340d701ef5c6bbfb855af75df\m_x8500 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      846 wires
+      890 wire bits
+        2 public wires
+       46 public wire bits
+        2 ports
+       46 port bits
+      870 cells
+      574   $_NAND_
+      296   $_NOT_
+
+=== $paramod\m_x10000_narrow\W=s32'00000000000000000000000000001000 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      342 wires
+      370 wire bits
+        2 public wires
+       30 public wire bits
+        2 ports
+       30 port bits
+      354 cells
+      243   $_NAND_
+      111   $_NOT_
+
+=== $paramod\m_x10000_wide\W=s32'00000000000000000000000000001000 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      779 wires
+      823 wire bits
+        2 public wires
+       46 public wire bits
+        2 ports
+       46 port bits
+      799 cells
+      538   $_NAND_
+      261   $_NOT_
+
+=== $paramod\m_mul\W=s32'00000000000000000000000000001000 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      676 wires
+      705 wire bits
+        3 public wires
+       32 public wire bits
+        3 ports
+       32 port bits
+      689 cells
+      463   $_NAND_
+      226   $_NOT_
+
+=== design hierarchy ===
+
+        +----------Count including submodules.
+        | 
+     4331 split_check_mod
+      870 $paramod$0108bbf9bbdf453340d701ef5c6bbfb855af75df\m_x8500
+      314 $paramod\m_add\W=s32'00000000000000000000000000001000
+      616 $paramod\m_cmp\W=s32'00000000000000000000000000001000
+      689 $paramod\m_mul\W=s32'00000000000000000000000000001000
+      354 $paramod\m_x10000_narrow\W=s32'00000000000000000000000000001000
+      799 $paramod\m_x10000_wide\W=s32'00000000000000000000000000001000
+
+        +----------Count including submodules.
+        | 
+     4237 wires
+     4760 wire bits
+       32 public wires
+      555 public wire bits
+       26 ports
+      410 port bits
+        - memories
+        - memory bits
+        - processes
+     4331 cells
+     2834   $_NAND_
+     1497   $_NOT_
+        7 submodules
+        1   $paramod$0108bbf9bbdf453340d701ef5c6bbfb855af75df\m_x8500
+        1   $paramod\m_add\W=s32'00000000000000000000000000001000
+        1   $paramod\m_cmp\W=s32'00000000000000000000000000001000
+        2   $paramod\m_mul\W=s32'00000000000000000000000000001000
+        1   $paramod\m_x10000_narrow\W=s32'00000000000000000000000000001000
+        1   $paramod\m_x10000_wide\W=s32'00000000000000000000000000001000
+
