@@ -128,6 +128,37 @@ s3-32mut|nets/split_check_mod_32.mods.nand.v|split_check_mod|-|MUT:nets/split_ch
   done <<< "$pairs"
   exit 0
 fi
+if [ "$PART" = lin ]; then
+  # Module split, step 2 for the five modules other than m_mul (2026-11-20). For each
+  # module and width: the module is cut out of the per-module netlist that is joined and
+  # taped out (split_check_mod_<w>.mods.nand.v) and renamed <module>_g; the RTL of the
+  # same module comes from rtl/split_check_mod.v with chparam W; the two are joined with
+  # miter -equiv -flatten and checked with &cec -m, as in part comp. Control per module:
+  # the cut netlist with its 40th NAND turned into an AND, which must be not equivalent.
+  # Usage: prove-split.sh lin <timeout> <width> [module regex]
+  w="${1:?width}"; SEL="${2:-.}"
+  d="$R/lin-$w"; mkdir -p "$d"
+  for m in m_x10000_narrow m_add m_cmp m_x10000_wide m_x8500; do
+    echo "$m" | grep -qE "^($SEL)$" || continue
+    awk -v m="$m" -v n="${m}_g" '
+      $1 == "module" && (index($0, "\\" m "\\") || index($0, "\\" m " ")) {on=1; sub(/^module [^(]*\(/, "module " n " ("); print; next}
+      on {print} on && /^endmodule/ {on=0}' "nets/split_check_mod_$w.mods.nand.v" > "$d/${m}_g.nand.v"
+    awk 'BEGIN{n=0} /= ~\(/ {n++; if (n==40) {sub(/= ~\(/, "= ("); print "// MUTATED: " $0 > "/dev/stderr"}} {print}' \
+      "$d/${m}_g.nand.v" 2> "$d/$m-mutant-line.txt" | sed "s/^module ${m}_g /module ${m}_gm /" > "$d/${m}_gm.nand.v"
+    for v in g gm; do
+      name="$m"; [ "$v" = gm ] && name="$m-mut"
+      $O/yosys -q -l "$d/$name-build.log" -p "read_verilog rtl/split_check_mod.v; chparam -set W $w $m;
+        read_verilog $d/${m}_$v.nand.v; hierarchy; proc; miter -equiv -flatten $m ${m}_$v miter;
+        hierarchy -top miter; techmap; opt -fast; aigmap; write_aiger -symbols $d/$name.aig" > /dev/null 2>&1
+      log="$d/$name-ncec.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $O/yosys-abc -c "&r $d/$name.aig; &cec -m -v -T $T" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      v2=$(grep -iE 'equivalent|undecided|proved|disproved|SATISFIABLE' "$log" | tail -n 1 | tr -s ' ' | cut -c1-110)
+      echo "lin $w $name &cec [${v2:-no verdict line}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+    done
+  done
+  exit 0
+fi
 if [ "$PART" = amul ]; then
   # Module split, step 2 for m_mul (2026-11-20): AMulet 2.2 (tools/bin/amulet, built by
   # build-amulet.sh) checks that an AIG computes the unsigned product of its inputs,
