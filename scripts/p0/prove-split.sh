@@ -60,7 +60,7 @@ check8|rtl/split_check.v|split_check|-set W 8|nets/split_check_8.nand.v|split_ch
 check8mut|rtl/split_check.v|split_check|-set W 8 -set HOLDER_BPS 8499|nets/split_check_8.nand.v|split_check_8
 check32|rtl/split_check.v|split_check|-set W 32|nets/split_check_32.nand.v|split_check_32
 check32mut|rtl/split_check.v|split_check|-set W 32 -set HOLDER_BPS 8499|nets/split_check_32.nand.v|split_check_32"
-  SEL="${1:-.}"
+  SEL="${1:-.*}"
   d="$R/miter"; mkdir -p "$d"
   while IFS='|' read -r name gsrc gtop gpar nsrc ntop; do
     echo "$name" | grep -qE "^($SEL)$" || continue
@@ -105,7 +105,7 @@ s3-8|nets/split_check_mod_8.mods.nand.v|split_check_mod|-|nets/split_check_mod_8
 s3-8mut|nets/split_check_mod_8.mods.nand.v|split_check_mod|-|MUT:nets/split_check_mod_8.nand.v|split_check_mod_8|-|
 s3-32|nets/split_check_mod_32.mods.nand.v|split_check_mod|-|nets/split_check_mod_32.nand.v|split_check_mod_32|-|
 s3-32mut|nets/split_check_mod_32.mods.nand.v|split_check_mod|-|MUT:nets/split_check_mod_32.nand.v|split_check_mod_32|-|"
-  SEL="${1:-.}"
+  SEL="${1:-.*}"
   d="$R/comp"; mkdir -p "$d"
   while IFS='|' read -r name s1 t1 p1 s2 t2 p2 f2; do
     echo "$name" | grep -qE "^($SEL)$" || continue
@@ -136,7 +136,7 @@ if [ "$PART" = lin ]; then
   # miter -equiv -flatten and checked with &cec -m, as in part comp. Control per module:
   # the cut netlist with its 40th NAND turned into an AND, which must be not equivalent.
   # Usage: prove-split.sh lin <timeout> <width> [module regex]
-  w="${1:?width}"; SEL="${2:-.}"
+  w="${1:?width}"; SEL="${2:-.*}"
   d="$R/lin-$w"; mkdir -p "$d"
   for m in m_x10000_narrow m_add m_cmp m_x10000_wide m_x8500; do
     echo "$m" | grep -qE "^($SEL)$" || continue
@@ -155,6 +155,53 @@ if [ "$PART" = lin ]; then
       rc=$?; t1=$(date +%s.%N)
       v2=$(grep -iE 'equivalent|undecided|proved|disproved|SATISFIABLE' "$log" | tail -n 1 | tr -s ' ' | cut -c1-110)
       echo "lin $w $name &cec [${v2:-no verdict line}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+    done
+  done
+  exit 0
+fi
+if [ "$PART" = asub ]; then
+  # Module split, step 2 for m_mul, adder substitution (2026-11-20). Plain `-verify`
+  # timed out at 32 bits on all three AIGs (part amul). AMulet's `-substitute` mode
+  # (README; substitution_engine.h: "We first detect the GP adder, then generate the
+  # equivalent miter and print the CNF miter and the rewritten AIG") replaces the
+  # final-stage adder by a ripple-carry adder. The CNF miter must be unsat (checked
+  # with yices-sat 2.7.0 from oss-cad-suite, calibrated here on two tiny CNFs), and
+  # the rewritten AIG is then verified and certified. Reuses the AIGs of part amul.
+  B=tools/bin
+  c="$R/asub-cal"; mkdir -p "$c"
+  printf 'p cnf 1 2\n1 0\n-1 0\n' > "$c/unsat.cnf"; printf 'p cnf 2 1\n1 2 0\n' > "$c/sat.cnf"
+  for f in unsat sat; do
+    echo "asub yices-cal $f [$($O/yices-sat "$c/$f.cnf" 2>&1 | head -n 1)]" | tee -a "$R/summary.txt"
+  done
+  for w in "$@"; do
+    s="$R/amul-$w"; d="$R/asub-$w"; mkdir -p "$d"
+    for g in gate rtl mutant; do
+      log="$d/substitute-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/amulet -substitute "$s/$g.aig" "$d/$g-sub.cnf" "$d/$g-sub.aig" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      echo "asub $w substitute $g [$(grep -iE 'substitut|adder|fail|error' "$log" | tail -n 1 | tr -s ' ' | cut -c1-90)] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      [ -s "$d/$g-sub.aig" ] || continue
+      if [ -s "$d/$g-sub.cnf" ]; then
+        log="$d/miter-$g.log"; t0=$(date +%s.%N)
+        timeout --kill-after=10 $((T + 60)) $O/yices-sat "$d/$g-sub.cnf" > "$log" 2>&1
+        rc=$?; t1=$(date +%s.%N)
+        echo "asub $w miter-sat $g [$(head -n 1 "$log")] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      fi
+      log="$d/verify-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/amulet -verify "$d/$g-sub.aig" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      v=$(grep -oE '(IN)?CORRECT MULTIPLIER' "$log" | tail -n 1)
+      echo "asub $w verify $g [${v:-no verdict}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      [ "$v" = "CORRECT MULTIPLIER" ] || continue
+      log="$d/certify-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/amulet -certify "$d/$g-sub.aig" "$d/$g.polys" "$d/$g.proof" "$d/$g.spec" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      echo "asub $w certify $g [$(grep -oE '(IN)?CORRECT MULTIPLIER' "$log" | tail -n 1)] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      log="$d/pacheck-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/pacheck "$d/$g.polys" "$d/$g.proof" "$d/$g.spec" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      echo "asub $w pacheck $g [$(grep -oE 'TARGET CHECKED' "$log" | tail -n 1)] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      rm -f "$d/$g.proof"   # large; rebuilt by re-running this part
     done
   done
   exit 0
