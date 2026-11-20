@@ -1,0 +1,1 @@
+not_cleanup m_mul_tm_32: rounds=2 NAND 10599 -> 10599, NOT 9484 -> 4370, total 20083 -> 14969

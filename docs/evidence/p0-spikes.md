@@ -734,6 +734,54 @@ and certified by the method that proved the 32-bit RTL multiplier.
   not yet measured.
 - 51,356 gates is about the size of the flat 40-bit check circuit (51,206, section 4).
 
+**32-bit proof and NOT cleanup** (owner asked for both on 2026-11-20).
+
+- Proof: run `p0-split-anet-32`, 3,600 s per step.
+- Cleanup: `scripts/p0/not_cleanup.py`, run on host-service by `synth-all.sh` group `mul-tmc-*`
+  (run `p0-synth-mul-tmc`). It works on the Yosys JSON netlist and repeats three rewrites
+  until nothing changes:
+  1. NOT(NOT(x)) becomes x.
+  2. NOTs with the same input become one NOT.
+  3. NANDs with the same two inputs become one NAND.
+
+  Gates whose output nobody reads are then removed. A module output bit is never rewired.
+  Yosys reads the result back, checks that only NAND and NOT remain, and writes the netlist.
+- Proof of the cleaned multiplier: run `p0-split-anet-tmc`, 3,600 s per step.
+
+| Multiplier | Gates | Substitution | Miter | Verify | Certificate (Pacheck) | Control (one gate changed) |
+| --- | --- | --- | --- | --- | --- | --- |
+| `m_mul_tm_32` | 20,083 | done, 2,119 XOR gates found | unsat | **CORRECT**, 0.1 s | **TARGET CHECKED**, 0.1 s | `_00256_` NAND to AND: substituted, miter unsat, INCORRECT |
+| `m_mul_tmc_8` (cleaned) | 867 (607 NAND, 260 NOT) | done, 120 XOR | unsat | **CORRECT**, 0.0 s | **TARGET CHECKED** | `_0066_` (a[7] & b[4]): INCORRECT |
+| `m_mul_tmc_32` (cleaned) | **14,969** (10,599 NAND, 4,370 NOT) | done, 2,119 XOR | unsat | **CORRECT**, 0.1 s | **TARGET CHECKED**, 0.1 s | `_00135_` NAND to AND: substituted, miter unsat, INCORRECT |
+
+- The cleanup ran two rounds at each width. It removed 279 of 539 NOTs at 8 bits and 5,114 of
+  9,484 at 32 bits, and no NANDs.
+- Every control went through substitution like the real netlist and was reported incorrect.
+  So at 32 bits these controls test the same path as the proof, unlike the controls of the
+  ABC-mapped netlist, which AMulet could not check at all.
+
+Cost of a joined 32-bit check circuit using each multiplier. The totals are computed from the
+measured module counts (step 0) by swapping in the new `m_mul` twice; that joined netlist has
+not been built yet.
+
+| Joined 32-bit circuit | Gates | `eval` gas | Against the largest transaction seen (88,709,982) | Share of a 210 M block | Fee at 20,000,001 wei per gas |
+| --- | --- | --- | --- | --- | --- |
+| ABC-mapped `m_mul` (step 0; multiplier not proved) | 35,834 | 83.0 M to 88.9 M | -6.5% to +0.2% | 39.5% to 42.3% | 0.00166 to 0.00178 OKB |
+| `m_mul_tm` (proved) | 51,356 | 118.9 M to 127.3 M | +34.1% to +43.5% | 56.6% to 60.6% | 0.00238 to 0.00255 OKB |
+| `m_mul_tmc` (proved) | **41,128** | **95.3 M to 102.0 M** | **+7.4% to +15.0%** | 45.4% to 48.6% | 0.00191 to 0.00204 OKB |
+
+The cleaned multiplier closes step 2 at 32 bits for the `m_mul` module itself. To make the
+chain hold for a netlist that would be taped out, still to do:
+
+- Build the joined circuit with `m_mul_tmc` in place of the ABC-mapped `m_mul`.
+- Re-run step 3 (flat equals the joined modules) and the TAP-02 check on it.
+- Check that the five other modules are unchanged (their proofs in this section then carry
+  over); step 1 is about the RTL and does not change.
+
+Its gas, 95 M to 102 M, is over the largest transaction seen on X Layer. That transaction is
+not a cap (block limit 210 M), but the 32-bit choice in section 9 assumed 80.8 M to 86.7 M, so
+this needs the owner's decision.
+
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
 The first fact (`cn_raise`: b1 < b2 gives net(b2) >= net(b1)) failed at the 960,000 yuan edge

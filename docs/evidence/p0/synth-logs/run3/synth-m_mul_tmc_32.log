@@ -1,0 +1,63 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70 (git sha1 28ba3cb92, Release, Clang /workspace/YoWASP/yosys/wasi-sdk-33.0-x86_64-linux/share/cmake/../..//bin/clang++ 22.1.0)
+
+-- Running command `
+    read_json out/m_mul_tmc_32.raw.json; hierarchy -top m_mul_tm_32; opt_clean -purge;
+    select -assert-none t:* t:$_NAND_ t:$_NOT_ %u %d;
+    tee -o out/m_mul_tmc_32.stat.txt stat;
+    rename m_mul_tm_32 m_mul_tmc_32;
+    write_verilog -noattr out/m_mul_tmc_32.nand.v;
+    write_json out/m_mul_tmc_32.json' --
+
+1. Executing JSON frontend.
+Importing module m_mul_tm_32 from JSON tree.
+
+2. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1. Analyzing design hierarchy..
+Top module:  \m_mul_tm_32
+
+2.2. Analyzing design hierarchy..
+Top module:  \m_mul_tm_32
+Removed 0 unused modules.
+
+3. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \m_mul_tm_32..
+Removed 0 unused cells and 3356 unused wires.
+<suppressed ~1 debug messages>
+
+4. Printing statistics.
+
+=== m_mul_tm_32 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+    10766 wires
+    18766 wire bits
+        3 public wires
+      128 public wire bits
+        3 ports
+      128 port bits
+    14969 cells
+    10599   $_NAND_
+     4370   $_NOT_
+
+Renaming module \m_mul_tm_32 to \m_mul_tmc_32.
+
+5. Executing Verilog backend.
+
+5.1. Executing BMUXMAP pass.
+
+5.2. Executing DEMUXMAP pass.
+Dumping module `\m_mul_tmc_32'.
+
+6. Executing JSON backend.
+
+End of script. Logfile hash: 835c8ec92d, time: 0.57s, user: 0.57s, system: 0.00s
+Yosys 0.70 (git sha1 28ba3cb92, Release, Clang /workspace/YoWASP/yosys/wasi-sdk-33.0-x86_64-linux/share/cmake/../..//bin/clang++ 22.1.0)
+Time spent: 59% 2x read_json (0 sec), 20% 2x write_json (0 sec), ...

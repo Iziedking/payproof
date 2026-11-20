@@ -3,7 +3,7 @@
 # Runs in the throwaway workdir on host-service after setup-yosys.sh.
 # Usage: bash synth-all.sh <yosys-binary> <group>...
 #   groups: wage | check | check-narrow | check-40 | compute-24 | compute-32 | compute-40 | mul-8
-#           | check-mod-8 | check-mod-32 | mul-tm-8 | mul-tm-32
+#           | check-mod-8 | check-mod-32 | mul-tm-8 | mul-tm-32 | mul-tmc-8 | mul-tmc-32
 #
 # Flow per circuit (Yosys 0.70 help pages read on the host, 2026-11-17):
 #   read_verilog; chparam; synth -flatten -top -noabc; abc -g NAND; opt_clean -purge; stat
@@ -92,6 +92,27 @@ synth_tm() { # name width
     "$(( (nand + not) * 7 ))" "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
 }
 
+# Same multiplier with redundant NOTs removed (not_cleanup.py), from the JSON written by
+# synth_tm. Needs group mul-tm-<w> to have run first in this workdir.
+synth_tmc() { # name width
+  local name="$1" width="$2" src="m_mul_tm_$2" t0 t1
+  t0=$(date +%s.%N)
+  python3 not_cleanup.py "out/$src.json" "$src" "out/$name.raw.json" | tee "logs/cleanup-$name.log"
+  "$YOSYS" -q -l "logs/synth-$name.log" -p "
+    read_json out/$name.raw.json; hierarchy -top $src; opt_clean -purge;
+    select -assert-none t:* t:\$_NAND_ t:\$_NOT_ %u %d;
+    tee -o out/$name.stat.txt stat;
+    rename $src ${name};
+    write_verilog -noattr out/$name.nand.v;
+    write_json out/$name.json"
+  t1=$(date +%s.%N)
+  local nand not
+  nand=$(awk '/\$_NAND_/ {print $1; exit}' "out/$name.stat.txt"); nand=${nand:-0}
+  not=$(awk '/\$_NOT_/ {print $1; exit}' "out/$name.stat.txt"); not=${not:-0}
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$name" "$width" "$nand" "$not" "$((nand + not))" \
+    "$(( (nand + not) * 7 ))" "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
+}
+
 for g in "$@"; do
   case "$g" in
     wage)
@@ -111,6 +132,8 @@ for g in "$@"; do
       synth mul_8 mul rtl/mul.v 8 "" ;;
     mul-tm-8|mul-tm-32)
       w="${g#mul-tm-}"; synth_tm "m_mul_tm_$w" "$w" ;;
+    mul-tmc-8|mul-tmc-32)
+      w="${g#mul-tmc-}"; synth_tmc "m_mul_tmc_$w" "$w" ;;
     check-mod-8|check-mod-32)
       w="${g#check-mod-}"; synth_mod "split_check_mod_$w" "$w" ;;
     *) echo "unknown group $g" >&2; exit 2 ;;

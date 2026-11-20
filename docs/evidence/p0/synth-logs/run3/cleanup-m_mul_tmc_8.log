@@ -1,0 +1,1 @@
+not_cleanup m_mul_tm_8: rounds=2 NAND 607 -> 607, NOT 539 -> 260, total 1146 -> 867

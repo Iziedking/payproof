@@ -1,0 +1,17 @@
+
+4. Printing statistics.
+
+=== m_mul_tm_32 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+    10766 wires
+    18766 wire bits
+        3 public wires
+      128 public wire bits
+        3 ports
+      128 port bits
+    14969 cells
+    10599   $_NAND_
+     4370   $_NOT_
+
