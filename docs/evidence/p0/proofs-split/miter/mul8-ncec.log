@@ -1,0 +1,35 @@
+======== ABC command line "&r proofs-split/miter/mul8.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =     838  cls =      0  lit =     838  unused =      16  proof =     0
+cst =      10  cls =     47  lit =      67  unused =     740  proof =     0
+cst =       2  cls =     42  lit =      46  unused =     766  proof =     0
+cst =       1  cls =     41  lit =      44  unused =     769  proof =     0
+cst =       1  cls =     41  lit =      44  unused =     769  proof =     0
+cst =       1  cls =     41  lit =      44  unused =     769  proof =     0
+cst =       1  cls =     41  lit =      44  unused =     769  proof =     0
+cst =       1  cls =     41  lit =      44  unused =     769  proof =     0
+cst =       1  cls =     41  lit =      44  unused =     769  proof =     0
+cst =       1  cls =     41  lit =      44  unused =     769  proof =     0
+  1 : P =      7. D =      0. F =     0. M =     375. And =     816. Time =     0.01 sec
+Switching into reduced mode.
+  2 : P =      5. D =      0. F =     0. M =     357. And =     799. Time =     0.00 sec
+Switching into normal mode.
+  3 : P =      5. D =      0. F =     3. M =       0. And =     788. Time =     0.09 sec
+  4 : P =      2. D =      0. F =     9. M =       0. And =     781. Time =     0.44 sec
+Increasing conflict limit to 10000.
+  5 : P =      4. D =      0. F =     5. M =       0. And =     658. Time =     3.41 sec
+Increasing conflict limit to 100000.
+  6 : P =      5. D =      0. F =     0. M =       0. And =       0. Time =     5.05 sec
+Network after reduction is empty.
+Performed 45 SAT calls: P = 28  D = 0  F = 17
+NBeg = 838. NEnd = 0. (Gain = 100.00 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.00 sec (  0.00 %)
+Sat  =     9.00 sec (  0.00 %)
+Pat  =     0.00 sec (  0.00 %)
+Time =     9.00 sec
+Networks are UNDECIDED after the new CEC engine.  Time =     9.00 sec
+Calling the old CEC engine.
+Original miter:   Nodes =      0.
+Initial SAT:      Nodes =      0.  Time =     0.01 sec
+Networks are equivalent.  Time =     9.01 sec

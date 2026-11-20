@@ -1,0 +1,37 @@
+======== ABC command line "&r proofs-split/alg-8/mul-mutant.aig; &polyn -v -S 0*o0+1*o1+2*o2+3*o3+4*o4+5*o5+6*o6+7*o7+8*o8+9*o9+10*o10+11*o11+12*o12+13*o13+14*o14+15*o15"
+Output signature with 16 monomials:
+  +2^0 * o0
+  +2^1 * o1
+  +2^2 * o2
+  +2^3 * o3
+  +2^4 * o4
+  +2^5 * o5
+  +2^6 * o6
+  +2^7 * o7
+  +2^8 * o8
+  +2^9 * o9
+  +2^10 * o10
+  +2^11 * o11
+  +2^12 * o12
+  +2^13 * o13
+  +2^14 * o14
+  +2^15 * o15
+HashC = 88. HashM = 13693.  Total = 29870. Left = 68.  Used = 68.  Time =     0.01 sec
+Input signature with 68 monomials:
+  -2^2 appears 1 times
+  -2^3 appears 3 times
+  +2^0 appears 1 times
+  +2^1 appears 2 times
+  +2^2 appears 3 times
+  +2^3 appears 4 times
+  +2^4 appears 4 times
+  +2^5 appears 7 times
+  +2^6 appears 7 times
+  +2^7 appears 8 times
+  +2^8 appears 7 times
+  +2^9 appears 6 times
+  +2^10 appears 5 times
+  +2^11 appears 4 times
+  +2^12 appears 3 times
+  +2^13 appears 2 times
+  +2^14 appears 1 times

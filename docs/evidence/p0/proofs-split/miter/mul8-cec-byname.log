@@ -1,0 +1,2 @@
+======== ABC command line "cec -T 900 -v proofs-split/alg-8/mul-gold.aig proofs-split/alg-8/mul-gate.aig"
+Networks are equivalent.  Time =    23.71 sec

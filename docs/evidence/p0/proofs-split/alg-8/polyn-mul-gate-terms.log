@@ -1,0 +1,83 @@
+======== ABC command line "&r proofs-split/alg-8/mul-gate.aig; &polyn -w -S 0*o0+1*o1+2*o2+3*o3+4*o4+5*o5+6*o6+7*o7+8*o8+9*o9+10*o10+11*o11+12*o12+13*o13+14*o14+15*o15"
+HashC = 87. HashM = 13689.  Total = 29858. Left = 64.  Used = 64.  Time =     0.01 sec
+Input signature with 64 monomials:
+  +2^0 appears 1 times
+  +2^1 appears 2 times
+  +2^2 appears 3 times
+  +2^3 appears 4 times
+  +2^4 appears 5 times
+  +2^5 appears 6 times
+  +2^6 appears 7 times
+  +2^7 appears 8 times
+  +2^8 appears 7 times
+  +2^9 appears 6 times
+  +2^10 appears 5 times
+  +2^11 appears 4 times
+  +2^12 appears 3 times
+  +2^13 appears 2 times
+  +2^14 appears 1 times
+Polynomial with 64 monomials:
+| +2^0 * i0 * i8
+| +2^1 * i0 * i9
+  +2^1 * i1 * i8
+| +2^2 * i0 * i10
+  +2^2 * i1 * i9
+  +2^2 * i2 * i8
+| +2^3 * i0 * i11
+  +2^3 * i1 * i10
+  +2^3 * i2 * i9
+  +2^3 * i3 * i8
+| +2^4 * i0 * i12
+  +2^4 * i1 * i11
+  +2^4 * i2 * i10
+  +2^4 * i3 * i9
+  +2^4 * i4 * i8
+| +2^5 * i0 * i13
+  +2^5 * i1 * i12
+  +2^5 * i2 * i11
+  +2^5 * i3 * i10
+  +2^5 * i4 * i9
+  +2^5 * i5 * i8
+| +2^6 * i0 * i14
+  +2^6 * i1 * i13
+  +2^6 * i2 * i12
+  +2^6 * i3 * i11
+  +2^6 * i4 * i10
+  +2^6 * i5 * i9
+  +2^6 * i6 * i8
+| +2^7 * i0 * i15
+  +2^7 * i1 * i14
+  +2^7 * i2 * i13
+  +2^7 * i3 * i12
+  +2^7 * i4 * i11
+  +2^7 * i5 * i10
+  +2^7 * i6 * i9
+  +2^7 * i7 * i8
+| +2^8 * i1 * i15
+  +2^8 * i2 * i14
+  +2^8 * i3 * i13
+  +2^8 * i4 * i12
+  +2^8 * i5 * i11
+  +2^8 * i6 * i10
+  +2^8 * i7 * i9
+| +2^9 * i2 * i15
+  +2^9 * i3 * i14
+  +2^9 * i4 * i13
+  +2^9 * i5 * i12
+  +2^9 * i6 * i11
+  +2^9 * i7 * i10
+| +2^10 * i3 * i15
+  +2^10 * i4 * i14
+  +2^10 * i5 * i13
+  +2^10 * i6 * i12
+  +2^10 * i7 * i11
+| +2^11 * i4 * i15
+  +2^11 * i5 * i14
+  +2^11 * i6 * i13
+  +2^11 * i7 * i12
+| +2^12 * i5 * i15
+  +2^12 * i6 * i14
+  +2^12 * i7 * i13
+| +2^13 * i6 * i15
+  +2^13 * i7 * i14
+| +2^14 * i7 * i15

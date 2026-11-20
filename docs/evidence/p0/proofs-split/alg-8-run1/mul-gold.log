@@ -1,0 +1,11 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+
+-- Running command `read_verilog rtl/mul.v; chparam -set W 8 mul; hierarchy -top mul;
+      proc; flatten; techmap; opt -fast; aigmap; write_aiger -symbols -map proofs-split/alg-8/mul-gold.map proofs-split/alg-8/mul-gold.aig' --
+ERROR: File `rtl/mul.v' not found or is a directory

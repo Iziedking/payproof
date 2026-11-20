@@ -1,0 +1,44 @@
+======== ABC command line "&r proofs-split/miter/check32.aig; &cec -m -v -T 3600"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =   46696  cls =      0  lit =   46696  unused =     128  proof =     0
+cst =     499  cls =   2239  lit =    3552  unused =   41033  proof =     0
+cst =     220  cls =   1944  lit =    2587  unused =   42293  proof =     0
+cst =     140  cls =   1907  lit =    2377  unused =   42540  proof =     0
+cst =     133  cls =   1888  lit =    2343  unused =   42593  proof =     0
+cst =     121  cls =   1886  lit =    2316  unused =   42622  proof =     0
+cst =     116  cls =   1881  lit =    2296  unused =   42647  proof =     0
+cst =     107  cls =   1883  lit =    2275  unused =   42666  proof =     0
+cst =     104  cls =   1884  lit =    2265  unused =   42675  proof =     0
+cst =      97  cls =   1887  lit =    2251  unused =   42686  proof =     0
+  1 : P =    304. D =      2. F =    29. M =   21673. And =   46027. Time =     1.05 sec
+Switching into reduced mode.
+  2 : P =     29. D =      6. F =    64. M =   20922. And =   45963. Time =     3.73 sec
+Increasing conflict limit to 10000.
+  3 : P =     23. D =      7. F =    74. M =   20873. And =   45869. Time =    82.22 sec
+Increasing conflict limit to 100000.
+  4 : P =     34. D =      5. F =    79. M =   20324. And =   45747. Time =  2141.45 sec
+Performed 656 SAT calls: P = 390  D = 20  F = 246
+NBeg = 46696. NEnd = 45747. (Gain =   2.03 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.08 sec (  0.00 %)
+Sat  =  2228.38 sec (  0.22 %)
+Pat  =     0.01 sec (  0.00 %)
+Time = -2066.45 sec
+Networks are UNDECIDED after the new CEC engine.  Time =  2228.52 sec
+Calling the old CEC engine.
+Original miter:   Nodes =  45750.
+Initial SAT:      Nodes =  45750.  Time =     0.18 sec
+Rewriting:        Nodes =  44595.  Time =     0.58 sec
+Balance-X:        Nodes =  50795.  Time =     0.02 sec
+Fraiging (i=1):   Nodes =  50754.  Time =     0.26 sec
+Rewriting:        Nodes =  44969.  Time =     0.32 sec
+Balance-X:        Nodes =  50600.  Time =     0.02 sec
+Fraiging (i=2):   Nodes =  50596.  Time =     0.99 sec
+Rewriting:        Nodes =  44888.  Time =     0.32 sec
+Balance-X:        Nodes =  50514.  Time =     0.02 sec
+Fraiging (i=3):   Nodes =  50486.  Time =    10.30 sec
+Rewriting:        Nodes =  44829.  Time =     0.36 sec
+Balance-X:        Nodes =  50450.  Time =     0.02 sec
+Fraiging (i=4):   Nodes =  50191.  Time =   115.87 sec
+Rewriting:        Nodes =  44586.  Time =     0.28 sec
+Balance-X:        Nodes =  50173.  Time =     0.02 sec

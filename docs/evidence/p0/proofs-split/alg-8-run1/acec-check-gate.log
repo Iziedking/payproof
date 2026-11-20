@@ -1,0 +1,425 @@
+======== ABC command line "&acec -T 600 -v proofs-split/cec-8/gold.aig proofs-split/cec-8/gate.aig"
+Xor node 2548 belongs to Tree 59 and Tree 58.
+Xor node 2490 belongs to Tree 56 and Tree 55.
+Xor node 906 belongs to Tree 64 and Tree 38.
+Xor node 2394 belongs to Tree 64 and Tree 38.
+Xor node 863 belongs to Tree 63 and Tree 37.
+Xor node 2389 belongs to Tree 63 and Tree 37.
+Xor node 812 belongs to Tree 62 and Tree 36.
+Xor node 2381 belongs to Tree 62 and Tree 36.
+Xor node 810 belongs to Tree 61 and Tree 35.
+Xor node 2376 belongs to Tree 61 and Tree 35.
+Xor node 2360 belongs to Tree 60 and Tree 34.
+Xor node 2362 belongs to Tree 60 and Tree 34.
+Xor node 906 belongs to Tree 64 and Tree 60.
+Xor node 2353 belongs to Tree 59 and Tree 33.
+Xor node 2355 belongs to Tree 59 and Tree 33.
+Xor node 2343 belongs to Tree 58 and Tree 32.
+Xor node 2345 belongs to Tree 58 and Tree 32.
+Xor node 2336 belongs to Tree 57 and Tree 31.
+Xor node 2338 belongs to Tree 57 and Tree 31.
+Xor node 2323 belongs to Tree 56 and Tree 30.
+Xor node 2325 belongs to Tree 56 and Tree 30.
+Xor node 2313 belongs to Tree 55 and Tree 29.
+Xor node 2318 belongs to Tree 55 and Tree 29.
+Xor node 2303 belongs to Tree 54 and Tree 28.
+Xor node 2305 belongs to Tree 54 and Tree 28.
+Xor node 2291 belongs to Tree 53 and Tree 27.
+Xor node 2298 belongs to Tree 53 and Tree 27.
+Xor node 2272 belongs to Tree 52 and Tree 26.
+Xor node 2274 belongs to Tree 52 and Tree 26.
+Xor node 2262 belongs to Tree 51 and Tree 25.
+Xor node 2267 belongs to Tree 51 and Tree 25.
+Xor node 2249 belongs to Tree 50 and Tree 24.
+Xor node 2251 belongs to Tree 50 and Tree 24.
+Xor node 2237 belongs to Tree 49 and Tree 23.
+Xor node 2244 belongs to Tree 49 and Tree 23.
+Xor node 2219 belongs to Tree 48 and Tree 22.
+Xor node 2221 belongs to Tree 48 and Tree 22.
+Xor node 2209 belongs to Tree 47 and Tree 21.
+Xor node 2214 belongs to Tree 47 and Tree 21.
+Xor node 2196 belongs to Tree 46 and Tree 20.
+Xor node 2198 belongs to Tree 46 and Tree 20.
+Xor node 2182 belongs to Tree 45 and Tree 19.
+Xor node 2191 belongs to Tree 45 and Tree 19.
+Xor node 2162 belongs to Tree 44 and Tree 18.
+Xor node 2164 belongs to Tree 44 and Tree 18.
+Xor node 2152 belongs to Tree 43 and Tree 17.
+Xor node 2157 belongs to Tree 43 and Tree 17.
+Xor node 2139 belongs to Tree 42 and Tree 16.
+Xor node 2141 belongs to Tree 42 and Tree 16.
+Xor node 2127 belongs to Tree 41 and Tree 15.
+Xor node 2134 belongs to Tree 41 and Tree 15.
+Xor node 2112 belongs to Tree 40 and Tree 14.
+Xor node 2114 belongs to Tree 40 and Tree 14.
+Xor node 1086 belongs to Tree 39 and Tree 13.
+Xor node 2107 belongs to Tree 39 and Tree 13.
+Xor node 1781 belongs to Tree 64 and Tree 63.
+Xor node 1731 belongs to Tree 64 and Tree 62.
+Xor node 1780 belongs to Tree 63 and Tree 62.
+Xor node 1731 belongs to Tree 64 and Tree 61.
+Xor node 1780 belongs to Tree 63 and Tree 12.
+Xor node 1679 belongs to Tree 63 and Tree 61.
+Xor node 1781 belongs to Tree 64 and Tree 60.
+Xor node 1677 belongs to Tree 62 and Tree 60.
+Xor node 1679 belongs to Tree 63 and Tree 60.
+Xor node 1780 belongs to Tree 63 and Tree 59.
+Xor node 1611 belongs to Tree 60 and Tree 58.
+Xor node 1648 belongs to Tree 61 and Tree 59.
+Xor node 1677 belongs to Tree 62 and Tree 59.
+Xor node 1648 belongs to Tree 61 and Tree 58.
+Xor node 1731 belongs to Tree 64 and Tree 58.
+Xor node 1679 belongs to Tree 63 and Tree 57.
+Xor node 1584 belongs to Tree 59 and Tree 57.
+Xor node 1611 belongs to Tree 60 and Tree 57.
+Xor node 1677 belongs to Tree 62 and Tree 56.
+Xor node 1520 belongs to Tree 57 and Tree 55.
+Xor node 1557 belongs to Tree 58 and Tree 56.
+Xor node 1584 belongs to Tree 59 and Tree 56.
+Xor node 1648 belongs to Tree 61 and Tree 55.
+Xor node 1781 belongs to Tree 64 and Tree 55.
+Xor node 1557 belongs to Tree 58 and Tree 55.
+Xor node 1584 belongs to Tree 59 and Tree 11.
+Xor node 1611 belongs to Tree 60 and Tree 54.
+Xor node 1520 belongs to Tree 57 and Tree 54.
+Xor node 1526 belongs to Tree 56 and Tree 54.
+Xor node 1780 belongs to Tree 63 and Tree 54.
+Xor node 1584 belongs to Tree 59 and Tree 53.
+Xor node 1731 belongs to Tree 64 and Tree 53.
+Xor node 1506 belongs to Tree 40 and Tree 51.
+Xor node 1526 belongs to Tree 56 and Tree 53.
+Xor node 1531 belongs to Tree 55 and Tree 53.
+Xor node 1488 belongs to Tree 12 and Tree 64.
+Xor node 1491 belongs to Tree 12 and Tree 64.
+Xor node 1557 belongs to Tree 58 and Tree 52.
+Xor node 1679 belongs to Tree 63 and Tree 52.
+Xor node 1677 belongs to Tree 62 and Tree 51.
+Xor node 1531 belongs to Tree 55 and Tree 52.
+Xor node 1508 belongs to Tree 41 and Tree 52.
+Xor node 1515 belongs to Tree 54 and Tree 52.
+Xor node 1520 belongs to Tree 57 and Tree 51.
+Xor node 1648 belongs to Tree 61 and Tree 50.
+Xor node 1506 belongs to Tree 40 and Tree 49.
+Xor node 1513 belongs to Tree 53 and Tree 51.
+Xor node 1515 belongs to Tree 54 and Tree 51.
+Xor node 1526 belongs to Tree 56 and Tree 50.
+Xor node 1611 belongs to Tree 60 and Tree 49.
+Xor node 1506 belongs to Tree 40 and Tree 48.
+Xor node 1508 belongs to Tree 41 and Tree 50.
+Xor node 1513 belongs to Tree 53 and Tree 50.
+Xor node 1508 belongs to Tree 41 and Tree 49.
+Xor node 1531 belongs to Tree 55 and Tree 49.
+Xor node 1584 belongs to Tree 59 and Tree 48.
+Xor node 1515 belongs to Tree 54 and Tree 48.
+Xor node 1513 belongs to Tree 53 and Tree 47.
+Xor node 1557 belongs to Tree 58 and Tree 47.
+Xor node 1413 belongs to Tree 11 and Tree 58.
+Xor node 1497 belongs to Tree 11 and Tree 58.
+Xor node 1508 belongs to Tree 41 and Tree 46.
+Xor node 1520 belongs to Tree 57 and Tree 46.
+Xor node 1506 belongs to Tree 40 and Tree 45.
+Xor node 1526 belongs to Tree 56 and Tree 45.
+Xor node 1531 belongs to Tree 55 and Tree 44.
+Xor node 1515 belongs to Tree 54 and Tree 43.
+Xor node 1513 belongs to Tree 53 and Tree 42.
+Xor node 812 belongs to Tree 62 and Tree 58.
+Xor node 982 belongs to Tree 59 and Tree 58.
+Xor node 810 belongs to Tree 61 and Tree 57.
+Xor node 863 belongs to Tree 63 and Tree 59.
+Xor node 906 belongs to Tree 64 and Tree 59.
+Xor node 812 belongs to Tree 62 and Tree 57.
+Xor node 863 belongs to Tree 63 and Tree 57.
+Xor node 812 belongs to Tree 62 and Tree 56.
+Xor node 863 belongs to Tree 63 and Tree 10.
+Xor node 906 belongs to Tree 64 and Tree 55.
+Xor node 714 belongs to Tree 58 and Tree 54.
+Xor node 720 belongs to Tree 59 and Tree 55.
+Xor node 902 belongs to Tree 56 and Tree 55.
+Xor node 768 belongs to Tree 60 and Tree 56.
+Xor node 810 belongs to Tree 61 and Tree 56.
+Xor node 863 belongs to Tree 63 and Tree 54.
+Xor node 720 belongs to Tree 59 and Tree 54.
+Xor node 768 belongs to Tree 60 and Tree 54.
+Xor node 720 belongs to Tree 59 and Tree 53.
+Xor node 812 belongs to Tree 62 and Tree 53.
+Xor node 572 belongs to Tree 55 and Tree 51.
+Xor node 810 belongs to Tree 61 and Tree 52.
+Xor node 654 belongs to Tree 56 and Tree 52.
+Xor node 761 belongs to Tree 53 and Tree 52.
+Xor node 489 belongs to Tree 10 and Tree 62.
+Xor node 492 belongs to Tree 10 and Tree 62.
+Xor node 768 belongs to Tree 60 and Tree 51.
+Xor node 696 belongs to Tree 57 and Tree 53.
+Xor node 714 belongs to Tree 58 and Tree 53.
+Xor node 654 belongs to Tree 56 and Tree 51.
+Xor node 696 belongs to Tree 57 and Tree 51.
+Xor node 720 belongs to Tree 59 and Tree 50.
+Xor node 714 belongs to Tree 58 and Tree 49.
+Xor node 654 belongs to Tree 56 and Tree 50.
+Xor node 696 belongs to Tree 57 and Tree 9.
+Xor node 696 belongs to Tree 57 and Tree 48.
+Xor node 516 belongs to Tree 53 and Tree 49.
+Xor node 642 belongs to Tree 50 and Tree 49.
+Xor node 520 belongs to Tree 52 and Tree 48.
+Xor node 654 belongs to Tree 56 and Tree 47.
+Xor node 414 belongs to Tree 9 and Tree 56.
+Xor node 498 belongs to Tree 9 and Tree 56.
+Xor node 539 belongs to Tree 54 and Tree 50.
+Xor node 572 belongs to Tree 55 and Tree 50.
+Xor node 516 belongs to Tree 53 and Tree 48.
+Xor node 539 belongs to Tree 54 and Tree 48.
+Xor node 507 belongs to Tree 49 and Tree 45.
+Xor node 572 belongs to Tree 55 and Tree 46.
+Xor node 516 belongs to Tree 53 and Tree 47.
+Xor node 539 belongs to Tree 54 and Tree 8.
+Xor node 507 belongs to Tree 49 and Tree 44.
+Xor node 539 belongs to Tree 54 and Tree 45.
+Xor node 509 belongs to Tree 50 and Tree 46.
+Xor node 564 belongs to Tree 47 and Tree 46.
+Xor node 520 belongs to Tree 52 and Tree 47.
+Xor node 525 belongs to Tree 51 and Tree 47.
+Xor node 520 belongs to Tree 52 and Tree 43.
+Xor node 507 belongs to Tree 49 and Tree 43.
+Xor node 509 belongs to Tree 50 and Tree 44.
+Xor node 516 belongs to Tree 53 and Tree 44.
+Xor node 509 belongs to Tree 50 and Tree 45.
+Xor node 525 belongs to Tree 51 and Tree 45.
+Xor node 525 belongs to Tree 51 and Tree 42.
+Xor node 509 belongs to Tree 50 and Tree 41.
+Xor node 507 belongs to Tree 49 and Tree 40.
+Xor node 253 belongs to Tree 8 and Tree 53.
+Xor node 513 belongs to Tree 8 and Tree 53.
+Detected 209 full-adders and 310 half-adders.  Found 747 XOR-cuts.  Time =     0.00 sec
+Xor node 1780 belongs to Tree 1 and Tree 2.
+Xor node 1731 belongs to Tree 2 and Tree 3.
+Xor node 1780 belongs to Tree 1 and Tree 0.
+Xor node 1679 belongs to Tree 1 and Tree 3.
+Xor node 1781 belongs to Tree 1 and Tree 4.
+Xor node 1677 belongs to Tree 2 and Tree 4.
+Xor node 1679 belongs to Tree 1 and Tree 4.
+Xor node 1780 belongs to Tree 1 and Tree 5.
+Xor node 1648 belongs to Tree 3 and Tree 5.
+Xor node 1677 belongs to Tree 2 and Tree 5.
+Xor node 1584 belongs to Tree 5 and Tree 6.
+Xor node 1488 belongs to Tree 0 and Tree 2.
+Xor node 1491 belongs to Tree 0 and Tree 2.
+Xor node 863 belongs to Tree 1 and Tree 5.
+Xor node 906 belongs to Tree 4 and Tree 5.
+The adder tree has 116 internal cut points. There is no internal fanouts.
+Adders:
+    0 :  3  { 235=(1488,1466) *421=(2394,2088) *517=(2992,2753) }
+    1 :  6  { *139=(863,492) 231=(1458,1431) 234=(1486,1472) *362=(2087,2063) 419=(2389,2093) 515=(2987,2755) }
+    2 : 10  { 61=(489,467) *127=(812,493) 225=(1423,1377) *226=(1437,1435) 230=(1456,1441) *233=(1484,1473) *354=(2062,2018) 361=(2085,2068) *417=(2381,2094) 513=(2979,2971) }
+    3 : 13  { 57=(459,432) 60=(487,473) *126=(810,494) 219=(1369,1324) 220=(1387,1393) 224=(1421,1391) 229=(1454,1446) *232=(1482,1474) *266=(1648,1495) *347=(2022,2020) 353=(2060,2026) *360=(2083,2069) *415=(2376,2095) }
+    4 : 20  { 51=(424,378) *52=(438,436) 56=(457,442) *59=(485,474) *117=(768,495) 212=(1316,1268) 213=(1334,1340) 218=(1367,1338) *221=(1397,1395) 223=(1419,1401) *228=(1452,1447) *339=(1988,1986) *346=(2017,1989) *348=(2030,2028) 352=(2058,2034) *359=(2081,2070) *412=(2360,1073) *413=(2362,2096) *477=(2728,2610) 510=(2957,2949) }
+    5 :  6  { 206=(1260,1215) 207=(1278,1284) 211=(1314,1282) 214=(1348,1354) 217=(1365,1352) 222=(1417,1406) }
+    6 :  0  { }
+Inputs:
+    0 :  7  { +17 +906 +1459 +1460 +1462 +1731 +1781 }
+    1 : 10  { +18 +490 +491 +1424 +1425 +1427 +1468 +1679 +1780 +1781 }
+    2 : 12  { +19 +460 +461 +463 +1370 +1371 +1373 +1433 +1434 +1677 +1731 +1780 }
+    3 : 13  { +425 +426 +428 +469 +1317 +1318 +1320 +1379 +1380 +1384 +1494 +1679 +1731 }
+    4 : 20  { +17 +21 +371 +372 +374 +434 +435 +906 +1261 +1262 +1264 +1326 +1327 +1331 +1394 +1611 +1677 +1679 +1781 -2757 }
+    5 :  8  { +1208 +1209 +1211 +1270 +1271 +1275 +1341 +1345 }
+    6 :  9  { +1157 +1158 +1217 +1218 +1222 +1285 +1289 +1497 +1584 }
+Outputs:
+    0 :  3  { +2992 +2394 +1488 }
+    1 :  3  { +2987 +2389 +1486 }
+    2 :  3  { +2979 +2381 +1484 }
+    3 :  3  { -2971 +2376 +810 }
+    4 :  5  { +2957 +2362 +1495 +1474 +1452 }
+    5 : 16  { -2949 +2610 +2096 +2070 -2034 +2028 +1989 +1986 +1447 +1417 +1073 +495 +474 -442 +436 -378 }
+    6 :  1  { +1828 }
+Xor node 2470 belongs to Tree 90 and Tree 89.
+Xor node 2598 belongs to Tree 90 and Tree 89.
+Xor node 2405 belongs to Tree 78 and Tree 71.
+Xor node 2406 belongs to Tree 78 and Tree 71.
+Xor node 2277 belongs to Tree 80 and Tree 70.
+Xor node 2418 belongs to Tree 80 and Tree 70.
+Xor node 2317 belongs to Tree 82 and Tree 69.
+Xor node 2426 belongs to Tree 82 and Tree 69.
+Xor node 2317 belongs to Tree 82 and Tree 67.
+Xor node 2426 belongs to Tree 82 and Tree 67.
+Xor node 2277 belongs to Tree 80 and Tree 66.
+Xor node 2418 belongs to Tree 80 and Tree 66.
+Xor node 2215 belongs to Tree 79 and Tree 65.
+Xor node 2234 belongs to Tree 79 and Tree 65.
+Xor node 2405 belongs to Tree 78 and Tree 64.
+Xor node 2406 belongs to Tree 78 and Tree 64.
+Xor node 2329 belongs to Tree 85 and Tree 62.
+Xor node 2329 belongs to Tree 85 and Tree 60.
+Xor node 2226 belongs to Tree 81 and Tree 57.
+Xor node 2215 belongs to Tree 79 and Tree 56.
+Xor node 2234 belongs to Tree 79 and Tree 56.
+Xor node 2226 belongs to Tree 81 and Tree 55.
+Xor node 2031 belongs to Tree 79 and Tree 41.
+Xor node 1609 belongs to Tree 76 and Tree 38.
+Xor node 1908 belongs to Tree 76 and Tree 38.
+Xor node 541 belongs to Tree 35 and Tree 34.
+Xor node 975 belongs to Tree 35 and Tree 34.
+Xor node 1977 belongs to Tree 72 and Tree 33.
+Xor node 509 belongs to Tree 33 and Tree 32.
+Xor node 984 belongs to Tree 33 and Tree 32.
+Xor node 509 belongs to Tree 33 and Tree 31.
+Xor node 984 belongs to Tree 33 and Tree 31.
+Xor node 1967 belongs to Tree 73 and Tree 30.
+Xor node 494 belongs to Tree 30 and Tree 29.
+Xor node 521 belongs to Tree 30 and Tree 29.
+Xor node 1479 belongs to Tree 94 and Tree 27.
+Xor node 1946 belongs to Tree 94 and Tree 27.
+Xor node 1479 belongs to Tree 94 and Tree 25.
+Xor node 1946 belongs to Tree 94 and Tree 25.
+Xor node 1609 belongs to Tree 76 and Tree 23.
+Xor node 1908 belongs to Tree 76 and Tree 23.
+Xor node 1871 belongs to Tree 92 and Tree 88.
+Xor node 1820 belongs to Tree 85 and Tree 22.
+Xor node 1838 belongs to Tree 85 and Tree 22.
+Xor node 1820 belongs to Tree 85 and Tree 21.
+Xor node 1838 belongs to Tree 85 and Tree 21.
+Xor node 1777 belongs to Tree 83 and Tree 20.
+Xor node 1801 belongs to Tree 83 and Tree 20.
+Xor node 1643 belongs to Tree 90 and Tree 19.
+Xor node 1777 belongs to Tree 83 and Tree 18.
+Xor node 1801 belongs to Tree 83 and Tree 18.
+Xor node 1595 belongs to Tree 88 and Tree 84.
+Xor node 1675 belongs to Tree 91 and Tree 82.
+Xor node 1561 belongs to Tree 87 and Tree 83.
+Xor node 1595 belongs to Tree 88 and Tree 83.
+Xor node 1619 belongs to Tree 85 and Tree 83.
+Xor node 1643 belongs to Tree 90 and Tree 81.
+Xor node 1530 belongs to Tree 50 and Tree 82.
+Xor node 1561 belongs to Tree 87 and Tree 82.
+Xor node 1595 belongs to Tree 88 and Tree 82.
+Xor node 1619 belongs to Tree 85 and Tree 80.
+Xor node 1508 belongs to Tree 85 and Tree 81.
+Xor node 1530 belongs to Tree 50 and Tree 81.
+Xor node 1561 belongs to Tree 87 and Tree 81.
+Xor node 1595 belongs to Tree 88 and Tree 79.
+Xor node 1481 belongs to Tree 84 and Tree 80.
+Xor node 1508 belongs to Tree 85 and Tree 80.
+Xor node 1530 belongs to Tree 50 and Tree 80.
+Xor node 1561 belongs to Tree 87 and Tree 78.
+Xor node 1326 belongs to Tree 83 and Tree 79.
+Xor node 1481 belongs to Tree 84 and Tree 79.
+Xor node 1508 belongs to Tree 85 and Tree 79.
+Xor node 1530 belongs to Tree 50 and Tree 77.
+Xor node 1406 belongs to Tree 82 and Tree 78.
+Xor node 1432 belongs to Tree 82 and Tree 78.
+Xor node 1326 belongs to Tree 83 and Tree 78.
+Xor node 1481 belongs to Tree 84 and Tree 78.
+Xor node 1406 belongs to Tree 82 and Tree 16.
+Xor node 1432 belongs to Tree 82 and Tree 16.
+Xor node 1451 belongs to Tree 81 and Tree 77.
+Xor node 1326 belongs to Tree 83 and Tree 77.
+Xor node 1406 belongs to Tree 82 and Tree 77.
+Xor node 1432 belongs to Tree 82 and Tree 77.
+Xor node 1481 belongs to Tree 84 and Tree 15.
+Xor node 1406 belongs to Tree 82 and Tree 14.
+Xor node 1432 belongs to Tree 82 and Tree 14.
+Xor node 1483 belongs to Tree 16 and Tree 14.
+Xor node 1326 belongs to Tree 83 and Tree 74.
+Xor node 1418 belongs to Tree 79 and Tree 15.
+Xor node 1483 belongs to Tree 16 and Tree 15.
+Xor node 1421 belongs to Tree 80 and Tree 16.
+Xor node 1451 belongs to Tree 81 and Tree 16.
+Xor node 1418 belongs to Tree 79 and Tree 94.
+Xor node 1416 belongs to Tree 78 and Tree 13.
+Xor node 1451 belongs to Tree 81 and Tree 13.
+Xor node 1406 belongs to Tree 82 and Tree 73.
+Xor node 1432 belongs to Tree 82 and Tree 73.
+Xor node 1406 belongs to Tree 82 and Tree 12.
+Xor node 1432 belongs to Tree 82 and Tree 12.
+Xor node 1406 belongs to Tree 82 and Tree 11.
+Xor node 1432 belongs to Tree 82 and Tree 11.
+Xor node 1416 belongs to Tree 78 and Tree 74.
+Xor node 1418 belongs to Tree 79 and Tree 74.
+Xor node 1421 belongs to Tree 80 and Tree 74.
+Xor node 541 belongs to Tree 35 and Tree 8.
+Xor node 975 belongs to Tree 35 and Tree 8.
+Xor node 548 belongs to Tree 53 and Tree 51.
+Xor node 565 belongs to Tree 52 and Tree 51.
+Xor node 526 belongs to Tree 52 and Tree 48.
+Xor node 548 belongs to Tree 53 and Tree 48.
+Xor node 511 belongs to Tree 51 and Tree 49.
+Xor node 526 belongs to Tree 52 and Tree 49.
+Xor node 590 belongs to Tree 53 and Tree 49.
+Xor node 498 belongs to Tree 48 and Tree 47.
+Xor node 511 belongs to Tree 51 and Tree 47.
+Xor node 565 belongs to Tree 52 and Tree 47.
+Xor node 479 belongs to Tree 49 and Tree 46.
+Xor node 498 belongs to Tree 48 and Tree 46.
+Xor node 467 belongs to Tree 47 and Tree 45.
+Xor node 479 belongs to Tree 49 and Tree 45.
+Xor node 548 belongs to Tree 53 and Tree 46.
+Xor node 465 belongs to Tree 46 and Tree 44.
+Xor node 467 belongs to Tree 47 and Tree 44.
+Xor node 526 belongs to Tree 52 and Tree 45.
+Xor node 660 belongs to Tree 51 and Tree 45.
+Xor node 461 belongs to Tree 45 and Tree 43.
+Xor node 465 belongs to Tree 46 and Tree 43.
+Xor node 511 belongs to Tree 51 and Tree 44.
+Xor node 623 belongs to Tree 48 and Tree 44.
+Xor node 455 belongs to Tree 24 and Tree 42.
+Xor node 473 belongs to Tree 44 and Tree 42.
+Xor node 461 belongs to Tree 45 and Tree 42.
+Xor node 498 belongs to Tree 48 and Tree 43.
+Xor node 590 belongs to Tree 53 and Tree 43.
+Xor node 455 belongs to Tree 24 and Tree 40.
+Xor node 457 belongs to Tree 43 and Tree 6.
+Xor node 473 belongs to Tree 44 and Tree 6.
+Xor node 479 belongs to Tree 49 and Tree 42.
+Xor node 565 belongs to Tree 52 and Tree 42.
+Xor node 457 belongs to Tree 43 and Tree 40.
+Xor node 467 belongs to Tree 47 and Tree 6.
+Xor node 548 belongs to Tree 53 and Tree 6.
+Xor node 455 belongs to Tree 24 and Tree 37.
+Xor node 465 belongs to Tree 46 and Tree 40.
+Xor node 526 belongs to Tree 52 and Tree 40.
+Xor node 461 belongs to Tree 45 and Tree 37.
+Xor node 511 belongs to Tree 51 and Tree 37.
+Xor node 494 belongs to Tree 30 and Tree 5.
+Xor node 521 belongs to Tree 30 and Tree 5.
+Xor node 473 belongs to Tree 44 and Tree 39.
+Xor node 498 belongs to Tree 48 and Tree 39.
+Xor node 457 belongs to Tree 43 and Tree 35.
+Xor node 479 belongs to Tree 49 and Tree 35.
+Xor node 465 belongs to Tree 46 and Tree 4.
+Xor node 473 belongs to Tree 44 and Tree 28.
+Xor node 461 belongs to Tree 45 and Tree 33.
+Xor node 455 belongs to Tree 24 and Tree 36.
+Xor node 467 belongs to Tree 47 and Tree 36.
+Xor node 457 belongs to Tree 43 and Tree 26.
+Detected 195 full-adders and 238 half-adders.  Found 600 XOR-cuts.  Time =     0.00 sec
+Xor node 455 belongs to Tree 5 and Tree 0.
+The adder tree has 32 internal cut points. There is no internal fanouts.
+Adders:
+    0 :  5  { 12=(152,110) 19=(199,158) *26=(244,200) 54=(467,445) *64=(502,483) }
+    1 :  4  { *61=(492,484) 219=(1497,1447) 229=(1558,1922) 300=(1967,1921) }
+    2 :  3  { *59=(486,470) *65=(506,487) 306=(1983,986) }
+    3 :  2  { *60=(489,474) 299=(1960,990) }
+    4 :  1  { 295=(1951,992) }
+    5 :  1  { *292=(1944,993) }
+    6 :  0  { }
+Inputs:
+    0 : 10  { -97 +99 +106 -150 -154 -197 -242 -441 +480 +482 }
+    1 :  8  { -465 +1428 +1441 -1443 -1495 +1524 +1556 -1917 }
+    2 :  4  { +461 +469 +504 -984 }
+    3 :  1  { +473 }
+    4 :  1  { +457 }
+    5 :  1  { -455 }
+    6 :  1  { +2691 }
+Outputs:
+    0 :  2  { +502 +467 }
+    1 :  6  { +1967 +492 -445 +200 -158 -110 }
+    2 :  4  { +1983 -1922 -1921 -1447 }
+    3 :  1  { +1960 }
+    4 :  1  { +1951 }
+    5 :  1  { +1944 }
+    6 :  1  { +2694 }
+Finished computing equivalent nodes.  Time =     0.10 sec
+Moved 0 pairs of PPs to normalize the matrix.
+Moved 0 pairs of PPs to normalize the matrix.
+Box0: Matched 0 entries out of 79.
+Box1: Matched 0 entries out of 26.
+Cannot match arithmetic boxes in LHS and RHS. Trying regular CEC.
+Networks are equivalent.  Time =    58.89 sec

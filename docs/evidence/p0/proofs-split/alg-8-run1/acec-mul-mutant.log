@@ -1,0 +1,2 @@
+======== ABC command line "&acec -T 600 -v proofs-split/alg-8/mul-gold.aig proofs-split/alg-8/mul-mutant.aig"
+Error: Cannot open input file "proofs-split/alg-8/mul-gold.aig". 

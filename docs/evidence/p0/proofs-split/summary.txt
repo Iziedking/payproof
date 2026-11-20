@@ -8,3 +8,29 @@ smt unique_wrong z3 sat 1.1 rc=0
 smt unique_wrong cvc5 sat 0.1 rc=0
 cec 8 mutant [Networks are NOT EQUIVALENT. Time = 2.88 sec] 3.1 rc=0
 cec 8 gold [no verdict line] 960.1 rc=124
+alg 8 cec-mul-mutant 0.1 rc=0
+alg 8 acec-mul-gate 0.0 rc=0
+alg 8 acec-mul-mutant 0.0 rc=0
+alg 8 polyn-mul-gold 0.0 rc=0
+alg 8 polyn-mul-gate 0.0 rc=0
+alg 8 polyn-mul-mutant 0.0 rc=0
+alg 8 acec-check-gate 59.0 rc=0
+alg 8 acec-check-mutant 0.1 rc=0
+alg 8 cec-mul-mutant 0.1 rc=0
+alg 8 acec-mul-gate 0.1 rc=0
+alg 8 acec-mul-mutant 0.0 rc=0
+alg 8 polyn-mul-gold 16.3 rc=0
+alg 8 polyn-mul-gate 0.0 rc=0
+alg 8 polyn-mul-mutant 0.0 rc=0
+alg 8 polyn-mul-gate-terms 0.0 rc=0
+alg 8 acec-check-gate 60.2 rc=0
+alg 8 acec-check-mutant 0.1 rc=0
+acec 32 mutant undecided 0.3 rc=134
+acec 32 gold undecided 0.3 rc=134
+miter mul8 &cec [Networks are UNDECIDED after the new CEC engine. Time = 9.00 sec] 9.1 rc=0
+miter mul8mut &cec [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] 0.0 rc=0
+miter check8 &cec [Networks are UNDECIDED after the new CEC engine. Time = 67.94 sec] 68.0 rc=0
+miter check8mut &cec [Disproved at least one output of the miter (zero-based number 0).] 0.1 rc=0
+miter mul8 cec-byname [Networks are equivalent. Time = 23.71 sec] 23.7 rc=0
+miter check32 &cec [Networks are UNDECIDED after the new CEC engine. Time = 2228.52 sec] 3660.0 rc=124
+miter check32mut &cec [Networks are UNDECIDED after the new CEC engine. Time = 2093.09 sec] 3660.0 rc=124

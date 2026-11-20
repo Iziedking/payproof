@@ -332,6 +332,96 @@ the NAND netlist equals the RTL is not proved at any width. So nothing is yet pr
 netlist that would be taped out. The trigger for spike C (B stalls) is met; spike C waits for the
 owner.
 
+### split-v1 check facts, spike C (arithmetic-aware checkers)
+
+The owner started spike C on 2026-11-19. Before splitting the RTL into modules, the plan was to
+try ABC's arithmetic-aware commands on the whole circuit, after first testing each command on a
+plain multiplier whose answer is known. Tools as in spike B, plus `&acec`, `&polyn` and `&cec`
+from the same `yosys-abc`. Source read for `&acec`: `src/proof/acec/acecCore.c`, YosysHQ/abc
+branch `yosys-experimental` (adder-tree matching, then ordinary equivalence checking; its Booth
+path is disabled). Source read for the `&cec` messages: `src/proof/cec/cecCec.c`, same branch,
+read 2026-11-20. No source was found for the `&polyn -S` wrapper, so its output is read only
+against the calibration below.
+
+**Calibration circuit.** `spikes/p0/rtl/mul.v`, an 8x8 multiplier, synthesised on host-service
+(run `p0-synth-mul-8`) to `mul_8`: 463 NAND and 226 NOT, 689 gates. The mutant changes one gate,
+the 40th NAND, into an AND (`_0392_ = a[0] & b[2]`).
+
+**Step 1** (run `p0-split-alg-8`, node-services, 600 s per command). The first run used a
+missing `rtl/mul.v` on node-services, so every gold-multiplier command failed; those logs are
+kept in `proofs-split/alg-8-run1/` and the run was repeated after the file was copied.
+
+| Comparison | Result | Time (s) |
+| --- | --- | --- |
+| `cec` multiplier RTL against the one-gate mutant | not equivalent, as required | 0.1 |
+| `cec` multiplier RTL against its netlist, by port name (run inside the hook, see below) | equivalent | 23.7 |
+| `&acec` multiplier netlist | "not equivalent", with a counterexample that is false (see below) | 0.1 |
+| `&acec` multiplier mutant | not equivalent | 0.0 |
+| `&polyn -S` on the RTL and on the netlist | 64 input monomials each, with the product's coefficient pattern | 16.3 and 0.0 |
+| `&polyn -S` on the mutant | 68 input monomials, some with negative coefficients | 0.0 |
+| `&acec` whole 8-bit check circuit, RTL against netlist | equivalent | 60.2 (first run 58.9) |
+| `&acec` 8-bit check, mutant (HOLDER_BPS 8499) against netlist | not equivalent, as required | 0.1 |
+
+- **`&acec` is not sound in this build.** On the correct multiplier netlist it reported
+  "Matching of adder trees succeeded" and then "Networks are NOT EQUIVALENT" with a
+  counterexample. Plain `cec` proves the same pair equivalent, so that counterexample is false.
+  No `&acec` verdict is relied on by itself.
+- Its 8-bit check result came from the fallback: it found no adder boxes in the check circuit and
+  ran ordinary equivalence checking, which said equivalent. That needed a second check; see step 3.
+- `&polyn -S` gave the expected product polynomial for the correct multiplier and a different one
+  for the mutant. `-w` did not list individual terms, so only the counts and coefficient
+  histogram are compared.
+- Rule slip, 2026-11-19: the by-name `cec` on the multiplier (22.8 s, equivalent) was first run
+  by hand over ssh on node-services, outside the resource hook. It was repeated inside the
+  hooked run `p0-split-miter-8` (23.71 s, equivalent); that is the result in the table.
+
+**Step 2** (run `p0-split-acec-32`, `--cpus 3`, limit 3,600 s). `&acec` on the 32-bit check
+circuit aborted after 0.3 s on an internal assertion (`acecXor.c:102`, in
+`Acec_OrderTreeRoots`), exit 134, for both the RTL and the mutant. No result at 32 bits.
+
+**Step 3, miter** (runs `p0-split-miter-8`, 2026-11-19 23:05 UTC, limit 900 s, and
+`p0-split-miter-32`, 2026-11-19 23:07 UTC to 2026-11-20 01:10 UTC, `--cpus 3`, limit 3,600 s per pair). Yosys built one
+design from the RTL (with `chparam`) and the netlist, joined them with `miter -equiv -flatten`
+(ports matched by name) and wrote an AIG; ABC `&cec -m -v -T <limit>` checked that the miter
+output can never be 1.
+
+| Pair | Result | Time (s) |
+| --- | --- | --- |
+| mul8: multiplier RTL against its netlist | equivalent | 9.01 |
+| mul8mut: multiplier RTL against the mutant | not equivalent; already differs on the all-zero input | 0.00 |
+| check8: 8-bit check RTL against its netlist | **equivalent** | 67.95 |
+| check8mut: mutant RTL (8499) against the 8-bit netlist | not equivalent, with a counterexample | 0.01 |
+| check32: 32-bit check RTL against its netlist | **undecided**: no verdict at the limit, killed by the outer `timeout` | 3,660.0 (rc 124) |
+| check32mut: mutant RTL (8499) against the 32-bit netlist | **undecided**: no verdict at the limit, killed by the outer `timeout` (should be not equivalent) | 3,660.0 (rc 124) |
+
+- `&cec` first runs a newer engine. When that one gives up it prints "UNDECIDED after the new CEC
+  engine" and runs the older engine, whose verdict is final. For mul8 and check8 the newer engine
+  gave up after 9.00 s and 67.94 s, and the older one then proved them in about 0.01 s more.
+  The run's `summary.txt` recorded the first, intermediate line for these two. That is a script
+  error, fixed in `prove-split.sh` (it now takes the last verdict line); the logs, copied
+  unchanged, show the final verdicts.
+- "Output 0 trivially differs (different phase)" means the two sides already disagree on the
+  all-zero input (`cecCec.c`). That fits the mutant: at all-zero inputs the original NAND outputs
+  1 and the AND outputs 0.
+- check32: the newer engine gave up at 2,228.5 s, having reduced the miter by only 2% (46,696 to
+  45,747 nodes). The older engine was still running when the limit ended the run. ABC's own
+  total line printed a negative time (-2,066.45 s); that is ABC's clock display, not a result.
+- check32mut went the same way: the newer engine gave up at 2,093.1 s (46,996 to 46,070 nodes,
+  2%), and the older engine was still running at the limit. The mutant differs from the netlist
+  (the 8-bit mutant was caught in 0.01 s), so at 32 bits this method did not find even a known
+  difference within 3,600 s. The 32-bit gold result is therefore no evidence either way.
+- The miter method passes its calibration at 8 bits: it proves the two known-equal pairs and
+  catches both mutants. At 32 bits it gives no verdict on either side.
+
+Status after spike C on the whole circuit: at 8 bits, the NAND netlist equals the RTL. Two ABC
+routes agree (`&acec` fallback, 58.9 and 60.2 s; miter and `&cec`, 67.95 s). Both are ABC
+equivalence checking, so this is one tool family, not two independent tools. With spike A, the
+check facts therefore hold on the 8-bit netlist. At 32 bits, the width the owner chose, netlist
+equals RTL is undecided: `&acec` crashes, and `&cec` gives no verdict in 3,600 s on the correct
+circuit or on the mutant. Nothing about the
+split facts is proved on the 32-bit netlist. The next step in the plan is the module split, which
+waits for the owner.
+
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
 The first fact (`cn_raise`: b1 < b2 gives net(b2) >= net(b1)) failed at the 960,000 yuan edge
@@ -598,8 +688,10 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
     facts may be called proved at any width, and any checking of them is labelled testing, not
     proof. How to get a proof (for example a different formulation of the facts, a different
     engine or longer limits) is an open P0 question for the owner, recorded in section 10.
-    The owner chose a proof in parts (section 5, spikes A and B): the integer facts and the
-    no-overflow bound are proved; netlist equals RTL is not proved at any width yet.
+    The owner chose a proof in parts (section 5, spikes A, B and C): the integer facts and the
+    no-overflow bound are proved; netlist equals RTL is proved at 8 bits (ABC, two routes) and
+    undecided at 32 bits at 3,600 s. So the split facts hold on the 8-bit netlist only. At 32
+    bits nothing is proved yet; the module split is the next step and waits for the owner.
 
 Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
@@ -619,8 +711,13 @@ options with cost per claim before any choice is made.
 - From node-services `/tmp/izie-build-test.XkZQkbd5`: `proofs/` and `proofs-900s/` (every
   `sat.log`, `abc.log`, `aig.log`, `*.result`, `script.ys` and `summary.txt`, including the
   bonus-rule runs). 492 files, checksums in `SHA256SUMS-node-services.txt`, all matched.
+- From node-services `proofs-split/` (spikes A, B and C): the logs of runs `p0-split-smt`,
+  `p0-split-cec-8`, `p0-split-alg-8` (both runs), `p0-split-acec-32`, `p0-split-miter-8` and
+  `p0-split-miter-32`, the mutant multiplier netlist, and `summary.txt`. 64 files, checksums in
+  `SHA256SUMS-split.txt`, all matched after the copy on 2026-11-20. `summary.txt` keeps the two
+  intermediate "UNDECIDED" lines for mul8 and check8 as the run wrote them (see spike C).
 - Not copied, because they can be rebuilt from the files above and the scripts: the Yosys JSON
-  netlists and the `miter.aig` files.
+  netlists and the `miter.aig` and other `.aig` files.
 
 Both workdirs are kept for now: decision rule 2 is open (above), and further proof attempts would
 run there. The `payproof-p0-chk-*` containers have all exited and been removed by their runs.
@@ -635,7 +732,11 @@ run there. The `payproof-p0-chk-*` containers have all exited and been removed b
 - Multiplier facts are undecided at 900 s even at 24 bits. At 8, 12 and 16 bits every pair
   except check_unique at 8 is also undecided at 3,600 s, and both are undecided at 32 bits at
   3,600 s (section 5). No width from 8 to 32 has both check facts proved; decision rule 2 has no
-  width to publish (section 9). Proof in parts started: integer facts proved (spike A); netlist
-  against RTL equivalence undecided at 8 bits in 900 s (spike B). Spike C waits for the owner.
+  width to publish (section 9). Proof in parts: integer facts proved (spike A); netlist against
+  RTL undecided at 8 bits in 900 s with plain `cec` (spike B); proved at 8 bits with `&acec`
+  fallback and with a miter and `&cec` (spike C); undecided at 32 bits at 3,600 s, where even the
+  mutant is not caught, and `&acec` crashes at 32 bits. The module split waits for the owner.
+- ABC `&acec` in this build gave a false "not equivalent" on a correct multiplier and crashes at
+  32 bits (section 5, spike C). Not used as evidence on its own.
 - Synthesis of large circuits on host-service is slow (52 min for the 32-bit check circuit).
 - Tape-outs above about 2,280 gates do not fit one `cast send` on Windows (section 7).
