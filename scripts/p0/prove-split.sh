@@ -69,7 +69,10 @@ check32mut|rtl/split_check.v|split_check|-set W 32 -set HOLDER_BPS 8499|nets/spl
     log="$d/$name-ncec.log"; t0=$(date +%s.%N)
     timeout --kill-after=10 $((T + 60)) $O/yosys-abc -c "&r $d/$name.aig; &cec -m -v -T $T" > "$log" 2>&1
     rc=$?; t1=$(date +%s.%N)
-    v=$(grep -m1 -iE 'equivalent|undecided|proved|disproved|SATISFIABLE' "$log" | tr -s ' ' | cut -c1-110)
+    # &cec prints "UNDECIDED after the new CEC engine" and then runs the old engine,
+    # so the final verdict is the last matching line, not the first (fixed 2026-11-20
+    # after the first miter run recorded the intermediate line for mul8 and check8).
+    v=$(grep -iE 'equivalent|undecided|proved|disproved|SATISFIABLE' "$log" | tail -n 1 | tr -s ' ' | cut -c1-110)
     echo "miter $name &cec [${v:-no verdict line}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
   done <<< "$pairs"
   # reference: plain cec by name on the multiplier pair (ran by hand once outside the
