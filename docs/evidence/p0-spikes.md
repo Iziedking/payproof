@@ -519,6 +519,69 @@ Status: step 1 and step 3 hold at 8 and 32 bits. What is left for the 32-bit net
 each module's netlist against its own RTL, five kinds of module, the 32x32 multiplier being the
 hard one. Not started.
 
+### split-v1 check circuit, module split, step 2: the multiplier checker
+
+The owner approved downloading and building a multiplier checker on 2026-11-20.
+
+**Tools.** Primary sources read 2026-11-20 at the pinned commits:
+
+| Tool | Source | Commit | What it does |
+| --- | --- | --- | --- |
+| AMulet 2.2 | github.com/d-kfmnn/amulet2, MIT (Kaufmann and Biere, TACAS 2021) | `1b179334ba95c8e8ab50e75f2823fa8cce0bc914` (2026-11-02) | Checks that an AIG computes the unsigned product of its inputs. `-verify` prints "CORRECT MULTIPLIER" or "INCORRECT MULTIPLIER" (`polynomial_solver.cpp`); `-certify` also writes the gate polynomials, a proof and the specification |
+| Pacheck 2.0 | github.com/d-kfmnn/pacheck2, MIT | `46001db7dc336b328b3f81f435c1ea71001f5dc3` (2026-07-10) | Checks such a proof on its own: exit 0 and "TARGET CHECKED" only if every step is valid and the proof reaches the specification |
+
+- **Input rules** (`parser.cpp`): no latches, as many outputs as inputs. Input order is guessed:
+  interleaved if the first AND gate joins inputs 0 and 1, otherwise a is the first half and b
+  the second. Yosys writes a then b, and AMulet's log states the order it assumed.
+- **Exit code:** `main` returns the verdict (`amulet.cpp`, line 220), so AMulet exits 1 for a
+  correct multiplier and 0 for an incorrect one. The scripts read the printed verdict, not the
+  exit code.
+- **What Pacheck does and does not check:** it checks the algebra of the proof against the
+  polynomials and the specification. It does not read the AIG, so it trusts AMulet's translation
+  of the gates into polynomials. That translation is one polynomial per AND gate, which can be
+  read in the `.polys` file.
+
+**Build** (run `p0-build-amulet`, node-services, finished 2026-11-20 06:56 UTC). Steps:
+
+- Both repositories were cloned on the host and checked out at the commits above; both
+  `git status` checks were clean.
+- `scripts/p0/build-amulet.sh` built them inside `debian@sha256:734a72b3…b179bc` (bookworm-slim
+  12.15, pulled the same day), with network on for `apt-get`.
+- Packages: g++ 12.2.0-14+deb12u1, make 4.3-4.1, libgmp-dev 2:6.2.1+dfsg1-1.1.
+- Build commands: `./configure.sh && make`, as both READMEs say, with `-static` added so the
+  binaries run in the no-network `python:3.12-slim` proof container.
+- Results: `amulet` sha256 `c33d850f…bd31dc3`, `pacheck` sha256 `7e2eecc6…bed96df`. Record in
+  `proofs-split/build-amulet-versions.txt`.
+
+**8-bit calibration** (run `p0-split-amul-8`, 600 s each, part `amul` of `prove-split.sh`).
+Three AIGs:
+
+- **gate:** the `m_mul` module cut from `split_check_mod_8.mods.nand.v`, the netlist that is
+  joined and taped out.
+- **rtl:** the `m_mul` RTL mapped by Yosys alone.
+- **mutant:** gate with its 40th NAND turned into an AND (`_0392_ = a[0] & b[2]`, the same line
+  as the spike C multiplier mutant).
+
+| Check | Result | Time (s) |
+| --- | --- | --- |
+| AMulet `-verify` gate | CORRECT MULTIPLIER | 0.1 |
+| AMulet `-verify` rtl | CORRECT MULTIPLIER | 6.4 |
+| AMulet `-verify` mutant | INCORRECT MULTIPLIER, counterexample written | 0.0 |
+| AMulet `-certify` gate, then Pacheck | CORRECT; TARGET CHECKED (480 gate polynomials, 369 proof steps) | 0.0 and 0.1 |
+| AMulet `-certify` rtl, then Pacheck | CORRECT; TARGET CHECKED (586 gate polynomials, 491 proof steps) | 7.9 and 1.4 |
+
+- The specification Pacheck checked (`gate.spec`) is exactly the 8x8 product:
+  sum 2^i s_i = (sum 2^i a_i)(sum 2^j b_j).
+- The mutant's counterexample is the all-zero input, the same input `&cec` gave for this change
+  in spike C.
+- AMulet assumed a = inputs 0 to 7 and b = inputs 8 to 15, matching the Yosys map files.
+- Not copied: the AIGs, the cut netlists and the proof files (1.1 MB and 23.7 MB at 8 bits). All
+  can be rebuilt with the scripts.
+
+So the checker and its proof checker give the right answer on a correct multiplier and on a
+one-gate mutant at 8 bits. The 32-bit run (`p0-split-amul-32`, 3,600 s each) was started on
+2026-11-20.
+
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
 The first fact (`cn_raise`: b1 < b2 gives net(b2) >= net(b1)) failed at the 960,000 yuan edge

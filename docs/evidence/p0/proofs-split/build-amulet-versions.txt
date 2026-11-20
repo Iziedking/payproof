@@ -1,0 +1,12 @@
+image: 12.15 (debian bookworm-slim, pinned by digest in the task)
+g++ 4:12.2.0-3
+g++-12 12.2.0-14+deb12u1
+libgmp-dev 2:6.2.1+dfsg1-1.1
+libgmp10 2:6.2.1+dfsg1-1.1
+make 4.3-4.1
+amulet2 commit read on host
+pacheck2 commit read on host
+amulet sha256 c33d850f0fe01d35f772f697752baac190e4e69076c5a2e160d1b85d6bd31dc3
+amulet header 177ELF
+pacheck sha256 7e2eecc62e9335d7237e5bef83812e3adcef50f7036d2ffd6c53b2200bed96df
+pacheck header 177ELF

@@ -1,0 +1,59 @@
+[amulet2] AMulet Version 2.2
+[amulet2] Aiger multiplier examination tool
+[amulet2] Copyright(C) 2020, 2021, Daniela Kaufmann, Johannes Kepler University Linz
+[amulet2] selected mode: verification + certificates
+[amulet2] proof condensed level: medium
+[amulet2] reading 'proofs-split/amul-8/rtl.aig'
+[amulet2] MILOA 585 16 0 16 569
+[amulet2] assuming ordering as in the ABC generated or AOKI benchmarks
+[amulet2] allocating 601 gates
+[amulet2] found 64 partial products
+[amulet2] assuming simple pp generator
+[amulet2] found 111 xor-gates
+[amulet2] marking xor chain gates
+[amulet2] marked 1 xor gates in last slice
+[amulet2] remove internal xor gates
+[amulet2] removed 222 internal xor gates
+[amulet2] slicing based on xor
+[amulet2] remove single occurence gates
+[amulet2] removed 102 single occurence gates
+[amulet2] insert l1106 after l1110
+[amulet2] insert l970 after l974
+[amulet2] insert l882 after l888
+[amulet2] insert l772 after l776
+[amulet2] insert l510 after l514
+[amulet2] moved 0 gates to smaller slices
+[amulet2] remove gates that are not assigned to slices
+[amulet2] removed 68 gates that are not assigned to slices
+[amulet2] 
+[amulet2] 
+[amulet2] started reducing
+[amulet2] reducing by slice 15
+[amulet2] reducing by slice 14
+[amulet2] reducing by slice 13
+[amulet2] reducing by slice 12
+[amulet2] reducing by slice 11
+[amulet2] reducing by slice 10
+[amulet2] reducing by slice 9
+[amulet2] reducing by slice 8
+[amulet2] reducing by slice 7
+[amulet2] reducing by slice 6
+[amulet2] reducing by slice 5
+[amulet2] reducing by slice 4
+[amulet2] reducing by slice 3
+[amulet2] reducing by slice 2
+[amulet2] reducing by slice 1
+[amulet2] reducing by slice 0
+[amulet2] 
+[amulet2] CORRECT MULTIPLIER
+[amulet2] 
+[amulet2] writing gate constraints to 'proofs-split/amul-8/rtl.polys' 
+[amulet2] writing proof certificate to 'proofs-split/amul-8/rtl.proof'
+[amulet2] writing specification to 'proofs-split/amul-8/rtl.spec'    
+[amulet2] 
+[amulet2] maximum resident set size:                      33.88 MB
+[amulet2] used time for initializing:                      0.00 seconds
+[amulet2] used time for slicing/elimination:               0.00 seconds
+[amulet2] used time for reduction:                         7.85 seconds
+[amulet2] used time for freeing memory:                    0.01 seconds
+[amulet2] total process time:                              7.86 seconds

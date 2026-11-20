@@ -15,6 +15,7 @@
 #              &cec -m; third argument selects pairs by regex (see that block).
 #   part comp: module split steps 1 and 3 (joined RTL against original RTL; flat
 #              netlist against the hierarchical one); third argument selects pairs.
+#   part amul: module split step 2 for m_mul: AMulet verify and certify, Pacheck check.
 #   part acec: &acec of the whole check netlist against the RTL at each width,
 #              plus the HOLDER_BPS 8499 mutant.
 # Commands checked against the help text of the binaries in oss-cad-suite
@@ -125,6 +126,52 @@ s3-32mut|nets/split_check_mod_32.mods.nand.v|split_check_mod|-|MUT:nets/split_ch
     v=$(grep -iE 'equivalent|undecided|proved|disproved|SATISFIABLE' "$log" | tail -n 1 | tr -s ' ' | cut -c1-110)
     echo "comp $name &cec [${v:-no verdict line}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
   done <<< "$pairs"
+  exit 0
+fi
+if [ "$PART" = amul ]; then
+  # Module split, step 2 for m_mul (2026-11-20): AMulet 2.2 (tools/bin/amulet, built by
+  # build-amulet.sh) checks that an AIG computes the unsigned product of its inputs,
+  # first half a, second half b, outputs y[0..2W-1] (parser.cpp at the pinned commit).
+  # `-verify` prints "CORRECT MULTIPLIER" or "INCORRECT MULTIPLIER"; `-certify` writes
+  # polynomials, proof and spec, which Pacheck 2.0 (tools/bin/pacheck) checks
+  # independently: exit 0 and "TARGET CHECKED". Three AIGs per width:
+  #   gate   : the m_mul module cut out of the per-module netlist that is joined and
+  #            taped out (split_check_mod_<w>.mods.nand.v)
+  #   rtl    : the m_mul RTL mapped by Yosys alone
+  #   mutant : gate with its 40th NAND turned into an AND; must be INCORRECT
+  B=tools/bin
+  for w in "$@"; do
+    d="$R/amul-$w"; mkdir -p "$d"
+    awk -v w="$w" '/^module .*\\m_mul\\/ {on=1; print "module m_mul_" w " (a, b, y);"; next}
+      on {print} on && /^endmodule/ {on=0}' "nets/split_check_mod_$w.mods.nand.v" > "$d/m_mul_$w.nand.v"
+    awk 'BEGIN{n=0} /= ~\(/ {n++; if (n==40) {sub(/= ~\(/, "= ("); print "// MUTATED: " $0 > "/dev/stderr"}} {print}' \
+      "$d/m_mul_$w.nand.v" 2> "$d/mutant-line.txt" | sed "s/^module m_mul_$w /module m_mul_${w}_mut /" > "$d/m_mul_${w}_mut.nand.v"
+    $O/yosys -q -l "$d/gate.log" -p "read_verilog $d/m_mul_$w.nand.v; hierarchy -top m_mul_$w;
+      proc; flatten; techmap; aigmap; write_aiger -map $d/gate.map $d/gate.aig" > /dev/null 2>&1
+    $O/yosys -q -l "$d/mutant.log" -p "read_verilog $d/m_mul_${w}_mut.nand.v; hierarchy -top m_mul_${w}_mut;
+      proc; flatten; techmap; aigmap; write_aiger -map $d/mutant.map $d/mutant.aig" > /dev/null 2>&1
+    $O/yosys -q -l "$d/rtl.log" -p "read_verilog rtl/split_check_mod.v; chparam -set W $w m_mul;
+      hierarchy -top m_mul; proc; flatten; techmap; opt -fast; aigmap; write_aiger -map $d/rtl.map $d/rtl.aig" > /dev/null 2>&1
+    for g in gate rtl mutant; do
+      log="$d/verify-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/amulet -verify "$d/$g.aig" -v2 > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      v=$(grep -oE '(IN)?CORRECT MULTIPLIER' "$log" | tail -n 1)
+      echo "amul $w verify $g [${v:-no verdict}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+    done
+    for g in gate rtl; do
+      log="$d/certify-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/amulet -certify "$d/$g.aig" "$d/$g.polys" "$d/$g.proof" "$d/$g.spec" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      v=$(grep -oE '(IN)?CORRECT MULTIPLIER' "$log" | tail -n 1)
+      echo "amul $w certify $g [${v:-no verdict}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      log="$d/pacheck-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/pacheck "$d/$g.polys" "$d/$g.proof" "$d/$g.spec" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      v=$(grep -oE 'TARGET CHECKED|[A-Z ]*FAIL[A-Z ]*' "$log" | tail -n 1)
+      echo "amul $w pacheck $g [${v:-no verdict}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+    done
+  done
   exit 0
 fi
 if [ "$PART" = acec ]; then
