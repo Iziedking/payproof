@@ -3,7 +3,7 @@
 # Runs in the throwaway workdir on host-service after setup-yosys.sh.
 # Usage: bash synth-all.sh <yosys-binary> <group>...
 #   groups: wage | check | check-narrow | check-40 | compute-24 | compute-32 | compute-40 | mul-8
-#           | check-mod-8 | check-mod-32
+#           | check-mod-8 | check-mod-32 | mul-tm-8 | mul-tm-32
 #
 # Flow per circuit (Yosys 0.70 help pages read on the host, 2026-11-17):
 #   read_verilog; chparam; synth -flatten -top -noabc; abc -g NAND; opt_clean -purge; stat
@@ -67,6 +67,31 @@ synth_mod() { # name width
     "$(( (nand + not) * 7 ))" "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
 }
 
+# Structure-keeping multiplier (spike C, module split step 2, 2026-11-20): m_mul mapped
+# exactly as the RTL run AMulet proved at 32 bits (techmap; opt -fast, no ABC), then
+# each simple gate turned into NAND/NOT by rtl/nand_map.v with no optimisation. The
+# select line stops the run if any other cell type is left.
+synth_tm() { # name width
+  local name="$1" width="$2" t0 t1
+  t0=$(date +%s.%N)
+  "$YOSYS" -q -l "logs/synth-$name.log" -p "
+    read_verilog rtl/split_check_mod.v; chparam -set W $width m_mul;
+    hierarchy -top m_mul; proc; flatten; techmap; opt -fast;
+    tee -o out/$name.pre.stat.txt stat;
+    techmap -map rtl/nand_map.v; opt_clean -purge;
+    select -assert-none t:* t:\$_NAND_ t:\$_NOT_ %u %d;
+    tee -o out/$name.stat.txt stat;
+    rename m_mul ${name};
+    write_verilog -noattr out/$name.nand.v;
+    write_json out/$name.json"
+  t1=$(date +%s.%N)
+  local nand not
+  nand=$(awk '/\$_NAND_/ {print $1; exit}' "out/$name.stat.txt"); nand=${nand:-0}
+  not=$(awk '/\$_NOT_/ {print $1; exit}' "out/$name.stat.txt"); not=${not:-0}
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$name" "$width" "$nand" "$not" "$((nand + not))" \
+    "$(( (nand + not) * 7 ))" "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
+}
+
 for g in "$@"; do
   case "$g" in
     wage)
@@ -84,6 +109,8 @@ for g in "$@"; do
       w="${g#compute-}"; synth "split_compute_$w" split_compute rtl/split_compute.v "$w" "" ;;
     mul-8)
       synth mul_8 mul rtl/mul.v 8 "" ;;
+    mul-tm-8|mul-tm-32)
+      w="${g#mul-tm-}"; synth_tm "m_mul_tm_$w" "$w" ;;
     check-mod-8|check-mod-32)
       w="${g#check-mod-}"; synth_mod "split_check_mod_$w" "$w" ;;
     *) echo "unknown group $g" >&2; exit 2 ;;

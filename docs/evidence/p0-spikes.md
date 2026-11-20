@@ -675,6 +675,65 @@ decide: synthesise `m_mul` so it keeps the structure AMulet proved (the RTL mapp
 XOR built from NAND gates in a form AMulet still recognises). That changes the taped-out netlist
 again, so its gate count and gas must be measured as in step 0, and steps 1 and 3 re-run.
 
+### split-v1 check circuit, module split, step 2: a multiplier that keeps its structure
+
+The owner asked for this to be tested at 8 bits on 2026-11-20.
+
+**Synthesis** (run `p0-synth-mul-tm`, host-service, group `mul-tm-8` then `mul-tm-32` in
+`synth-all.sh`):
+
+- `m_mul` is mapped exactly as in the RTL run AMulet proved at 32 bits: `techmap; opt -fast`,
+  no ABC.
+- Each remaining simple gate is then replaced by NAND and NOT gates, one for one, by
+  `spikes/p0/rtl/nand_map.v`, with no optimisation. XOR becomes NAND(NAND(a, ~b),
+  NAND(~a, b)): 3 NAND and 2 NOT, which an AIG reads as the usual three-AND XOR.
+- The cell definitions used in the map were read from Yosys's own help on host-service:
+  `$_ANDNOT_` is A & ~B, `$_ORNOT_` is A | ~B, `$_MUX_` gives B when S is 1.
+- A `select -assert-none` line stops the run if any cell other than NAND or NOT is left. The
+  first run stopped there because the line itself was wrong (`%d` without `%u`), and the
+  second because a `sed` edit dropped its escapes. Both were fixed; the numbers below are
+  from the third run.
+
+| | 8 bits | 32 bits |
+| --- | --- | --- |
+| Gates before the NAND map (AND / OR / XOR) | 195 / 52 / 120 | 3,238 / 1,004 / 2,119 |
+| `m_mul`, structure kept | **1,146** (607 NAND, 539 NOT), 0.34 s | **20,083** (10,599 NAND, 9,484 NOT), 1.03 s |
+| `m_mul`, ABC-mapped (current) | 689 | 12,322 |
+| Joined check circuit with two structure-kept `m_mul` | 5,245 | **51,356** |
+| Joined check circuit now (step 0) | 4,331 | 35,834 |
+
+**8-bit proof test** (run `p0-split-anet-8`, node-services, part `anet` of `prove-split.sh`,
+600 s per step):
+
+| Check | Result | Time (s) |
+| --- | --- | --- |
+| AMulet `-substitute` on `m_mul_tm_8` | adder found ("build adder miter"); 120 XOR gates found | 0.0 |
+| CNF miter (`yices-sat`) | unsat | 0.0 |
+| AMulet `-verify` on the result | CORRECT MULTIPLIER | 0.0 |
+| `-certify`, then Pacheck | TARGET CHECKED | 0.0 and 0.0 |
+| Control: 40th NAND turned into an AND (`_0082_ = a[7] & b[4]`): substitute | adder found | 0.0 |
+| Control: CNF miter | unsat | 0.0 |
+| Control: `-verify` | INCORRECT MULTIPLIER (counterexample: all-zero input) | 0.0 |
+
+Unlike the ABC-mapped netlist, AMulet accepts this netlist for substitution, on both the
+correct version and the control. The control's swap is sound (its miter is unsat), and the
+rewritten control is reported incorrect. At 8 bits the structure-keeping multiplier is proved
+and certified by the method that proved the 32-bit RTL multiplier.
+
+**Cost at 32 bits**, from the measured gas per gate (section 3). Not yet proved at 32 bits.
+
+| Joined 32-bit circuit | Gates | `eval` gas | Against the largest transaction seen (88,709,982) | Share of a 210 M block | Fee at 20,000,001 wei per gas |
+| --- | --- | --- | --- | --- | --- |
+| Now (ABC-mapped `m_mul`) | 35,834 | 83.0 M to 88.9 M | -6.5% to +0.2% | 39.5% to 42.3% | 0.00166 to 0.00178 OKB |
+| Structure-kept `m_mul` | 51,356 | 118.9 M to 127.3 M | +34.1% to +43.5% | 56.6% to 60.6% | 0.00238 to 0.00255 OKB |
+
+- The NOT count is high (9,484 of 20,083 at 32 bits). Each AND becomes NAND plus NOT, and
+  each OR and XOR adds NOTs on its inputs.
+- In an AIG, inverters are not separate nodes. So removing NOT-NOT pairs and sharing one NOT
+  per signal would not change the AIG AMulet reads. It would lower the gate count by an amount
+  not yet measured.
+- 51,356 gates is about the size of the flat 40-bit check circuit (51,206, section 4).
+
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
 The first fact (`cn_raise`: b1 < b2 gives net(b2) >= net(b1)) failed at the 960,000 yuan edge

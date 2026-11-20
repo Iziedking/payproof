@@ -159,6 +159,51 @@ if [ "$PART" = lin ]; then
   done
   exit 0
 fi
+if [ "$PART" = anet ]; then
+  # Step 2 for a stand-alone multiplier netlist (2026-11-20): nets/<name>.nand.v with
+  # top module <name>, e.g. m_mul_tm_8 from synth-all.sh group mul-tm-8. Same flow as
+  # part asub (substitute, CNF miter with yices-sat, verify, certify, Pacheck), on the
+  # netlist and on a one-gate control (40th NAND turned into an AND).
+  # Usage: prove-split.sh anet <timeout> <name>...
+  B=tools/bin
+  for n in "$@"; do
+    d="$R/anet-$n"; mkdir -p "$d"
+    cp "nets/$n.nand.v" "$d/gate.nand.v"
+    awk 'BEGIN{k=0} /= ~\(/ {k++; if (k==40) {sub(/= ~\(/, "= ("); print "// MUTATED: " $0 > "/dev/stderr"}} {print}' \
+      "nets/$n.nand.v" 2> "$d/mutant-line.txt" > "$d/mutant.nand.v"
+    for g in gate mutant; do
+      $O/yosys -q -l "$d/$g.log" -p "read_verilog $d/$g.nand.v; hierarchy -top $n;
+        proc; flatten; techmap; aigmap; write_aiger -map $d/$g.map $d/$g.aig" > /dev/null 2>&1
+      log="$d/substitute-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/amulet -substitute "$d/$g.aig" "$d/$g-sub.cnf" "$d/$g-sub.aig" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      sv=$(grep -iE 'substitution not possible|build adder miter' "$log" | tail -n 1 | tr -s ' ' | cut -c1-90)
+      echo "anet $n substitute $g [$sv] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      if grep -q 'build adder miter' "$log"; then
+        log="$d/miter-$g.log"; t0=$(date +%s.%N)
+        timeout --kill-after=10 $((T + 60)) $O/yices-sat "$d/$g-sub.cnf" > "$log" 2>&1
+        rc=$?; t1=$(date +%s.%N)
+        echo "anet $n miter-sat $g [$(head -n 1 "$log")] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      fi
+      log="$d/verify-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/amulet -verify "$d/$g-sub.aig" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      v=$(grep -oE '(IN)?CORRECT MULTIPLIER' "$log" | tail -n 1)
+      echo "anet $n verify $g [${v:-no verdict}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      [ "$v" = "CORRECT MULTIPLIER" ] || continue
+      log="$d/certify-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/amulet -certify "$d/$g-sub.aig" "$d/$g.polys" "$d/$g.proof" "$d/$g.spec" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      echo "anet $n certify $g [$(grep -oE '(IN)?CORRECT MULTIPLIER' "$log" | tail -n 1)] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      log="$d/pacheck-$g.log"; t0=$(date +%s.%N)
+      timeout --kill-after=10 $((T + 60)) $B/pacheck "$d/$g.polys" "$d/$g.proof" "$d/$g.spec" > "$log" 2>&1
+      rc=$?; t1=$(date +%s.%N)
+      echo "anet $n pacheck $g [$(grep -oE 'TARGET CHECKED' "$log" | tail -n 1)] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+      rm -f "$d/$g.proof"
+    done
+  done
+  exit 0
+fi
 if [ "$PART" = asub ]; then
   # Module split, step 2 for m_mul, adder substitution (2026-11-20). Plain `-verify`
   # timed out at 32 bits on all three AIGs (part amul). AMulet's `-substitute` mode
