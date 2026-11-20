@@ -473,6 +473,52 @@ largest transaction seen; built from REF modules at the measured REF rate it wou
 it. Steps 1 to 4 (the proofs) have not started; the multiplier checker for step 2 needs the
 owner's approval before it is downloaded.
 
+### split-v1 check circuit, module split, steps 1 and 3: joining
+
+The owner approved steps 1 and 3 on 2026-11-20. Run `p0-split-comp` (node-services, container
+`payproof-p0-split-comp`, `--cpus 2`, 2026-11-20 02:26 UTC, limit 900 s per pair), part `comp`
+of `scripts/p0/prove-split.sh`. Each pair is joined with Yosys `miter -equiv -flatten` (ports
+matched by name) and checked with ABC `&cec -m`, as in spike C step 3.
+
+- Step 1: the joined RTL (`split_check_mod.v`) against the original RTL (`split_check.v`).
+- Step 3: the flat netlist that would be taped out (`split_check_mod_<w>.nand.v`) against the
+  per-module netlist it was flattened from (`split_check_mod_<w>.mods.nand.v`).
+
+Each has a control that must come back not equivalent:
+
+- Step 1 at 8 bits uses HOLDER_BPS 8499. At 32 bits the 8499 control was not caught in 3,600 s
+  in spike C, so step 1 at 32 bits uses a different one: `MUTANT_VALID_OR`, a switch in
+  `split_check_mod.v`, off by default, that writes the input check with `||` instead of `&&`.
+- Step 3 uses the flat netlist with its 40th NAND turned into an AND.
+
+| Pair | Result | Time (s) |
+| --- | --- | --- |
+| s1-8: joined RTL against original RTL, 8 bits | equivalent | 0.00 |
+| s1-8mut: control, HOLDER_BPS 8499 | not equivalent, as required | 0.01 |
+| s1-32: joined RTL against original RTL, 32 bits | **equivalent** | 0.00 |
+| s1-32mut: control, `MUTANT_VALID_OR` | not equivalent, as required | 102.60 |
+| s3-8: flat netlist against the per-module netlist, 8 bits | equivalent | 0.00 |
+| s3-8mut: control, one gate changed (`_0092_`) | not equivalent, as required | 0.00 |
+| s3-32: flat netlist against the per-module netlist, 32 bits | **equivalent** | 0.00 |
+| s3-32mut: control, one gate changed (`_00185_`) | not equivalent, as required | 342.55 |
+
+- Every gold pair hashed to the same gates, so ABC decided it before any SAT call. That is what
+  joining without optimisation should give, and the controls show the miters do compare the
+  output: a change in either side is found.
+- s1-32mut counterexample: pot 0, shares 3, total 1, payout 0. Checked by hand: the original
+  rejects it (shares above total); the control accepts it (lhs 0 <= rhs 0 < lhs1 10,000).
+- The build logs show no errors. Their warnings are the miter's input bits being left undriven,
+  which Yosys turns into free inputs, as in spike C.
+- The local SSH session dropped during s3-32mut. The container ran on and wrote its result; the
+  host had been up 12 days, so the run was not interrupted.
+- `split_check_mod.v` gained the `MUTANT_VALID_OR` switch after step 0's synthesis. The proof
+  chain uses the current file: step 1 proves it against the original, and step 2 will prove each
+  module's netlist against it.
+
+Status: step 1 and step 3 hold at 8 and 32 bits. What is left for the 32-bit netlist is step 2:
+each module's netlist against its own RTL, five kinds of module, the 32x32 multiplier being the
+hard one. Not started.
+
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
 The first fact (`cn_raise`: b1 < b2 gives net(b2) >= net(b1)) failed at the 960,000 yuan edge
@@ -744,8 +790,8 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
     no-overflow bound are proved; netlist equals RTL is proved at 8 bits (ABC, two routes) and
     undecided at 32 bits at 3,600 s. So the split facts hold on the 8-bit netlist only. At 32
     bits nothing is proved yet. The owner approved the module split on 2026-11-20; step 0
-    measured it at 35,834 gates at 32 bits (+958 over the flat circuit, section 5). Its proofs
-    have not started.
+    measured it at 35,834 gates at 32 bits (+958 over the flat circuit, section 5). Steps 1
+    and 3 (joining) hold at 8 and 32 bits; step 2 (each module) has not started.
 
 Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
@@ -767,8 +813,10 @@ options with cost per claim before any choice is made.
   bonus-rule runs). 492 files, checksums in `SHA256SUMS-node-services.txt`, all matched.
 - From node-services `proofs-split/` (spikes A, B and C): the logs of runs `p0-split-smt`,
   `p0-split-cec-8`, `p0-split-alg-8` (both runs), `p0-split-acec-32`, `p0-split-miter-8` and
-  `p0-split-miter-32`, the mutant multiplier netlist, and `summary.txt`. 64 files, checksums in
-  `SHA256SUMS-split.txt`, all matched after the copy on 2026-11-20. `summary.txt` keeps the two
+  `p0-split-miter-32` and `p0-split-comp`, the mutant multiplier netlist, and `summary.txt`.
+  82 files, checksums in `SHA256SUMS-split.txt`, all matched after the copy on 2026-11-20. The
+  mutant flat netlists of `p0-split-comp` are not copied; each is the flat netlist with the one
+  line in its `*-mutant-line.txt` changed. `summary.txt` keeps the two
   intermediate "UNDECIDED" lines for mul8 and check8 as the run wrote them (see spike C).
 - From host-service, 2026-11-20, added to `netlists/` and `synth-logs/run3/`: the module-split
   netlists (`split_check_mod_8` and `_32`, flat and hierarchical, with `stat` files), the
@@ -795,7 +843,7 @@ run there. The `payproof-p0-chk-*` containers have all exited and been removed b
   fallback and with a miter and `&cec` (spike C); undecided at 32 bits at 3,600 s, where even the
   mutant is not caught, and `&acec` crashes at 32 bits. Module split approved; step 0 done
   (35,834 gates at 32 bits, 0.16% over the largest transaction seen if built from REF
-  modules); the proof steps have not started.
+  modules); steps 1 and 3 hold at 8 and 32 bits; step 2, per module, has not started.
 - ABC `&acec` in this build gave a false "not equivalent" on a correct multiplier and crashes at
   32 bits (section 5, spike C). Not used as evidence on its own.
 - Synthesis of large circuits on host-service is slow (52 min for the 32-bit check circuit).

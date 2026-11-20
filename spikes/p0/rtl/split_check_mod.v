@@ -55,7 +55,12 @@ module m_cmp #(parameter W = 32) (
   input  [2*W+13:0] rhs,
   output            ok
 );
+`ifdef MUTANT_VALID_OR
+  // Control for the proof scripts only: accepts shares > total (payout 0, pot 0).
+  wire valid = (total != 0) || (shares <= total);
+`else
   wire valid = (total != 0) && (shares <= total);
+`endif
   assign ok = valid && (lhs <= rhs) && ({1'b0, rhs} < lhs1);
 endmodule
 

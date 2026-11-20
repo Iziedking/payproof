@@ -34,3 +34,11 @@ miter check8mut &cec [Disproved at least one output of the miter (zero-based num
 miter mul8 cec-byname [Networks are equivalent. Time = 23.71 sec] 23.7 rc=0
 miter check32 &cec [Networks are UNDECIDED after the new CEC engine. Time = 2228.52 sec] 3660.0 rc=124
 miter check32mut &cec [Networks are UNDECIDED after the new CEC engine. Time = 2093.09 sec] 3660.0 rc=124
+comp s1-8 &cec [Networks are equivalent. Time = 0.00 sec] 0.0 rc=0
+comp s1-8mut &cec [Networks are NOT EQUIVALENT. Time = 0.01 sec] 0.1 rc=0
+comp s1-32 &cec [Networks are equivalent. Time = 0.00 sec] 0.0 rc=0
+comp s1-32mut &cec [Networks are NOT EQUIVALENT. Time = 102.60 sec] 102.6 rc=0
+comp s3-8 &cec [Networks are equivalent. Time = 0.00 sec] 0.0 rc=0
+comp s3-8mut &cec [Networks are NOT EQUIVALENT. Time = 0.00 sec] 0.0 rc=0
+comp s3-32 &cec [Networks are equivalent. Time = 0.00 sec] 0.0 rc=0
+comp s3-32mut &cec [Networks are NOT EQUIVALENT. Time = 342.55 sec] 342.6 rc=0

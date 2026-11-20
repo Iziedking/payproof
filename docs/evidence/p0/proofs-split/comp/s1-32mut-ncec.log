@@ -1,0 +1,45 @@
+======== ABC command line "&r proofs-split/comp/s1-32mut.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =   26315  cls =      0  lit =   26315  unused =     128  proof =     0
+cst =     417  cls =    548  lit =    1347  unused =   24548  proof =     0
+cst =     180  cls =    292  lit =     596  unused =   25555  proof =     0
+cst =     114  cls =    230  lit =     419  unused =   25794  proof =     0
+cst =     109  cls =    213  lit =     393  unused =   25837  proof =     0
+cst =     101  cls =    198  lit =     369  unused =   25876  proof =     0
+cst =      96  cls =    187  lit =     351  unused =   25905  proof =     0
+cst =      88  cls =    180  lit =     330  unused =   25933  proof =     0
+cst =      85  cls =    178  lit =     320  unused =   25945  proof =     0
+cst =      81  cls =    170  lit =     307  unused =   25966  proof =     0
+Considered all available candidate equivalences.
+Switching into reduced mode.
+  2 : P =      0. D =      2. F =     0. M =   26315. And =   26315. Time =     0.01 sec
+Switching into normal mode.
+  3 : P =     32. D =     10. F =     0. M =       0. And =   26280. Time =     0.05 sec
+  4 : P =      4. D =     10. F =     0. M =       0. And =   26272. Time =     0.05 sec
+  5 : P =      1. D =      8. F =     0. M =       0. And =   26267. Time =     0.06 sec
+  6 : P =      3. D =      3. F =     3. M =       0. And =   26263. Time =     0.19 sec
+  7 : P =      3. D =      1. F =     4. M =       0. And =   26259. Time =     0.13 sec
+  8 : P =      4. D =      0. F =     4. M =       0. And =   26253. Time =     0.17 sec
+  9 : P =      5. D =      0. F =     6. M =       0. And =   26244. Time =     0.26 sec
+Increasing conflict limit to 10000.
+ 10 : P =      2. D =      3. F =     3. M =       0. And =   26242. Time =     3.54 sec
+ 11 : P =      1. D =      3. F =     6. M =       0. And =   26240. Time =     4.88 sec
+Increasing conflict limit to 100000.
+ 12 : P =      0. D =      8. F =     1. M =       0. And =   26240. Time =    14.68 sec
+ 13 : P =      6. D =      6. F =     2. M =       0. And =   26234. Time =    19.75 sec
+ 14 : P =      2. D =      3. F =     3. M =       0. And =   26232. Time =    27.39 sec
+ 15 : P =      0. D =      1. F =     4. M =       0. And =   26232. Time =    31.31 sec
+Performed 157 SAT calls: P = 63  D = 58  F = 36
+NBeg = 26315. NEnd = 26232. (Gain =   0.32 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.04 sec (  0.00 %)
+Sat  =   102.40 sec (  0.01 %)
+Pat  =     0.01 sec (  0.00 %)
+Time =   102.52 sec
+Networks are UNDECIDED after the new CEC engine.  Time =   102.52 sec
+Calling the old CEC engine.
+Original miter:   Nodes =  26235.
+Initial SAT:      Nodes =  26235.  Time =     0.08 sec
+Networks are NOT EQUIVALENT.  Time =   102.60 sec
+Primary output 0 has failed, along with other 0 incorrect outputs.
+INPUT: a = 128'h00000000000000030000000100000000.  OUTPUT: z = 1'h1 (s1-32mut), z = 1'h0 (s1-32mut).

@@ -1,0 +1,16 @@
+======== ABC command line "&r proofs-split/comp/s1-8mut.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =    3803  cls =      0  lit =    3803  unused =      32  proof =     0
+cst =      84  cls =    260  lit =     442  unused =    3133  proof =     0
+cst =      38  cls =    183  lit =     269  unused =    3383  proof =     0
+cst =      24  cls =    109  lit =     157  unused =    3569  proof =     0
+cst =      17  cls =     74  lit =     106  unused =    3655  proof =     0
+cst =      17  cls =     69  lit =     100  unused =    3666  proof =     0
+cst =      16  cls =     67  lit =      97  unused =    3671  proof =     0
+cst =      10  cls =     64  lit =      86  unused =    3685  proof =     0
+cst =      10  cls =     63  lit =      85  unused =    3687  proof =     0
+Performed 0 SAT calls: P = 0  D = 0  F = 0
+Disproved at least one output of the miter (zero-based number 0).
+Networks are NOT EQUIVALENT.  Time =     0.01 sec
+INPUT: a = 32'hBC5C698B.  OUTPUT: z = 1'h1 (s1-8mut), z = 1'h0 (s1-8mut).

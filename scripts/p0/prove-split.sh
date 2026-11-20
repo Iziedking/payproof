@@ -13,6 +13,8 @@
 #              and run &acec on the whole check circuit (see that block).
 #   part miter: Yosys miter -equiv (ports by name) of RTL and netlist, then ABC
 #              &cec -m; third argument selects pairs by regex (see that block).
+#   part comp: module split steps 1 and 3 (joined RTL against original RTL; flat
+#              netlist against the hierarchical one); third argument selects pairs.
 #   part acec: &acec of the whole check netlist against the RTL at each width,
 #              plus the HOLDER_BPS 8499 mutant.
 # Commands checked against the help text of the binaries in oss-cad-suite
@@ -86,6 +88,45 @@ check32mut|rtl/split_check.v|split_check|-set W 32 -set HOLDER_BPS 8499|nets/spl
   exit 0
 fi
 
+if [ "$PART" = comp ]; then
+  # Module split, steps 1 and 3 (2026-11-20). Each pair is joined with Yosys
+  # `miter -equiv -flatten` (ports by name) and checked with ABC `&cec -m`, as in part
+  # miter. Step 1: the joined RTL (rtl/split_check_mod.v) against the original RTL.
+  # Step 3: the flat netlist that would be taped out against the hierarchical netlist
+  # it was flattened from. Both sides of every gold pair should hash to the same
+  # gates, so these are expected to be quick; each has a control that must fail.
+  # Fields: name | side 1 files | top 1 | chparam 1 | side 2 files | top 2 | chparam 2 | read flags 2
+  pairs="s1-8|rtl/split_check.v|split_check|-set W 8|rtl/split_check_mod.v|split_check_mod|-set W 8|
+s1-8mut|rtl/split_check.v|split_check|-set W 8|rtl/split_check_mod.v|split_check_mod|-set W 8 -set HOLDER_BPS 8499|
+s1-32|rtl/split_check.v|split_check|-set W 32|rtl/split_check_mod.v|split_check_mod|-set W 32|
+s1-32mut|rtl/split_check.v|split_check|-set W 32|rtl/split_check_mod.v|split_check_mod|-set W 32|-DMUTANT_VALID_OR
+s3-8|nets/split_check_mod_8.mods.nand.v|split_check_mod|-|nets/split_check_mod_8.nand.v|split_check_mod_8|-|
+s3-8mut|nets/split_check_mod_8.mods.nand.v|split_check_mod|-|MUT:nets/split_check_mod_8.nand.v|split_check_mod_8|-|
+s3-32|nets/split_check_mod_32.mods.nand.v|split_check_mod|-|nets/split_check_mod_32.nand.v|split_check_mod_32|-|
+s3-32mut|nets/split_check_mod_32.mods.nand.v|split_check_mod|-|MUT:nets/split_check_mod_32.nand.v|split_check_mod_32|-|"
+  SEL="${1:-.}"
+  d="$R/comp"; mkdir -p "$d"
+  while IFS='|' read -r name s1 t1 p1 s2 t2 p2 f2; do
+    echo "$name" | grep -qE "^($SEL)$" || continue
+    if [ "${s2#MUT:}" != "$s2" ]; then
+      # one-gate control: the 40th NAND of the flat netlist becomes an AND.
+      src="${s2#MUT:}"; s2="$d/$name.nand.v"
+      awk 'BEGIN{n=0} /= ~\(/ {n++; if (n==40) {sub(/= ~\(/, "= ("); print "// MUTATED: " $0 > "/dev/stderr"}} {print}' \
+        "$src" > "$s2" 2> "$d/$name-mutant-line.txt"
+    fi
+    c1=""; [ "$p1" != "-" ] && c1="chparam $p1 $t1;"
+    c2=""; [ "$p2" != "-" ] && c2="chparam $p2 $t2;"
+    $O/yosys -q -l "$d/$name-build.log" -p "read_verilog $s1; $c1 read_verilog $f2 $s2; $c2
+      hierarchy; proc; miter -equiv -flatten $t1 $t2 miter; hierarchy -top miter; techmap; opt -fast; aigmap;
+      write_aiger -symbols $d/$name.aig" > /dev/null 2>&1
+    log="$d/$name-ncec.log"; t0=$(date +%s.%N)
+    timeout --kill-after=10 $((T + 60)) $O/yosys-abc -c "&r $d/$name.aig; &cec -m -v -T $T" > "$log" 2>&1
+    rc=$?; t1=$(date +%s.%N)
+    v=$(grep -iE 'equivalent|undecided|proved|disproved|SATISFIABLE' "$log" | tail -n 1 | tr -s ' ' | cut -c1-110)
+    echo "comp $name &cec [${v:-no verdict line}] $(secs "$t0" "$t1") rc=$rc" | tee -a "$R/summary.txt"
+  done <<< "$pairs"
+  exit 0
+fi
 if [ "$PART" = acec ]; then
   # Spike C finding, 2026-11-20: at 8 bits `&acec` proved the whole check netlist
   # equal to the RTL in 59 s (it found no matching adder boxes and fell back to its
