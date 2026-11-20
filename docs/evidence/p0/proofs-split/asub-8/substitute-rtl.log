@@ -1,0 +1,23 @@
+[amulet2] AMulet Version 2.2
+[amulet2] Aiger multiplier examination tool
+[amulet2] Copyright(C) 2020, 2021, Daniela Kaufmann, Johannes Kepler University Linz
+[amulet2] selected mode: adder substitution
+[amulet2] reading 'proofs-split/amul-8/rtl.aig'
+[amulet2] MILOA 585 16 0 16 569
+[amulet2] assuming ordering as in the ABC generated or AOKI benchmarks
+[amulet2] allocating 601 gates
+[amulet2] found 64 partial products
+[amulet2] assuming simple pp generator
+[amulet2] found 111 xor-gates
+[amulet2] checking last stage adder
+[amulet2] build adder miter
+[amulet2] transform aiger miter to cnf miter
+[amulet2] writing miter to proofs-split/asub-8/rtl-sub.cnf
+[amulet2] generate rewritten aig
+[amulet2] writing rewritten aig to 'proofs-split/asub-8/rtl-sub.aig'
+[amulet2] 
+[amulet2] maximum resident set size:                       1.65 MB
+[amulet2] used time for initializing:                      0.00 seconds
+[amulet2] used time for substituion:                       0.00 seconds
+[amulet2] used time for freeing memory:                    0.00 seconds
+[amulet2] total process time:                              0.00 seconds

@@ -1,0 +1,32 @@
+======== ABC command line "&r proofs-split/lin-8/m_cmp.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =     621  cls =      0  lit =     621  unused =     107  proof =     0
+cst =       0  cls =     96  lit =     113  unused =     519  proof =     0
+cst =       0  cls =     99  lit =     104  unused =     525  proof =     0
+cst =       0  cls =     99  lit =     102  unused =     527  proof =     0
+cst =       0  cls =     99  lit =     102  unused =     527  proof =     0
+cst =       0  cls =     99  lit =     102  unused =     527  proof =     0
+cst =       0  cls =     99  lit =     102  unused =     527  proof =     0
+cst =       0  cls =     99  lit =     102  unused =     527  proof =     0
+cst =       0  cls =     99  lit =     102  unused =     527  proof =     0
+cst =       0  cls =     99  lit =     102  unused =     527  proof =     0
+  1 : P =     43. D =      0. F =     0. M =     238. And =     463. Time =     0.00 sec
+Switching into reduced mode.
+  2 : P =      6. D =      1. F =     0. M =      91. And =     406. Time =     0.00 sec
+Switching into normal mode.
+  3 : P =      2. D =      2. F =     0. M =       0. And =     373. Time =     0.00 sec
+  4 : P =      1. D =      1. F =     0. M =       0. And =     367. Time =     0.00 sec
+  5 : P =      1. D =      0. F =     0. M =       0. And =       0. Time =     0.00 sec
+Network after reduction is empty.
+Performed 57 SAT calls: P = 53  D = 4  F = 0
+NBeg = 621. NEnd = 0. (Gain = 100.00 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.00 sec (  0.00 %)
+Sat  =     0.01 sec (  0.00 %)
+Pat  =     0.00 sec (  0.00 %)
+Time =     0.01 sec
+Networks are UNDECIDED after the new CEC engine.  Time =     0.01 sec
+Calling the old CEC engine.
+Original miter:   Nodes =      0.
+Initial SAT:      Nodes =      0.  Time =     0.01 sec
+Networks are equivalent.  Time =     0.02 sec

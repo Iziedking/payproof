@@ -1,0 +1,44 @@
+[pck2] Pacheck Version 2.0
+[pck2] Practical Algebraic Calculus Proof Checker
+[pck2] Copyright(C) 2020, Daniela Kaufmann, Johannes Kepler University Linz
+[pck2] sorting according to strcmp
+[pck2] checking target enabled
+[pck2] reading target polynomial from 'proofs-split/asub-32/rtl.spec'
+[pck2] read 19611 bytes from 'proofs-split/asub-32/rtl.spec'
+[pck2] 
+[pck2] 
+[pck2] reading original polynomials from 'proofs-split/asub-32/rtl.polys'
+[pck2] found 10261 original polynomials in 'proofs-split/asub-32/rtl.polys'
+[pck2] read 344181 bytes from 'proofs-split/asub-32/rtl.polys'
+[pck2] 
+[pck2] reading polynomial algebraic calculus proof from 'proofs-split/asub-32/rtl.proof'
+[pck2] found and checked 8235 inferences in 'proofs-split/asub-32/rtl.proof'
+[pck2] read 1227510 bytes from 'proofs-split/asub-32/rtl.proof'
+[pck2] 
+[pck2] 
+[pck2] ----------------------------------------------------------------------
+[pck2] c TARGET CHECKED
+[pck2] ----------------------------------------------------------------------
+[pck2] 
+[pck2] proof length:                  18496 (total number of polynomials)
+[pck2] proof size:                    87377 (total number of monomials)
+[pck2] proof degree:                      7 
+[pck2] 
+[pck2] total inferences:              18496
+[pck2] original inferences:           10261 (55% of total rules)
+[pck2] proof rules:                    8235 (45% of total rules)
+[pck2]   extensions:                      0 (0% of inference rules)
+[pck2]   linear combination:           8235 (100% of inference rules
+[pck2]                                        containing 11411 additions
+[pck2]                                        and 11410 multiplications)
+[pck2] rules deleted:                 15179 (82% of total rules)
+[pck2] 
+[pck2] total allocated terms:         35401
+[pck2] max allocated terms:           16438 (46% of total terms)
+[pck2] searched terms:               291793 (88% hits,
+[pck2]                                        0.0 average collisions)
+[pck2] searched inferences:           71816 (3.0 average searches,
+[pck2]                                        0.0 average collisions)
+[pck2] 
+[pck2] maximum resident set size:      8.32  MB
+[pck2] process time:                   0.08  seconds

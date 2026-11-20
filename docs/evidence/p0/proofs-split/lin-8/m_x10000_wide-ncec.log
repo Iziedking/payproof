@@ -1,0 +1,34 @@
+======== ABC command line "&r proofs-split/lin-8/m_x10000_wide.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =    1087  cls =      0  lit =    1087  unused =      16  proof =     0
+cst =       7  cls =     58  lit =      69  unused =     976  proof =     0
+cst =       1  cls =     51  lit =      53  unused =     999  proof =     0
+cst =       1  cls =     50  lit =      52  unused =    1001  proof =     0
+cst =       0  cls =     49  lit =      50  unused =    1004  proof =     0
+cst =       0  cls =     49  lit =      50  unused =    1004  proof =     0
+cst =       0  cls =     49  lit =      50  unused =    1004  proof =     0
+cst =       0  cls =     49  lit =      50  unused =    1004  proof =     0
+cst =       0  cls =     49  lit =      50  unused =    1004  proof =     0
+cst =       0  cls =     49  lit =      50  unused =    1004  proof =     0
+  1 : P =      6. D =      0. F =     0. M =     516. And =    1070. Time =     0.00 sec
+Switching into reduced mode.
+  2 : P =      8. D =      0. F =     0. M =     477. And =    1051. Time =     0.00 sec
+Switching into normal mode.
+  3 : P =      5. D =      0. F =     0. M =       0. And =    1039. Time =     0.00 sec
+  4 : P =      2. D =      0. F =     0. M =       0. And =    1034. Time =     0.00 sec
+  5 : P =      8. D =      0. F =    10. M =       0. And =     964. Time =     0.20 sec
+Increasing conflict limit to 10000.
+  6 : P =     11. D =      0. F =     0. M =       0. And =       0. Time =     0.28 sec
+Network after reduction is empty.
+Performed 50 SAT calls: P = 40  D = 0  F = 10
+NBeg = 1087. NEnd = 0. (Gain = 100.00 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.00 sec (  0.00 %)
+Sat  =     0.49 sec (  0.00 %)
+Pat  =     0.00 sec (  0.00 %)
+Time =     0.49 sec
+Networks are UNDECIDED after the new CEC engine.  Time =     0.49 sec
+Calling the old CEC engine.
+Original miter:   Nodes =      0.
+Initial SAT:      Nodes =      0.  Time =     0.01 sec
+Networks are equivalent.  Time =     0.50 sec

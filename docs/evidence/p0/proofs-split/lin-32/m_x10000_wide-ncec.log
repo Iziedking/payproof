@@ -1,0 +1,56 @@
+======== ABC command line "&r proofs-split/lin-32/m_x10000_wide.aig; &cec -m -v -T 3600"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =    5137  cls =      0  lit =    5137  unused =      64  proof =     0
+cst =      60  cls =    187  lit =     300  unused =    4714  proof =     0
+cst =      19  cls =    107  lit =     135  unused =    4959  proof =     0
+cst =      14  cls =    100  lit =     122  unused =    4979  proof =     0
+cst =      14  cls =    100  lit =     122  unused =    4979  proof =     0
+cst =      14  cls =    100  lit =     122  unused =    4979  proof =     0
+cst =      13  cls =    100  lit =     120  unused =    4981  proof =     0
+cst =      13  cls =    100  lit =     120  unused =    4981  proof =     0
+cst =      12  cls =    100  lit =     118  unused =    4983  proof =     0
+cst =      12  cls =    100  lit =     118  unused =    4983  proof =     0
+  1 : P =      6. D =      0. F =     0. M =    2474. And =    5121. Time =     0.00 sec
+Switching into reduced mode.
+  2 : P =      3. D =      3. F =     0. M =    2461. And =    5117. Time =     0.00 sec
+Switching into normal mode.
+  3 : P =     22. D =      2. F =    13. M =       0. And =    5067. Time =     0.26 sec
+  4 : P =      1. D =      3. F =    34. M =       0. And =    5062. Time =     0.72 sec
+Increasing conflict limit to 10000.
+  5 : P =     52. D =      1. F =     0. M =       0. And =    4699. Time =     5.06 sec
+  6 : P =      4. D =      0. F =    10. M =       0. And =    4677. Time =     3.07 sec
+Increasing conflict limit to 100000.
+  7 : P =      6. D =      0. F =     6. M =       0. And =    4323. Time =    32.03 sec
+  8 : P =      0. D =      0. F =     6. M =       0. And =    4323. Time =    27.43 sec
+Performed 172 SAT calls: P = 94  D = 9  F = 69
+NBeg = 5137. NEnd = 4323. (Gain =  15.85 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.01 sec (  0.00 %)
+Sat  =    68.57 sec (  0.01 %)
+Pat  =     0.00 sec (  0.00 %)
+Time =    68.58 sec
+Networks are UNDECIDED after the new CEC engine.  Time =    68.58 sec
+Calling the old CEC engine.
+Original miter:   Nodes =   4341.
+Initial SAT:      Nodes =   4341.  Time =     0.02 sec
+Rewriting:        Nodes =   4252.  Time =     0.04 sec
+Balance-X:        Nodes =   4988.  Time =     0.00 sec
+Fraiging (i=1):   Nodes =   4983.  Time =     0.01 sec
+Rewriting:        Nodes =   4403.  Time =     0.02 sec
+Balance-X:        Nodes =   4965.  Time =     0.00 sec
+Fraiging (i=2):   Nodes =   4965.  Time =     0.01 sec
+Rewriting:        Nodes =   4395.  Time =     0.02 sec
+Balance-X:        Nodes =   4960.  Time =     0.00 sec
+Fraiging (i=3):   Nodes =   4960.  Time =     0.06 sec
+Rewriting:        Nodes =   4393.  Time =     0.02 sec
+Balance-X:        Nodes =   4957.  Time =     0.00 sec
+Fraiging (i=4):   Nodes =   4953.  Time =     0.75 sec
+Rewriting:        Nodes =   4390.  Time =     0.02 sec
+Balance-X:        Nodes =   4952.  Time =     0.00 sec
+Fraiging (i=5):   Nodes =   4944.  Time =     7.26 sec
+Rewriting:        Nodes =   4387.  Time =     0.02 sec
+Balance-X:        Nodes =   4943.  Time =     0.00 sec
+Fraiging (i=6):   Nodes =   4712.  Time =    60.35 sec
+Rewriting:        Nodes =   4179.  Time =     0.02 sec
+Final SAT:        Nodes =   4179.  Time =    27.86 sec
+Networks are equivalent.  Time =   165.04 sec

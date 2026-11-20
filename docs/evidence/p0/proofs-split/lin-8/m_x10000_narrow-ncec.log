@@ -1,0 +1,28 @@
+======== ABC command line "&r proofs-split/lin-8/m_x10000_narrow.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =     460  cls =      0  lit =     460  unused =       8  proof =     0
+cst =       2  cls =     27  lit =      30  unused =     411  proof =     0
+cst =       1  cls =     26  lit =      28  unused =     414  proof =     0
+cst =       0  cls =     25  lit =      26  unused =     417  proof =     0
+cst =       0  cls =     25  lit =      26  unused =     417  proof =     0
+cst =       0  cls =     25  lit =      26  unused =     417  proof =     0
+cst =       0  cls =     25  lit =      26  unused =     417  proof =     0
+cst =       0  cls =     25  lit =      26  unused =     417  proof =     0
+cst =       0  cls =     25  lit =      26  unused =     417  proof =     0
+cst =       0  cls =     25  lit =      26  unused =     417  proof =     0
+  1 : P =      4. D =      0. F =     0. M =     223. And =     447. Time =     0.01 sec
+Switching into reduced mode.
+  2 : P =     11. D =      0. F =     0. M =     194. And =       0. Time =     0.02 sec
+Network after reduction is empty.
+Performed 15 SAT calls: P = 15  D = 0  F = 0
+NBeg = 460. NEnd = 0. (Gain = 100.00 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.00 sec (  0.00 %)
+Sat  =     0.03 sec (  0.00 %)
+Pat  =     0.00 sec (  0.00 %)
+Time =     0.04 sec
+Networks are UNDECIDED after the new CEC engine.  Time =     0.04 sec
+Calling the old CEC engine.
+Original miter:   Nodes =      0.
+Initial SAT:      Nodes =      0.  Time =     0.01 sec
+Networks are equivalent.  Time =     0.05 sec

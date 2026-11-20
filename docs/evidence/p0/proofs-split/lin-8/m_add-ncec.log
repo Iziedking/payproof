@@ -1,0 +1,37 @@
+======== ABC command line "&r proofs-split/lin-8/m_add.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =     354  cls =      0  lit =     354  unused =      52  proof =     0
+cst =       4  cls =     80  lit =     103  unused =     223  proof =     0
+cst =       1  cls =     82  lit =      97  unused =     227  proof =     0
+cst =       1  cls =     83  lit =      96  unused =     227  proof =     0
+cst =       0  cls =     83  lit =      94  unused =     229  proof =     0
+cst =       0  cls =     83  lit =      94  unused =     229  proof =     0
+cst =       0  cls =     83  lit =      94  unused =     229  proof =     0
+cst =       0  cls =     83  lit =      94  unused =     229  proof =     0
+cst =       0  cls =     83  lit =      94  unused =     229  proof =     0
+cst =       0  cls =     83  lit =      94  unused =     229  proof =     0
+  1 : P =      1. D =      0. F =     0. M =     144. And =     339. Time =     0.00 sec
+Switching into reduced mode.
+  2 : P =      1. D =      0. F =     0. M =     134. And =     324. Time =     0.00 sec
+Switching into normal mode.
+  3 : P =      2. D =      0. F =     0. M =       0. And =     304. Time =     0.00 sec
+  4 : P =      5. D =      0. F =     0. M =       0. And =     283. Time =     0.00 sec
+  5 : P =      4. D =      0. F =     0. M =       0. And =     259. Time =     0.00 sec
+  6 : P =      3. D =      0. F =     0. M =       0. And =     241. Time =     0.00 sec
+  7 : P =      3. D =      0. F =     0. M =       0. And =     219. Time =     0.00 sec
+  8 : P =      3. D =      0. F =     0. M =       0. And =     201. Time =     0.00 sec
+  9 : P =      3. D =      0. F =     0. M =       0. And =     181. Time =     0.00 sec
+ 10 : P =      3. D =      0. F =     0. M =       0. And =       0. Time =     0.00 sec
+Network after reduction is empty.
+Performed 28 SAT calls: P = 28  D = 0  F = 0
+NBeg = 354. NEnd = 0. (Gain = 100.00 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.00 sec (  0.00 %)
+Sat  =     0.01 sec (  0.00 %)
+Pat  =     0.00 sec (  0.00 %)
+Time =     0.01 sec
+Networks are UNDECIDED after the new CEC engine.  Time =     0.01 sec
+Calling the old CEC engine.
+Original miter:   Nodes =      0.
+Initial SAT:      Nodes =      0.  Time =     0.01 sec
+Networks are equivalent.  Time =     0.02 sec

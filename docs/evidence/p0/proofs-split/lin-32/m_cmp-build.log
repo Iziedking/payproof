@@ -1,0 +1,560 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+
+-- Running command `read_verilog rtl/split_check_mod.v; chparam -set W 32 m_cmp;
+        read_verilog proofs-split/lin-32/m_cmp_g.nand.v; hierarchy; proc; miter -equiv -flatten m_cmp m_cmp_g miter;
+        hierarchy -top miter; techmap; opt -fast; aigmap; write_aiger -symbols proofs-split/lin-32/m_cmp.aig' --
+
+1. Executing Verilog-2005 frontend: rtl/split_check_mod.v
+Parsing Verilog input from `rtl/split_check_mod.v' to AST representation.
+Generating RTLIL representation for module `\m_mul'.
+Generating RTLIL representation for module `\m_x10000_wide'.
+Generating RTLIL representation for module `\m_x10000_narrow'.
+Generating RTLIL representation for module `\m_x8500'.
+Generating RTLIL representation for module `\m_add'.
+Generating RTLIL representation for module `\m_cmp'.
+Generating RTLIL representation for module `\split_check_mod'.
+Successfully finished Verilog frontend.
+Parameter \W = 32
+
+2. Executing AST frontend in derive mode using pre-parsed AST for module `\m_cmp'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_cmp\W=s32'00000000000000000000000000100000'.
+
+3. Executing Verilog-2005 frontend: proofs-split/lin-32/m_cmp_g.nand.v
+Parsing Verilog input from `proofs-split/lin-32/m_cmp_g.nand.v' to AST representation.
+Generating RTLIL representation for module `\m_cmp_g'.
+Successfully finished Verilog frontend.
+
+4. Executing HIERARCHY pass (managing design hierarchy).
+Parameter \W = 32
+
+4.1. Executing AST frontend in derive mode using pre-parsed AST for module `\m_cmp'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_cmp\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+
+4.2. Executing AST frontend in derive mode using pre-parsed AST for module `\m_add'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_add\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+Parameter \HOLDER_BPS = 8500
+
+4.3. Executing AST frontend in derive mode using pre-parsed AST for module `\m_x8500'.
+Parameter \W = 32
+Parameter \HOLDER_BPS = 8500
+Generating RTLIL representation for module `$paramod$fefeed225e00891b7d3d2c7596c0783970263577\m_x8500'.
+Parameter \W = 32
+
+4.4. Executing AST frontend in derive mode using pre-parsed AST for module `\m_x10000_narrow'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_x10000_narrow\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+
+4.5. Executing AST frontend in derive mode using pre-parsed AST for module `\m_x10000_wide'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_x10000_wide\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+
+4.6. Executing AST frontend in derive mode using pre-parsed AST for module `\m_mul'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_mul\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+Found cached RTLIL representation for module `$paramod\m_mul\W=s32'00000000000000000000000000100000'.
+
+5. Executing PROC pass (convert processes to netlists).
+
+5.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+5.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+5.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+5.4. Executing PROC_INIT pass (extract init attributes).
+
+5.5. Executing PROC_ARST pass (detect async resets in processes).
+
+5.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+5.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+5.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+5.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+5.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+5.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+5.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\m_mul\W=s32'00000000000000000000000000100000.
+Optimizing module $paramod\m_x10000_wide\W=s32'00000000000000000000000000100000.
+Optimizing module $paramod\m_x10000_narrow\W=s32'00000000000000000000000000100000.
+Optimizing module $paramod$fefeed225e00891b7d3d2c7596c0783970263577\m_x8500.
+Optimizing module $paramod\m_add\W=s32'00000000000000000000000000100000.
+Optimizing module $paramod\m_cmp\W=s32'00000000000000000000000000100000.
+<suppressed ~1 debug messages>
+Optimizing module m_cmp_g.
+<suppressed ~489 debug messages>
+Optimizing module split_check_mod.
+Optimizing module m_cmp.
+<suppressed ~1 debug messages>
+Optimizing module m_add.
+Optimizing module m_x8500.
+Optimizing module m_x10000_narrow.
+Optimizing module m_x10000_wide.
+Optimizing module m_mul.
+
+6. Executing MITER pass (creating miter circuit).
+Creating miter cell "miter" with gold cell "m_cmp" and gate cell "m_cmp_g".
+
+6.1. Executing FLATTEN pass (flatten design).
+<suppressed ~2 debug messages>
+
+6.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+Removed 404 unused cells and 2728 unused wires.
+
+7. Executing HIERARCHY pass (managing design hierarchy).
+
+7.1. Analyzing design hierarchy..
+Top module:  \miter
+
+7.2. Analyzing design hierarchy..
+Top module:  \miter
+Removing unused module `$paramod\m_mul\W=s32'00000000000000000000000000100000'.
+Removing unused module `$paramod\m_x10000_wide\W=s32'00000000000000000000000000100000'.
+Removing unused module `$paramod\m_x10000_narrow\W=s32'00000000000000000000000000100000'.
+Removing unused module `$paramod$fefeed225e00891b7d3d2c7596c0783970263577\m_x8500'.
+Removing unused module `$paramod\m_add\W=s32'00000000000000000000000000100000'.
+Removing unused module `$paramod\m_cmp\W=s32'00000000000000000000000000100000'.
+Removing unused module `\m_cmp_g'.
+Removing unused module `\split_check_mod'.
+Removing unused module `\m_cmp'.
+Removing unused module `\m_add'.
+Removing unused module `\m_x8500'.
+Removing unused module `\m_x10000_narrow'.
+Removing unused module `\m_x10000_wide'.
+Removing unused module `\m_mul'.
+Removed 14 unused modules.
+
+8. Executing TECHMAP pass (map to technology primitives).
+
+8.1. Executing Verilog-2005 frontend: /w/oss-cad-suite/lib/../share/yosys/techmap.v
+Parsing Verilog input from `/w/oss-cad-suite/lib/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `$__div_mod_u'.
+Generating RTLIL representation for module `$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `$connect'.
+Generating RTLIL representation for module `$input_port'.
+Successfully finished Verilog frontend.
+
+8.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $eqx.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $logic_and.
+Running "alumacc" on wrapper $extern:wrap:$lt:Y_WIDTH=1:B_WIDTH=79:A_WIDTH=79:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$lt:Y_WIDTH=1:B_WIDTH=79:A_WIDTH=79:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$lt:Y_WIDTH=1:B_WIDTH=79:A_WIDTH=79:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Running "alumacc" on wrapper $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=78:A_WIDTH=78:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=78:A_WIDTH=78:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=78:A_WIDTH=78:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Running "alumacc" on wrapper $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using extmapper simplemap for cells of type $and.
+Using template $paramod$843b956ba44a9ae53d2e60f0c110dbb0d05fe52f\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $reduce_and.
+Using template $paramod$3f4e6bd0a788d8a6cef996bad831fad0bfd04bdd\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $reduce_or.
+Using template $paramod$fbc7873bff55778c0b3173955b7e4bce1d9d6834\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000001001111 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000001001111 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using extmapper simplemap for cells of type $mux.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000001001110 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000001001110 for cells of type $lcu.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000100000 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000100000 for cells of type $lcu.
+Using extmapper simplemap for cells of type $or.
+No more expansions possible.
+<suppressed ~3537 debug messages>
+
+9. Executing OPT pass (performing simple optimizations).
+
+9.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+<suppressed ~769 debug messages>
+
+9.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\miter'.
+Computing hashes of 3751 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3510 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3298 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3287 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3283 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3282 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+<suppressed ~1407 debug messages>
+Removed a total of 469 cells.
+
+9.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+9.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \miter..
+Removed 514 unused cells and 557 unused wires.
+<suppressed ~515 debug messages>
+
+9.5. Finished fast OPT passes.
+
+10. Executing AIGMAP pass (map logic to AIG).
+Module miter: replaced 410 cells with 2207 new cells, skipped 2358 cells.
+  replaced 2 cell types:
+     221 $_OR_
+     189 $_XOR_
+  not replaced 3 cell types:
+    1412 $_AND_
+     944 $_NOT_
+       2 $scopeinfo
+
+11. Executing AIGER backend.
+Warning: Treating undriven bit miter.\in_rhs [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [32] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [33] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [34] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [35] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [36] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [37] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [38] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [39] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [40] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [41] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [42] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [43] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [44] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [45] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [46] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [47] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [48] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [49] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [50] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [51] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [52] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [53] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [54] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [55] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [56] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [57] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [58] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [59] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [60] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [61] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [62] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [63] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [64] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [65] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [66] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [67] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [68] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [69] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [70] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [71] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [72] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [73] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [74] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [75] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [76] like $anyseq.
+Warning: Treating undriven bit miter.\in_rhs [77] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [32] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [33] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [34] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [35] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [36] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [37] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [38] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [39] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [40] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [41] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [42] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [43] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [44] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [45] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [46] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [47] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [48] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [49] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [50] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [51] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [52] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [53] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [54] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [55] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [56] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [57] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [58] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [59] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [60] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [61] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [62] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [63] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [64] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [65] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [66] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [67] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [68] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [69] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [70] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [71] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [72] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [73] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [74] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [75] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [76] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [77] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs1 [78] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [32] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [33] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [34] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [35] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [36] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [37] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [38] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [39] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [40] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [41] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [42] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [43] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [44] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [45] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [46] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [47] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [48] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [49] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [50] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [51] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [52] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [53] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [54] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [55] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [56] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [57] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [58] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [59] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [60] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [61] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [62] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [63] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [64] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [65] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [66] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [67] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [68] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [69] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [70] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [71] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [72] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [73] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [74] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [75] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [76] like $anyseq.
+Warning: Treating undriven bit miter.\in_lhs [77] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [31] like $anyseq.
+Warning: Treating a total of 299 undriven bits in miter like $anyseq.
+
+Warnings: 300 unique messages, 300 total
+End of script. Logfile hash: df399493d6, time: 0.28s, user: 0.29s, system: 0.01s, MEM: 34.54 MB peak
+Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+Time spent: 29% 5x read_verilog (0 sec), 25% 1x techmap (0 sec), ...

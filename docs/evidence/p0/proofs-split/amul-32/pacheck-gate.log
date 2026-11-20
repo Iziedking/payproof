@@ -1,0 +1,7 @@
+[pck2] Pacheck Version 2.0
+[pck2] Practical Algebraic Calculus Proof Checker
+[pck2] Copyright(C) 2020, Daniela Kaufmann, Johannes Kepler University Linz
+[pck2] sorting according to strcmp
+[pck2] checking target enabled
+[pck2] reading target polynomial from 'proofs-split/amul-32/gate.spec'
+*** parse error in 'proofs-split/amul-32/gate.spec' line 1 at end-of-file: unexpected end-of-file

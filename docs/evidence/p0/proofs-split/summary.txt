@@ -42,3 +42,65 @@ comp s3-8 &cec [Networks are equivalent. Time = 0.00 sec] 0.0 rc=0
 comp s3-8mut &cec [Networks are NOT EQUIVALENT. Time = 0.00 sec] 0.0 rc=0
 comp s3-32 &cec [Networks are equivalent. Time = 0.00 sec] 0.0 rc=0
 comp s3-32mut &cec [Networks are NOT EQUIVALENT. Time = 342.55 sec] 342.6 rc=0
+amul 8 verify gate [CORRECT MULTIPLIER] 0.1 rc=1
+amul 8 verify rtl [CORRECT MULTIPLIER] 6.4 rc=1
+amul 8 verify mutant [INCORRECT MULTIPLIER] 0.0 rc=0
+amul 8 certify gate [CORRECT MULTIPLIER] 0.0 rc=1
+amul 8 pacheck gate [TARGET CHECKED] 0.1 rc=0
+amul 8 certify rtl [CORRECT MULTIPLIER] 7.9 rc=1
+amul 8 pacheck rtl [TARGET CHECKED] 1.4 rc=0
+amul 32 verify gate [no verdict] 3660.1 rc=124
+amul 32 verify rtl [no verdict] 3660.1 rc=124
+amul 32 verify mutant [no verdict] 3660.0 rc=124
+amul 32 certify gate [no verdict] 3660.0 rc=124
+amul 32 pacheck gate [no verdict] 0.0 rc=1
+amul 32 certify rtl [no verdict] 3660.1 rc=124
+amul 32 pacheck rtl [no verdict] 0.0 rc=1
+lin 8 m_x10000_narrow &cec [Networks are equivalent. Time = 0.05 sec] 0.1 rc=0
+lin 8 m_x10000_narrow-mut &cec [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] 0.0 rc=0
+lin 8 m_add &cec [Networks are equivalent. Time = 0.02 sec] 0.0 rc=0
+lin 8 m_add-mut &cec [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] 0.0 rc=0
+lin 8 m_cmp &cec [Networks are equivalent. Time = 0.02 sec] 0.1 rc=0
+lin 8 m_cmp-mut &cec [Networks are NOT EQUIVALENT. Time = 0.01 sec] 0.0 rc=0
+lin 8 m_x10000_wide &cec [Networks are equivalent. Time = 0.50 sec] 0.5 rc=0
+lin 8 m_x10000_wide-mut &cec [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] 0.0 rc=0
+lin 8 m_x8500 &cec [Networks are equivalent. Time = 0.90 sec] 0.9 rc=0
+lin 8 m_x8500-mut &cec [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] 0.0 rc=0
+lin 32 m_x10000_narrow &cec [Networks are equivalent. Time = 2.73 sec] 2.8 rc=0
+lin 32 m_x10000_narrow-mut &cec [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] 0.0 rc=0
+lin 32 m_add &cec [Networks are equivalent. Time = 0.03 sec] 0.1 rc=0
+lin 32 m_add-mut &cec [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] 0.0 rc=0
+lin 32 m_cmp &cec [Networks are equivalent. Time = 0.03 sec] 0.1 rc=0
+lin 32 m_cmp-mut &cec [Networks are NOT EQUIVALENT. Time = 0.02 sec] 0.0 rc=0
+lin 32 m_x10000_wide &cec [Networks are equivalent. Time = 165.04 sec] 165.1 rc=0
+lin 32 m_x10000_wide-mut &cec [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] 0.0 rc=0
+lin 32 m_x8500 &cec [Networks are equivalent. Time = 468.46 sec] 468.5 rc=0
+lin 32 m_x8500-mut &cec [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] 0.0 rc=0
+asub yices-cal unsat [unsat]
+asub yices-cal sat [sat]
+asub 8 substitute gate [[amulet2] substitution not possible - not all outputs are XORs] 0.0 rc=0
+asub 8 miter-sat gate [unsat] 0.0 rc=0
+asub 8 verify gate [CORRECT MULTIPLIER] 0.0 rc=1
+asub 8 certify gate [CORRECT MULTIPLIER] 0.0 rc=1
+asub 8 pacheck gate [TARGET CHECKED] 0.1 rc=0
+asub 8 substitute rtl [[amulet2] build adder miter] 0.0 rc=1
+asub 8 miter-sat rtl [unsat] 0.0 rc=0
+asub 8 verify rtl [CORRECT MULTIPLIER] 0.0 rc=1
+asub 8 certify rtl [CORRECT MULTIPLIER] 0.0 rc=1
+asub 8 pacheck rtl [TARGET CHECKED] 0.0 rc=0
+asub 8 substitute mutant [[amulet2] substitution not possible - not all outputs are XORs] 0.0 rc=0
+asub 8 miter-sat mutant [unsat] 0.0 rc=0
+asub 8 verify mutant [INCORRECT MULTIPLIER] 0.0 rc=0
+asub yices-cal unsat [unsat]
+asub yices-cal sat [sat]
+asub 32 substitute gate [[amulet2] substitution not possible - not all outputs are XORs] 0.0 rc=0
+asub 32 miter-sat gate [unsat] 0.0 rc=0
+asub 32 verify gate [no verdict] 3660.0 rc=124
+asub 32 substitute rtl [[amulet2] build adder miter] 0.0 rc=1
+asub 32 miter-sat rtl [unsat] 0.0 rc=0
+asub 32 verify rtl [CORRECT MULTIPLIER] 0.1 rc=1
+asub 32 certify rtl [CORRECT MULTIPLIER] 0.1 rc=1
+asub 32 pacheck rtl [TARGET CHECKED] 0.1 rc=0
+asub 32 substitute mutant [[amulet2] substitution not possible - not all outputs are XORs] 0.0 rc=0
+asub 32 miter-sat mutant [unsat] 0.0 rc=0
+asub 32 verify mutant [no verdict] 3660.0 rc=124

@@ -1,0 +1,33 @@
+======== ABC command line "&r proofs-split/lin-8/m_x8500.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =    1177  cls =      0  lit =    1177  unused =      16  proof =     0
+cst =       6  cls =     60  lit =      73  unused =    1060  proof =     0
+cst =       2  cls =     48  lit =      51  unused =    1094  proof =     0
+cst =       1  cls =     47  lit =      49  unused =    1097  proof =     0
+cst =       0  cls =     46  lit =      47  unused =    1100  proof =     0
+cst =       0  cls =     46  lit =      47  unused =    1100  proof =     0
+cst =       0  cls =     46  lit =      47  unused =    1100  proof =     0
+cst =       0  cls =     46  lit =      47  unused =    1100  proof =     0
+cst =       0  cls =     46  lit =      47  unused =    1100  proof =     0
+cst =       0  cls =     46  lit =      47  unused =    1100  proof =     0
+  1 : P =     12. D =      0. F =     2. M =     571. And =    1136. Time =     0.04 sec
+Switching into reduced mode.
+  2 : P =      3. D =      0. F =    12. M =     532. And =    1123. Time =     0.27 sec
+Increasing conflict limit to 10000.
+Switching into normal mode.
+  3 : P =      7. D =      0. F =     0. M =       0. And =    1111. Time =     0.00 sec
+  4 : P =     17. D =      0. F =     0. M =       0. And =     600. Time =     0.40 sec
+  5 : P =      1. D =      0. F =     0. M =       0. And =       0. Time =     0.18 sec
+Network after reduction is empty.
+Performed 54 SAT calls: P = 40  D = 0  F = 14
+NBeg = 1177. NEnd = 0. (Gain = 100.00 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.00 sec (  0.00 %)
+Sat  =     0.89 sec (  0.00 %)
+Pat  =     0.00 sec (  0.00 %)
+Time =     0.89 sec
+Networks are UNDECIDED after the new CEC engine.  Time =     0.89 sec
+Calling the old CEC engine.
+Original miter:   Nodes =      0.
+Initial SAT:      Nodes =      0.  Time =     0.01 sec
+Networks are equivalent.  Time =     0.90 sec

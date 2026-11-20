@@ -579,8 +579,101 @@ Three AIGs:
   can be rebuilt with the scripts.
 
 So the checker and its proof checker give the right answer on a correct multiplier and on a
-one-gate mutant at 8 bits. The 32-bit run (`p0-split-amul-32`, 3,600 s each) was started on
-2026-11-20.
+one-gate mutant at 8 bits.
+
+**32 bits, plain rewriting** (run `p0-split-amul-32`, 2026-11-20 06:59 to 12:04 UTC, container
+`payproof-p0-split-amul-32`, `--cpus 3`, 3,600 s per step, logs with `-v2`).
+
+| Check | Result | Time (s) |
+| --- | --- | --- |
+| `-verify` gate (`m_mul` cut from the 32-bit netlist, 12,322 gates) | no verdict; stopped at output slice 58 of 64 | 3,660.1 (rc 124) |
+| `-verify` rtl | no verdict; stopped at slice 54 | 3,660.1 (rc 124) |
+| `-verify` mutant | no verdict; stopped at slice 58 | 3,660.0 (rc 124) |
+| `-certify` gate, then Pacheck | no verdict; Pacheck had no complete proof (exit 1) | 3,660.0 |
+| `-certify` rtl, then Pacheck | no verdict; Pacheck had no complete proof (exit 1) | 3,660.1 |
+
+- AMulet works backwards from output slice 63. In the rtl AIG it found 2,080 XOR gates; in the
+  gate AIG it marked none ("marked 0 xor gates in last slice"). The remainder polynomial kept
+  growing.
+- The `-v2` logs are 6.2 MB (gate, mutant) and 266 MB (rtl), mostly polynomials printed on one
+  line each. The evidence keeps the first and last 20,000 bytes of each (`*.excerpt.log`, with
+  the full file's size and sha256 in the first line). The full files stay on node-services
+  until P0 cleanup.
+- The partial proof files (228 MB and 1.0 GB) were deleted.
+- The local SSH session dropped twice during the run; the container ran on.
+
+**Adder substitution** (part `asub`; runs `p0-split-asub-8`, 600 s per step, and
+`p0-split-asub-32`, 2026-11-20 12:17 to 14:19 UTC, 3,600 s per step). AMulet's `-substitute`
+mode finds the final-stage adder, swaps it for a ripple-carry adder, and writes the rewritten
+AIG plus a CNF miter that must be unsatisfiable for the swap to be sound
+(`substitution_engine.h`). The miter was checked with `yices-sat` 2.7.0 from oss-cad-suite,
+first calibrated on two tiny CNFs: it answered unsat and sat as required.
+
+| Width | AIG | Substitution | Miter | Verify | Certificate (Pacheck) | Time (s) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 8 | gate | refused: "not all outputs are XORs" | (none) | CORRECT | TARGET CHECKED | 0.0 to 0.1 each |
+| 8 | rtl | done | unsat | CORRECT | TARGET CHECKED | 0.0 each |
+| 8 | mutant | refused | (none) | INCORRECT | | 0.0 |
+| 32 | gate | refused | (none) | no verdict | | 3,660.0 (rc 124) |
+| 32 | rtl | done | unsat (1,305 variables, 3,273 clauses) | **CORRECT** | **TARGET CHECKED** (8,235 proof steps) | 0.1 each |
+| 32 | mutant | refused | (none) | no verdict | | 3,660.0 (rc 124) |
+
+- When substitution is refused, AMulet writes a placeholder CNF of one variable and two clauses
+  (`p cnf 1 2`). `yices-sat` answers unsat for it, but that says nothing, so the table shows
+  "(none)". The AIG written in that case is the original one, so the 8-bit gate and mutant
+  results are plain rewriting again, and the 32-bit gate and mutant runs repeat the timeout
+  above.
+- The 32-bit RTL multiplier is proved and certified in under a second this way. There is no
+  32-bit control on this path: the only 32-bit mutant was cut from the gate netlist, which
+  AMulet cannot check.
+
+Result for `m_mul`: the 32x32 multiplier as Yosys builds it from the RTL (`techmap` without ABC)
+is proved, with an independently checked certificate. The `m_mul` actually in the joined 32-bit
+netlist, after `abc -g NAND`, is **not proved**. ABC's mapping removed the XOR outputs that
+AMulet's substitution needs, and plain rewriting ran out of time.
+
+### split-v1 check circuit, module split, step 2: the other five modules
+
+Part `lin` of `prove-split.sh`, runs `p0-split-lin-8` (`--cpus 1`, 900 s per check) and
+`p0-split-lin-32` (`--cpus 3`, 3,600 s per check), 2026-11-20 12:05 to 12:17 UTC.
+
+- Each module is cut out of the per-module netlist (`split_check_mod_<w>.mods.nand.v`) and
+  joined with its own RTL from `split_check_mod.v` (`chparam W`) by `miter -equiv -flatten`,
+  then checked with `&cec -m`. The NAND counts of the cut modules match step 0's per-module
+  `stat` exactly.
+- Control: the cut netlist with its 40th NAND turned into an AND.
+- The first run of these two tasks checked nothing. The script's default module selector
+  `^(.)$` matched only one-character names, so every module was skipped and no file was
+  written. The default was changed to `.*` in every part, and both tasks were run again. The
+  results below are from the second run.
+
+| Module | 8 bits | 8-bit control | 32 bits | 32-bit control |
+| --- | --- | --- | --- | --- |
+| `m_x10000_narrow` | equivalent, 0.05 s | caught | **equivalent, 2.73 s** | caught |
+| `m_add` | equivalent, 0.02 s | caught | **equivalent, 0.03 s** | caught |
+| `m_cmp` | equivalent, 0.02 s | caught | **equivalent, 0.03 s** | caught |
+| `m_x10000_wide` | equivalent, 0.50 s | caught | **equivalent, 165.04 s** | caught |
+| `m_x8500` | equivalent, 0.90 s | caught | **equivalent, 468.46 s** | caught |
+
+- Four of the five controls at each width were caught on the all-zero input ("trivially differs
+  (different phase)"). That shows each miter compares the outputs, but not that `&cec` finds
+  hard-to-reach differences. The `m_cmp` control needed a search (0.01 s and 0.02 s).
+
+Status of the 32-bit chain after step 2:
+
+| Link | 32 bits |
+| --- | --- |
+| A: the facts hold for the integer predicate, any width | proved (Z3; one fact also cvc5) |
+| 1: joined RTL equals the original RTL | proved |
+| 2: each module's netlist equals its RTL | proved for five of six modules; **`m_mul` netlist not proved** |
+| 3: flat netlist equals the joined modules | proved |
+
+At 8 bits every link holds, including `m_mul` (AMulet, certified). At 32 bits the chain is open
+at one place: the two `m_mul` instances in the netlist. Nothing about the split facts may be
+called proved on the 32-bit netlist until that link holds. A way to close it, for the owner to
+decide: synthesise `m_mul` so it keeps the structure AMulet proved (the RTL mapping, with each
+XOR built from NAND gates in a form AMulet still recognises). That changes the taped-out netlist
+again, so its gate count and gas must be measured as in step 0, and steps 1 and 3 re-run.
 
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
@@ -854,7 +947,9 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
     undecided at 32 bits at 3,600 s. So the split facts hold on the 8-bit netlist only. At 32
     bits nothing is proved yet. The owner approved the module split on 2026-11-20; step 0
     measured it at 35,834 gates at 32 bits (+958 over the flat circuit, section 5). Steps 1
-    and 3 (joining) hold at 8 and 32 bits; step 2 (each module) has not started.
+    and 3 (joining) hold at 8 and 32 bits. Step 2 holds at 8 bits for all six modules; at 32
+    bits it holds for five, and the `m_mul` netlist is not proved (section 5). So the split
+    facts are proved on the 8-bit netlist and not yet on the 32-bit one.
 
 Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
@@ -876,8 +971,12 @@ options with cost per claim before any choice is made.
   bonus-rule runs). 492 files, checksums in `SHA256SUMS-node-services.txt`, all matched.
 - From node-services `proofs-split/` (spikes A, B and C): the logs of runs `p0-split-smt`,
   `p0-split-cec-8`, `p0-split-alg-8` (both runs), `p0-split-acec-32`, `p0-split-miter-8` and
-  `p0-split-miter-32` and `p0-split-comp`, the mutant multiplier netlist, and `summary.txt`.
-  82 files, checksums in `SHA256SUMS-split.txt`, all matched after the copy on 2026-11-20. The
+  `p0-split-miter-32`, `p0-split-comp`, `p0-split-amul-8`, `p0-split-amul-32`,
+  `p0-split-asub-8`, `p0-split-asub-32`, `p0-split-lin-8` and `p0-split-lin-32`, the build
+  record of `p0-build-amulet`, the mutant multiplier netlist, and `summary.txt`. 209 files,
+  checksums in `SHA256SUMS-split.txt`, all matched after the copy on 2026-11-20. Not copied:
+  AIGs, cut netlists, proof certificates, and the three AMulet logs over 5 MB (excerpts kept;
+  see step 2). The
   mutant flat netlists of `p0-split-comp` are not copied; each is the flat netlist with the one
   line in its `*-mutant-line.txt` changed. `summary.txt` keeps the two
   intermediate "UNDECIDED" lines for mul8 and check8 as the run wrote them (see spike C).
@@ -906,7 +1005,9 @@ run there. The `payproof-p0-chk-*` containers have all exited and been removed b
   fallback and with a miter and `&cec` (spike C); undecided at 32 bits at 3,600 s, where even the
   mutant is not caught, and `&acec` crashes at 32 bits. Module split approved; step 0 done
   (35,834 gates at 32 bits, 0.16% over the largest transaction seen if built from REF
-  modules); steps 1 and 3 hold at 8 and 32 bits; step 2, per module, has not started.
+  modules); steps 1 and 3 hold at 8 and 32 bits; step 2 holds at 32 bits except the
+  ABC-mapped `m_mul`, which AMulet cannot finish in 3,600 s (the RTL-structured 32-bit
+  multiplier is proved and certified). The open link waits for the owner (section 5).
 - ABC `&acec` in this build gave a false "not equivalent" on a correct multiplier and crashes at
   32 bits (section 5, spike C). Not used as evidence on its own.
 - Synthesis of large circuits on host-service is slow (52 min for the 32-bit check circuit).

@@ -1,0 +1,54 @@
+[amulet2] AMulet Version 2.2
+[amulet2] Aiger multiplier examination tool
+[amulet2] Copyright(C) 2020, 2021, Daniela Kaufmann, Johannes Kepler University Linz
+[amulet2] selected mode: verification + certificates
+[amulet2] proof condensed level: medium
+[amulet2] reading 'proofs-split/asub-8/gate-sub.aig'
+[amulet2] MILOA 479 16 0 16 463
+[amulet2] assuming ordering as in the ABC generated or AOKI benchmarks
+[amulet2] allocating 495 gates
+[amulet2] found 64 partial products
+[amulet2] assuming simple pp generator
+[amulet2] found 103 xor-gates
+[amulet2] marking xor chain gates
+[amulet2] marked 0 xor gates in last slice
+[amulet2] remove internal xor gates
+[amulet2] removed 104 internal xor gates
+[amulet2] slicing based on input cones
+[amulet2] totally merged 99 variable(s)
+[amulet2] totally promoted 15 variable(s)
+[amulet2] filled 16 slices
+[amulet2] eliminate single occs
+[amulet2] decomposed 136 variables
+[amulet2] 
+[amulet2] 
+[amulet2] started reducing
+[amulet2] reducing by slice 15
+[amulet2] reducing by slice 14
+[amulet2] reducing by slice 13
+[amulet2] reducing by slice 12
+[amulet2] reducing by slice 11
+[amulet2] reducing by slice 10
+[amulet2] reducing by slice 9
+[amulet2] reducing by slice 8
+[amulet2] reducing by slice 7
+[amulet2] reducing by slice 6
+[amulet2] reducing by slice 5
+[amulet2] reducing by slice 4
+[amulet2] reducing by slice 3
+[amulet2] reducing by slice 2
+[amulet2] reducing by slice 1
+[amulet2] reducing by slice 0
+[amulet2] 
+[amulet2] CORRECT MULTIPLIER
+[amulet2] 
+[amulet2] writing gate constraints to 'proofs-split/asub-8/gate.polys' 
+[amulet2] writing proof certificate to 'proofs-split/asub-8/gate.proof'
+[amulet2] writing specification to 'proofs-split/asub-8/gate.spec'    
+[amulet2] 
+[amulet2] maximum resident set size:                       3.65 MB
+[amulet2] used time for initializing:                      0.00 seconds
+[amulet2] used time for slicing/elimination:               0.00 seconds
+[amulet2] used time for reduction:                         0.04 seconds
+[amulet2] used time for freeing memory:                    0.00 seconds
+[amulet2] total process time:                              0.04 seconds

@@ -1,0 +1,85 @@
+[amulet2] AMulet Version 2.2
+[amulet2] Aiger multiplier examination tool
+[amulet2] Copyright(C) 2020, 2021, Daniela Kaufmann, Johannes Kepler University Linz
+[amulet2] selected mode: verification + certificates
+[amulet2] proof condensed level: medium
+[amulet2] reading 'proofs-split/amul-32/rtl.aig'
+[amulet2] MILOA 10501 64 0 64 10437
+[amulet2] assuming ordering as in the ABC generated or AOKI benchmarks
+[amulet2] allocating 10565 gates
+[amulet2] found 1024 partial products
+[amulet2] assuming simple pp generator
+[amulet2] found 2080 xor-gates
+[amulet2] marking xor chain gates
+[amulet2] marked 1 xor gates in last slice
+[amulet2] remove internal xor gates
+[amulet2] removed 4160 internal xor gates
+[amulet2] slicing based on xor
+[amulet2] remove single occurence gates
+[amulet2] removed 1970 single occurence gates
+[amulet2] insert l20934 after l20938
+[amulet2] insert l20766 after l20770
+[amulet2] insert l20650 after l20656
+[amulet2] insert l20508 after l20512
+[amulet2] insert l20166 after l20170
+[amulet2] insert l19974 after l19980
+[amulet2] insert l19764 after l19768
+[amulet2] insert l19540 after l19546
+[amulet2] insert l19284 after l19288
+[amulet2] insert l19012 after l19018
+[amulet2] insert l18718 after l18722
+[amulet2] insert l18058 after l18062
+[amulet2] insert l17714 after l17720
+[amulet2] insert l17348 after l17352
+[amulet2] insert l16964 after l16970
+[amulet2] insert l16552 after l16556
+[amulet2] insert l16128 after l16134
+[amulet2] insert l15686 after l15690
+[amulet2] insert l15226 after l15232
+[amulet2] insert l14728 after l14732
+[amulet2] insert l14228 after l14234
+[amulet2] insert l13710 after l13714
+[amulet2] insert l13174 after l13180
+[amulet2] insert l12614 after l12618
+[amulet2] insert l12046 after l12052
+[amulet2] insert l11456 after l11460
+[amulet2] insert l10216 after l10220
+[amulet2] insert l9600 after l9606
+[amulet2] insert l9002 after l9006
+[amulet2] insert l8426 after l8432
+[amulet2] insert l7858 after l7862
+[amulet2] insert l7310 after l7316
+[amulet2] insert l6776 after l6780
+[amulet2] insert l6268 after l6274
+[amulet2] insert l5770 after l5774
+[amulet2] insert l5306 after l5312
+[amulet2] insert l4860 after l4864
+[amulet2] insert l4436 after l4442
+[amulet2] insert l4024 after l4028
+[amulet2] insert l3636 after l3642
+[amulet2] insert l3258 after l3262
+[amulet2] insert l2562 after l2566
+[amulet2] insert l2250 after l2256
+[amulet2] insert l1956 after l1960
+[amulet2] insert l1418 after l1422
+[amulet2] moved 0 gates to smaller slices
+[amulet2] remove gates that are not assigned to slices
+[amulet2] removed 1043 gates that are not assigned to slices
+[amulet2] 
+[amulet2] 
+[amulet2] started reducing
+[amulet2] reducing by slice 63
+[amulet2] reducing by slice 62
+[amulet2] reducing by slice 61
+[amulet2] reducing by slice 60
+[amulet2] reducing by slice 59
+[amulet2] reducing by slice 58
+[amulet2] reducing by slice 57
+[amulet2] reducing by slice 56
+[amulet2] reducing by slice 55
+[amulet2] reducing by slice 54
+c
+c caught signal 'SIGTERM'(15)
+c
+c
+c raising signal 'SIGTERM'(15) again

@@ -1,0 +1,24 @@
+======== ABC command line "&r proofs-split/lin-8/m_cmp-mut.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =     621  cls =      0  lit =     621  unused =     107  proof =     0
+cst =       0  cls =     96  lit =     113  unused =     519  proof =     0
+cst =       0  cls =     98  lit =     103  unused =     527  proof =     0
+cst =       0  cls =     98  lit =     101  unused =     529  proof =     0
+cst =       0  cls =     98  lit =     101  unused =     529  proof =     0
+cst =       0  cls =     98  lit =     101  unused =     529  proof =     0
+cst =       0  cls =     98  lit =     101  unused =     529  proof =     0
+cst =       0  cls =     98  lit =     101  unused =     529  proof =     0
+cst =       0  cls =     98  lit =     101  unused =     529  proof =     0
+cst =       0  cls =     98  lit =     101  unused =     529  proof =     0
+  1 : P =     43. D =      0. F =     0. M =     238. And =     463. Time =     0.00 sec
+Switching into reduced mode.
+  2 : P =      5. D =      2. F =     0. M =      91. And =     437. Time =     0.00 sec
+Switching into normal mode.
+  3 : P =      1. D =      3. F =     0. M =       0. And =     411. Time =     0.00 sec
+  4 : P =      0. D =      1. F =     0. M =       0. And =     411. Time =     0.00 sec
+  5 : P =      1. D =      0. F =     0. M =       0. And =     403. Time =     0.00 sec
+Performed 56 SAT calls: P = 50  D = 6  F = 0
+Disproved at least one output of the miter (zero-based number 0).
+Networks are NOT EQUIVALENT.  Time =     0.01 sec
+INPUT: a = 107'h004100000100000001440000080.  OUTPUT: z = 1'h1 (m_cmp-mut), z = 1'h0 (m_cmp-mut).

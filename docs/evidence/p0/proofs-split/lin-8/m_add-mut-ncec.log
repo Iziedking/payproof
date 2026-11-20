@@ -1,0 +1,3 @@
+======== ABC command line "&r proofs-split/lin-8/m_add-mut.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase).  Time =     0.00 sec
