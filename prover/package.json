@@ -1,0 +1,10 @@
+{
+  "name": "@payproof/prover",
+  "private": true,
+  "type": "module",
+  "description": "TAP-02 bytes to structural Verilog, miters, and Yosys/ABC runs. No runtime dependencies.",
+  "engines": { "node": ">=24.22.1 <25" },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.ts\""
+  }
+}

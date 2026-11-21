@@ -1,0 +1,41 @@
+✔ ng-paye-nta2025: layout matches the netlist (6.821781ms)
+✔ ng-paye-nta2025: 32 vectors through ng_paye (8482 gates) (265.619003ms)
+✔ ng-paye-nta2025: pack then unpack returns the values (13.638781ms)
+✔ cn-bonus-2023-30: layout matches the netlist (1.249572ms)
+✔ cn-bonus-2023-30: 22 vectors through cn_bonus (3573 gates) (44.18146ms)
+✔ cn-bonus-2023-30: pack then unpack returns the values (3.653739ms)
+✔ split-v1: layout matches the netlist (0.200102ms)
+✔ split-v1: 23 vectors through split_check_modc_32 (41128 gates) (1236.830557ms)
+✔ split-v1: pack then unpack returns the values (5.298303ms)
+✔ pack refuses a value wider than its field (1.148856ms)
+✔ vectors file is the one TAP-02 names (2.557327ms)
+✔ valid: nand (2.238938ms)
+✔ valid: constants (0.52001ms)
+✔ valid: popcount8_3151 (24.96569ms)
+✔ valid: toggle (0.465017ms)
+✔ valid: ref_with_state (0.640227ms)
+✔ ill-formed: unknown_opcode (0.720332ms)
+✔ ill-formed: truncated_record (1.351187ms)
+✔ ill-formed: nand_forward_reference (0.310118ms)
+✔ ill-formed: nOut_zero (1.40137ms)
+✔ ill-formed: output_is_an_input (0.203161ms)
+✔ ill-formed: more_outputs_than_elements (0.190371ms)
+✔ ill-formed: ref_arity_mismatch (1.22534ms)
+✔ ill-formed: ref_target_not_registered (0.259435ms)
+✔ packing edge cases (0.298027ms)
+✔ NAND truth table (1.141206ms)
+✔ adder8: same bytes as the P0 tape-out file (9.627271ms)
+✔ cn_bonus: same bytes as the P0 tape-out file (69.806528ms)
+✔ ng_paye: same bytes as the P0 tape-out file (150.388733ms)
+✔ cn_bonus: rule vectors through the freshly imported netlist (120.548174ms)
+✔ ng_paye: rule vectors through the freshly imported netlist (207.580069ms)
+✔ ng_paye_mutant19 (third band 19%) differs from ng_paye on a rule vector (378.290386ms)
+✔ split_check_8: every one of 3,000 inputs matches the rule (4192.240971ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7596.322941

@@ -1,0 +1,258 @@
+Warning: Treating undriven bit miter.\in_in [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [15] like $anyseq.
+Warning: Treating a total of 16 undriven bits in miter like $anyseq.
+  adder8: gates 90 -> 90; Networks are equivalent.  Time =     0.00 sec; 0.09 s; miter fcc534c49d1c1561589ccd4acb2c5ccbf443a159a075dff0c8ca9066a11b08c7
+Warning: Treating undriven bit miter.\in_in [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [15] like $anyseq.
+Warning: Treating a total of 16 undriven bits in miter like $anyseq.
+  adder8 mutant (NAND 30): Networks are NOT EQUIVALENT.  Time =     0.00 sec; 0.09 s; cex {"a":"16'hF728"}
+Warning: Treating undriven bit miter.\in_in [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [31] like $anyseq.
+Warning: Treating a total of 32 undriven bits in miter like $anyseq.
+  cn_bonus: gates 3573 -> 3536; Networks are equivalent.  Time =     0.28 sec; 0.37 s; miter d75ce4ba785c849893aaf6afce7db4bfab92fa95be1109adb2915a67e924bb57
+Warning: Treating undriven bit miter.\in_in [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [31] like $anyseq.
+Warning: Treating a total of 32 undriven bits in miter like $anyseq.
+  cn_bonus mutant (NAND 1191): Networks are equivalent.  Time =     0.00 sec; 0.04 s; cex null
+Warning: Treating undriven bit miter.\in_in [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [31] like $anyseq.
+Warning: Treating a total of 32 undriven bits in miter like $anyseq.
+  split_check_8: gates 3979 -> 3890; Networks are equivalent.  Time =    10.58 sec; 10.68 s; miter 8162f19225177d644a00c0c934fc3483abb3621819275ab4b605f69e4aeeac13
+Warning: Treating undriven bit miter.\in_in [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [31] like $anyseq.
+Warning: Treating a total of 32 undriven bits in miter like $anyseq.
+  split_check_8 mutant (NAND 1326): Networks are equivalent.  Time =     0.00 sec; 0.04 s; cex null
+Warning: Treating undriven bit miter.\in_in [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_in [31] like $anyseq.
+Warning: Treating a total of 32 undriven bits in miter like $anyseq.
+✔ adder8: export, re-synthesise, import: same outputs, and proved equal (401.323753ms)
+✔ adder8: known-different pair (one NAND rewired) fails, and the counterexample replays (263.831866ms)
+✔ cn_bonus: export, re-synthesise, import: same outputs, and proved equal (7754.231916ms)
+✖ cn_bonus: known-different pair (one NAND rewired) fails, and the counterexample replays (5094.271536ms)
+✔ split_check_8: export, re-synthesise, import: same outputs, and proved equal (29558.250049ms)
+✖ split_check_8: known-different pair (one NAND rewired) fails, and the counterexample replays (3081.730552ms)
+✔ known-equal pair: a netlist against its own export (5038.52195ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51647.778508
+
+✖ failing tests:
+
+test at test/roundtrip.test.ts:69:3
+✖ cn_bonus: known-different pair (one NAND rewired) fails, and the counterexample replays (5094.271536ms)
+  AssertionError [ERR_ASSERTION]: mutant at NAND 1191 was proved equal: pick another gate
+      at TestContext.<anonymous> (file:///w/prover/test/roundtrip.test.ts:78:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'fail',
+    diff: 'simple'
+  }
+
+test at test/roundtrip.test.ts:69:3
+✖ split_check_8: known-different pair (one NAND rewired) fails, and the counterexample replays (3081.730552ms)
+  AssertionError [ERR_ASSERTION]: mutant at NAND 1326 was proved equal: pick another gate
+      at TestContext.<anonymous> (file:///w/prover/test/roundtrip.test.ts:78:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'fail',
+    diff: 'simple'
+  }
