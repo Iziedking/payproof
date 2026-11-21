@@ -1,0 +1,97 @@
+
+
+                             _   _
+                            (_) | |
+      __ _   _ __   __   __  _  | |
+     / _` | | '_ \  \ \ / / | | | |
+    | (_| | | | | |  \ V /  | | | |
+     \__,_| |_| |_|   \_/   |_| |_|
+
+    1.8.6 (6bad0a66de 2026-10-21T19:24:36.040754853Z)
+    https://github.com/foundry-rs/foundry
+
+[Lines removed from this copy: anvil prints its ten default test accounts, their public test private keys and the public test mnemonic at start. None was used; the deployer was impersonated. The host copy had sha256 283d51e1e4243a68e4ebeace54169172e305be8a34821911e4db2216bb61f647.]
+
+Fork
+==================
+Endpoint:       https://xlayerrpc.okx.com/
+Block number:   76525871
+Block hash:     0x3234e7388661bf5fa6fb5888972d0ffda02f95d70628f5a4d46226f8dbcff7ce
+Chain ID:       196
+
+Base Fee
+==================
+
+20000000
+
+Gas Limit
+==================
+
+210000000
+
+Genesis Timestamp
+==================
+
+1795294909
+
+Genesis Number
+==================
+
+0
+
+Listening on 127.0.0.1:8545
+eth_blockNumber
+eth_chainId
+eth_blockNumber
+web3_clientVersion
+eth_getBlockByNumber
+anvil_nodeInfo
+eth_estimateGas
+eth_estimateGas
+eth_estimateGas
+eth_call
+eth_call
+eth_getBalance
+anvil_impersonateAccount
+eth_estimateGas
+eth_sendTransaction
+eth_accounts
+eth_getTransactionReceipt
+eth_getTransactionReceipt
+
+    Transaction: 0x49102383316acdb418bd49bb76e37df7eb9bdc9a8f3e1d5ce2f902cc3978e79e
+    Gas used: 120869633
+
+    Block Number: 76525872
+    Block Hash: 0x68c0ce8451b431e0da939e36d011322aa1779b3a03cbae15a74ea4591ad02ea0
+    Block Time: "Sat, 21 Nov 2026 21:02:09 +0000"
+
+eth_getTransactionReceipt
+eth_call
+eth_call
+eth_estimateGas
+eth_call
+eth_estimateGas
+eth_call
+eth_estimateGas
+eth_call
+eth_estimateGas
+eth_call
+eth_estimateGas
+eth_call
+eth_estimateGas
+eth_call
+eth_estimateGas
+eth_sendTransaction
+eth_accounts
+eth_getTransactionReceipt
+
+    Transaction: 0x08a4402ec4ca849ca181a092f6c75f8c290d9644ae663dc3015397257615d002
+    Gas used: 105364196
+
+    Block Number: 76525873
+    Block Hash: 0x904cd4b6b83ffe2a526388ad5852c9ee50955e3049c837a6d205a2e8c957adeb
+    Block Time: "Sat, 21 Nov 2026 21:02:43 +0000"
+
+eth_getTransactionReceipt
+eth_getBlockByNumber

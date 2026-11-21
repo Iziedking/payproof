@@ -1072,6 +1072,60 @@ Story text for transaction 2, approved by the owner 2026-11-17: "Rules that deci
 | Tape-out gas for cn_bonus, ng_paye, split_check (simulation from the owner's address) | done (simulation): 10.6 M, 25.0 M and 63.4 M gas, about 2,950 to 2,980 gas per gate |
 | `eval` gas of our own circuits | done (simulation): #1 262,051, #2 323,162; large-circuit eval gas still from section 3's per-gate rate |
 
+### `eval` gas of `split_check_modc_32` on a fork of X Layer (simulation)
+
+Run on 2026-11-21 at the start of P1, owner approved. Task `p1-fork-gas` on node-services,
+scripts `scripts/p1/fork-gas.sh` and `scripts/p1/fork-gas.mjs`.
+
+- **Fork:** anvil 1.8.6 (Foundry image digest `sha256:4a16a86f…2464`, read 2026-11-21), forked
+  from `https://xlayerrpc.okx.com` at block 76,525,871. Chain id 196, block gas limit
+  210,000,000, base fee 20,000,000 wei. anvil's default EVM rules ("Bpo1").
+- **Deployer:** the owner's deployer was impersonated on the fork only. No key was used and
+  nothing was sent to the live chain. Both transactions paid X Layer's live gas price,
+  20,000,001 wei.
+- **Results:** `docs/evidence/p1/fork-gas-split_check_modc_32.json` and the anvil log.
+  Checksums are in `docs/evidence/p1/SHA256SUMS.txt`. anvil prints its default test keys at
+  start; those lines are cut from the copy, and the log says so.
+
+**Calibration.** Before anything else, `eval` gas was estimated for three circuits already on
+X Layer, on the fork and on the live RPC at the fork block. The fork read exactly 2,845 gas
+lower than the live chain in all three cases. That is under 0.01% for the two large circuits,
+so the fork's `eval` gas stands for X Layer's.
+
+| Circuit | Fork | Live, same block |
+| --- | --- | --- |
+| Payproof #1, adder8, 90 gates | 259,206 | 262,051 |
+| `0x69f6…62ca` #1386, 10,000 gates flat | 23,248,618 | 23,251,463 |
+| `0xb00e…2f54` #40, 14,985 gates, 27 REF records | 37,153,865 | 37,156,709 |
+
+**Tape-out on the fork.** The whole 41,128-gate flat netlist (287,896 bytes) went in one
+`tapeout` transaction. It was estimated at 122,747,809 gas and used 120,869,633, status 1.
+`circuitInfo(3)` returns 128 inputs, 1 output and 41,128 gates. On the live chain that would
+cost 0.0013 OKB in tape-out fee plus about 0.00242 OKB in network fee, and burn 41,128 NAND.
+
+**`eval`.** Seven inputs were run through `eth_call` and compared with the rule in plain integer
+arithmetic: 0 mismatches. They cover the exact payout, payout one too high, payout one too low,
+all inputs at maximum, total zero, shares above total, and all zero. `eth_estimateGas` gave
+106,998,830 to 107,037,059 gas.
+
+One `eval` sent as a transaction (exact payout):
+
+| Gas used | Gas per gate | Block gas used / limit | Against the largest transaction seen (88,709,982) | Fee at 20,000,001 wei per gas |
+| --- | --- | --- | --- | --- |
+| **105,364,196** | **2,561.9** | 105,364,196 / 210,000,000 (50.2%) | **+18.8%** | 0.00211 OKB |
+
+What this shows and what it does not:
+
+- An `eval` of this circuit fits one X Layer block with about half the block to spare, and a
+  single flat tape-out of it also fits. That is shown on a fork, not on the live chain.
+- The gas is **above the 95.3 M to 102.0 M predicted** from the per-gate rates of smaller
+  circuits (section 3). At 41,128 gates a gate costs 2,561.9 gas, against 2,316 to 2,345 on
+  circuits of 1,204 to 10,000 gates. Why it grows with size is not measured here; the
+  prediction tables below are corrected to this measurement.
+- The vault's own gas around the `eval` is still not included.
+- A real transaction of this size on the live chain is still not shown. The largest seen
+  remains 88,709,982 gas.
+
 ## 8. Cost per claim (check circuit), from measured gas per gate
 
 `eval` gas = gates x 2,316 to 2,345 (flat, section 3); a REF-split circuit about 6% more.
@@ -1083,7 +1137,7 @@ around the `eval` (share lookups, transfer) is not measured yet and is not inclu
 | Check, 24-bit | 21,441 | 49.7 M to 53.2 M | about 0.0010 to 0.0011 OKB | 24% to 25% |
 | Check, 32-bit | 34,876 | 80.8 M to 86.5 M | about 0.0016 to 0.0017 OKB | 38% to 41% |
 | Check, 32-bit, module split (section 5, step 0) | 35,834 | 83.0 M to 88.9 M | about 0.0017 to 0.0018 OKB | 40% to 42% |
-| Check, 32-bit, joined with the proved multiplier (`split_check_modc_32`, section 5) | 41,128 | 95.3 M to 102.0 M | about 0.0019 to 0.0020 OKB | 45% to 49% |
+| Check, 32-bit, joined with the proved multiplier (`split_check_modc_32`, section 5) | 41,128 | predicted 95.3 M to 102.0 M; **measured on a fork 105.4 M** (section 7) | about 0.0021 OKB | 50% |
 | Check, 40-bit | 51,206 | 118.6 M to 127.0 M | about 0.0024 to 0.0025 OKB | 56% to 60% |
 | Check, 16-bit | 11,168 | 25.9 M to 27.7 M | about 0.0005 to 0.0006 OKB | 12% to 13% |
 | Check, 12-bit | 7,137 | 16.5 M to 17.7 M | about 0.0003 to 0.0004 OKB | 8% |
@@ -1185,6 +1239,12 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
   narrower widths are not proved either: no netlist other than `split_check_modc_32` and the
   8-bit ones has the chain.
 
+2026-11-21, measured on a fork of X Layer (section 7, simulation): one `eval` of
+`split_check_modc_32` used **105,364,196 gas**, more than the 95.3 M to 102.0 M above. That is
+50.2% of the block and +18.8% over the largest transaction seen, and the fee is about
+0.0021 OKB. It ran in a 210 M block on the fork. A single flat tape-out of the circuit used
+120.9 M gas there. The live-chain test set above still applies.
+
 Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
 narrow the widths and state the supported range; (2) publish split facts at the widest width
@@ -1265,9 +1325,12 @@ host may use, so it was left for the owner to decide.
   multiplier is proved and certified). Closed on 2026-11-20: the joined circuit rebuilt with
   the cleaned, structure-kept multiplier (`split_check_modc_32`, 41,128 gates) has every link
   proved at 32 bits (section 5), and the owner chose it as the netlist to tape out (section 9).
-- A 32-bit claim now needs 95.3 M to 102.0 M gas for the `eval`, above the largest X Layer
-  transaction seen (88,709,982). It is under the block limit but not yet shown to work. The
-  first on-chain `eval` of `split_check_modc_32` is the test (section 9).
+- A 32-bit claim needs 105.4 M gas for the `eval`, measured on a fork of X Layer on
+  2026-11-21 (section 7; the prediction was 95.3 M to 102.0 M). That is above the largest X Layer
+  transaction seen (88,709,982) and half the block. It ran on the fork; on the live chain it is
+  not yet shown, and the first on-chain `eval` of `split_check_modc_32` is the test (section 9).
+  Gas per gate rises with circuit size (2,561.9 at 41,128 gates against about 2,330 at 10,000);
+  the per-gate rates in sections 8 and 8a understate large circuits.
 - ABC `&acec` in this build gave a false "not equivalent" on a correct multiplier and crashes at
   32 bits (section 5, spike C). Not used as evidence on its own.
 - Synthesis of large circuits on host-service is slow (52 min for the 32-bit check circuit).
