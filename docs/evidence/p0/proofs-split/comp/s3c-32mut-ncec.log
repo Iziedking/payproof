@@ -1,0 +1,56 @@
+======== ABC command line "&r proofs-split/comp/s3c-32mut.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =   28927  cls =      0  lit =   28927  unused =     128  proof =     0
+cst =     233  cls =    532  lit =    1125  unused =   27398  proof =     0
+cst =     128  cls =    402  lit =     776  unused =   27877  proof =     0
+cst =      92  cls =    376  lit =     685  unused =   27994  proof =     0
+cst =      82  cls =    362  lit =     639  unused =   28054  proof =     0
+cst =      75  cls =    346  lit =     611  unused =   28098  proof =     0
+cst =      75  cls =    342  lit =     602  unused =   28111  proof =     0
+cst =      74  cls =    337  lit =     594  unused =   28124  proof =     0
+cst =      72  cls =    329  lit =     583  unused =   28143  proof =     0
+cst =      69  cls =    324  lit =     573  unused =   28158  proof =     0
+  1 : P =      1. D =      0. F =     2. M =     537. And =   28926. Time =     0.06 sec
+Increasing conflict limit to 10000.
+Switching into reduced mode.
+  2 : P =      1. D =      4. F =     3. M =     535. And =   28923. Time =     1.95 sec
+Switching into normal mode.
+  3 : P =     22. D =      3. F =     0. M =       0. And =   28886. Time =     0.02 sec
+  4 : P =     20. D =      5. F =     0. M =       0. And =   28850. Time =     0.07 sec
+  5 : P =     15. D =      4. F =     1. M =       0. And =   28824. Time =     0.50 sec
+  6 : P =     10. D =      4. F =     0. M =       0. And =   28808. Time =     0.09 sec
+  7 : P =     15. D =      2. F =     0. M =       0. And =   28782. Time =     0.12 sec
+  8 : P =      5. D =      6. F =     3. M =       0. And =   28777. Time =     2.13 sec
+  9 : P =      4. D =      6. F =     3. M =       0. And =   28773. Time =     2.89 sec
+ 10 : P =      4. D =      3. F =     5. M =       0. And =   28769. Time =     3.18 sec
+ 11 : P =      3. D =      3. F =     7. M =       0. And =   28760. Time =     4.00 sec
+Increasing conflict limit to 100000.
+ 12 : P =      0. D =     11. F =     1. M =       0. And =   28760. Time =    17.78 sec
+ 13 : P =      0. D =      8. F =     2. M =       0. And =   28760. Time =    19.03 sec
+ 14 : P =      0. D =      8. F =     1. M =       0. And =   28760. Time =    12.74 sec
+ 15 : P =      1. D =      8. F =     2. M =       0. And =   28758. Time =    17.01 sec
+ 16 : P =      0. D =      6. F =     4. M =       0. And =   28758. Time =    31.66 sec
+ 17 : P =      0. D =      6. F =     3. M =       0. And =   28758. Time =    27.66 sec
+ 18 : P =      0. D =      6. F =     4. M =       0. And =   28758. Time =    31.61 sec
+ 19 : P =      0. D =      6. F =     4. M =       0. And =   28758. Time =    27.65 sec
+ 20 : P =      0. D =      5. F =     4. M =       0. And =   28758. Time =    26.00 sec
+ 21 : P =      0. D =      8. F =     4. M =       0. And =   28758. Time =    29.93 sec
+ 22 : P =      0. D =      6. F =     4. M =       0. And =   28758. Time =    35.30 sec
+ 23 : P =      0. D =      4. F =     4. M =       0. And =   28758. Time =    31.88 sec
+ 24 : P =      0. D =      6. F =     4. M =       0. And =   28758. Time =    26.89 sec
+ 25 : P =      1. D =      4. F =     4. M =       0. And =   28755. Time =    27.20 sec
+ 26 : P =      1. D =      2. F =     4. M =       0. And =   28752. Time =    34.33 sec
+Performed 310 SAT calls: P = 103  D = 134  F = 73
+NBeg = 28927. NEnd = 28752. (Gain =   0.60 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.05 sec (  0.00 %)
+Sat  =   411.49 sec (  0.04 %)
+Pat  =     0.05 sec (  0.00 %)
+Time =   411.70 sec
+Networks are UNDECIDED after the new CEC engine.  Time =   411.71 sec
+Calling the old CEC engine.
+Original miter:   Nodes =  28755.
+Initial SAT:      Nodes =  28755.  Time =     0.06 sec
+Networks are NOT EQUIVALENT.  Time =   411.77 sec
+Primary output 0 has failed, along with other 0 incorrect outputs.
+INPUT: a = 128'h00000000000000000000000100000000.  OUTPUT: z = 1'h0 (s3c-32mut), z = 1'h1 (s3c-32mut).

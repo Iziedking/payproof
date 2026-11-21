@@ -1,0 +1,3 @@
+======== ABC command line "&r proofs-split/comp/s3c-8.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Networks are equivalent.  Time =     0.00 sec

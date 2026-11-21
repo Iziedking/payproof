@@ -136,3 +136,25 @@ anet m_mul_tmc_32 pacheck gate [TARGET CHECKED] 0.1 rc=0
 anet m_mul_tmc_32 substitute mutant [[amulet2] build adder miter] 0.0 rc=1
 anet m_mul_tmc_32 miter-sat mutant [unsat] 0.0 rc=0
 anet m_mul_tmc_32 verify mutant [INCORRECT MULTIPLIER] 0.1 rc=0
+comp s3c-8 &cec [Networks are equivalent. Time = 0.00 sec] 0.0 rc=0
+comp s3c-8mut &cec [Networks are NOT EQUIVALENT. Time = 0.00 sec] 0.0 rc=0
+comp s3c-32 &cec [Networks are equivalent. Time = 0.00 sec] 0.0 rc=0
+ajoin 8 cut 607 NAND 260 NOT
+anet m_mul_tmcj_8 substitute gate [[amulet2] build adder miter] 0.0 rc=1
+anet m_mul_tmcj_8 miter-sat gate [unsat] 0.0 rc=0
+anet m_mul_tmcj_8 verify gate [CORRECT MULTIPLIER] 0.0 rc=1
+anet m_mul_tmcj_8 certify gate [CORRECT MULTIPLIER] 0.0 rc=1
+anet m_mul_tmcj_8 pacheck gate [TARGET CHECKED] 0.0 rc=0
+anet m_mul_tmcj_8 substitute mutant [[amulet2] build adder miter] 0.0 rc=1
+anet m_mul_tmcj_8 miter-sat mutant [unsat] 0.0 rc=0
+anet m_mul_tmcj_8 verify mutant [INCORRECT MULTIPLIER] 0.0 rc=0
+ajoin 32 cut 10599 NAND 4370 NOT
+anet m_mul_tmcj_32 substitute gate [[amulet2] build adder miter] 0.0 rc=1
+anet m_mul_tmcj_32 miter-sat gate [unsat] 0.0 rc=0
+anet m_mul_tmcj_32 verify gate [CORRECT MULTIPLIER] 0.1 rc=1
+anet m_mul_tmcj_32 certify gate [CORRECT MULTIPLIER] 0.1 rc=1
+anet m_mul_tmcj_32 pacheck gate [TARGET CHECKED] 0.1 rc=0
+anet m_mul_tmcj_32 substitute mutant [[amulet2] build adder miter] 0.0 rc=1
+anet m_mul_tmcj_32 miter-sat mutant [unsat] 0.0 rc=0
+anet m_mul_tmcj_32 verify mutant [INCORRECT MULTIPLIER] 0.1 rc=0
+comp s3c-32mut &cec [Networks are NOT EQUIVALENT. Time = 411.77 sec] 411.8 rc=0

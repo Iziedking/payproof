@@ -782,6 +782,112 @@ Its gas, 95 M to 102 M, is over the largest transaction seen on X Layer. That tr
 not a cap (block limit 210 M), but the 32-bit choice in section 9 assumed 80.8 M to 86.7 M, so
 this needs the owner's decision.
 
+### split-v1 check circuit, module split: the chain closed at 32 bits
+
+The owner asked on 2026-11-20 for the joined circuit to be built with the proved multiplier
+and the chain closed.
+
+**Build** (run `p0-synth-check-modc`, host-service, groups `check-modc-8` and `check-modc-32`
+in `synth-all.sh`, function `synth_modc`). One Yosys session:
+
+1. Repeats the step 0 per-module synthesis of `split_check_mod.v` (`synth -noabc`, then
+   `abc -g NAND`) and writes it as `split_check_modc_W.base.mods.nand.v`.
+2. Reads the cleaned multiplier `m_mul_tmc_W` from its Yosys JSON. Reading the written netlist
+   back as Verilog was tried first; Yosys turned its gates into `$and`/`$not` cells, so the
+   JSON is used instead.
+3. Points the two multiplier instances (`u_pt`, `u_ps`) at it with `chtype`. `hierarchy -top`
+   then drops the ABC-mapped `m_mul`.
+4. Writes the joined netlist (`.mods.nand.v`), then flattens it and writes the flat one
+   (`.nand.v`).
+5. Checks that only NAND and NOT cells remain. The check runs after `flatten`; run before it,
+   it also caught the instance cells.
+
+The run then compares its own output (`synth-logs/run3/same-split_check_modc_W.log`):
+
+- The base per-module synthesis is identical, byte for byte, to the step 0 file
+  `split_check_mod_W.mods.nand.v`.
+- The five other modules (`m_x10000_wide`, `m_x10000_narrow`, `m_x8500`, `m_add`, `m_cmp`) are
+  byte-identical to step 0. So their step 2 proofs (section 5, "the other five modules") apply
+  unchanged.
+- The multiplier text differs from `m_mul_tmc_W.nand.v` only in wire names. Yosys renames
+  wires when it writes the joined file. It has the same 607 NAND and 260 NOT at 8 bits, and
+  10,599 NAND and 4,370 NOT at 32 bits. Because the text differs, it is proved again
+  directly (below), not carried over.
+- 2 of 2 instances use `m_mul_tmc_W`; 0 `m_mul` modules are left.
+
+| Joined circuit | Gates | NAND | NOT | Per module |
+| --- | --- | --- | --- | --- |
+| `split_check_modc_8` | 4,687 | | | |
+| `split_check_modc_32` | **41,128** | 28,467 | 12,661 | `m_x8500` 3,624, `m_add` 804, `m_cmp` 1,833, `m_mul_tmc_32` 14,969 x 2, `m_x10000_narrow` 1,623, `m_x10000_wide` 3,306 |
+
+The total matches the figure computed before the build (previous subsection).
+
+**Step 3 on the joined netlist** (run `p0-split-comp-c`, node-services, part `comp` of
+`prove-split.sh`, pairs `s3c-*`). Flat `split_check_modc_W.nand.v` against joined
+`split_check_modc_W.mods.nand.v`, Yosys miter and ABC `&cec -m`. The control turns the 40th
+NAND of the flat netlist into an AND (line in `comp/s3c-*mut-mutant-line.txt`).
+
+| Pair | Result | Time (s) |
+| --- | --- | --- |
+| `s3c-8` | equivalent | 0.00 |
+| `s3c-8mut` (`_0092_ = _0066_ & _0090_`) | **NOT EQUIVALENT**, counterexample `a = 32'h006EB900` | 0.00 |
+| `s3c-32` | equivalent | 0.00 |
+| `s3c-32mut` (`_00185_ = _00180_ & _00184_`) | **NOT EQUIVALENT**, counterexample: one input bit set, `a = 128'h00000000000000000000000100000000` | 411.77 |
+
+The first `s3c-32mut` watcher lost its ssh connection ("Connection reset by peer") at
+15:23 UTC. The run was started again; the result above is from that run.
+
+**Step 2 for the multiplier inside the joined netlist** (run `p0-split-ajoin`, part `ajoin`).
+The `m_mul_tmc_W` module is cut out of `split_check_modc_W.mods.nand.v` as it stands, saved
+as `m_mul_tmcj_W.nand.v`, and given the same AMulet2 and Pacheck checks as in the previous
+subsection (part `anet`). The cut has 607 NAND and 260 NOT at 8 bits, and 10,599 NAND and
+4,370 NOT at 32 bits, as expected.
+
+| Multiplier as cut | Substitution | Miter (`yices-sat`) | Verify | Certificate (Pacheck) | Control (one gate changed) |
+| --- | --- | --- | --- | --- | --- |
+| `m_mul_tmcj_8` | done, 120 XOR gates found | unsat | **CORRECT**, 0.0 s | **TARGET CHECKED**, 503 inferences | `_0066_ = a[7] & b[4]`: substituted, miter unsat, **INCORRECT** (all-zero input) |
+| `m_mul_tmcj_32` | done, 2,119 XOR gates found | unsat | **CORRECT**, 0.1 s | **TARGET CHECKED**, 8,357 inferences | `_00135_` NAND to AND: substituted, miter unsat, **INCORRECT** (all-zero input) |
+
+**TAP-02 bytes** (run `p0-convert-check-modc`). The flat netlist is converted with
+`yosys2tap.py` and checked against the TAP-02 reference with `check_tap.py`. This is testing,
+not proof.
+
+| Netlist | Inputs / outputs | Gates | Bytes | Cases | Mismatches |
+| --- | --- | --- | --- | --- | --- |
+| `split_check_modc_8` | 32 / 1 | 4,687 | 32,809 | 2,024 | 0 |
+| `split_check_modc_32` | 128 / 1 | 41,128 | 287,896 | 424 | 0 |
+
+The TAP files are `spikes/p0/tap/split_check_modc_8.tap.json` (sha256 `31fd2444…9c38`) and
+`split_check_modc_32.tap.json` (sha256 `1e1cca51…2a63`). Both match the host copies.
+
+**The chain for `split_check_modc_32`.** Every link holds at 32 bits.
+
+| Link | What it says | Result at 32 bits | Where |
+| --- | --- | --- | --- |
+| A | The integer facts hold for the RTL arithmetic, with no overflow | proved (Z3 and cvc5) | spike A |
+| 1 | The joined RTL (`split_check_mod.v`) equals the original RTL (`split_check.v`) | equivalent; control caught | steps 1 and 3 |
+| 2 | Each module netlist equals its RTL module | five modules equivalent, controls caught (byte-identical here); `m_mul_tmc_32` as cut from this netlist CORRECT with a checked certificate, control INCORRECT | "the other five modules", this subsection |
+| 3 | The flat netlist equals the joined modules | equivalent; control caught (411.77 s) | this subsection |
+
+What the chain rests on: Yosys and ABC (miters, `&cec`), AMulet 2.2 and its translation of the
+AIG into polynomials (Pacheck checks the algebra, not that translation), `yices-sat` for the
+adder swap, and Z3 and cvc5 for the integer facts. Tool versions are in section 1 and the
+step 2 subsections.
+
+So the split check facts are proved on the 32-bit netlist `split_check_modc_32`. They are not
+proved on the flat 32-bit netlist of section 4 (34,876 gates) or the step 0 netlist (35,834
+gates), whose ABC-mapped multiplier is not proved.
+
+**Cost**, from the measured gas per gate (sections 3 and 7). The vault's own gas around the
+`eval` is not measured and not included.
+
+| | Gates | `eval` gas | Against the largest transaction seen (88,709,982) | Share of a 210 M block | Fee at 20,000,001 wei per gas | Tape-out gas (simulation, section 7) |
+| --- | --- | --- | --- | --- | --- | --- |
+| `split_check_modc_32` | 41,128 | 95.3 M (flat, 2,316 per gate) to 102.0 M (REF, 2,479.6 per gate) | +7.4% to +15.0% | 45.4% to 48.6% | 0.00191 to 0.00204 OKB | 121.4 M to 122.5 M |
+
+A transaction of this size has not been seen on X Layer yet. The largest seen is not a cap;
+the block limit is 210 M. The first transaction of this size is the test (section 9).
+
 ## 5a. Bonus rule: the six traps, found by the solver alone
 
 The first fact (`cn_raise`: b1 < b2 gives net(b2) >= net(b1)) failed at the 960,000 yuan edge
@@ -977,6 +1083,7 @@ around the `eval` (share lookups, transfer) is not measured yet and is not inclu
 | Check, 24-bit | 21,441 | 49.7 M to 53.2 M | about 0.0010 to 0.0011 OKB | 24% to 25% |
 | Check, 32-bit | 34,876 | 80.8 M to 86.5 M | about 0.0016 to 0.0017 OKB | 38% to 41% |
 | Check, 32-bit, module split (section 5, step 0) | 35,834 | 83.0 M to 88.9 M | about 0.0017 to 0.0018 OKB | 40% to 42% |
+| Check, 32-bit, joined with the proved multiplier (`split_check_modc_32`, section 5) | 41,128 | 95.3 M to 102.0 M | about 0.0019 to 0.0020 OKB | 45% to 49% |
 | Check, 40-bit | 51,206 | 118.6 M to 127.0 M | about 0.0024 to 0.0025 OKB | 56% to 60% |
 | Check, 16-bit | 11,168 | 25.9 M to 27.7 M | about 0.0005 to 0.0006 OKB | 12% to 13% |
 | Check, 12-bit | 7,137 | 16.5 M to 17.7 M | about 0.0003 to 0.0004 OKB | 8% |
@@ -1057,6 +1164,26 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
     and 3 (joining) hold at 8 and 32 bits. Step 2 holds at 8 bits for all six modules; at 32
     bits it holds for five, and the `m_mul` netlist is not proved (section 5). So the split
     facts are proved on the 8-bit netlist and not yet on the 32-bit one.
+    On 2026-11-20 the joined circuit was rebuilt with the cleaned, structure-kept multiplier
+    (`split_check_modc_32`, 41,128 gates). Every link holds for it at 32 bits (section 5, "the
+    chain closed at 32 bits"). Rule 2 can now be applied: the split check facts are published
+    at 32 bits, for that netlist.
+
+2026-11-20, the owner approved two recommendations:
+
+- **The netlist taped out for the split-v1 check is `split_check_modc_32`** (41,128 gates),
+  not the flat 34,876-gate netlist or the 35,834-gate step 0 netlist. It is the only 32-bit
+  netlist for which the split facts are proved. A netlist whose multiplier is not proved
+  would not meet rule 2.
+- **The width stays at 32 bits, at 95.3 M to 102.0 M gas for the `eval`.** That is 7.4% to
+  15.0% over the largest transaction seen on X Layer, and 45% to 49% of the 210 M block
+  limit. The fee is about 0.0019 to 0.0020 OKB per claim. It replaces the 80.8 M to 86.7 M
+  assumed above. The largest transaction seen is not a cap, but a transaction this large has
+  not been shown to work. So the condition already set for the first claim applies, at this
+  size: the first `eval` of `split_check_modc_32` on X Layer, with the vault's own gas, is the
+  test. If it fails, the record says so and the width is brought back to the owner. The
+  narrower widths are not proved either: no netlist other than `split_check_modc_32` and the
+  8-bit ones has the chain.
 
 Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
@@ -1091,11 +1218,32 @@ options with cost per claim before any choice is made.
   netlists (`split_check_mod_8` and `_32`, flat and hierarchical, with `stat` files), the
   calibration multiplier `mul_8`, their synthesis logs, and the updated `synth-summary.tsv`.
   `SHA256SUMS-host-service.txt` now lists 52 files, all matched after the copy.
+- From host-service, 2026-11-20, added to `netlists/` and `synth-logs/run3/`: the
+  structure-kept and cleaned multipliers (`m_mul_tm_*`, `m_mul_tmc_*`) and the joined circuits
+  `split_check_modc_8` and `_32` (flat, joined and base netlists, `stat` files, synthesis and
+  `same-*` logs). `SHA256SUMS-host-service.txt` lists 82 files, all matched.
+- From node-services `proofs-split/`, 2026-11-20, added after the 209 above: the logs of
+  `p0-split-anet-8`, `-anet-32` and `-anet-tmc` (copied with the multiplier results), then of
+  `p0-split-comp-c` (pairs `s3c-*`) and `p0-split-ajoin` (`anet-m_mul_tmcj_8` and `_32`), and
+  `summary.txt` again. Mutant netlists,
+  AIGs and proof certificates are not copied; each mutant is described by its
+  `mutant-line.txt`. `SHA256SUMS-split.txt` now lists 327 files, all matched after the copy.
+  The TAP files `spikes/p0/tap/split_check_modc_*.tap.json` were checked against the host
+  hashes (section 5).
 - Not copied, because they can be rebuilt from the files above and the scripts: the Yosys JSON
-  netlists and the `miter.aig` and other `.aig` files.
+  netlists, the `miter.aig` and other `.aig` files, and the Pacheck certificates (`*.proof`).
 
-Both workdirs are kept for now: decision rule 2 is open (above), and further proof attempts would
-run there. The `payproof-p0-chk-*` containers have all exited and been removed by their runs.
+**Workdirs removed on 2026-11-20** after the last run passed and its evidence was copied:
+host-service `/tmp/izie-build-test.RK0bzkMu` and node-services `/tmp/izie-build-test.XkZQkbd5`.
+Each was removed only after its `.izie-test-owner` marker was checked. The node-services
+directory held the built AMulet2 and Pacheck sources and binaries, the oss-cad-suite, and the
+full AMulet logs over 5 MB, of which only excerpts are kept (section 5, step 2). These go with
+it. `scripts/p0/build-amulet.sh` rebuilds the tools from the pinned commits. Other projects'
+`/tmp/izie-build-test.*` directories were not touched. All `payproof-*` containers have exited
+and been removed. The `debian:bookworm-slim` image
+(`sha256:734a72b3d6142a71993b4bc580ca01d8ca687f77a2c422d96a961d3376b179bc`, 116 MB) pulled
+for the AMulet build is still on node-services. It is a common tag that other projects on the
+host may use, so it was left for the owner to decide.
 
 ## 10. Open items found during P0
 
@@ -1114,7 +1262,12 @@ run there. The `payproof-p0-chk-*` containers have all exited and been removed b
   (35,834 gates at 32 bits, 0.16% over the largest transaction seen if built from REF
   modules); steps 1 and 3 hold at 8 and 32 bits; step 2 holds at 32 bits except the
   ABC-mapped `m_mul`, which AMulet cannot finish in 3,600 s (the RTL-structured 32-bit
-  multiplier is proved and certified). The open link waits for the owner (section 5).
+  multiplier is proved and certified). Closed on 2026-11-20: the joined circuit rebuilt with
+  the cleaned, structure-kept multiplier (`split_check_modc_32`, 41,128 gates) has every link
+  proved at 32 bits (section 5), and the owner chose it as the netlist to tape out (section 9).
+- A 32-bit claim now needs 95.3 M to 102.0 M gas for the `eval`, above the largest X Layer
+  transaction seen (88,709,982). It is under the block limit but not yet shown to work. The
+  first on-chain `eval` of `split_check_modc_32` is the test (section 9).
 - ABC `&acec` in this build gave a false "not equivalent" on a correct multiplier and crashes at
   32 bits (section 5, spike C). Not used as evidence on its own.
 - Synthesis of large circuits on host-service is slow (52 min for the 32-bit check circuit).

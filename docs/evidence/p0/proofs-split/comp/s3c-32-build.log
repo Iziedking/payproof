@@ -1,0 +1,947 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+
+-- Running command `read_verilog nets/split_check_modc_32.mods.nand.v;  read_verilog  nets/split_check_modc_32.nand.v; 
+      hierarchy; proc; miter -equiv -flatten split_check_mod split_check_modc_32 miter; hierarchy -top miter; techmap; opt -fast; aigmap;
+      write_aiger -symbols proofs-split/comp/s3c-32.aig' --
+
+1. Executing Verilog-2005 frontend: nets/split_check_modc_32.mods.nand.v
+Parsing Verilog input from `nets/split_check_modc_32.mods.nand.v' to AST representation.
+Generating RTLIL representation for module `\$paramod$fefeed225e00891b7d3d2c7596c0783970263577\m_x8500'.
+Generating RTLIL representation for module `\$paramod\m_add\W=s32'00000000000000000000000000100000'.
+Generating RTLIL representation for module `\$paramod\m_cmp\W=s32'00000000000000000000000000100000'.
+Generating RTLIL representation for module `\$paramod\m_x10000_narrow\W=s32'00000000000000000000000000100000'.
+Generating RTLIL representation for module `\$paramod\m_x10000_wide\W=s32'00000000000000000000000000100000'.
+Generating RTLIL representation for module `\m_mul_tmc_32'.
+Generating RTLIL representation for module `\split_check_mod'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: nets/split_check_modc_32.nand.v
+Parsing Verilog input from `nets/split_check_modc_32.nand.v' to AST representation.
+Generating RTLIL representation for module `\split_check_modc_32'.
+Successfully finished Verilog frontend.
+
+3. Executing HIERARCHY pass (managing design hierarchy).
+
+4. Executing PROC pass (convert processes to netlists).
+
+4.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+4.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+4.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+4.4. Executing PROC_INIT pass (extract init attributes).
+
+4.5. Executing PROC_ARST pass (detect async resets in processes).
+
+4.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+4.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+4.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+4.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+4.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+4.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+4.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module split_check_modc_32.
+<suppressed ~12409 debug messages>
+Optimizing module split_check_mod.
+Optimizing module m_mul_tmc_32.
+<suppressed ~4370 debug messages>
+Optimizing module $paramod\m_x10000_wide\W=s32'00000000000000000000000000100000.
+<suppressed ~999 debug messages>
+Optimizing module $paramod\m_x10000_narrow\W=s32'00000000000000000000000000100000.
+<suppressed ~495 debug messages>
+Optimizing module $paramod\m_cmp\W=s32'00000000000000000000000000100000.
+<suppressed ~489 debug messages>
+Optimizing module $paramod\m_add\W=s32'00000000000000000000000000100000.
+<suppressed ~190 debug messages>
+Optimizing module $paramod$fefeed225e00891b7d3d2c7596c0783970263577\m_x8500.
+<suppressed ~1166 debug messages>
+
+5. Executing MITER pass (creating miter circuit).
+Creating miter cell "miter" with gold cell "split_check_mod" and gate cell "split_check_modc_32".
+
+5.1. Executing FLATTEN pass (flatten design).
+<suppressed ~9 debug messages>
+
+5.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+<suppressed ~502 debug messages>
+Removed 1649 unused cells and 108500 unused wires.
+
+6. Executing HIERARCHY pass (managing design hierarchy).
+
+6.1. Analyzing design hierarchy..
+Top module:  \miter
+
+6.2. Analyzing design hierarchy..
+Top module:  \miter
+Removing unused module `\split_check_modc_32'.
+Removing unused module `\split_check_mod'.
+Removing unused module `\m_mul_tmc_32'.
+Removing unused module `\$paramod\m_x10000_wide\W=s32'00000000000000000000000000100000'.
+Removing unused module `\$paramod\m_x10000_narrow\W=s32'00000000000000000000000000100000'.
+Removing unused module `\$paramod\m_cmp\W=s32'00000000000000000000000000100000'.
+Removing unused module `\$paramod\m_add\W=s32'00000000000000000000000000100000'.
+Removing unused module `\$paramod$fefeed225e00891b7d3d2c7596c0783970263577\m_x8500'.
+Removed 8 unused modules.
+
+7. Executing TECHMAP pass (map to technology primitives).
+
+7.1. Executing Verilog-2005 frontend: /w/oss-cad-suite/lib/../share/yosys/techmap.v
+Parsing Verilog input from `/w/oss-cad-suite/lib/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `$__div_mod_u'.
+Generating RTLIL representation for module `$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `$connect'.
+Generating RTLIL representation for module `$input_port'.
+Successfully finished Verilog frontend.
+
+7.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $eqx.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $and.
+No more expansions possible.
+<suppressed ~112756 debug messages>
+
+8. Executing OPT pass (performing simple optimizations).
+
+8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+<suppressed ~1 debug messages>
+
+8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\miter'.
+Computing hashes of 112688 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 110372 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 107510 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 105445 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 104058 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 103300 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 101951 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 100042 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 98755 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 97471 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 96136 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 94726 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 93362 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 92819 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 91854 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 90520 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 89615 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 88703 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 87738 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 86670 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 85650 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 85228 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 84509 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 83544 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 82886 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 82237 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 81526 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 80829 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 80191 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 79885 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 79391 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 78729 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 78258 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 77836 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 77349 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 76812 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 76341 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 76115 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 75774 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 75290 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 74946 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 74655 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 74324 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 73973 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 73659 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 73486 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 73244 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 72905 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 72630 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 72439 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 72201 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 71867 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 71578 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 71405 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 71177 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 70856 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 70604 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 70445 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 70239 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 69946 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 69701 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 69545 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 69355 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 69103 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 68895 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 68773 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 68643 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 68494 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 68369 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 68288 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 68218 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 68131 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 68039 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67961 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67894 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67814 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67728 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67654 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67591 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67508 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67407 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67321 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67246 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67149 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 67025 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 66916 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 66824 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 66696 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 66533 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 66406 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 66288 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 66111 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 65907 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 65760 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 65622 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 65413 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 65180 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 65014 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 64860 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 64626 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 64374 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 64197 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 64021 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 63775 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 63526 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 63337 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 63158 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 62928 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 62695 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 62508 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 62334 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 62119 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 61906 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 61740 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 61586 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 61391 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 61206 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 61057 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 60903 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 60717 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 60542 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 60407 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 60272 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 60115 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59971 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59856 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59731 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59590 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59469 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59372 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59271 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59163 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59081 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 59017 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58946 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58881 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58844 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58816 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58789 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58764 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58747 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58731 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58707 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58683 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58664 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58645 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58629 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58615 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58604 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58593 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58575 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58556 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58543 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58533 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58521 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58509 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58500 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58489 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58470 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58450 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58437 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58426 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58412 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58399 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58390 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58377 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58358 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58342 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58333 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58324 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58312 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58297 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58281 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58264 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58244 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58225 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58207 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58191 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58168 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58144 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58123 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58109 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58095 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58079 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58067 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58056 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58040 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58021 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58006 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57997 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57986 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57972 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57963 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57953 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57940 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57925 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57912 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57901 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57889 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57875 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57863 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57849 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57833 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57810 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57789 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57771 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57752 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57731 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57715 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57705 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57694 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57679 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57665 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57652 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57638 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57622 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57609 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57599 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57586 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57571 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57558 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57547 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57535 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57522 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57513 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57506 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57495 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57480 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57467 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57453 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57437 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57418 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57399 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57382 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57363 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57345 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57327 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57314 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57306 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57297 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57283 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57270 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57259 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57246 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57232 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57221 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57213 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57201 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57185 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57171 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57160 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57144 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57125 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57108 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57095 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57080 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57062 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57047 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57034 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57022 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57007 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56990 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56975 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56960 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56942 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56923 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56903 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56881 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56857 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56837 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56822 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56804 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56783 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56765 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56752 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56735 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56712 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56690 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56670 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56646 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56621 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56598 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56581 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56564 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56547 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56531 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56517 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56509 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56497 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56482 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56471 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56460 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56444 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56427 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56415 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56404 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56384 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56365 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56354 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56345 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56336 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56330 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56323 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56315 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56306 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56297 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56287 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56280 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56274 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56271 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56268 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56265 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56262 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56259 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56256 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56254 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56252 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56251 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56250 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 56249 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+<suppressed ~169317 debug messages>
+Removed a total of 56439 cells.
+
+8.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+8.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \miter..
+Removed 1 unused cells and 16176 unused wires.
+<suppressed ~2 debug messages>
+
+8.5. Finished fast OPT passes.
+
+9. Executing AIGMAP pass (map logic to AIG).
+Module miter: replaced 1 cells with 7 new cells, skipped 56247 cells.
+  replaced 1 cell types:
+       1 $_XOR_
+  not replaced 3 cell types:
+   28390 $_AND_
+   27848 $_NOT_
+       9 $scopeinfo
+
+10. Executing AIGER backend.
+Warning: Treating undriven bit miter.\in_payout [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [31] like $anyseq.
+Warning: Treating a total of 128 undriven bits in miter like $anyseq.
+
+Warnings: 129 unique messages, 129 total
+End of script. Logfile hash: 6dbc509662, time: 23.58s, user: 32.91s, system: 0.52s, MEM: 709.44 MB peak
+Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+Time spent: 56% 1x opt_merge (18 sec), 13% 3x opt_expr (4 sec), ...

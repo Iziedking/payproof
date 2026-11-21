@@ -1,0 +1,1 @@
+// MUTATED:   assign _0066_ = (a[7] & b[4]);
