@@ -1,0 +1,25 @@
+{
+  "nIn": 32,
+  "nOut": 64,
+  "units": "fen (0.01 yuan)",
+  "inputs": [
+    {
+      "name": "bonus",
+      "offset": 0,
+      "width": 32
+    }
+  ],
+  "outputs": [
+    {
+      "name": "tax",
+      "offset": 0,
+      "width": 32
+    },
+    {
+      "name": "net",
+      "offset": 32,
+      "width": 32
+    }
+  ],
+  "note": "Bit offsets in the TAP-02 input and output vectors; field values are little-endian from their offset."
+}

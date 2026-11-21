@@ -1,0 +1,55 @@
+{
+  "nIn": 195,
+  "nOut": 57,
+  "units": "whole naira, annual",
+  "inputs": [
+    {
+      "name": "gross",
+      "offset": 0,
+      "width": 30
+    },
+    {
+      "name": "pension",
+      "offset": 30,
+      "width": 27
+    },
+    {
+      "name": "nhf",
+      "offset": 57,
+      "width": 27
+    },
+    {
+      "name": "nhis",
+      "offset": 84,
+      "width": 27
+    },
+    {
+      "name": "life",
+      "offset": 111,
+      "width": 27
+    },
+    {
+      "name": "mortgage",
+      "offset": 138,
+      "width": 27
+    },
+    {
+      "name": "rent",
+      "offset": 165,
+      "width": 30
+    }
+  ],
+  "outputs": [
+    {
+      "name": "annual_tax",
+      "offset": 0,
+      "width": 30
+    },
+    {
+      "name": "monthly_tax",
+      "offset": 30,
+      "width": 27
+    }
+  ],
+  "note": "Bit offsets in the TAP-02 input and output vectors; field values are little-endian from their offset."
+}

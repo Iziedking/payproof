@@ -1,0 +1,10 @@
+{
+  "name": "@payproof/compiler",
+  "private": true,
+  "type": "module",
+  "description": "TAP-02 netlist decoder, encoder, simulator and field layouts. No runtime dependencies.",
+  "engines": { "node": ">=24.22.1 <25" },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.ts\""
+  }
+}

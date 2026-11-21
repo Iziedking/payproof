@@ -1,0 +1,45 @@
+fetched_utc 2026-11-21T21:11:11Z
+debconf: delaying package configuration, since apt-utils is not installed
+curl	7.88.1-10+deb12u15
+poppler-utils	22.12.0-2+deb12u3
+ng-nta2025-nass.pdf http 200 application/pdf 598389 bytes https://nass.gov.ng/documents/download/11249
+ng-pit-guidelines-2026.pdf http 404 text/html; charset=utf-8 5606 bytes https://www.jtb.gov.ng/assets/2026-pit-guidelines-TJG3n9-T.pdf
+cn-govcn-6900595.html http 200 text/html 28097 bytes https://www.gov.cn/zhengce/zhengceku/202308/content_6900595.htm
+cn-no30-rate-table.pdf http 200 application/pdf 73035 bytes https://www.gov.cn/zhengce/zhengceku/202308/P020230828633757032068.pdf
+cn-govcn-6900701.html http 200 text/html 27122 bytes https://www.gov.cn/zhengce/zhengceku/202308/content_6900701.htm
+cn-govcn-6900234.html http 200 text/html 28418 bytes https://www.gov.cn/zhengce/zhengceku/202308/content_6900234.htm
+cn-no30-rate-table.pdf starts with: %PDF-
+Title:           000001
+Creator:         WPS 文字
+Producer:        
+Pages:           1
+cn-no30-rate-table.txt 572 bytes of text
+ng-nta2025-nass.pdf starts with: %PDF-
+Title:           NIGERIA TAX ACT 2025 (Edited 1-1-2026) A.pmd
+Creator:         PageMaker 7.0
+Producer:        GPL Ghostscript 8.64
+Pages:           215
+ng-nta2025-nass.txt 564468 bytes of text
+ng-pit-guidelines-2026.pdf starts with: <!DOC
+Syntax Warning: May not be a PDF file (continuing anyway)
+Syntax Error (2): Illegal character <21> in hex string
+Syntax Error (4): Illegal character <4f> in hex string
+scripts/p1/fetch-sources.sh: line 28: ng-pit-guidelines-2026.txt: No such file or directory
+ng-pit-guidelines-2026.txt  bytes of text
+cn-govcn-6900234.html title: <title>财政部 税务总局关于延续实施上市公司股权激励有关个人所得税政策的公告_国务院部门文件_中国政府网
+cn-govcn-6900595.html title: <title>财政部 税务总局关于延续实施全年一次性奖金个人所得税政策的公告_国务院部门文件_中国政府网
+cn-govcn-6900701.html title: <title>关于延续实施外籍个人有关津补贴个人所得税政策的公告_国务院部门文件_中国政府网
+--- Fourth Schedule hits (NASS):
+1230:        (i) disposal proceeds, in aggregate, is less than N150,000,000 and the
+1580:Personal           50.—(1) Sums not exceeding N50,000,000 obtained by way of compen-
+1585:                  (2) Where the sum exceeds N50,000,000, only the excess amount shall
+1689:                      (b) any other company with an aggregate turnover of N50,000,000,000
+1704:Fourth Schedule to this Act.                                                      2019
+5272:or less per annum with total fixed assets not exceeding N250,000,000.
+6285:                                      FOURTH SCHEDULE
+6291:     (a) First N800,000 at 0% ;
+6292:     (b) Next N2,200,000 at 15% ;
+6295:     (e) Next N25,000,000 at 23% ; and
+6296:     (f) Above N50,000,000 at 25%.
+--- No. 30 hits:
+cn-govcn-6900595.txt

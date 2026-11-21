@@ -1,0 +1,249 @@
+{
+  "rule": "cn-bonus-2023-30",
+  "notes": "Derived from the README formula: MOF/STA Announcement 2023 No. 30 and its attached monthly rate table, read 2026-11-21. Amounts in fen; bonus x rate floored to the fen (D12 open). No official worked example yet.",
+  "count": 22,
+  "vectors": [
+    {
+      "inputs": {
+        "bonus": "0"
+      },
+      "outputs": {
+        "tax": "0",
+        "net": "0"
+      },
+      "source": "derived",
+      "why": "no bonus"
+    },
+    {
+      "inputs": {
+        "bonus": "1"
+      },
+      "outputs": {
+        "tax": "0",
+        "net": "1"
+      },
+      "source": "derived",
+      "why": "one fen"
+    },
+    {
+      "inputs": {
+        "bonus": "3599999"
+      },
+      "outputs": {
+        "tax": "107999",
+        "net": "3492000"
+      },
+      "source": "derived",
+      "why": "12 x 3,000 yuan = 36,000 yuan -1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "3600000"
+      },
+      "outputs": {
+        "tax": "108000",
+        "net": "3492000"
+      },
+      "source": "derived",
+      "why": "12 x 3,000 yuan = 36,000 yuan +0 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "3600001"
+      },
+      "outputs": {
+        "tax": "339000",
+        "net": "3261001"
+      },
+      "source": "derived",
+      "why": "12 x 3,000 yuan = 36,000 yuan +1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "14399999"
+      },
+      "outputs": {
+        "tax": "1418999",
+        "net": "12981000"
+      },
+      "source": "derived",
+      "why": "12 x 12,000 yuan = 144,000 yuan -1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "14400000"
+      },
+      "outputs": {
+        "tax": "1419000",
+        "net": "12981000"
+      },
+      "source": "derived",
+      "why": "12 x 12,000 yuan = 144,000 yuan +0 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "14400001"
+      },
+      "outputs": {
+        "tax": "2739000",
+        "net": "11661001"
+      },
+      "source": "derived",
+      "why": "12 x 12,000 yuan = 144,000 yuan +1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "29999999"
+      },
+      "outputs": {
+        "tax": "5858999",
+        "net": "24141000"
+      },
+      "source": "derived",
+      "why": "12 x 25,000 yuan = 300,000 yuan -1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "30000000"
+      },
+      "outputs": {
+        "tax": "5859000",
+        "net": "24141000"
+      },
+      "source": "derived",
+      "why": "12 x 25,000 yuan = 300,000 yuan +0 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "30000001"
+      },
+      "outputs": {
+        "tax": "7234000",
+        "net": "22766001"
+      },
+      "source": "derived",
+      "why": "12 x 25,000 yuan = 300,000 yuan +1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "41999999"
+      },
+      "outputs": {
+        "tax": "10233999",
+        "net": "31766000"
+      },
+      "source": "derived",
+      "why": "12 x 35,000 yuan = 420,000 yuan -1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "42000000"
+      },
+      "outputs": {
+        "tax": "10234000",
+        "net": "31766000"
+      },
+      "source": "derived",
+      "why": "12 x 35,000 yuan = 420,000 yuan +0 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "42000001"
+      },
+      "outputs": {
+        "tax": "12159000",
+        "net": "29841001"
+      },
+      "source": "derived",
+      "why": "12 x 35,000 yuan = 420,000 yuan +1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "65999999"
+      },
+      "outputs": {
+        "tax": "19358999",
+        "net": "46641000"
+      },
+      "source": "derived",
+      "why": "12 x 55,000 yuan = 660,000 yuan -1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "66000000"
+      },
+      "outputs": {
+        "tax": "19359000",
+        "net": "46641000"
+      },
+      "source": "derived",
+      "why": "12 x 55,000 yuan = 660,000 yuan +0 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "66000001"
+      },
+      "outputs": {
+        "tax": "22384000",
+        "net": "43616001"
+      },
+      "source": "derived",
+      "why": "12 x 55,000 yuan = 660,000 yuan +1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "95999999"
+      },
+      "outputs": {
+        "tax": "32883999",
+        "net": "63116000"
+      },
+      "source": "derived",
+      "why": "12 x 80,000 yuan = 960,000 yuan -1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "96000000"
+      },
+      "outputs": {
+        "tax": "32884000",
+        "net": "63116000"
+      },
+      "source": "derived",
+      "why": "12 x 80,000 yuan = 960,000 yuan +0 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "96000001"
+      },
+      "outputs": {
+        "tax": "41684000",
+        "net": "54316001"
+      },
+      "source": "derived",
+      "why": "12 x 80,000 yuan = 960,000 yuan +1 fen"
+    },
+    {
+      "inputs": {
+        "bonus": "3600100"
+      },
+      "outputs": {
+        "tax": "339010",
+        "net": "3261090"
+      },
+      "source": "derived",
+      "why": "36,001 yuan: the first trap; take-home below 36,000 yuan's"
+    },
+    {
+      "inputs": {
+        "bonus": "4294967295"
+      },
+      "outputs": {
+        "tax": "1931219282",
+        "net": "2363748013"
+      },
+      "source": "derived",
+      "why": "largest bonus the 32-bit field holds (42,949,672.95 yuan)"
+    }
+  ]
+}

@@ -1245,6 +1245,9 @@ this unit before they reach the circuit. How it handles a deposit or a remainder
 0.0021 OKB. It ran in a 210 M block on the fork. A single flat tape-out of the circuit used
 120.9 M gas there. The live-chain test set above still applies.
 
+2026-11-21, the owner accepted **105.4 M `eval` gas per 32-bit claim** (about 0.0021 OKB) in
+place of the 95.3 M to 102.0 M approved the day before, and P1 continues.
+
 Rules applied once sections 4 to 8 are complete: (1) if a claim fits under the
 gas cap with the compute circuit, use it, otherwise the check circuit, and if neither fits,
 narrow the widths and state the supported range; (2) publish split facts at the widest width

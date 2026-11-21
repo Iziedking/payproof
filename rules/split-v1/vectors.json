@@ -1,0 +1,306 @@
+{
+  "rule": "split-v1",
+  "notes": "Derived from the README rule, holderBps 8500, 32-bit fields.",
+  "count": 23,
+  "vectors": [
+    {
+      "inputs": {
+        "pot": "1000000",
+        "shares": "250",
+        "total": "1000",
+        "payout": "212500"
+      },
+      "outputs": {
+        "ok": "1"
+      },
+      "source": "derived",
+      "why": "pot 1000000, shares 250/1000: the correct payout 212500"
+    },
+    {
+      "inputs": {
+        "pot": "1000000",
+        "shares": "250",
+        "total": "1000",
+        "payout": "212501"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too high"
+    },
+    {
+      "inputs": {
+        "pot": "1000000",
+        "shares": "250",
+        "total": "1000",
+        "payout": "212499"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too low"
+    },
+    {
+      "inputs": {
+        "pot": "100",
+        "shares": "1",
+        "total": "3",
+        "payout": "28"
+      },
+      "outputs": {
+        "ok": "1"
+      },
+      "source": "derived",
+      "why": "pot 100, shares 1/3: the correct payout 28"
+    },
+    {
+      "inputs": {
+        "pot": "100",
+        "shares": "1",
+        "total": "3",
+        "payout": "29"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too high"
+    },
+    {
+      "inputs": {
+        "pot": "100",
+        "shares": "1",
+        "total": "3",
+        "payout": "27"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too low"
+    },
+    {
+      "inputs": {
+        "pot": "7",
+        "shares": "1",
+        "total": "1",
+        "payout": "5"
+      },
+      "outputs": {
+        "ok": "1"
+      },
+      "source": "derived",
+      "why": "pot 7, shares 1/1: the correct payout 5"
+    },
+    {
+      "inputs": {
+        "pot": "7",
+        "shares": "1",
+        "total": "1",
+        "payout": "6"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too high"
+    },
+    {
+      "inputs": {
+        "pot": "7",
+        "shares": "1",
+        "total": "1",
+        "payout": "4"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too low"
+    },
+    {
+      "inputs": {
+        "pot": "4294967295",
+        "shares": "4294967295",
+        "total": "4294967295",
+        "payout": "3650722200"
+      },
+      "outputs": {
+        "ok": "1"
+      },
+      "source": "derived",
+      "why": "pot 4294967295, shares 4294967295/4294967295: the correct payout 3650722200"
+    },
+    {
+      "inputs": {
+        "pot": "4294967295",
+        "shares": "4294967295",
+        "total": "4294967295",
+        "payout": "3650722201"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too high"
+    },
+    {
+      "inputs": {
+        "pot": "4294967295",
+        "shares": "4294967295",
+        "total": "4294967295",
+        "payout": "3650722199"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too low"
+    },
+    {
+      "inputs": {
+        "pot": "4294967295",
+        "shares": "1",
+        "total": "4294967295",
+        "payout": "0"
+      },
+      "outputs": {
+        "ok": "1"
+      },
+      "source": "derived",
+      "why": "pot 4294967295, shares 1/4294967295: the correct payout 0"
+    },
+    {
+      "inputs": {
+        "pot": "4294967295",
+        "shares": "1",
+        "total": "4294967295",
+        "payout": "1"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too high"
+    },
+    {
+      "inputs": {
+        "pot": "1",
+        "shares": "1",
+        "total": "4294967295",
+        "payout": "0"
+      },
+      "outputs": {
+        "ok": "1"
+      },
+      "source": "derived",
+      "why": "pot 1, shares 1/4294967295: the correct payout 0"
+    },
+    {
+      "inputs": {
+        "pot": "1",
+        "shares": "1",
+        "total": "4294967295",
+        "payout": "1"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too high"
+    },
+    {
+      "inputs": {
+        "pot": "0",
+        "shares": "5",
+        "total": "10",
+        "payout": "0"
+      },
+      "outputs": {
+        "ok": "1"
+      },
+      "source": "derived",
+      "why": "pot 0, shares 5/10: the correct payout 0"
+    },
+    {
+      "inputs": {
+        "pot": "0",
+        "shares": "5",
+        "total": "10",
+        "payout": "1"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too high"
+    },
+    {
+      "inputs": {
+        "pot": "10000",
+        "shares": "0",
+        "total": "10",
+        "payout": "0"
+      },
+      "outputs": {
+        "ok": "1"
+      },
+      "source": "derived",
+      "why": "pot 10000, shares 0/10: the correct payout 0"
+    },
+    {
+      "inputs": {
+        "pot": "10000",
+        "shares": "0",
+        "total": "10",
+        "payout": "1"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "one unit too high"
+    },
+    {
+      "inputs": {
+        "pot": "5",
+        "shares": "0",
+        "total": "0",
+        "payout": "0"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "total zero: not valid"
+    },
+    {
+      "inputs": {
+        "pot": "1000",
+        "shares": "11",
+        "total": "10",
+        "payout": "0"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "shares above total: not valid"
+    },
+    {
+      "inputs": {
+        "pot": "0",
+        "shares": "0",
+        "total": "0",
+        "payout": "0"
+      },
+      "outputs": {
+        "ok": "0"
+      },
+      "source": "derived",
+      "why": "all zero: not valid"
+    }
+  ]
+}

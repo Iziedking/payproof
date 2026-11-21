@@ -1,0 +1,35 @@
+{
+  "nIn": 128,
+  "nOut": 1,
+  "units": "vault unit, 0.01 token (owner decision 2026-11-19)",
+  "inputs": [
+    {
+      "name": "pot",
+      "offset": 0,
+      "width": 32
+    },
+    {
+      "name": "shares",
+      "offset": 32,
+      "width": 32
+    },
+    {
+      "name": "total",
+      "offset": 64,
+      "width": 32
+    },
+    {
+      "name": "payout",
+      "offset": 96,
+      "width": 32
+    }
+  ],
+  "outputs": [
+    {
+      "name": "ok",
+      "offset": 0,
+      "width": 1
+    }
+  ],
+  "note": "Check circuit split_check_modc_32. Bit offsets in the TAP-02 input and output vectors; field values are little-endian from their offset."
+}

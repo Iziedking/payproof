@@ -1,0 +1,34 @@
+✔ ng-paye-nta2025: layout matches the netlist (2.082239ms)
+✔ ng-paye-nta2025: 32 vectors through ng_paye (8482 gates) (215.722085ms)
+✔ ng-paye-nta2025: pack then unpack returns the values (13.479459ms)
+✔ cn-bonus-2023-30: layout matches the netlist (0.186021ms)
+✔ cn-bonus-2023-30: 22 vectors through cn_bonus (3573 gates) (37.847819ms)
+✔ cn-bonus-2023-30: pack then unpack returns the values (6.088878ms)
+✔ split-v1: layout matches the netlist (0.34044ms)
+✔ split-v1: 23 vectors through split_check_modc_32 (41128 gates) (828.188761ms)
+✔ split-v1: pack then unpack returns the values (6.230075ms)
+✔ pack refuses a value wider than its field (0.949044ms)
+✔ vectors file is the one TAP-02 names (2.935827ms)
+✔ valid: nand (2.253368ms)
+✔ valid: constants (0.53511ms)
+✔ valid: popcount8_3151 (31.045051ms)
+✔ valid: toggle (3.134449ms)
+✔ valid: ref_with_state (0.800986ms)
+✔ ill-formed: unknown_opcode (3.060104ms)
+✔ ill-formed: truncated_record (0.306147ms)
+✔ ill-formed: nand_forward_reference (0.301057ms)
+✔ ill-formed: nOut_zero (0.438925ms)
+✔ ill-formed: output_is_an_input (0.205852ms)
+✔ ill-formed: more_outputs_than_elements (0.201681ms)
+✔ ill-formed: ref_arity_mismatch (0.213912ms)
+✔ ill-formed: ref_target_not_registered (0.196671ms)
+✔ packing edge cases (0.34695ms)
+✔ NAND truth table (1.421451ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1856.083764

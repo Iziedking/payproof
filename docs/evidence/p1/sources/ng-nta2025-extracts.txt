@@ -1,0 +1,67 @@
+# Extracts from ng-nta2025-nass.pdf (Nigeria Tax Act 2025, NASS copy, Edited 1-1-2026), pdftotext -layout, poppler-utils 22.12.0
+# sha256 of the PDF: 41abf6887bc58a3c97116fd9a048aa91ad49c1cab156f39065a58401c0fce94f
+
+## Section 30 (text lines 1172-1196)
+Ascertain-          30.—(1) The chargeable income of an individual, is the total income of
+ment of       that individual ascertained under the provisions of section 28 of this Act, less
+chargeable
+income of     eligible deductions.
+individuals        (2) For the purposes of this section —
+                  (a) "eligible deductions" include payments made by the individual in a
+                year of assessment in respect of —
+                     (i) the individual's contributions under the National Housing Fund,
+                     (ii) the individual's contributions under the National Health Insurance
+                  Scheme,
+Act No. 4,           (iii) the individual's contributions under the Pension Reform Act,
+2014                 (iv) interest on loans for developing an owner-occupied residential
+                  house,
+                     (v) annual amount of any annuity or premium paid by the individual
+                  during the year preceding the year of assessment in respect of insurance
+                  on his life or the life of his spouse, or contract for a deferred annuity on
+                  his own life or the life of his spouse ;
+                     (vi) rent relief of 20% of annual rent paid, subject to a maximum of
+                  N500,000, whichever is lower, provided that the individual accurately
+                  declares the actual amount of rent paid and other relevant information as
+                  may be prescribed by the relevant tax authority ; and
+                  (b) "total income" means total income as specified in section 28 of this
+                Act.
+Deductions         31. Deduction shall not be allowed under this Part to any person for a
+to be         year of assessment, unless claimed in writing in such form as the relevant tax
+
+## Section 58 (text lines 1700-1705)
+      58. The income tax payable on the chargeable income of an individual,       Rates of tax
+other than an individual earning the Minimum Wage in line with the Minimum        for individu-
+Wage Act, in respect of each year of assessment, shall be as specified in the     als
+                                                                                  Act No. 8,
+Fourth Schedule to this Act.                                                      2019
+                                                                                  Fourth
+
+## Section 162 (1) opening and (t) (text lines 3873-3874, 3958-3960)
+     162.—(1) There is exempt from tax under chapter two of this Act —                 Income tax
+                                                                                       exemption
+     (t) income of a person from an employment where such person earns
+  gross income of national minimum wage or less from such employment ;
+     (u) wages and salaries of military officers.
+
+## Interpretation section, definition of National Minimum Wage (text lines 5130-5134)
+   "multinational group" means MNE Group ;
+   "National Minimum Wage" means the extant minimum Wage prescribed
+by the National Minimum Wage Act Cap. N61, Laws of the Federation of
+Nigeria, 2004 ;
+   "Nigeria" means the Federal Republic of Nigeria, and when used in a
+
+## Fourth Schedule (text lines 6283-6296)
+
+
+                                      FOURTH SCHEDULE
+                                                                                  Section 58
+                         INDIVIDUALS' INCOME TAX RATES
+      After the relief allowance and exemptions had been granted in accordance with sub-
+section of (1) of section 30 of this Act, the taxable income ascertained shall be taxed at the
+following rates –
+     (a) First N800,000 at 0% ;
+     (b) Next N2,200,000 at 15% ;
+     (c) Next N9,000,000 at 18% ;
+     (d) Next N13,000,000 at 21% ;
+     (e) Next N25,000,000 at 23% ; and
+     (f) Above N50,000,000 at 25%.

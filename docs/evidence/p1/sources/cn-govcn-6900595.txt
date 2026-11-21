@@ -1,0 +1,246 @@
+ 财政部 税务总局关于延续实施全年一次性奖金个人所得税政策的公告_国务院部门文件_中国政府网
+var INFO_FLAG={
+ channelinfo:"国务院部门文件479953709"
+}
+ body {
+ color: #333;
+ font-family: "宋体";
+ }
+ .pages-date span.font, .pages_print span.font {
+ margin: 0;
+ }
+ .com_word_gwy_bmwj:hover {
+ color: #6f6f6f;
+ }
+div.BreadcrumbNav_gwy_bmwj {
+ color: #000;
+ cursor: default;
+}
+ @media screen and (max-width:767px) and (orientation:portrait) {
+ .pages_contentm {
+ width: 710px;
+ font-size: 32px;
+ }
+ }
+ /* 20231023添加无障碍代码 */
+ .header_toolbar li {
+ font-size: 16px;
+ }
+ .header_toolbar li.split {
+ margin: 0 9px;
+ }
+ 首页
+ |
+ 简
+ |
+ 繁
+ |
+ EN
+ |
+ 登录
+ 个人中心
+ 退出
+ |
+ 邮箱
+ |
+ 无障碍
+ EN
+ function goSearch(event) {
+ var e = window.event || event;
+ if(e.preventDefault){
+ e.preventDefault();
+ }else{
+ e.returnValue=false;
+ }
+ var s = '', m = document.querySelector('.header .pchide [name=headSearchword]');
+ s = m.offsetHeight > 0 ? m.value : document.querySelector('.header .mhide [name=headSearchword]').value;
+ // 市场主体 dataTypeId=14
+ if (s == '市场主体') {
+ url = '//sousuo.www.gov.cn/sousuo/search.shtml?code=17da70961a7&dataTypeId=14&searchWord=' + s;
+ } else {
+ url = '//sousuo.www.gov.cn/sousuo/search.shtml?code=17da70961a7&dataTypeId=107&searchWord=' + encodeURIComponent(s);
+ }
+ window.open(url, '_blank');
+ }
+ function listenerKeyUpEventFn(){
+ if(event.keyCode==13){
+ goSearch();
+ };
+ }
+https://www.gov.cn/
+ //繁体和简体相互转换
+ var currUrl = window.location.href;
+ var flag = currUrl.indexOf("big5.www.gov.cn/gate/big5/");
+ var jtzw = 'ht'+'tps://www.gov.cn';
+ //繁体
+ if (flag > 0) { 
+ $('.header_logo a').attr('href',jtzw);
+ $('.header_toolbar li').eq(2).find('a').attr('href', jtzw);
+ }//简体
+ else { 
+ $('.header_toolbar li').eq(2).find('a').attr('href', jtzw);
+ };
+网站无障碍开关 -->
+ 首页 &gt; 政策 &gt; 国务院政策文件库 &gt; 国务院部门文件
+ 字号：默认
+ 大
+ 超大
+ |
+ 打印
+ 收藏
+ |
+<!--
+-->
+ 标 题：
+ 财政部 税务总局关于延续实施全年一次性奖金个人所得税政策的公告
+ 发文机关：
+ 财政部 税务总局
+ 发文字号：
+ 财政部 税务总局公告2023年第30号
+ 来 源：
+ 税务总局网站
+ 主题分类：
+ 财政、金融、审计\税务
+ 公文种类：
+ 通知
+ 成文日期：
+ 2023年08月18日
+ 标 题：
+ 财政部 税务总局关于延续实施全年一次性奖金个人所得税政策的公告
+ 发文机关：财政部 税务总局
+ 发文字号：财政部 税务总局公告2023年第30号
+ 来 源：税务总局网站
+ 主题分类：财政、金融、审计\税务
+ 公文种类：通知
+ 成文日期：2023年08月18日
+ 财政部 税务总局关于延续实施全年一次性奖金个人所得税政策的公告财政部 税务总局公告2023年第30号为进一步减轻纳税人负担，现将全年一次性奖金个人所得税政策公告如下：一、居民个人取得全年一次性奖金，符合《国家税务总局关于调整个人取得全年一次性奖金等计算征收个人所得税方法问题的通知》（国税发〔2005〕9号）规定的，不并入当年综合所得，以全年一次性奖金收入除以12个月得到的数额，按照本公告所附按月换算后的综合所得税率表，确定适用税率和速算扣除数，单独计算纳税。计算公式为：应纳税额＝全年一次性奖金收入×适用税率－速算扣除数二、居民个人取得全年一次性奖金，也可以选择并入当年综合所得计算纳税。三、本公告执行至2027年12月31日。特此公告。附件：按月换算后的综合所得税率表财政部 税务总局2023年8月18日
+ 财政部 税务总局关于延续实施全年一次性奖金个人所得税政策的公告财政部 税务总局公告2023年第30号为进一步减轻纳税人负担，现将全年一次性奖金个人所得税政策公告如下：一、居民个人取得全年一次性奖金，符合《国家税务总局关于调整个人取得全年一次性奖金等计算征收个人所得税方法问题的通知》（国税发〔2005〕9号）规定的，不并入当年综合所得，以全年一次性奖金收入除以12个月得到的数额，按照本公告所附按月换算后的综合所得税率表，确定适用税率和速算扣除数，单独计算纳税。计算公式为：应纳税额＝全年一次性奖金收入×适用税率－速算扣除数二、居民个人取得全年一次性奖金，也可以选择并入当年综合所得计算纳税。三、本公告执行至2027年12月31日。特此公告。附件：按月换算后的综合所得税率表财政部 税务总局2023年8月18日
+ .footer{
+ padding-top: 0;
+ }
+ .footer_dzjg {
+ padding: 14px 22px 0 0;
+ width: 90px;
+ }
+ .footer_dzjg span{
+ display: block;
+ }
+ .footer_txt{
+ margin-top: 27px;
+ }
+ .footer_r {
+ margin-top: 25px;
+ }
+ .barrierFree20231007{
+ width: 80px;
+ height: 37px;
+ }
+ #_ideConac a {
+ display: block;
+ width: 80px;
+ height: 80px;
+ margin: 0 auto;
+}
+ 链接：
+ 全国人大
+ |
+ 全国政协
+ |
+ 国家监察委员会
+ |
+ 最高人民法院
+ |
+ 最高人民检察院
+ 国务院部门网站
+ |
+ 地方政府网站
+ |
+ 驻港澳机构网站
+ |
+ 驻外机构
+ <a
+ href="https://bszs.conac.cn/sitename?method=show&amp;id=081D1D6883441A53E053012819AC0DAA"
+ target="_blank">
+ 中国政府网
+ |
+ 关于本网
+ |
+ 网站声明
+ |
+ 联系我们
+ |
+ 网站纠错
+ 主办单位：国务院办公厅　运行维护单位：中国政府网运行中心 
+ 版权所有：中国政府网　中文域名：中国政府网.政务
+ 网站标识码bm01000001　<a class="banquan" href="https://beian.miit.gov.cn/#/Integrated/index"
+ target="_blank">京ICP备05070218号　<a class="banquan"
+ href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202000001"
+ target="_blank">京公网安备11010202000001号
+ 国务院客户端
+ 国务院客户端小程序
+ 中国政府网微博、微信
+ 电脑版
+ 客户端
+ 小程序
+ 微博
+ 微信
+ 邮箱
+ 退出
+ 注册
+ 登录
+ 网站纠错
+ 主办单位：国务院办公厅　运行维护单位：中国政府网运行中心
+ 版权所有：中国政府网　中文域名：中国政府网.政务
+ 网站标识码bm01000001
+ 京ICP备05070218号　京公网安备11010202000001号
+ $(function () {
+ trs_bottom.init();
+ initShow();
+ });
+ var trs_bottom = (function () {
+ function init() {
+ if (typeof (trs) != 'undefined') {
+ // trs.PcBackTop()
+ trs.SearchFn()
+ }
+ }
+ return {
+ init: init
+ }
+ })();
+ function initShow() {
+ var isShowPc = localStorage.getItem('isShowPc')
+ if (isShowPc && isShowPc === 'true') {
+ $("meta[name='viewport']").attr("content", "width=1280, target-densitydpi=device-dpi")
+ $('body').append('返回手机版')
+ } else {
+ $("meta[name='viewport']").attr("content", "width=750, user-scalable=no, target-densitydpi=device-dpi")
+ $('#showMobi').remove()
+ }
+ }
+回到顶部
+ 登录
+ 注册
+ ×
+ ×
+ ×
+ -->
+ -->
+ //new 一个实例对象
+ var policyLibraryOverview = new PolicyLibraryOverview();
+ //点击调用关闭窗口方法
+ $('.closeNowWindow').on('click', function () {
+ policyLibraryOverview.closeNowWindow();
+ });
+ //点赞输入框输入字数限制条件
+ //textarea
+ var $weiboTextArea = $('#weiboTextArea');
+ //调用字数限制方法
+ policyLibraryOverview.weiboTextArea($weiboTextArea);
+ //重置
+ policyLibraryOverview.resetContent($('.policyLibraryOverview_comment_footer a').eq(1));
+ $(function () {
+ })
+财政部 税务总局关于延续实施全年一次性奖金个人所得税政策的公告
+居民个人取得全年一次性奖金，符合《国家税务总局关于调整个人取得全年一次性奖金等计算征收个人所得税方法问题的通知》（国税发〔2005〕9号）规定的，不并入当年综合所得，以全年一次性奖金收入除以12个月得到的数额，按照本公告所附按月换算后的综合所得税率表，确定适用税率和速算扣除数，单独计算纳税。
+document.write(unescape("%3Cscript src='//stat.www.gov.cn/webdig.js?z=1' type='text/javascript'%3E%3C/script%3E"));wd_paramtracker("_wdxid=000000000000000000000000000000000000000000")
