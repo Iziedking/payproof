@@ -6,6 +6,8 @@
 //       rule expect, the calldata, and the owner's `cast estimate` and `cast send` lines.
 //   node scripts/p2/eval-tx.mts field <netlist dir> <name>
 //       Prints one field of the plan for vector 0 (used by eval-dryrun.sh).
+//   node scripts/p2/eval-tx.mts find <rpc> <from block> <to block>
+//       Lists the deployer's transactions in a block range. Read-only.
 //   node scripts/p2/eval-tx.mts landed <rpc> <netlist dir> <tx hash> [vector index]
 //       Checks a landed eval transaction: status, sender, target, the exact calldata of the plan,
 //       gas used, and the block's gas limit. Prints one JSON line. Read-only.
@@ -76,8 +78,29 @@ async function landed(rpcUrl: string, dir: string, hash: string, index: number) 
   if (fail.length) process.exit(1);
 }
 
+// Finds the deployer's transaction to the circuits contract in a block range (eval emits no event,
+// so eth_getLogs cannot find it). Read-only.
+async function find(rpcUrl: string, from: number, to: number) {
+  const one = async (n: number, tries = 6): Promise<any> => {
+    const j: any = await (await fetch(rpcUrl, { method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ jsonrpc: '2.0', id: n, method: 'eth_getBlockByNumber', params: ['0x' + n.toString(16), true] }) })).json();
+    if (j.error || !j.result) {
+      if (tries > 1) { await new Promise((r) => setTimeout(r, 1000)); return one(n, tries - 1); }
+      throw new Error(`block ${n}: ${JSON.stringify(j.error ?? j)}`);
+    }
+    return j.result;
+  };
+  for (let b = from; b <= to; b += 4) {
+    const blocks = await Promise.all(Array.from({ length: Math.min(4, to - b + 1) }, (_, k) => one(b + k)));
+    for (const r of blocks) for (const t of r.transactions)
+      if (t.from?.toLowerCase() === DEPLOYER.toLowerCase()) console.log(JSON.stringify({ block: Number(BigInt(t.blockNumber)), hash: t.hash, to: t.to, nonce: Number(BigInt(t.nonce)), selector: t.input.slice(0, 10) }));
+  }
+  console.log(`scanned ${from} to ${to}`);
+}
+
 const [cmd, ...a] = process.argv.slice(2);
 if (cmd === 'plan') console.log(JSON.stringify(plan(a[0], Number(a[1] ?? 0)), null, 2));
 else if (cmd === 'field') console.log((plan(a[0], 0) as any)[a[1]]);
+else if (cmd === 'find') await find(a[0], Number(a[1]), Number(a[2]));
 else if (cmd === 'landed') await landed(a[0], a[1], a[2], Number(a[3] ?? 0));
 else { console.error('commands: plan, landed (see the header)'); process.exit(2); }

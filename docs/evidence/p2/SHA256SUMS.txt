@@ -22,3 +22,11 @@ d49b5677b5eb7d681146a87bd90dc39ffae8f7758f56044fda90a6d7d8071ada  live/live-chec
 b19ec3db740bfab685afb9d47582bef8c992355e461d1eed6401c95137951e7d  live-tapeouts.jsonl
 716b2592e7a728b61a9ce68ca7f00fabedf409b037de1ce2006e54d9a926796e  ../../../chain/netlists/ids.json
 a2c8c1fe39f10c608c24c47ea4cc6068cef6d805d17f0207c3a486b703ecf66d  ../../../chain/netlists/split_v1_top.bin
+56b59231d4cf15107c7b0e699514ddc0c88fbbeb6cf68b4dcd839df3d94c8673  tools/cast-send-call-help-1.8.6.txt
+ef32c06a2753301a33612ccc490ef7ace325836bb85361b6ebb6bc0177bf1ad6  eval/eval-plan.json
+3642c95729d8260e04a84ba41ab6e3215684c6149cf9a2832db638b8ed77483e  eval/eval-dryrun.json
+7b2dc9c6a3aa8aff45e2847c1dbff76dca7b2db8c68118b5424aab641a15a873  eval/eval-fork-send.json
+4c9d97d90d98c3bbfd96dfa32989e9ff614baaef69587d4682e0635598c1c06a  eval/eval-live.json
+1414895b7c9407e8dc8c73c13eaf2ffab3aee83c627c3a0a8a7a637f9ab57c60  eval/eval-replay.json
+dbdab46ee0691aa5ed7bcc9cbacc4821126f5bf4fe906a5a4310c306be6ea054  logs/anvil-p2-eval-dryrun.log
+d0f49feb71aa0414f581d87831043ca4b60fbdef5f937f51a73ccb660f24f025  logs/anvil-p2-eval-replay.log
