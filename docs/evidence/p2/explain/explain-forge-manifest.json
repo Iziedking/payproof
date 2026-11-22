@@ -1,0 +1,259 @@
+{
+  "circuits": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+  "note": "TAP-02 netlists of the explanation and validity circuits; made by scripts/p2/explain-tapeout.mts prepare",
+  "identity": [
+    "m_x8500: same bytes as circuit 4 (keccak 0xe74acf21863c228ee6abc16ab63858d7d24f5e73c5a0c4c9f1ba2e727e7748e9)",
+    "m_x10000_narrow: same bytes as circuit 6 (keccak 0x398a6ce29e1de9cee1aad80a25f70028059a377dc32dc6c2a776f7d35876af33)",
+    "m_x10000_wide: same bytes as circuit 7 (keccak 0x2c83435eefa93042656d9385c7c32bfa67f9951ab16e7b4f2686e48d6238626b)",
+    "m_mul_tmc_32: same bytes as circuit 3 (keccak 0x9f63c8ba02c786f1573c9f2f79da68f28614661d6e2b974e51349dbd63844327)",
+    "split_v1_validity: REF-JSON module and flat synthesis give the same bytes (keccak 0x9c6ecd5fbeea33418503a7cb68e5842f75f387d6f14a63c4164654f6afa6a1cb)"
+  ],
+  "pieces": [
+    {
+      "name": "split_v1_validity",
+      "yosysModule": "$paramod\\split_v1_validity\\W=s32'00000000000000000000000000100000",
+      "file": "netlists/explain/split_v1_validity.bin",
+      "nIn": 128,
+      "nOut": 1,
+      "nandRecords": 387,
+      "refRecords": 0,
+      "bytes": 2709,
+      "keccak256": "0x9c6ecd5fbeea33418503a7cb68e5842f75f387d6f14a63c4164654f6afa6a1cb",
+      "sha256": "e3453a6c0ba9a9be35d5dfe61ce11163056bd0f7cacd326fe130f26b95beade0",
+      "inputs": [
+        {
+          "name": "pot",
+          "offset": 0,
+          "width": 32
+        },
+        {
+          "name": "shares",
+          "offset": 32,
+          "width": 32
+        },
+        {
+          "name": "total",
+          "offset": 64,
+          "width": 32
+        },
+        {
+          "name": "payout",
+          "offset": 96,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "valid",
+          "offset": 0,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "name": "split_v1_explain",
+      "yosysModule": "split_v1_explain",
+      "file": "netlists/explain/split_v1_explain.bin",
+      "nIn": 128,
+      "nOut": 203,
+      "nandRecords": 406,
+      "refRecords": 6,
+      "bytes": 4276,
+      "keccak256": "0xe7f25fde3b3849b8e8e784a750fb23fe077a3a7acc170938a7f2315faa9eefe6",
+      "sha256": "dee730e0f5885a513188e496072683e005443b1af87cfcd0b81b34186e652ed7",
+      "inputs": [
+        {
+          "name": "pot",
+          "offset": 0,
+          "width": 32
+        },
+        {
+          "name": "shares",
+          "offset": 32,
+          "width": 32
+        },
+        {
+          "name": "total",
+          "offset": 64,
+          "width": 32
+        },
+        {
+          "name": "payout",
+          "offset": 96,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "exact_num",
+          "offset": 0,
+          "width": 78
+        },
+        {
+          "name": "paid_num",
+          "offset": 78,
+          "width": 78
+        },
+        {
+          "name": "den",
+          "offset": 156,
+          "width": 46
+        },
+        {
+          "name": "valid",
+          "offset": 202,
+          "width": 1
+        }
+      ],
+      "refs": {
+        "m_x8500": "4",
+        "m_x10000_narrow": "6",
+        "m_x10000_wide": "7",
+        "m_mul_tmc_32": "3",
+        "split_v1_validity": "13"
+      }
+    },
+    {
+      "name": "cn_bonus_explain",
+      "yosysModule": "cn_bonus_explain",
+      "file": "netlists/explain/cn_bonus_explain.bin",
+      "nIn": 32,
+      "nOut": 63,
+      "nandRecords": 3045,
+      "refRecords": 0,
+      "bytes": 21315,
+      "keccak256": "0xcb907d2a913da336a5df02bfa5b96d12577148ff3c3cf2a733ae0c855487b18b",
+      "sha256": "f64b8d0676ac8bce07535ed38a04025a0b7eed217ad92d26698bec907586179d",
+      "inputs": [
+        {
+          "name": "bonus",
+          "offset": 0,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "bracket",
+          "offset": 0,
+          "width": 3
+        },
+        {
+          "name": "rate",
+          "offset": 3,
+          "width": 7
+        },
+        {
+          "name": "quick_deduction",
+          "offset": 10,
+          "width": 21
+        },
+        {
+          "name": "tax_before_deduction",
+          "offset": 31,
+          "width": 32
+        }
+      ]
+    },
+    {
+      "name": "ng_paye_explain",
+      "yosysModule": "ng_paye_explain",
+      "file": "netlists/explain/ng_paye_explain.bin",
+      "nIn": 195,
+      "nOut": 227,
+      "nandRecords": 3645,
+      "refRecords": 0,
+      "bytes": 25515,
+      "keccak256": "0xd27eaed86b4efca5864033c786ab7f181df6fc0dc8c4b41bdfaf12a6decba169",
+      "sha256": "eb590c9c55260c89e7e87c52ccc4a2bdfa87110b76603caf367a41bc667e0328",
+      "inputs": [
+        {
+          "name": "gross",
+          "offset": 0,
+          "width": 30
+        },
+        {
+          "name": "pension",
+          "offset": 30,
+          "width": 27
+        },
+        {
+          "name": "nhf",
+          "offset": 57,
+          "width": 27
+        },
+        {
+          "name": "nhis",
+          "offset": 84,
+          "width": 27
+        },
+        {
+          "name": "life",
+          "offset": 111,
+          "width": 27
+        },
+        {
+          "name": "mortgage",
+          "offset": 138,
+          "width": 27
+        },
+        {
+          "name": "rent",
+          "offset": 165,
+          "width": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "rent_relief",
+          "offset": 0,
+          "width": 19
+        },
+        {
+          "name": "deductions",
+          "offset": 19,
+          "width": 32
+        },
+        {
+          "name": "chargeable",
+          "offset": 51,
+          "width": 30
+        },
+        {
+          "name": "exempt",
+          "offset": 81,
+          "width": 1
+        },
+        {
+          "name": "band1",
+          "offset": 82,
+          "width": 20
+        },
+        {
+          "name": "band2",
+          "offset": 102,
+          "width": 22
+        },
+        {
+          "name": "band3",
+          "offset": 124,
+          "width": 24
+        },
+        {
+          "name": "band4",
+          "offset": 148,
+          "width": 24
+        },
+        {
+          "name": "band5",
+          "offset": 172,
+          "width": 25
+        },
+        {
+          "name": "band6",
+          "offset": 197,
+          "width": 30
+        }
+      ]
+    }
+  ]
+}

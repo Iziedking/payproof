@@ -209,6 +209,11 @@ The first three come to about 20 M gas, against 25.2 M left after the four fees,
 may just cover all four tape-outs. The fork rehearsal gives the real figures before the owner
 is asked for anything.
 
+**Measured on the fork, 2026-11-22.** The four tape-outs used 22,865,499 gas in all, for a total
+cost of 0.005657 OKB with the fees. Through the owner's Foundry path, from the deployer's real
+balance, they left 0.000048 OKB. No top-up is needed at 20,000,001 wei. See
+`docs/evidence/p2.md`, section 7.
+
 ## 5. Order of work once approved
 
 1. Write `explain.v` and `validity.v` for the three rules, and add their layouts.
