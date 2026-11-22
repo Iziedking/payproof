@@ -51,5 +51,68 @@
       "width": 27
     }
   ],
-  "note": "Bit offsets in the TAP-02 input and output vectors; field values are little-endian from their offset."
+  "note": "Bit offsets in the TAP-02 input and output vectors; field values are little-endian from their offset.",
+  "explain": {
+    "circuit": "ng_paye_explain",
+    "nIn": 195,
+    "nOut": 227,
+    "outputs": [
+      {
+        "name": "rent_relief",
+        "offset": 0,
+        "width": 19
+      },
+      {
+        "name": "deductions",
+        "offset": 19,
+        "width": 32
+      },
+      {
+        "name": "chargeable",
+        "offset": 51,
+        "width": 30
+      },
+      {
+        "name": "exempt",
+        "offset": 81,
+        "width": 1
+      },
+      {
+        "name": "band1",
+        "offset": 82,
+        "width": 20
+      },
+      {
+        "name": "band2",
+        "offset": 102,
+        "width": 22
+      },
+      {
+        "name": "band3",
+        "offset": 124,
+        "width": 24
+      },
+      {
+        "name": "band4",
+        "offset": 148,
+        "width": 24
+      },
+      {
+        "name": "band5",
+        "offset": 172,
+        "width": 25
+      },
+      {
+        "name": "band6",
+        "offset": 197,
+        "width": 30
+      }
+    ],
+    "inputs": "same as the decision inputs",
+    "note": "Explanation circuit, rules/ng-paye-nta2025/explain.v. Not taped out yet. Band income in naira; band tax = income x 0, 15, 18, 21, 23, 25 percent."
+  },
+  "validity": {
+    "circuit": null,
+    "note": "No validity circuit: every input is valid (owner decision A, 2026-11-22). RuleRegistry records CircuitRef(address(0), 0)."
+  }
 }

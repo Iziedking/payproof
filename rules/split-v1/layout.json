@@ -31,5 +31,48 @@
       "width": 1
     }
   ],
-  "note": "Check circuit split_check_modc_32. Bit offsets in the TAP-02 input and output vectors; field values are little-endian from their offset."
+  "note": "Check circuit split_check_modc_32. Bit offsets in the TAP-02 input and output vectors; field values are little-endian from their offset.",
+  "explain": {
+    "circuit": "split_v1_explain",
+    "nIn": 128,
+    "nOut": 203,
+    "outputs": [
+      {
+        "name": "exact_num",
+        "offset": 0,
+        "width": 78
+      },
+      {
+        "name": "paid_num",
+        "offset": 78,
+        "width": 78
+      },
+      {
+        "name": "den",
+        "offset": 156,
+        "width": 46
+      },
+      {
+        "name": "valid",
+        "offset": 202,
+        "width": 1
+      }
+    ],
+    "inputs": "same as the decision inputs",
+    "note": "Explanation circuit, rules/split-v1/explain.v. Not taped out yet. Exact share = exact_num / den; ok == valid && paid_num <= exact_num < paid_num + den."
+  },
+  "validity": {
+    "circuit": "split_v1_validity",
+    "nIn": 128,
+    "nOut": 1,
+    "outputs": [
+      {
+        "name": "valid",
+        "offset": 0,
+        "width": 1
+      }
+    ],
+    "inputs": "same as the decision inputs",
+    "note": "Validity circuit, rules/split-v1/validity.v. Not taped out yet. valid = total != 0 && shares <= total."
+  }
 }

@@ -1,0 +1,17 @@
+
+5. Printing statistics.
+
+=== ng_paye_explain ===
+
+        +----------Local Count, excluding submodules.
+        | 
+     3345 wires
+     3750 wire bits
+       17 public wires
+      422 public wire bits
+       17 ports
+      422 port bits
+     3553 cells
+     2245   $_NAND_
+     1308   $_NOT_
+

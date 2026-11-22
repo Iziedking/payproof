@@ -4,7 +4,7 @@
 # Usage: bash synth-all.sh <yosys-binary> <group>...
 #   groups: wage | check | check-narrow | check-40 | compute-24 | compute-32 | compute-40 | mul-8
 #           | check-mod-8 | check-mod-32 | mul-tm-8 | mul-tm-32 | mul-tmc-8 | mul-tmc-32
-#           | check-modc-8 | check-modc-32
+#           | check-modc-8 | check-modc-32 | explain | explain-ref-32
 #
 # Flow per circuit (Yosys 0.70 help pages read on the host, 2026-11-17):
 #   read_verilog; chparam; synth -flatten -top -noabc; abc -g NAND; opt_clean -purge; stat
@@ -180,8 +180,54 @@ synth_modc() { # name width
     "$(( (nand + not) * 7 ))" "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
 }
 
+# P2 explanation of split-v1 (docs/specs/explain-validity.md, 2026-11-22). The same per-module
+# flow as synth_modc, on split_v1_explain: every module is synthesised alone, the two m_mul
+# instances are retyped to the proved m_mul_tmc_32, and the modules already on chain
+# (m_mul_tmc_32, m_x10000_wide, m_x10000_narrow, m_x8500) and the new split_v1_validity keep
+# their own netlists for REF. logs/same-<name>.log compares each module body with the one
+# taped out (out/split_check_mod_32.mods.nand.v and out/m_mul_tmc_32.nand.v). Needs out/ of
+# groups check-mod-32 and mul-tmc-32, and rtl/split_v1_validity.v, rtl/split_v1_explain.v.
+synth_explain_ref() { # name width
+  local name="$1" width="$2" t0 t1 tmc="m_mul_tmc_$2"
+  t0=$(date +%s.%N)
+  "$YOSYS" -q -l "logs/synth-$name.log" -p "
+    read_verilog rtl/split_check_mod.v rtl/split_v1_validity.v rtl/split_v1_explain.v;
+    chparam -set W $width split_v1_explain;
+    synth -top split_v1_explain -noabc;
+    abc -g NAND; opt_clean -purge;
+    read_json out/$tmc.json;
+    chtype -set $tmc split_v1_explain/u_pt split_v1_explain/u_ps;
+    hierarchy -top split_v1_explain;
+    tee -o out/$name.mods.stat.txt stat -top split_v1_explain;
+    write_verilog -noattr out/$name.mods.nand.v;
+    setattr -mod -set keep_hierarchy 1 $tmc *m_x10000_wide* *m_x10000_narrow* *m_x8500* *split_v1_validity*;
+    flatten; opt_clean -purge;
+    tee -o out/$name.ref.stat.txt stat -top split_v1_explain;
+    write_json out/$name.ref.json"
+  t1=$(date +%s.%N)
+  {
+    for m in '\m_x10000_narrow\' '\m_x10000_wide\' '\m_x8500 '; do
+      if cmp -s <(block "out/split_check_mod_$width.mods.nand.v" "$m") <(block "out/$name.mods.nand.v" "$m"); then
+        echo "same $m identical to the taped-out module"; else echo "same $m DIFFERS"; fi
+    done
+    if cmp -s <(block "out/$tmc.nand.v" "module $tmc") <(block "out/$name.mods.nand.v" "module $tmc"); then
+      echo "same $tmc identical to out/$tmc.nand.v"
+    else echo "same $tmc text differs from out/$tmc.nand.v"; fi
+    echo "instances: $(grep -cE "^  $tmc +u_p[ts] " "out/$name.mods.nand.v") of 2 use $tmc"
+    echo "m_mul modules left: $(grep -cF '\m_mul' "out/$name.mods.nand.v")"
+  } | tee "logs/same-$name.log"
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$name" "$width" "see-ref-stat" "-" "-" "-" \
+    "$(awk -v a="$t0" -v b="$t1" 'BEGIN{print b-a}')" | tee -a "$summary"
+}
+
 for g in "$@"; do
   case "$g" in
+    explain)
+      synth cn_bonus_explain cn_bonus_explain rtl/cn_bonus_explain.v - ""
+      synth ng_paye_explain ng_paye_explain rtl/ng_paye_explain.v - ""
+      synth split_v1_validity_32 split_v1_validity rtl/split_v1_validity.v 32 "" ;;
+    explain-ref-32)
+      synth_explain_ref split_v1_explain_32 32 ;;
     wage)
       synth adder8 adder8 rtl/adder8.v - ""
       synth cn_bonus cn_bonus rtl/cn_bonus.v - ""

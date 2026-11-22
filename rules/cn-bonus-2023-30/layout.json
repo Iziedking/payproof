@@ -21,5 +21,38 @@
       "width": 32
     }
   ],
-  "note": "Bit offsets in the TAP-02 input and output vectors; field values are little-endian from their offset."
+  "note": "Bit offsets in the TAP-02 input and output vectors; field values are little-endian from their offset.",
+  "explain": {
+    "circuit": "cn_bonus_explain",
+    "nIn": 32,
+    "nOut": 63,
+    "outputs": [
+      {
+        "name": "bracket",
+        "offset": 0,
+        "width": 3
+      },
+      {
+        "name": "rate",
+        "offset": 3,
+        "width": 7
+      },
+      {
+        "name": "quick_deduction",
+        "offset": 10,
+        "width": 21
+      },
+      {
+        "name": "tax_before_deduction",
+        "offset": 31,
+        "width": 32
+      }
+    ],
+    "inputs": "same as the decision inputs",
+    "note": "Explanation circuit, rules/cn-bonus-2023-30/explain.v. Not taped out yet. tax == tax_before_deduction - quick_deduction."
+  },
+  "validity": {
+    "circuit": null,
+    "note": "No validity circuit: every input is valid (owner decision A, 2026-11-22). RuleRegistry records CircuitRef(address(0), 0)."
+  }
 }

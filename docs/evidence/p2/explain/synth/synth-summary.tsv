@@ -1,0 +1,5 @@
+circuit	width	nand	not	tapeout_gates	netlist_bytes_est	seconds
+cn_bonus_explain	-	1965	997	2962	20734	168.892
+ng_paye_explain	-	2245	1308	3553	24871	3.60439
+split_v1_validity_32	32	210	177	387	2709	0.25545
+split_v1_explain_32	32	see-ref-stat	-	-	-	3.42261

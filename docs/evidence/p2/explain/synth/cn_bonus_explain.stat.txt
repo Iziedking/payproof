@@ -1,0 +1,17 @@
+
+5. Printing statistics.
+
+=== cn_bonus_explain ===
+
+        +----------Local Count, excluding submodules.
+        | 
+     2912 wires
+     3002 wire bits
+        5 public wires
+       95 public wire bits
+        5 ports
+       95 port bits
+     2962 cells
+     1965   $_NAND_
+      997   $_NOT_
+

@@ -46,7 +46,10 @@ zero test; the gate count will be measured by synthesis, not estimated here.
 Facts it enables (P3): `validity-matches-check`: whenever `valid` is 0, the decision's
 `ok` is 0. The equality miter for engines uses `valid` as its domain.
 
-### cn-bonus and ng-paye: no validity circuit (owner decision A)
+### cn-bonus and ng-paye: no validity circuit (owner decision A, decided 2026-11-22)
+
+Decided by the owner on 2026-11-22: no validity circuit for these two rules, as recommended
+below.
 
 On our reading every input the layout can hold is valid:
 
@@ -153,7 +156,7 @@ check is the same and will be handled the same way.
 
 ## 4. Cost and funds (owner decision B)
 
-New tape-outs if decision A is approved, in order:
+New tape-outs under decision A, in order:
 
 1. split-v1 validity
 2. split-v1 explanation, which references 1
@@ -169,6 +172,42 @@ alone need about 35 M gas, and the funds will not cover all four. The exact amou
 from synthesis and a fork rehearsal. The owner is then asked for a top-up of that amount
 plus a margin, before any live tape-out. The P4 contract deployments will need more funds
 on top of this.
+
+### Synthesis results, 2026-11-22
+
+Synthesised on host-service (task `p2-synth-explain`, Yosys 0.70, the same flow as the
+decision circuits: `synth -noabc`, `abc -g NAND`). Gate count = NAND + NOT. Evidence:
+`docs/evidence/p2/explain/synth/`.
+
+| Circuit | NAND | NOT | Gates | Decision it explains |
+| --- | --- | --- | --- | --- |
+| `cn_bonus_explain` | 1,965 | 997 | **2,962** | circuit 9, 3,573 gates |
+| `ng_paye_explain` | 2,245 | 1,308 | **3,553** | circuit 10, 8,482 gates |
+| `split_v1_validity` (W = 32) | 210 | 177 | **387** | circuit 8 |
+| `split_v1_explain` top | 0 | 0 | **0**, plus 6 REF records | circuit 8 |
+
+The ng-paye explanation is much smaller than its decision because it has no rate multiplies
+and no divisions by 100 or 12.
+
+The split-v1 explanation top has no gates of its own. All 38,878 gates sit in the referenced
+modules. `m_x8500`, `m_x10000_narrow` and `m_x10000_wide` came out text-identical to the
+netlists taped out as circuits 4, 6 and 7. Both `m_mul` instances are `m_mul_tmc_32`
+(circuit 3). Its netlist text differs from `out/m_mul_tmc_32.nand.v` in wire names only, the
+same as for the split-v1 check top (P0, proved directly in `prove-split.sh` part ajoin). The
+REF records point at circuit 3 on chain, so the bytes run are the ones already taped out.
+
+**Gas, estimated, not measured.** At the live rate of about 2,905 gas per gate:
+
+| Circuit | Estimate |
+| --- | --- |
+| cn-bonus explanation | about 8.6 M |
+| ng-paye explanation | about 10.3 M |
+| split-v1 validity | about 1.1 M |
+| split-v1 explanation top | not estimated; circuit 8, with 1,833 gates and 6 REF records, took 6.05 M |
+
+The first three come to about 20 M gas, against 25.2 M left after the four fees, so the funds
+may just cover all four tape-outs. The fork rehearsal gives the real figures before the owner
+is asked for anything.
 
 ## 5. Order of work once approved
 

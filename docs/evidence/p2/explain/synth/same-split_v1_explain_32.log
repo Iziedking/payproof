@@ -1,0 +1,6 @@
+same \m_x10000_narrow\ identical to the taped-out module
+same \m_x10000_wide\ identical to the taped-out module
+same \m_x8500  identical to the taped-out module
+same m_mul_tmc_32 text differs from out/m_mul_tmc_32.nand.v
+instances: 2 of 2 use m_mul_tmc_32
+m_mul modules left: 0
