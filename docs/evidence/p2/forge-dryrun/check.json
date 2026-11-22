@@ -1,0 +1,38 @@
+{
+  "rpc": "http://127.0.0.1:8545",
+  "block": 76539705,
+  "checkedUtc": "2026-11-22T00:55:27.673Z",
+  "ids": {
+    "m_mul_tmc_32": "3",
+    "m_x8500": "4",
+    "m_add": "5",
+    "m_x10000_narrow": "6",
+    "m_x10000_wide": "7",
+    "split_v1_top": "8",
+    "cn_bonus": "9",
+    "ng_paye": "10"
+  },
+  "rows": [
+    {
+      "piece": "split_v1_top",
+      "id": "8",
+      "cases": 223,
+      "chainVsLocalMismatches": 0,
+      "examples": []
+    },
+    {
+      "piece": "cn_bonus",
+      "id": "9",
+      "cases": 1022,
+      "chainVsLocalMismatches": 0,
+      "examples": []
+    },
+    {
+      "piece": "ng_paye",
+      "id": "10",
+      "cases": 1032,
+      "chainVsLocalMismatches": 0,
+      "examples": []
+    }
+  ]
+}

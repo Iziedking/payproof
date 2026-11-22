@@ -1,0 +1,238 @@
+{
+  "circuits": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+  "note": "TAP-02 netlists for tapeout(bytes,uint32,uint32); made by scripts/p2/tapeout-plan.mts prepare. split_v1_top is added by prepare once the five module ids are live in ids.json.",
+  "pieces": [
+    {
+      "name": "m_mul_tmc_32",
+      "yosysModule": "m_mul_tmc_32",
+      "file": "netlists/m_mul_tmc_32.bin",
+      "nIn": 64,
+      "nOut": 64,
+      "nandRecords": 14969,
+      "refRecords": 0,
+      "bytes": 104783,
+      "keccak256": "0x9f63c8ba02c786f1573c9f2f79da68f28614661d6e2b974e51349dbd63844327",
+      "sha256": "b98e23f26b779c64fe6631fab6e402a612ed2a07a88ee1a89429efa4cac36ed0",
+      "inputs": [
+        {
+          "name": "a",
+          "offset": 0,
+          "width": 32
+        },
+        {
+          "name": "b",
+          "offset": 32,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "y",
+          "offset": 0,
+          "width": 64
+        }
+      ]
+    },
+    {
+      "name": "m_x8500",
+      "yosysModule": "$paramod$fefeed225e00891b7d3d2c7596c0783970263577\\m_x8500",
+      "file": "netlists/m_x8500.bin",
+      "nIn": 64,
+      "nOut": 78,
+      "nandRecords": 3630,
+      "refRecords": 0,
+      "bytes": 25410,
+      "keccak256": "0xe74acf21863c228ee6abc16ab63858d7d24f5e73c5a0c4c9f1ba2e727e7748e9",
+      "sha256": "48a2af01094f2f6a26870b55a4e78f7aa9c50f7816522394ed504e73481be35d",
+      "inputs": [
+        {
+          "name": "a",
+          "offset": 0,
+          "width": 64
+        }
+      ],
+      "outputs": [
+        {
+          "name": "y",
+          "offset": 0,
+          "width": 78
+        }
+      ]
+    },
+    {
+      "name": "m_add",
+      "yosysModule": "$paramod\\m_add\\W=s32'00000000000000000000000000100000",
+      "file": "netlists/m_add.bin",
+      "nIn": 124,
+      "nOut": 79,
+      "nandRecords": 804,
+      "refRecords": 0,
+      "bytes": 5628,
+      "keccak256": "0x479d5c4559cdff6365bd9a1dd2a9125b099129b8f9ff866c56f18a8c4cf91926",
+      "sha256": "46cc9e7786a5876fdc68352bf0da39ceb053defaa0a87084fa6d18935af4c9d8",
+      "inputs": [
+        {
+          "name": "a",
+          "offset": 0,
+          "width": 78
+        },
+        {
+          "name": "b",
+          "offset": 78,
+          "width": 46
+        }
+      ],
+      "outputs": [
+        {
+          "name": "y",
+          "offset": 0,
+          "width": 79
+        }
+      ]
+    },
+    {
+      "name": "m_x10000_narrow",
+      "yosysModule": "$paramod\\m_x10000_narrow\\W=s32'00000000000000000000000000100000",
+      "file": "netlists/m_x10000_narrow.bin",
+      "nIn": 32,
+      "nOut": 46,
+      "nandRecords": 1635,
+      "refRecords": 0,
+      "bytes": 11445,
+      "keccak256": "0x398a6ce29e1de9cee1aad80a25f70028059a377dc32dc6c2a776f7d35876af33",
+      "sha256": "d7a60bd05941a0a36d8c2fbf1390f0dbe1e24ec010922c4082b21602ccbda9dd",
+      "inputs": [
+        {
+          "name": "a",
+          "offset": 0,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "y",
+          "offset": 0,
+          "width": 46
+        }
+      ]
+    },
+    {
+      "name": "m_x10000_wide",
+      "yosysModule": "$paramod\\m_x10000_wide\\W=s32'00000000000000000000000000100000",
+      "file": "netlists/m_x10000_wide.bin",
+      "nIn": 64,
+      "nOut": 78,
+      "nandRecords": 3318,
+      "refRecords": 0,
+      "bytes": 23226,
+      "keccak256": "0x2c83435eefa93042656d9385c7c32bfa67f9951ab16e7b4f2686e48d6238626b",
+      "sha256": "401fb9ee353ba643b5fc65b6cffaed9c26e6b7b17bd78b21b2866a265b3eaa5b",
+      "inputs": [
+        {
+          "name": "a",
+          "offset": 0,
+          "width": 64
+        }
+      ],
+      "outputs": [
+        {
+          "name": "y",
+          "offset": 0,
+          "width": 78
+        }
+      ]
+    },
+    {
+      "name": "cn_bonus",
+      "yosysModule": "cn_bonus",
+      "file": "netlists/cn_bonus.bin",
+      "nIn": 32,
+      "nOut": 64,
+      "nandRecords": 3573,
+      "refRecords": 0,
+      "bytes": 25011,
+      "keccak256": "0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537",
+      "sha256": "31898c77144137213753e2f4cc7f136fab97c160dad35c39d98316fd25914835",
+      "inputs": [
+        {
+          "name": "bonus",
+          "offset": 0,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "tax",
+          "offset": 0,
+          "width": 32
+        },
+        {
+          "name": "net",
+          "offset": 32,
+          "width": 32
+        }
+      ]
+    },
+    {
+      "name": "ng_paye",
+      "yosysModule": "ng_paye",
+      "file": "netlists/ng_paye.bin",
+      "nIn": 195,
+      "nOut": 57,
+      "nandRecords": 8482,
+      "refRecords": 0,
+      "bytes": 59374,
+      "keccak256": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+      "sha256": "18ec489d6ac21c7d1f9948a829a3d0dbdecb121a448401a4a52b248b95f14b50",
+      "inputs": [
+        {
+          "name": "gross",
+          "offset": 0,
+          "width": 30
+        },
+        {
+          "name": "pension",
+          "offset": 30,
+          "width": 27
+        },
+        {
+          "name": "nhf",
+          "offset": 57,
+          "width": 27
+        },
+        {
+          "name": "nhis",
+          "offset": 84,
+          "width": 27
+        },
+        {
+          "name": "life",
+          "offset": 111,
+          "width": 27
+        },
+        {
+          "name": "mortgage",
+          "offset": 138,
+          "width": 27
+        },
+        {
+          "name": "rent",
+          "offset": 165,
+          "width": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "annual_tax",
+          "offset": 0,
+          "width": 30
+        },
+        {
+          "name": "monthly_tax",
+          "offset": 30,
+          "width": 27
+        }
+      ]
+    }
+  ]
+}

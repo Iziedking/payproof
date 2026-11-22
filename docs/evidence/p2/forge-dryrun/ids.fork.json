@@ -1,0 +1,10 @@
+{
+  "m_mul_tmc_32": "3",
+  "m_x8500": "4",
+  "m_add": "5",
+  "m_x10000_narrow": "6",
+  "m_x10000_wide": "7",
+  "split_v1_top": "8",
+  "cn_bonus": "9",
+  "ng_paye": "10"
+}

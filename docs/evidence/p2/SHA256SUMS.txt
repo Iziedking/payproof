@@ -1,2 +1,17 @@
 812c992659fc897863b4c3effd1f189b3b8cc9efe2d6f5a19af68bad73fa7ee4  fork-tapeout.json
 1ec76efa6d3e07efde1ae68aa0984ee3be3ada0b42c7c8bbab5421c141761274  logs/anvil-p2-fork-tapeout.log
+6491677ffe1f0a408536158fa3eded8be4e840040b3181c679bdfa202f154a3d  logs/anvil-p2-forge-dryrun.log
+8d403ec6cbd2785b36453f837d6d7231e19cc02d40f5be7c74f69d2001b96c01  logs/forge-dryrun.log
+2d2ea403d660c672aa41915f4a8ce5dcb75ddba6223f9bcd2beeaa9eae73fe18  forge-dryrun/check.json
+716b2592e7a728b61a9ce68ca7f00fabedf409b037de1ce2006e54d9a926796e  forge-dryrun/ids.fork.json
+fb02af00a8102c34deb9d10f08c7dfca8ce326e40612cd67c0c66e95e16b2f20  forge-dryrun/manifest.fork-ids.json
+a2c8c1fe39f10c608c24c47ea4cc6068cef6d805d17f0207c3a486b703ecf66d  forge-dryrun/split_v1_top.fork-ids.bin
+f02697d8f7de14a0a4a7b4dd88991845f5ea21333894c098536867d081ec6225  tools/forge-script-help-1.8.6.txt
+31898c77144137213753e2f4cc7f136fab97c160dad35c39d98316fd25914835  ../../../chain/netlists/cn_bonus.bin
+46cc9e7786a5876fdc68352bf0da39ceb053defaa0a87084fa6d18935af4c9d8  ../../../chain/netlists/m_add.bin
+b98e23f26b779c64fe6631fab6e402a612ed2a07a88ee1a89429efa4cac36ed0  ../../../chain/netlists/m_mul_tmc_32.bin
+d7a60bd05941a0a36d8c2fbf1390f0dbe1e24ec010922c4082b21602ccbda9dd  ../../../chain/netlists/m_x10000_narrow.bin
+401fb9ee353ba643b5fc65b6cffaed9c26e6b7b17bd78b21b2866a265b3eaa5b  ../../../chain/netlists/m_x10000_wide.bin
+48a2af01094f2f6a26870b55a4e78f7aa9c50f7816522394ed504e73481be35d  ../../../chain/netlists/m_x8500.bin
+39d477da09d3b23d0de72be19724162dda63c2a3b43383e96d3b16b6da66afb6  ../../../chain/netlists/manifest.json
+18ec489d6ac21c7d1f9948a829a3d0dbdecb121a448401a4a52b248b95f14b50  ../../../chain/netlists/ng_paye.bin
