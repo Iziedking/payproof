@@ -13,5 +13,12 @@ b98e23f26b779c64fe6631fab6e402a612ed2a07a88ee1a89429efa4cac36ed0  ../../../chain
 d7a60bd05941a0a36d8c2fbf1390f0dbe1e24ec010922c4082b21602ccbda9dd  ../../../chain/netlists/m_x10000_narrow.bin
 401fb9ee353ba643b5fc65b6cffaed9c26e6b7b17bd78b21b2866a265b3eaa5b  ../../../chain/netlists/m_x10000_wide.bin
 48a2af01094f2f6a26870b55a4e78f7aa9c50f7816522394ed504e73481be35d  ../../../chain/netlists/m_x8500.bin
-39d477da09d3b23d0de72be19724162dda63c2a3b43383e96d3b16b6da66afb6  ../../../chain/netlists/manifest.json
+fb02af00a8102c34deb9d10f08c7dfca8ce326e40612cd67c0c66e95e16b2f20  ../../../chain/netlists/manifest.json
 18ec489d6ac21c7d1f9948a829a3d0dbdecb121a448401a4a52b248b95f14b50  ../../../chain/netlists/ng_paye.bin
+c86c26799fe565883cb2f9dd071d0e59e00a1c258f178c0c76b8be49b4f57f34  logs/anvil-p2-live-check.log
+d49b5677b5eb7d681146a87bd90dc39ffae8f7758f56044fda90a6d7d8071ada  live/live-check-rpc.json
+560de3dbd25eae41b6ef3573cdaf31ebbe905cbee29de7a1bc31db3593822509  live/live-check-fork.json
+2ca54d8beea51bed443e8526dc61146bfa23d2a426998a8da38fcc48e67e01d2  live/rpc-probe.txt
+b19ec3db740bfab685afb9d47582bef8c992355e461d1eed6401c95137951e7d  live-tapeouts.jsonl
+716b2592e7a728b61a9ce68ca7f00fabedf409b037de1ce2006e54d9a926796e  ../../../chain/netlists/ids.json
+a2c8c1fe39f10c608c24c47ea4cc6068cef6d805d17f0207c3a486b703ecf66d  ../../../chain/netlists/split_v1_top.bin

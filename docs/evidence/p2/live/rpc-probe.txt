@@ -1,0 +1,40 @@
+# Output of tasks p2-live-probe and p2-live-probe-cap (scripts/p2/live-probe.mts), node-services,
+# 2026-11-22, against https://xlayerrpc.okx.com. Read-only: eth_call and eth_estimateGas only.
+# eval(id, all-zero input); "gas" is the gas field sent with eth_call ("none" = no field).
+
+== p2-live-probe (ids 9:32, 10:195, 8:128)
+{"selector":"0x934d06ea"}
+{"id":9,"gas":"none","ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":30000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":100000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":150000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":200000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"estimateGas":8313412,"error":null}
+{"id":10,"gas":"none","ok":true,"error":null,"resultBytes":96}
+{"id":10,"gas":30000000,"ok":true,"error":null,"resultBytes":96}
+{"id":10,"gas":100000000,"ok":true,"error":null,"resultBytes":96}
+{"id":10,"gas":150000000,"ok":true,"error":null,"resultBytes":96}
+{"id":10,"gas":200000000,"ok":true,"error":null,"resultBytes":96}
+{"id":10,"estimateGas":19747319,"error":null}
+{"id":8,"gas":"none","ok":false,"error":{"code":3,"message":"execution reverted"},"resultBytes":null}
+{"id":8,"gas":30000000,"ok":false,"error":{"code":3,"message":"execution reverted"},"resultBytes":null}
+{"id":8,"gas":100000000,"ok":false,"error":{"code":3,"message":"execution reverted"},"resultBytes":null}
+{"id":8,"gas":150000000,"ok":false,"error":{"code":3,"message":"execution reverted"},"resultBytes":null}
+{"id":8,"gas":200000000,"ok":false,"error":{"code":3,"message":"execution reverted"},"resultBytes":null}
+{"id":8,"estimateGas":97130345,"error":null}
+
+== p2-live-probe-cap (id 9:32, gas ladder)
+{"selector":"0x934d06ea"}
+{"id":9,"gas":5000000,"ok":false,"error":{"code":3,"message":"execution reverted"},"resultBytes":null}
+{"id":9,"gas":8000000,"ok":false,"error":{"code":3,"message":"execution reverted"},"resultBytes":null}
+{"id":9,"gas":9000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":20000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":40000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":50000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":60000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":80000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"gas":96000000,"ok":true,"error":null,"resultBytes":96}
+{"id":9,"estimateGas":8313412,"error":null}
+
+== p2-live-balance (deployer 0x5c807eA36fC11a72192d83ecff2b3D4746767612)
+{"block":76587286,"balanceWei":"7618923365946174","nonce":14}
