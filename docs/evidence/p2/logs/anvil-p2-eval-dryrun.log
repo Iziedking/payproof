@@ -1,0 +1,151 @@
+
+
+                             _   _
+                            (_) | |
+      __ _   _ __   __   __  _  | |
+     / _` | | '_ \  \ \ / / | | | |
+    | (_| | | | | |  \ V /  | | | |
+     \__,_| |_| |_|   \_/   |_| |_|
+
+    1.8.6 (6bad0a66de 2026-10-21T19:24:36.040754853Z)
+    https://github.com/foundry-rs/foundry
+
+[Lines removed from this copy: anvil prints its ten default test accounts, their public test private keys and the public test mnemonic at start. None was used; the deployer was impersonated. The host copy had sha256 f5297ba86868d2ba9eba7bc29470d528daf33efa0e0fe72a7b00c5b8ccbb2fb9.]
+
+Fork
+==================
+Endpoint:       https://xlayerrpc.okx.com/
+Block number:   76588453
+Block hash:     0x9875343f5890012fe969806cd0a9d784f462750831802da0a40f8104f7c220c0
+Chain ID:       196
+
+Base Fee
+==================
+
+20000000
+
+Gas Limit
+==================
+
+210000000
+
+Genesis Timestamp
+==================
+
+1795357491
+
+Genesis Number
+==================
+
+0
+
+Listening on 127.0.0.1:8545
+eth_blockNumber
+eth_blockNumber
+anvil_impersonateAccount
+eth_getTransactionCount
+eth_chainId
+eth_getTransactionCount
+eth_sendTransaction
+eth_accounts
+eth_getTransactionReceipt
+eth_getTransactionReceipt
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getBlockByNumber
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+eth_getTransactionReceipt
+eth_blockNumber
+
+    Transaction: 0x9451ee1bcc9cdf2c8783244ae46da3e79d6e74d1b58b1bad2b9482108c73ea3a
+    Gas used: 95673102
+
+    Block Number: 76588454
+    Block Hash: 0x1826e8c0baad52efe89ee4fc56ca3fb8f05f268cccab0273725aef459c14325b
+    Block Time: "Sun, 22 Nov 2026 14:24:51 +0000"
+
+eth_getTransactionReceipt
+eth_getTransactionCount
+eth_getTransactionByHash
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_chainId
+anvil_nodeInfo
+anvil_metadata
+eth_chainId
+anvil_nodeInfo
+anvil_metadata
+eth_call
