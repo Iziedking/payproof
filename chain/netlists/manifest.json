@@ -1,6 +1,6 @@
 {
   "circuits": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
-  "note": "TAP-02 netlists for tapeout(bytes,uint32,uint32); made by scripts/p2/tapeout-plan.mts prepare. split_v1_top is added by prepare once the five module ids are live in ids.json.",
+  "note": "TAP-02 netlists for tapeout(bytes,uint32,uint32); made by scripts/p2/tapeout-plan.mts prepare",
   "pieces": [
     {
       "name": "m_mul_tmc_32",
@@ -141,6 +141,54 @@
           "width": 78
         }
       ]
+    },
+    {
+      "name": "split_v1_top",
+      "yosysModule": "split_check_mod",
+      "file": "netlists/split_v1_top.bin",
+      "nIn": 128,
+      "nOut": 1,
+      "nandRecords": 1833,
+      "refRecords": 6,
+      "bytes": 14253,
+      "keccak256": "0x2e4c44e912da662903c6ebf368ca177c1eb77ebbb4d6838069fc7a14af6be5b7",
+      "sha256": "a2c8c1fe39f10c608c24c47ea4cc6068cef6d805d17f0207c3a486b703ecf66d",
+      "inputs": [
+        {
+          "name": "pot",
+          "offset": 0,
+          "width": 32
+        },
+        {
+          "name": "shares",
+          "offset": 32,
+          "width": 32
+        },
+        {
+          "name": "total",
+          "offset": 64,
+          "width": 32
+        },
+        {
+          "name": "payout",
+          "offset": 96,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ok",
+          "offset": 0,
+          "width": 1
+        }
+      ],
+      "refs": {
+        "m_mul_tmc_32": "3",
+        "m_x8500": "4",
+        "m_add": "5",
+        "m_x10000_narrow": "6",
+        "m_x10000_wide": "7"
+      }
     },
     {
       "name": "cn_bonus",
