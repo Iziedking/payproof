@@ -123,6 +123,11 @@ synth_tmc() { # name width
 # chtype, `hierarchy -top` drops the unused ABC-mapped m_mul, and the design is joined
 # as in synth_mod: flatten, opt_clean -purge, nothing else. Comparisons go to
 # logs/same-<name>.log. Needs out/ of groups check-mod-<w> and mul-tmc-<w>.
+# P2 (2026-11-21): the same session also writes out/<name>.ref.json for tape-out with REF.
+# Every module except m_cmp keeps its own netlist (keep_hierarchy, so flatten leaves it);
+# m_cmp is flattened into the top because it has 299 inputs and a REF allows at most 255
+# (TAP-02 section 3). `design -save` / `design -load` restore the joined design afterwards,
+# so the flat netlist below is built exactly as before.
 block() { # file module-pattern: print the lines of that module after its header
   # pattern passed through the environment: awk -v would treat its backslashes as escapes
   P="$2" awk '$1 == "module" && index($0, ENVIRON["P"]) {on=1; next} on {print} on && /^endmodule/ {on=0}' "$1"
@@ -140,6 +145,13 @@ synth_modc() { # name width
     hierarchy -top split_check_mod;
     tee -o out/$name.mods.stat.txt stat -top split_check_mod;
     write_verilog -noattr out/$name.mods.nand.v;
+    write_json out/$name.mods.json;
+    design -save joined;
+    setattr -mod -set keep_hierarchy 1 $tmc *m_x10000_wide* *m_x10000_narrow* *m_x8500* *m_add*;
+    flatten; opt_clean -purge;
+    tee -o out/$name.ref.stat.txt stat -top split_check_mod;
+    write_json out/$name.ref.json;
+    design -load joined;
     flatten; opt_clean -purge;
     select -assert-none t:* t:\$_NAND_ t:\$_NOT_ %u %d;
     tee -o out/$name.stat.txt stat;

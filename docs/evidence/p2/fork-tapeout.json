@@ -1,0 +1,164 @@
+{
+  "simulation": true,
+  "startedUtc": "2026-11-21T22:02:21.660Z",
+  "forkBlock": 76529501,
+  "tapeoutFeeWei": "1300000000000000",
+  "tapeouts": [
+    {
+      "label": "split-v1 module m_mul_tmc_32",
+      "id": "3",
+      "bytes": 104783,
+      "nIn": 64,
+      "nOut": 64,
+      "nandRecords": 14969,
+      "refRecords": 0,
+      "calldataChars": 209866,
+      "status": 1,
+      "gasEstimate": 44164867,
+      "gasUsed": 43491041,
+      "circuitInfoGates": 14969
+    },
+    {
+      "label": "split-v1 module $paramod$fefeed225e00891b7d3d2c7596c0783970263577\\m_x8500",
+      "id": "4",
+      "bytes": 25410,
+      "nIn": 64,
+      "nOut": 78,
+      "nandRecords": 3630,
+      "refRecords": 0,
+      "calldataChars": 51146,
+      "status": 1,
+      "gasEstimate": 10801939,
+      "gasUsed": 10635705,
+      "circuitInfoGates": 3630
+    },
+    {
+      "label": "split-v1 module $paramod\\m_add\\W=s32'00000000000000000000000000100000",
+      "id": "5",
+      "bytes": 5628,
+      "nIn": 124,
+      "nOut": 79,
+      "nandRecords": 804,
+      "refRecords": 0,
+      "calldataChars": 11530,
+      "status": 1,
+      "gasEstimate": 2536205,
+      "gasUsed": 2495755,
+      "circuitInfoGates": 804
+    },
+    {
+      "label": "split-v1 module $paramod\\m_x10000_narrow\\W=s32'00000000000000000000000000100000",
+      "id": "6",
+      "bytes": 11445,
+      "nIn": 32,
+      "nOut": 46,
+      "nandRecords": 1635,
+      "refRecords": 0,
+      "calldataChars": 23178,
+      "status": 1,
+      "gasEstimate": 4946669,
+      "gasUsed": 4869535,
+      "circuitInfoGates": 1635
+    },
+    {
+      "label": "split-v1 module $paramod\\m_x10000_wide\\W=s32'00000000000000000000000000100000",
+      "id": "7",
+      "bytes": 23226,
+      "nIn": 64,
+      "nOut": 78,
+      "nandRecords": 3318,
+      "refRecords": 0,
+      "calldataChars": 46730,
+      "status": 1,
+      "gasEstimate": 9837186,
+      "gasUsed": 9685652,
+      "circuitInfoGates": 3318
+    },
+    {
+      "label": "split-v1 top (REF-joined)",
+      "id": "8",
+      "bytes": 14253,
+      "nIn": 128,
+      "nOut": 1,
+      "nandRecords": 1833,
+      "refRecords": 6,
+      "calldataChars": 28810,
+      "status": 1,
+      "gasEstimate": 6140675,
+      "gasUsed": 6045409,
+      "circuitInfoGates": 41158
+    },
+    {
+      "label": "cn-bonus-2023-30 decision (flat)",
+      "id": "9",
+      "bytes": 25011,
+      "nIn": 32,
+      "nOut": 64,
+      "nandRecords": 3573,
+      "refRecords": 0,
+      "calldataChars": 50314,
+      "status": 1,
+      "gasEstimate": 10637060,
+      "gasUsed": 10473350,
+      "circuitInfoGates": 3573
+    },
+    {
+      "label": "ng-paye-nta2025 decision (flat)",
+      "id": "10",
+      "bytes": 59374,
+      "nIn": 195,
+      "nOut": 57,
+      "nandRecords": 8482,
+      "refRecords": 0,
+      "calldataChars": 119050,
+      "status": 1,
+      "gasEstimate": 25020749,
+      "gasUsed": 24638320,
+      "circuitInfoGates": 8482
+    }
+  ],
+  "checks": [
+    {
+      "label": "split-v1 top",
+      "id": "8",
+      "cases": 223,
+      "chainVsLocalMismatches": 0,
+      "ruleVsLocalMismatches": 0,
+      "evalGasEstimateFirst3": [
+        97188932,
+        97191312
+      ],
+      "examples": []
+    },
+    {
+      "label": "cn-bonus-2023-30 decision",
+      "id": "9",
+      "cases": 1022,
+      "chainVsLocalMismatches": 0,
+      "ruleVsLocalMismatches": 0,
+      "evalGasEstimateFirst3": [
+        8310567,
+        8320002
+      ],
+      "examples": []
+    },
+    {
+      "label": "ng-paye-nta2025 decision",
+      "id": "10",
+      "cases": 1032,
+      "chainVsLocalMismatches": 0,
+      "ruleVsLocalMismatches": 0,
+      "evalGasEstimateFirst3": [
+        19744475,
+        19748217
+      ],
+      "examples": []
+    }
+  ],
+  "splitEvalTx": {
+    "status": 1,
+    "gasUsed": 95673102,
+    "estimate": 97191212
+  },
+  "finishedUtc": "2026-11-21T22:04:53.571Z"
+}
