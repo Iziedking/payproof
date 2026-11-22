@@ -12,7 +12,7 @@
 //   node scripts/p2/tapeout-plan.mts landed <rpc> <netlist dir> <piece> <tx hash | run-latest.json>
 //       Reads the receipt, takes the new circuit id from the Transfer log, checks circuitInfo,
 //       and records the id in ids.json.
-//   node scripts/p2/tapeout-plan.mts check <rpc> <netlist dir> <out.json>
+//   node scripts/p2/tapeout-plan.mts check <rpc> <netlist dir> <out.json> [piece,piece]
 //       eth_call `eval` on every final circuit in ids.json against the local simulator: the rule
 //       vectors plus random inputs.
 //
@@ -132,7 +132,8 @@ async function landed(rpcUrl: string, dir: string, name: string, ref: string) {
   if (p.refRecords === 0 && infoGates !== p.nandRecords) throw new Error(`circuitInfo reports ${infoGates} gates, the file has ${p.nandRecords}`);
 }
 
-async function check(rpcUrl: string, dir: string, outFile: string) {
+async function check(rpcUrl: string, dir: string, outFile: string, only?: string) {
+  const pick = only ? new Set(only.split(',')) : null;
   const rpc = rpcAt(rpcUrl);
   const ids = idsOf(dir);
   const m = manifestOf(dir);
@@ -144,6 +145,7 @@ async function check(rpcUrl: string, dir: string, outFile: string) {
   const rnd = (bits: number) => { let v = 0n; for (let k = 0; k < bits; k += 32) { seed = (seed * 6364136223846793005n + 1442695040888963407n) & ((1n << 64n) - 1n); v = (v << 32n) | (seed >> 32n); } return v & ((1n << BigInt(bits)) - 1n); };
   const rows: any[] = [];
   for (const [name, rule] of Object.entries(FINAL)) {
+    if (pick && !pick.has(name)) continue;
     if (ids[name] === undefined) { console.log(`${name}: no id yet, skipped`); continue; }
     const p = pieceOf(dir, name);
     if (p.refs) for (const [mod, id] of Object.entries(p.refs)) if (ids[mod] !== id) throw new Error(`${name}.bin names ${mod} #${id}, ids.json has #${ids[mod]}`);
@@ -177,5 +179,5 @@ if (cmd === 'prepare') await prepare(a[0], a[1]);
 else if (cmd === 'args') console.log(argsLine(pieceOf(a[0], a[1])));
 else if (cmd === 'command') await command(a[0], a[1], a[2]);
 else if (cmd === 'landed') await landed(a[0], a[1], a[2], a[3]);
-else if (cmd === 'check') await check(a[0], a[1], a[2]);
+else if (cmd === 'check') await check(a[0], a[1], a[2], a[3]);
 else { console.error('commands: prepare, args, command, landed, check (see the header)'); process.exit(2); }
