@@ -1,0 +1,23 @@
+{
+  "note": "Files of the Payproof app as published to DeWEB, in publish order (index.html last). Written by scripts/p2/deweb-plan.mts prepare; read by chain/script/DeWebPublish.s.sol.",
+  "paths": [
+    "assets/index-BchCgAus.js",
+    "assets/index-J9SKQEqf.css",
+    "index.html"
+  ],
+  "types": [
+    "text/javascript",
+    "text/css",
+    "text/html"
+  ],
+  "sha256": [
+    "0x93c7096fe6053ca032cc6573a2169f1a6d15ffe9f3921fb15f0675fdaba79cfb",
+    "0xdb063f785636bff5c51bda055099e48c20c6f5d9d853005a71831da2620b5995",
+    "0x33da535f72ccc5b8006261e3e218b9ee93283039dae1ed9ff7a042cde50ac1f9"
+  ],
+  "sizes": [
+    301291,
+    14320,
+    1252
+  ]
+}

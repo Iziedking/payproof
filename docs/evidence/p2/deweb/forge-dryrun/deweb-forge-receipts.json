@@ -1,0 +1,181 @@
+{
+  "simulation": "anvil fork of X Layer, deployer impersonated (--unlocked); live balance below the opening fee, so the fork balance was raised (balanceRaised)",
+  "script": "chain/script/DeWebPublish.s.sol run(9,12), forge 1.8.6",
+  "publishRun": {
+    "transactions": 17,
+    "allSucceeded": true,
+    "gasUsed": 71892818,
+    "gasLimitSum": 99592664,
+    "valueWei": "80000000000000000",
+    "networkOkb": 0.001437856431892818,
+    "totalOkb": 0.08143785643189282,
+    "maxGasLimitOneTx": 7609349,
+    "txs": [
+      {
+        "to": "0x536add8f30f03b69f6fbf29d425a816a0dc50106",
+        "function": "open(address,uint256)",
+        "valueWei": "80000000000000000",
+        "calldataBytes": 68,
+        "gasLimit": 231004,
+        "gasUsed": 167244,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "putFile(address,string,string,bytes32,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24324,
+        "gasLimit": 7609349,
+        "gasUsed": 5509032,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 24228,
+        "gasLimit": 7412668,
+        "gasUsed": 5366639,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "appendChunk(address,string,uint256,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 13540,
+        "gasLimit": 4205306,
+        "gasUsed": 3044566,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "putFile(address,string,string,bytes32,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 14660,
+        "gasLimit": 4962006,
+        "gasUsed": 3392825,
+        "status": 1
+      },
+      {
+        "to": "0xd6efb7adcc9c83dc4924ad56f6a8e4e969b9adb6",
+        "function": "putFile(address,string,string,bytes32,bytes)",
+        "valueWei": "0",
+        "calldataBytes": 1604,
+        "gasLimit": 774384,
+        "gasUsed": 560640,
+        "status": 1
+      },
+      {
+        "to": "0x68809fd2fb343aa57d0aeb7f33defe477c9666f9",
+        "function": "bind(string,address,uint256)",
+        "valueWei": "0",
+        "calldataBytes": 164,
+        "gasLimit": 271267,
+        "gasUsed": 185482,
+        "status": 1
+      }
+    ]
+  },
+  "summary": {
+    "liveBalanceWei": "24048151227407573",
+    "balanceRaised": true,
+    "forkBalanceBeforeWei": "1000000000000000000",
+    "forkBalanceAfterWei": "917213506920675353",
+    "nonceStart": 19,
+    "nonceAfterPublish": 36,
+    "nonceBeforeResume": 37,
+    "nonceAfterResume": 49,
+    "nonceAfterRerun": 49,
+    "halfWritten": "assets/index-BchCgAus.js"
+  }
+}

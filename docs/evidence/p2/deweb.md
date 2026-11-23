@@ -71,6 +71,48 @@ Anvil fork of X Layer at block 76,656,415; the deployer impersonated, its fork b
 Evidence: `docs/evidence/p2/deweb/deweb-fork.json`, `docs/evidence/p2/deweb/anvil-p2-deweb-fork.log`
 (test keys cut, host sha noted).
 
+## The owner's publish path (task `p2-deweb-forge-dryrun`, simulation)
+
+`chain/script/DeWebPublish.s.sol`, signed by the owner with `forge script` as for the tape-outs.
+It reads `chain/site/manifest.json` and the files it lists (foundry.toml now allows reads of
+`./site` as well as `./netlists`). Before sending anything it checks the chain id, that the opening
+fee is still 0.08 OKB and the monthly fee still 0, and the size and SHA-256 of every file. Then it
+opens the container if not yet opened, writes each file (index.html last), and binds
+`<#ID>.2.425.tape`. Steps already on chain are skipped, and a file left part written is carried on
+from its last chunk. `scripts/p2/deweb-plan.mts` writes the manifest (`prepare`), prints the
+owner's command with the live gas price and balance (`command`), and reads everything back
+(`landed`).
+
+The files are the host-service build of the committed app (task `p2-app-build`, 2026-11-23). The
+SHA-256 of all three is identical to the build used in the first rehearsal:
+
+| File | Bytes | SHA-256 |
+| --- | --- | --- |
+| `assets/index-BchCgAus.js` | 301,291 | `93c7096f…ba79cfb` |
+| `assets/index-J9SKQEqf.css` | 14,320 | `db063f78…20b5995` |
+| `index.html` | 1,252 | `33da535f…0ac1f9` |
+
+Anvil fork of X Layer at block 76,658,740, forge 1.8.6, deployer impersonated with `--unlocked`.
+The live balance (0.024048 OKB) is below the opening fee, so the fork balance was raised to 1 OKB
+to rehearse the rest (`balanceRaised: true` in the summary).
+
+| Check | Result |
+| --- | --- |
+| Without `--broadcast` | Simulation only; nonce 19 before and after |
+| `index.html` changed by one byte | Refused ("size differs from the manifest: index.html"); nonce unchanged |
+| Publish with `--broadcast` | 17 transactions, all succeeded: open, 13 + 1 + 1 file writes, bind |
+| Read back (`landed`) | Every file byte for byte, declared SHA-256 and content type match; opened, `isLive` and `isContainerLive` true |
+| The JS file cut back to its first chunk, then run again | 12 `appendChunk` transactions from chunk 1; read back identical |
+| Run again with nothing left to do | No transactions; nonce 49 before and after |
+
+Cost of the 17-transaction publish at 20,000,001 wei: 71,892,818 gas, 0.001438 OKB, plus the 0.08
+OKB opening fee: **0.081438 OKB**. Forge sets gas limits that add up to 99,592,664 (largest one
+7,609,349), so the account must hold about **0.082 OKB** when the run starts.
+
+Evidence: `docs/evidence/p2/deweb/forge-dryrun/` (receipts summary, both read-backs, summary,
+anvil log with test keys and mnemonic cut, host file sha256 noted in its first line); the
+published bytes and manifest are in `chain/site/`.
+
 ## What is not settled
 
 - **Which circuit hosts the site.** Any circuit the deployer holds works; the name is `<#ID>.2.425.tape`.
@@ -80,6 +122,6 @@ Evidence: `docs/evidence/p2/deweb/deweb-fork.json`, `docs/evidence/p2/deweb/anvi
 - **A publishing tool.** There is no open-source CLI yet ("on the roadmap"). The routes are the
   HashPort console, or our own script calling `putFile` and `appendChunk`, signed by the holder
   or an operator set with `setOperator`.
-- **Funds.** The deployer holds about 0.000048 OKB; the rehearsal needs 0.08144 OKB (above). Before the rehearsal the estimate was: storing a 315 KB build is roughly 63 M gas
-  or more (about 0.0013 OKB at 20,000,001 wei) before the opening fee, so a top-up is needed.
-  This is an estimate from the 200 gas per byte figure, not a measurement.
+- **Funds.** On 2026-11-23, at fork block 76,658,740, the deployer held 0.024048 OKB. The publish
+  needs about 0.082 OKB at the start of the run (above), so at least about 0.058 OKB more is
+  needed before broadcasting.

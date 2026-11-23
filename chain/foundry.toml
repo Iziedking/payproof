@@ -2,7 +2,7 @@
 # their own keystore account (`--account`). Flags read from `forge script --help` of the pinned
 # Foundry 1.8.6 image on 2026-11-22 (docs/evidence/p2/tools/forge-script-help-1.8.6.txt).
 # `readFileBinary` paths are relative to this folder (forge-std Vm.sol doc comment); the script
-# may read only ./netlists.
+# may read only ./netlists (tape-outs) and ./site (the DeWEB publish).
 [profile.default]
 src = "script"
 script = "script"
@@ -11,4 +11,4 @@ cache_path = "cache"
 broadcast = "broadcast"
 libs = []
 solc_version = "0.8.28"
-fs_permissions = [{ access = "read", path = "./netlists" }]
+fs_permissions = [{ access = "read", path = "./netlists" }, { access = "read", path = "./site" }]
