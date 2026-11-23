@@ -59,7 +59,7 @@
       }
     ],
     "inputs": "same as the decision inputs",
-    "note": "Explanation circuit, rules/split-v1/explain.v. Not taped out yet. Exact share = exact_num / den; ok == valid && paid_num <= exact_num < paid_num + den."
+    "note": "Explanation circuit, rules/split-v1/explain.v. Circuit 14 on X Layer. Exact share = exact_num / den; ok == valid && paid_num <= exact_num < paid_num + den."
   },
   "validity": {
     "circuit": "split_v1_validity",

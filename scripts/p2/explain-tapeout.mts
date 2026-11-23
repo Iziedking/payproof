@@ -8,6 +8,9 @@
 //       `eval` by eth_call on the fork with the local simulator and with the formula in the spec,
 //       and test the relation to the live decision circuit (8, 9, 10), evaluated locally from
 //       <netlist dir>. Tests, not proofs.
+//   node scripts/p2/explain-tapeout.mts check <rpc> <json dir> <netlist dir> <ids.json> <out.json> [piece,piece]
+//       The same tests on the circuits already taped out, by their live ids, with no tape-out. Read-only.
+//       On the public RPC for the pieces it can run; split_v1_explain (about 93 M gas) on a fork.
 //   node scripts/p2/explain-tapeout.mts prepare <json dir> <netlist dir> <out dir>
 //       Writes <out dir>/<piece>.bin and manifest.json for the owner's tape-outs, in the format of
 //       scripts/p2/tapeout-plan.mts (so its `args`, `command` and `landed` work on <out dir>).
@@ -166,20 +169,26 @@ function ngInputs(n: number) {
 }
 
 // ---------- fork rehearsal ----------
-async function fork(rpcUrl: string, jsonDir: string, netDir: string, outFile: string) {
+async function fork(rpcUrl: string, jsonDir: string, netDir: string, outFile: string,
+  live?: { ids: Record<string, string>; pick: Set<string> | null; label: string }) {
   let rid = 1;
   const rpc = async (method: string, params: unknown[]): Promise<any> => {
-    const r = await fetch(rpcUrl, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: rid++, method, params }) });
-    const x = await r.json(); if (x.error) throw new Error(`${method}: ${JSON.stringify(x.error)}`); return x.result;
+    // Retries a dropped connection or an unreadable reply (the public RPC drops some); an RPC error is final.
+    let x: any;
+    for (let t = 1; ; t++) {
+      try { x = await (await fetch(rpcUrl, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: rid++, method, params }) })).json(); break; }
+      catch (e) { if (t >= 5) throw e; await new Promise((z) => setTimeout(z, 1000 * t)); }
+    }
+    if (x.error) throw new Error(`${method}: ${JSON.stringify(x.error)}`); return x.result;
   };
   const receipt = async (h: string) => { for (let i = 0; i < 60; i++) { const r = await rpc('eth_getTransactionReceipt', [h]); if (r) return r; await new Promise((z) => setTimeout(z, 1000)); } throw new Error(`no receipt ${h}`); };
   const TRANSFER = keccakHex(new TextEncoder().encode('Transfer(address,address,uint256)'));
   const d = load_(jsonDir, netDir);
   const fee = BigInt(await rpc('eth_call', [{ to: CIRCUITS, data: sel('TAPEOUT_FEE()') }, 'latest']));
-  await rpc('anvil_impersonateAccount', [DEPLOYER]);
+  if (!live) await rpc('anvil_impersonateAccount', [DEPLOYER]);
   const balanceBefore = BigInt(await rpc('eth_getBalance', [DEPLOYER, 'latest']));
   const blockGasLimit = num((await rpc('eth_getBlockByNumber', ['latest', false])).gasLimit);
-  const out: any = { simulation: true, startedUtc: new Date().toISOString(), forkBlock: num(await rpc('eth_blockNumber', [])),
+  const out: any = { simulation: live ? live.label : true, ids: live?.ids, startedUtc: new Date().toISOString(), forkBlock: num(await rpc('eth_blockNumber', [])),
     tapeoutFeeWei: fee.toString(), gasPriceWei: LIVE_GAS_PRICE.toString(), deployerBalanceWei: balanceBefore.toString(),
     identity: d.identity, tapeouts: [], checks: [] };
   d.identity.forEach((s) => console.log(s));
@@ -207,12 +216,14 @@ async function fork(rpcUrl: string, jsonDir: string, netDir: string, outFile: st
   const local = new Map(d.local);
   const resolve = (cpu: Uint8Array, id: bigint) => local.get(refKey(cpu, id)) ?? null;
 
-  const vId = await tapeout('split-v1 validity', d.validity);
+  // Live mode: no tape-out; the ids are the live ones, already checked by tapeout-plan.mts landed.
+  const vId = live ? BigInt(live.ids.split_v1_validity) : await tapeout('split-v1 validity', d.validity);
   local.set(refKey(CPU, vId), load(d.validity.bytes, d.validity.nIn, d.validity.nOut));
   const { top } = d.topWith(vId);
-  const eId = await tapeout('split-v1 explanation (REF top)', top);
-  const cId = await tapeout('cn-bonus explanation', d.cn);
-  const nId = await tapeout('ng-paye explanation', d.ng);
+  const eId = live ? BigInt(live.ids.split_v1_explain) : await tapeout('split-v1 explanation (REF top)', top);
+  const cId = live ? BigInt(live.ids.cn_bonus_explain) : await tapeout('cn-bonus explanation', d.cn);
+  const nId = live ? BigInt(live.ids.ng_paye_explain) : await tapeout('ng-paye explanation', d.ng);
+  const want = (piece: string) => !live?.pick || live.pick.has(piece);
 
   const run = async (label: string, kind: string, id: bigint, c: Compiled, decisionName: string,
     xs: Record<string, bigint>[], formula: (v: Record<string, bigint>) => Record<string, bigint>, gasCases: number) => {
@@ -238,17 +249,17 @@ async function fork(rpcUrl: string, jsonDir: string, netDir: string, outFile: st
       evalGasEstimate: gas.length ? [Math.min(...gas), Math.max(...gas)] : null, examples };
     out.checks.push(row); console.log(JSON.stringify(row));
   };
-  await run('split-v1 validity', 'validity', vId, d.validity, 'split_v1_top', splitInputs(400), (v) => ({ valid: splitValid(v) }), 3);
-  await run('split-v1 explanation', 'split', eId, top, 'split_v1_top', splitInputs(100), splitExplain, 3);
-  await run('cn-bonus explanation', 'cn', cId, d.cn, 'cn_bonus', cnInputs(1000), (v) => cnExplain(v.bonus), 3);
-  await run('ng-paye explanation', 'ng', nId, d.ng, 'ng_paye', ngInputs(1000), ngExplain, 3);
+  if (want('split_v1_validity')) await run('split-v1 validity', 'validity', vId, d.validity, 'split_v1_top', splitInputs(400), (v) => ({ valid: splitValid(v) }), 3);
+  if (want('split_v1_explain')) await run('split-v1 explanation', 'split', eId, top, 'split_v1_top', splitInputs(100), splitExplain, 3);
+  if (want('cn_bonus_explain')) await run('cn-bonus explanation', 'cn', cId, d.cn, 'cn_bonus', cnInputs(1000), (v) => cnExplain(v.bonus), 3);
+  if (want('ng_paye_explain')) await run('ng-paye explanation', 'ng', nId, d.ng, 'ng_paye', ngInputs(1000), ngExplain, 3);
 
   const gasUsed = out.tapeouts.reduce((s: number, r: any) => s + r.gasUsed, 0);
   const totalWei = BigInt(gasUsed) * LIVE_GAS_PRICE + fee * BigInt(out.tapeouts.length);
   out.cost = { tapeouts: out.tapeouts.length, gasUsed, feesWei: (fee * BigInt(out.tapeouts.length)).toString(),
     networkWei: (BigInt(gasUsed) * LIVE_GAS_PRICE).toString(), totalWei: totalWei.toString(), totalOkb: Number(totalWei) / 1e18,
     deployerBalanceOkb: Number(balanceBefore) / 1e18, shortfallOkb: totalWei > balanceBefore ? Number(totalWei - balanceBefore) / 1e18 : 0 };
-  console.log(JSON.stringify(out.cost));
+  if (!live) console.log(JSON.stringify(out.cost)); else delete out.cost;
   out.finishedUtc = new Date().toISOString();
   writeFileSync(outFile, JSON.stringify(out, null, 2) + '\n');
   const bad = out.checks.reduce((s: number, r: any) => s + r.chainVsLocalMismatches + r.formulaVsLocalMismatches + r.relationFailures, 0);
@@ -280,4 +291,6 @@ function prepare(jsonDir: string, netDir: string, dir: string) {
 const [cmd, ...a] = process.argv.slice(2);
 if (cmd === 'fork') await fork(a[0], a[1], a[2], a[3]);
 else if (cmd === 'prepare') prepare(a[0], a[1], a[2]);
+else if (cmd === 'check') await fork(a[0], a[1], a[2], a[4], { ids: readJson(a[3]), pick: a[5] ? new Set(a[5].split(',')) : null,
+  label: a[0].includes('127.0.0.1') ? 'fork of the live chain: no tape-out, live ids' : false as any });
 else { console.error('commands: fork, prepare (see the header)'); process.exit(2); }

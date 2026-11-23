@@ -40,7 +40,7 @@ input bits.
 | --- | --- | --- |
 | Decision (check) | 8 | Gives `ok`. Joined by REF from modules 3 to 7. The circuit a contract runs |
 | Validity | 13 | Gives `valid = total != 0 and shares <= total`. `pot` and `payout` are not used |
-| Explanation | not taped out yet | Gives `exact_num = pot x shares x 8500`, `paid_num = payout x total x 10000` and `den = total x 10000`, plus `valid`. Joined by REF from modules 3, 4, 6, 7 and the validity circuit. No contract has to run it |
+| Explanation | 14 | Gives `exact_num = pot x shares x 8500`, `paid_num = payout x total x 10000` and `den = total x 10000`, plus `valid`. Joined by REF from modules 3, 4, 6, 7 and the validity circuit. No contract has to run it |
 
 The holder's exact share is `exact_num / den`, and the check passes exactly when
 `paid_num <= exact_num < paid_num + den`. On a fork, 0 failures of that relation in 123 inputs,
