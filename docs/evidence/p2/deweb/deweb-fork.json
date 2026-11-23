@@ -1,0 +1,164 @@
+{
+  "simulation": "anvil fork of X Layer, impersonated deployer, balance raised with anvil_setBalance",
+  "forkBlock": 76656415,
+  "circuitId": "9",
+  "name": "9.2.425.tape",
+  "gatewayUrl": "https://9-2-425.tapekit.org/",
+  "container": "0x2b6cedc361719b551d1410f9fa25d90719770adf",
+  "openFeeWei": "80000000000000000",
+  "monthlyFeeWei": "0",
+  "strangerOpen": "reverts: Error: eth_call: {\"code\":3,\"message\":\"execution reverted: custom error 0xf04f3db2: 00000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "opened": true,
+  "live": true,
+  "containerLive": true,
+  "checks": [
+    {
+      "path": "assets/index-BchCgAus.js",
+      "bytes": 301291,
+      "sameBytes": true,
+      "declaredSha": true
+    },
+    {
+      "path": "assets/index-J9SKQEqf.css",
+      "bytes": 14320,
+      "sameBytes": true,
+      "declaredSha": true
+    },
+    {
+      "path": "index.html",
+      "bytes": 1252,
+      "sameBytes": true,
+      "declaredSha": true
+    }
+  ],
+  "txs": [
+    {
+      "label": "open",
+      "gasEstimate": 169414,
+      "gasUsed": 167244,
+      "value": "80000000000000000",
+      "calldataBytes": 68
+    },
+    {
+      "label": "putFile assets/index-BchCgAus.js 1/13",
+      "gasEstimate": 5589804,
+      "gasUsed": 5509032,
+      "value": "0",
+      "calldataBytes": 24324
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 2/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 3/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 4/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 5/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 6/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 7/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 8/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 9/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 10/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 11/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 12/13",
+      "gasEstimate": 5483202,
+      "gasUsed": 5366639,
+      "value": "0",
+      "calldataBytes": 24228
+    },
+    {
+      "label": "appendChunk assets/index-BchCgAus.js 13/13",
+      "gasEstimate": 3092452,
+      "gasUsed": 3044566,
+      "value": "0",
+      "calldataBytes": 13540
+    },
+    {
+      "label": "putFile assets/index-J9SKQEqf.css 1/1",
+      "gasEstimate": 3442505,
+      "gasUsed": 3392825,
+      "value": "0",
+      "calldataBytes": 14660
+    },
+    {
+      "label": "putFile index.html 1/1",
+      "gasEstimate": 568731,
+      "gasUsed": 560640,
+      "value": "0",
+      "calldataBytes": 1604
+    },
+    {
+      "label": "bind 9.2.425.tape 12 months",
+      "gasEstimate": 187961,
+      "gasUsed": 185482,
+      "value": "0",
+      "calldataBytes": 164
+    }
+  ],
+  "cost": {
+    "transactions": 17,
+    "gasUsed": 71892818,
+    "networkOkb": 0.001437856431892818,
+    "openFeeOkb": 0.08,
+    "bindOkb": 0,
+    "totalOkb": 0.08143785643189282,
+    "deployerHasOkb": 0.000048151227407573
+  }
+}
