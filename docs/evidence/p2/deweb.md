@@ -1,7 +1,7 @@
-# DeWEB: what a test publish of the app needs (2026-11-23)
+# DeWEB: publishing the app (2026-11-23)
 
-Read-only research for the P2 DeWEB test publish (PLAN R21, R22). Nothing was published and no
-transaction was sent.
+The P2 DeWEB test publish (PLAN R21, R22): the research, the fork rehearsals, and the live
+publish, which put the app at `https://9-2-425.tapekit.org/` from circuit 9's container.
 
 ## Sources
 
@@ -113,15 +113,51 @@ Evidence: `docs/evidence/p2/deweb/forge-dryrun/` (receipts summary, both read-ba
 anvil log with test keys and mnemonic cut, host file sha256 noted in its first line); the
 published bytes and manifest are in `chain/site/`.
 
+## Live publish (2026-11-23)
+
+The owner signed `DeWebPublish.s.sol` with `run(9, 12)` from `chain/`: first without `--broadcast`
+(simulation, 17 transactions, gas limits summing to 99,592,664), then with `--broadcast`.
+
+| Step | Transactions | Gas used |
+| --- | --- | --- |
+| `open(circuits, 9)`, tx `0x2daa4bdf…435a8291`, block 76,669,759 | 1 | 167,244 |
+| `index-BchCgAus.js`: `putFile` + 12 `appendChunk` | 13 | 67,946,701 |
+| `index-J9SKQEqf.css`: `putFile` | 1 | 3,392,825 |
+| `index.html`: `putFile` | 1 | 560,640 |
+| `bind("9.2.425.tape", container, 12)`, tx `0x166c40d5…7f6afac7`, block 76,669,800 | 1 | 185,482 |
+| **Total** | **17** | **71,892,818** |
+
+All 17 succeeded, blocks 76,669,759 to 76,669,800. Gas used is the same, transaction for
+transaction, as in the fork rehearsal. Cost at 20,000,001 wei: network 0.001437856 OKB, opening
+fee 0.08 OKB, binding 0: **0.081437856 OKB**.
+
+Read back from the live chain at block 76,677,049 (task `p2-deweb-live-landed`, read only): all
+three files byte for byte, declared SHA-256 and content type match; container
+`0x2b6cedc361719b551d1410f9fa25d90719770adf` opened; `isLive("9.2.425.tape", container)` and
+`isContainerLive(container)` true.
+
+Through the gateway, 2026-11-23 15:02 UTC, in Chrome:
+
+- `https://9-2-425.tapekit.org/` returns 200 and the app renders, with no errors in the console.
+- China year-end bonus, 36,001: the app read circuits 9 and 12 from X Layer at block 76,677,094,
+  ran them in the browser and showed ¥32,610.90 kept, tax ¥3,390.10, inside the trap
+  ¥36,000.01 to ¥38,566.65. These are the same figures as the local preview.
+- The hash route `#/result?rule=cn&bonus=36001.00&...` opened the result page, which shows
+  "Your figures sent: none".
+
+Evidence: `docs/evidence/p2/deweb/live/` (`deweb-live-receipts.json`, cut from the owner's
+`chain/broadcast/DeWebPublish.s.sol/196/run-latest.json`, which Git ignores;
+`deweb-live-landed.json`; `gateway-cn-36001.jpg`).
+
 ## What is not settled
 
-- **Which circuit hosts the site.** Any circuit the deployer holds works; the name is `<#ID>.2.425.tape`.
 - **Binding `payproof.kingizie.tech`.** The DNS record for an X Layer site, the CNAME target and
   who serves the certificate are HashPort's and are not in these repositories. The browser
   extension's checker knows only BNB Smart Chain records (`chain=56`).
 - **A publishing tool.** There is no open-source CLI yet ("on the roadmap"). The routes are the
   HashPort console, or our own script calling `putFile` and `appendChunk`, signed by the holder
   or an operator set with `setOperator`.
-- **Funds.** On 2026-11-23, at fork block 76,658,740, the deployer held 0.024048 OKB. The publish
-  needs about 0.082 OKB at the start of the run (above), so at least about 0.058 OKB more is
-  needed before broadcasting.
+- **Renewal.** The name `9.2.425.tape` is bound for 12 months from block 76,669,800. The monthly
+  fee was 0 when it was bound; a renewal has to check it again.
+- **Updating the site.** A new build means new asset names, so `putFile` for the new files and
+  `index.html`. The old assets stay on chain unless removed. Not yet rehearsed.
