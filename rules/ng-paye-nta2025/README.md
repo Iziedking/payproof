@@ -55,8 +55,27 @@ monthly_tax = floor(annual_tax / 12)
 - **Monthly method.** Employers work cumulatively through the year. We show annual tax and a
   flat twelfth; the last month's adjustment is not modelled.
 
+## Circuits on X Layer
+
+Contract `0x1900801e311184063b9d9C119C9D98AA4950E12c`, chain 196.
+
+| Circuit | Id | What it does |
+| --- | --- | --- |
+| Decision | 10 | Gives `annual_tax` and `monthly_tax`. The circuit a contract runs |
+| Explanation | 11 | Gives `rent_relief`, `deductions`, `chargeable`, `exempt` and the income in each of the six bands. No contract has to run it |
+| Validity | none | Every input the layout can hold is valid (owner decision, 2026-11-22). The rule registry records "every input valid" |
+
+A band's tax is its income times a whole percent (0, 15, 18, 21, 23, 25), which is exact in
+kobo, so the page works it out from the chain's figures. On a fork, 1,033 inputs gave 0
+failures of the two relations: the bands add up to `chargeable`, and
+`annual_tax = exempt ? 0 : floor((15 band2 + 18 band3 + 21 band4 + 23 band5 + 25 band6) / 100)`
+(`docs/evidence/p2.md`, section 7). Proved as `breakdown-adds-up` in P3; tested, not proved,
+until then. Specification: `docs/specs/explain-validity.md`.
+
 ## Files
 
-- `layout.json`: input and output bit layout (195 input bits, 57 output bits).
+- `layout.json`: input and output bit layout (195 input bits, 57 output bits); the
+  explanation's 227 output bits under `explain`.
+- `explain.v`: the explanation circuit.
 - `vectors.json`: examples. Each says where it comes from; "derived" means worked from the
   formula above at a boundary, not copied from an official worked example.

@@ -62,7 +62,25 @@ net      = bonus - tax
 - **Newer notices.** We have not found a later notice that changes this one before 2027-12-31;
   the search is not exhaustive.
 
+## Circuits on X Layer
+
+Contract `0x1900801e311184063b9d9C119C9D98AA4950E12c`, chain 196.
+
+| Circuit | Id | What it does |
+| --- | --- | --- |
+| Decision | 9 | Gives `tax` and `net`. The circuit a contract runs |
+| Explanation | 12 | Gives the row of the rate table (`bracket`), `rate`, `quick_deduction` and `tax_before_deduction`. No contract has to run it |
+| Validity | none | Every 32-bit bonus is a valid input (owner decision, 2026-11-22). The rule registry records "every input valid" |
+
+The explanation uses the same expressions as the decision, so
+`tax = tax_before_deduction - quick_deduction`. That relation was tested on 1,042 inputs on a
+fork with 0 failures (`docs/evidence/p2.md`, section 7). It is proved as the fact
+`breakdown-adds-up` in P3; until then it is tested, not proved. Specification:
+`docs/specs/explain-validity.md`.
+
 ## Files
 
-- `layout.json`: one 32-bit input (`bonus`, fen) and two 32-bit outputs (`tax`, `net`).
+- `layout.json`: one 32-bit input (`bonus`, fen) and two 32-bit outputs (`tax`, `net`); the
+  explanation's outputs under `explain`.
+- `explain.v`: the explanation circuit.
 - `vectors.json`: examples, each with its source.

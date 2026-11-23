@@ -49,7 +49,7 @@
       }
     ],
     "inputs": "same as the decision inputs",
-    "note": "Explanation circuit, rules/cn-bonus-2023-30/explain.v. Not taped out yet. tax == tax_before_deduction - quick_deduction."
+    "note": "Explanation circuit, rules/cn-bonus-2023-30/explain.v. Circuit 12 on X Layer. tax == tax_before_deduction - quick_deduction."
   },
   "validity": {
     "circuit": null,

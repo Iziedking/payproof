@@ -73,6 +73,6 @@
       }
     ],
     "inputs": "same as the decision inputs",
-    "note": "Validity circuit, rules/split-v1/validity.v. Not taped out yet. valid = total != 0 && shares <= total."
+    "note": "Validity circuit, rules/split-v1/validity.v. Circuit 13 on X Layer. valid = total != 0 && shares <= total."
   }
 }

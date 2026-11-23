@@ -109,7 +109,7 @@
       }
     ],
     "inputs": "same as the decision inputs",
-    "note": "Explanation circuit, rules/ng-paye-nta2025/explain.v. Not taped out yet. Band income in naira; band tax = income x 0, 15, 18, 21, 23, 25 percent."
+    "note": "Explanation circuit, rules/ng-paye-nta2025/explain.v. Circuit 11 on X Layer. Band income in naira; band tax = income x 0, 15, 18, 21, 23, 25 percent."
   },
   "validity": {
     "circuit": null,
