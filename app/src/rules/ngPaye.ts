@@ -81,8 +81,8 @@ export interface NgTrap {
 // The only cliff in this rule is the minimum wage exemption: one naira above
 // it, the whole chargeable income is taxed at once. With the same deductions,
 // every gross from 840,001 up to the returned end keeps less than 840,000 does.
-export function ngTrap(rest: Omit<NgInput, 'gross'>): NgTrap | null {
-  const keepAt = (gross: number) => ngPaye({ ...rest, gross }).keep
+export function ngTrap(rest: Omit<NgInput, 'gross'>, rule: (input: NgInput) => NgResult = ngPaye): NgTrap | null {
+  const keepAt = (gross: number) => rule({ ...rest, gross }).keep
   const edge = NG_EXEMPT_UPTO
   const edgeKeep = keepAt(edge)
   if (keepAt(edge + 1) >= edgeKeep) return null

@@ -4,9 +4,11 @@ import { href, useRoute } from './router'
 import { AppBar } from './components'
 import { CheckPay } from './pages/CheckPay'
 import { Result } from './pages/Result'
+import { Rules } from './pages/Rules'
+import { Rule } from './pages/Rule'
 
 const SOON: Record<string, Key> = {
-  '/rules': 'nav.rules', '/splits': 'nav.splits', '/engines': 'nav.engines', '/how': 'nav.how', '/sign-in': 'nav.signin',
+  '/splits': 'nav.splits', '/engines': 'nav.engines', '/how': 'nav.how', '/sign-in': 'nav.signin',
   '/check/payout': 'nav.check', '/run': 'nav.splits', '/me': 'nav.signin', '/settings': 'nav.signin',
 }
 
@@ -19,6 +21,8 @@ export function App() {
   let title = t('check.title')
   if (path === '/check/pay' || path === '/' || path === '/check') page = <CheckPay key={query.toString()} query={query} />
   else if (path === '/result') { page = <Result query={query} />; title = t('res.crumb') }
+  else if (path === '/rules') { page = <Rules />; title = t('rules.title') }
+  else if (path.startsWith('/rules/')) { page = <Rule key={path} id={path.slice('/rules/'.length)} />; title = t('rules.title') }
   else {
     const name = t(SOON[path] ?? SOON[`/${path.split('/')[1]}`] ?? 'nav.check')
     title = name

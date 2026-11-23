@@ -1,7 +1,8 @@
 // What a check needs to show, worked out once from typed figures, for both
 // the Check page and the Result page.
-import { cnBonus, cnKeep, cnTraps, CN_MAX_FEN } from './rules/cnBonus'
-import { ngPaye, ngTrap, NG_DEDUCTION_MAX, NG_GROSS_MAX, NG_RENT_MAX, type NgInput } from './rules/ngPaye'
+import { cnTraps, CN_MAX_FEN, type CnResult } from './rules/cnBonus'
+import { ngPaye, ngTrap, NG_DEDUCTION_MAX, NG_GROSS_MAX, NG_RENT_MAX, type NgInput, type NgResult } from './rules/ngPaye'
+import { copyEngine, type Engine } from './chain/engine'
 import { fen, fenPlain, naira, parseAmount, type Parsed } from './rules/money'
 import type { Key } from './i18n/i18n'
 
@@ -17,6 +18,9 @@ export interface ChartView { lo: number; hi: number; you: number; trap?: [number
 export interface Compare { kind: 'match' | 'more' | 'less'; paid: string; diff: string }
 export interface CheckView {
   rule: RuleKey
+  source: Engine['source'] // who worked the answer out: the circuits from X Layer, or the page's copy
+  mismatch: boolean // the circuits and the page's copy disagree (never expected; shown loudly)
+  ng?: NgResult // Nigeria: the working, for the band table on the Result page
   keep: string
   ofKey: Key
   ofAmount: string
@@ -54,10 +58,27 @@ function compare(ruleTax: number, paid: Parsed, fmt: (n: number) => string): Com
   return { kind: d === 0 ? 'match' : d > 0 ? 'more' : 'less', paid: fmt(paid.value), diff: fmt(Math.abs(d)) }
 }
 
-export function viewCn(form: CnForm): CheckView | null {
+// Runs the engine and, for the chain engine, checks it against the page's copy.
+function withCheck<I, R>(eng: Engine, run: (e: Engine) => (i: I) => R, same: (a: R, b: R) => boolean, input: I): { r: R; source: Engine['source']; mismatch: boolean } {
+  if (eng.source === 'copy') return { r: run(eng)(input), source: 'copy', mismatch: false }
+  const copy = run(copyEngine)(input)
+  try {
+    const r = run(eng)(input)
+    return { r, source: 'chain', mismatch: !same(r, copy) }
+  } catch {
+    return { r: copy, source: 'copy', mismatch: true }
+  }
+}
+const sameCn = (a: CnResult, b: CnResult) => a.taxFen === b.taxFen && a.keepFen === b.keepFen && a.productFen === b.productFen && a.bracket === b.bracket
+const sameNg = (a: NgResult, b: NgResult) => a.annualTax === b.annualTax && a.monthlyTax === b.monthlyTax && a.chargeable === b.chargeable &&
+  a.relief === b.relief && a.deductions === b.deductions && a.exempt === b.exempt && a.bands.every((x, i) => x.amount === b.bands[i].amount)
+
+export function viewCn(form: CnForm, eng: Engine = copyEngine): CheckView | null {
   const p = parseCn(form)
   if (p.bonus.kind !== 'ok' || !okOrEmpty(p.paid)) return null
-  const r = cnBonus(p.bonus.value)
+  const { r, source, mismatch } = withCheck(eng, (e) => e.cn, sameCn, p.bonus.value)
+  const rule = source === 'chain' ? eng : copyEngine
+  const cnKeep = (x: number) => rule.cn(x).keepFen
   const b = r.bracket
   const lines: Line[] = [
     { label: 'cn.bonus', value: fen(r.bonusFen) },
@@ -68,7 +89,7 @@ export function viewCn(form: CnForm): CheckView | null {
     { label: 'cn.tax', value: fen(r.taxFen) },
     { label: 'cn.keep', value: fen(r.keepFen), strong: true },
   ]
-  const traps = cnTraps()
+  const traps = cnTraps(cnKeep)
   const x = r.bonusFen
   const inside = traps.find((t) => x >= t.fromFen && x <= t.toFen)
   const next = traps.find((t) => t.fromFen > x)
@@ -82,18 +103,19 @@ export function viewCn(form: CnForm): CheckView | null {
     trap = { kind: 'next', vars: { from: fen(next.fromFen), to: fen(next.toFen), edge: fen(next.edgeFen), gap: fen(next.fromFen - x) } }
   } else trap = { kind: 'past', vars: {} }
   return {
-    rule: 'cn', keep: fen(r.keepFen), ofKey: 'ans.ofBonus', ofAmount: fen(r.bonusFen), lines,
+    rule: 'cn', source, mismatch, keep: fen(r.keepFen), ofKey: 'ans.ofBonus', ofAmount: fen(r.bonusFen), lines,
     compare: compare(r.taxFen, p.paid, fen), trap,
     chart: chartFor(x, shown && [shown.edgeFen, shown.toFen], cnKeep, CN_MAX_FEN),
     link: { rule: 'cn', bonus: fenPlain(x), ...(p.paid.kind === 'ok' ? { paid: fenPlain(p.paid.value) } : {}) },
   }
 }
 
-export function viewNg(form: NgForm): CheckView | null {
+export function viewNg(form: NgForm, eng: Engine = copyEngine): CheckView | null {
   const p = parseNg(form)
   if (p.gross.kind !== 'ok' || !NG_FIELDS.every((k) => okOrEmpty(p[k]))) return null
   const input: NgInput = { gross: val(p.gross), pension: val(p.pension), nhf: val(p.nhf), nhis: val(p.nhis), life: val(p.life), mortgage: val(p.mortgage), rent: val(p.rent) }
-  const r = ngPaye(input)
+  const { r, source, mismatch } = withCheck(eng, (e) => e.ng, sameNg, input)
+  const rule = source === 'chain' ? eng.ng : ngPaye
   const lines: Line[] = [{ label: 'ng.gross', value: naira(r.input.gross) }]
   if (r.relief) lines.push({ label: 'ng.relief', value: naira(r.relief) })
   if (r.deductions) lines.push({ label: 'ng.deductions', value: `-${naira(r.deductions)}` })
@@ -104,8 +126,8 @@ export function viewNg(form: NgForm): CheckView | null {
   lines.push({ label: 'ng.monthly', value: naira(r.monthlyTax) })
   lines.push({ label: 'ng.keep', value: naira(r.keep), strong: true })
   const { gross: _g, ...rest } = input
-  const t = ngTrap(rest)
-  const keepAt = (g: number) => ngPaye({ ...rest, gross: g }).keep
+  const t = ngTrap(rest, rule)
+  const keepAt = (g: number) => rule({ ...rest, gross: g }).keep
   let trap: TrapView
   if (t && input.gross >= t.from && input.gross <= t.to) {
     trap = { kind: 'inside', vars: { edge: naira(t.edge), diff: naira(keepAt(t.edge) - r.keep), from: naira(t.from), to: naira(t.to) } }
@@ -116,7 +138,7 @@ export function viewNg(form: NgForm): CheckView | null {
   const query: Record<string, string> = { rule: 'ng' }
   for (const k of NG_FIELDS) if (p[k].kind === 'ok') query[k] = String(val(p[k]))
   return {
-    rule: 'ng', keep: naira(r.keep), ofKey: 'ans.ofGross', ofAmount: naira(input.gross),
+    rule: 'ng', source, mismatch, ng: r, keep: naira(r.keep), ofKey: 'ans.ofGross', ofAmount: naira(input.gross),
     extra: [{ label: 'ans.taxMonth', value: naira(r.monthlyTax) }],
     lines, compare: compare(r.monthlyTax, p.paid, naira), trap,
     chart: chartFor(input.gross, near && t ? [t.edge, t.to] : undefined, keepAt, NG_GROSS_MAX),

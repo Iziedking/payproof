@@ -67,19 +67,20 @@ export interface Trap {
 // A trap starts one fen above each bracket limit, where a whole bracket's
 // extra rate lands at once, and lasts while the bonus keeps less than the
 // limit itself does. Inside a bracket "you keep" rises with the bonus, so the
-// end is found by binary search.
-export function cnTraps(): Trap[] {
+// end is found by binary search. `keep` is the rule's "you keep" for a bonus: the page's
+// copy by default, or the circuit from X Layer (src/chain/engine.ts).
+export function cnTraps(keep: (fen: number) => number = cnKeep): Trap[] {
   const traps: Trap[] = []
   for (const b of CN_BRACKETS) {
     if (b.limitFen === null) continue
     const edge = b.limitFen
-    const edgeKeep = cnKeep(edge)
-    if (cnKeep(edge + 1) >= edgeKeep) continue
+    const edgeKeep = keep(edge)
+    if (keep(edge + 1) >= edgeKeep) continue
     let lo = edge + 1 // keeps less
     let hi = Math.min(CN_MAX_FEN, edge * 2) // keeps more (checked in tests)
     while (hi - lo > 1) {
       const mid = Math.floor((lo + hi) / 2)
-      if (cnKeep(mid) < edgeKeep) lo = mid
+      if (keep(mid) < edgeKeep) lo = mid
       else hi = mid
     }
     traps.push({ fromFen: edge + 1, toFen: lo, edgeFen: edge })

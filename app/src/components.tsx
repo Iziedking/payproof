@@ -2,6 +2,9 @@ import { useId, useState } from 'react'
 import { useI18n, type Key } from './i18n/i18n'
 import { href } from './router'
 import type { ChartView, CheckView, TrapView } from './check'
+import type { EngineState } from './chain/useEngine'
+import { NG_BANDS, type NgResult } from './rules/ngPaye'
+import { naira } from './rules/money'
 
 export function Mark({ size = 28 }: { size?: number }) {
   return (
@@ -153,5 +156,56 @@ export function Chart({ chart, money }: { chart: ChartView; money: (n: number) =
         <span>{money(hi)}</span>
       </figcaption>
     </figure>
+  )
+}
+
+/** Says where an answer came from: the rule's circuits read from X Layer, or the page's own copy. */
+export function SourceTag({ eng }: { eng: EngineState & { retry: () => void } }) {
+  const { t } = useI18n()
+  if (eng.status === 'chain') return <span className="tag tag-chain" title={t('src.chainHint')}><i className="dot ink" aria-hidden="true" />{t('src.chain')}</span>
+  if (eng.status === 'loading') return <span className="tag tag-wait" role="status">{t('src.loading')}</span>
+  return (
+    <span className="tag-group">
+      <span className="tag tag-preview" title={t('src.copyHint', { reason: eng.message })}>{t('src.copy')}</span>
+      <button type="button" className="link-btn small" onClick={eng.retry}>{t('src.retry')}</button>
+    </span>
+  )
+}
+
+export function MismatchCard() {
+  const { t } = useI18n()
+  return (
+    <section className="trap trap-in" role="alert">
+      <h3><i className="dot" aria-hidden="true" />{t('src.mismatch')}</h3>
+      <p>{t('src.mismatchBody')}</p>
+    </section>
+  )
+}
+
+// Income x a whole percent is exact in kobo; the rule rounds down once, on the year's total.
+const koboExact = (kobo: number) => (kobo % 100 ? `${naira(Math.floor(kobo / 100))}.${String(kobo % 100).padStart(2, '0')}` : naira(kobo / 100))
+
+/** Nigeria: the income in each band (from the working circuit) and its tax (income x rate, exact). */
+export function BandTable({ r }: { r: NgResult }) {
+  const { t } = useI18n()
+  return (
+    <table className="bands">
+      <caption>{t('band.caption')}</caption>
+      <thead><tr><th scope="col">{t('band.band')}</th><th scope="col">{t('band.income')}</th><th scope="col">{t('band.rate')}</th><th scope="col">{t('band.tax')}</th></tr></thead>
+      <tbody>
+        {NG_BANDS.map((b, i) => {
+          const amount = r.bands[i].amount
+          const label = b.width === null ? t('band.above', { amount: naira(b.from) }) : t(i === 0 ? 'band.first' : 'band.next', { amount: naira(b.width) })
+          return (
+            <tr key={i} className={amount ? '' : 'zero'}>
+              <th scope="row">{label}</th>
+              <td className="mono">{naira(amount)}</td>
+              <td className="mono">{b.rate}%</td>
+              <td className="mono">{koboExact(amount * b.rate)}</td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
   )
 }

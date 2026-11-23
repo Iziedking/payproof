@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState, type FormEvent } from 'react'
 import { useI18n, type Key } from '../i18n/i18n'
 import { href } from '../router'
-import { Breakdown, Chart, CompareLine, TrapCard } from '../components'
+import { Breakdown, Chart, CompareLine, MismatchCard, SourceTag, TrapCard } from '../components'
+import { useEngine, type EngineState } from '../chain/useEngine'
 import {
   CN_LIMITS, NG_LIMITS, emptyCn, emptyNg, formFromQuery, parseCn, parseNg, viewCn, viewNg,
   type CnForm, type NgForm, type RuleKey, type CheckView,
@@ -27,7 +28,8 @@ export function CheckPay({ query }: { query: URLSearchParams }) {
   const answerRef = useRef<HTMLElement>(null)
   const setRule = (r: RuleKey) => { setRuleState(r); try { localStorage.setItem(STORE, r) } catch { /* ignore */ } }
 
-  const view = useMemo(() => (rule === 'cn' ? viewCn(cn) : viewNg(ng)), [rule, cn, ng])
+  const eng = useEngine()
+  const view = useMemo(() => (rule === 'cn' ? viewCn(cn, eng.engine) : viewNg(ng, eng.engine)), [rule, cn, ng, eng.engine])
   const cnErr = parseCn(cn)
   const ngErr = parseNg(ng)
   const limits = rule === 'cn' ? CN_LIMITS : NG_LIMITS
@@ -99,19 +101,19 @@ export function CheckPay({ query }: { query: URLSearchParams }) {
       </div>
 
       <section className="answer" ref={answerRef} tabIndex={-1} aria-live="polite" aria-labelledby="ans-h">
-        <Answer view={view} />
+        <Answer view={view} eng={eng} />
       </section>
     </div>
   )
 }
 
-function Answer({ view }: { view: CheckView | null }) {
+function Answer({ view, eng }: { view: CheckView | null; eng: EngineState & { retry: () => void } }) {
   const { t } = useI18n()
   const [saved, setSaved] = useState<string | null>(null)
   const top = (
     <div className="ans-top">
       <h2 id="ans-h">{t('ans.title')}</h2>
-      <span className="tag tag-preview" title={t('ans.previewHint')}>{t('ans.preview')}</span>
+      <SourceTag eng={eng} />
     </div>
   )
   if (!view) return <>{top}<p className="empty">{t('ans.empty')}</p></>
@@ -130,6 +132,7 @@ function Answer({ view }: { view: CheckView | null }) {
         <output className="mono v">{view.keep}</output>
         <span className="s">{t(view.ofKey, { amount: view.ofAmount })}</span>
       </div>
+      {view.mismatch && <MismatchCard />}
       <Breakdown view={view} />
       <CompareLine view={view} />
       <TrapCard trap={view.trap} rule={view.rule} />
