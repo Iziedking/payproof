@@ -38,4 +38,6 @@ afcd693bb73e2600a9a24d6d2fbc6f2507dde073f9bb488deecd0bcce9f969bb  explain/logs/a
 f64b8d0676ac8bce07535ed38a04025a0b7eed217ad92d26698bec907586179d  ../../../chain/netlists/explain/cn_bonus_explain.bin
 eb590c9c55260c89e7e87c52ccc4a2bdfa87110b76603caf367a41bc667e0328  ../../../chain/netlists/explain/ng_paye_explain.bin
 e3453a6c0ba9a9be35d5dfe61ce11163056bd0f7cacd326fe130f26b95beade0  ../../../chain/netlists/explain/split_v1_validity.bin
-4da2f35a508232b2ece7a1840d69cb6a92d73782d7e0c32c5e5bfa9160ac2904  ../../../chain/netlists/explain/manifest.json
+d9ff9812ae46aaecb514adf13eca8ae641d41ed616a69bfc1e72a544c8635f7c  ../../../chain/netlists/explain/manifest.json
+b4cb71375640dd9b0f1dc30fca2dbfed640784b2a8e70c891a523f44cdb263d0  ../../../chain/netlists/explain/ids.json
+dee730e0f5885a513188e496072683e005443b1af87cfcd0b81b34186e652ed7  ../../../chain/netlists/explain/split_v1_explain.bin
