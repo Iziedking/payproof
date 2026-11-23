@@ -10,6 +10,10 @@
 //   node scripts/p2/deweb-plan.mts landed <rpc> <site dir> <#ID> <out.json>
 //       Reads every file back from SiteRegistry, compares bytes and the declared SHA-256, and
 //       checks the container is opened and the name live. Exit 1 on any difference.
+//   node scripts/p2/deweb-plan.mts mirror <rpc> <site dir> <#ID> <mirror base url> <out.json>
+//       Fetches every manifest file from the mirror and compares it byte for byte with the file
+//       read from SiteRegistry, so the mirror is shown to serve the build that is on chain.
+//       Exit 1 on any difference.
 //
 // Interfaces as in chain/script/DeWebPublish.s.sol (TAP-10 Appendix A; opener bytecode).
 import { readFileSync, readdirSync, statSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
@@ -98,6 +102,46 @@ async function command(url: string, site: string, idS: string, monthsS: string) 
     `--rpc-url ${url} --chain 196 --sender ${DEPLOYER} --account ${ACCOUNT} --legacy --with-gas-price ${gasPrice} --slow`);
 }
 
+// Reads one file of a container back from SiteRegistry; null when it is not there.
+async function readOnChain(rpc: ReturnType<typeof rpcAt>, container: string, p: string): Promise<Buffer | null> {
+  try {
+    const h = (await rpc('eth_call', [{ to: SITES, data: callAddrStr('read(address,string)', container, p) }, 'latest'])).slice(2);
+    const off = Number(BigInt('0x' + h.slice(0, 64))) * 2, len = Number(BigInt('0x' + h.slice(off, off + 64)));
+    return Buffer.from(h.slice(off + 64, off + 64 + len * 2), 'hex');
+  } catch { return null; }
+}
+const containerOf = async (rpc: ReturnType<typeof rpcAt>, id: bigint) =>
+  '0x' + (await rpc('eth_call', [{ to: OPENER, data: callAddrUint('accountOf(address,uint256)', CIRCUITS, id) }, 'latest'])).slice(26);
+
+async function mirror(url: string, site: string, idS: string, base: string, out: string) {
+  const rpc = rpcAt(url);
+  const m = readManifest(site);
+  const block = Number(BigInt(await rpc('eth_blockNumber', [])));
+  const container = await containerOf(rpc, BigInt(idS));
+  const root = base.endsWith('/') ? base : base + '/';
+  const checks = [];
+  for (let i = 0; i < m.paths.length; i++) {
+    const p = m.paths[i];
+    const chain = await readOnChain(rpc, container, p);
+    let served: Buffer | null = null, status = 0, contentType = '';
+    for (let t = 1; t <= 5 && !served; t++) {
+      try {
+        const r = await fetch(root + p, { cache: 'no-store' });
+        status = r.status; contentType = r.headers.get('content-type') ?? '';
+        if (r.ok) served = Buffer.from(await r.arrayBuffer());
+      } catch { /* retried */ }
+      if (!served) await new Promise((r) => setTimeout(r, 3000 * t));
+    }
+    const sameAsChain = !!chain && !!served && Buffer.compare(chain, served) === 0;
+    checks.push({ path: p, status, contentType, mirrorSha: served ? sha(served) : null, chainSha: chain ? sha(chain) : null, manifestSha: m.sha256[i], sameAsChain });
+  }
+  const ok = checks.every((c) => c.sameAsChain && c.chainSha === c.manifestSha);
+  const res = { rpc: url, block, circuitId: idS, container, mirror: root, checks, ok };
+  writeFileSync(out, JSON.stringify(res, null, 2) + '\n');
+  console.log(JSON.stringify(res));
+  process.exit(ok ? 0 : 1);
+}
+
 async function landed(url: string, site: string, idS: string, out: string) {
   const rpc = rpcAt(url);
   const m = readManifest(site);
@@ -155,4 +199,5 @@ if (cmd === 'first-chunk') { firstChunk(a[0], a[1], a[2], a[3]); process.exit(0)
 if (cmd === 'prepare') prepare(a[0], a[1]);
 else if (cmd === 'command') await command(a[0], a[1], a[2], a[3]);
 else if (cmd === 'landed') await landed(a[0], a[1], a[2], a[3]);
-else { console.error('commands: prepare, command, landed (see the header)'); process.exit(2); }
+else if (cmd === 'mirror') await mirror(a[0], a[1], a[2], a[3], a[4]);
+else { console.error('commands: prepare, command, landed, mirror (see the header)'); process.exit(2); }

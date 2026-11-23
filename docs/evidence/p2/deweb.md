@@ -145,7 +145,14 @@ Through the gateway, 2026-11-23 15:02 UTC, in Chrome:
 - The hash route `#/result?rule=cn&bonus=36001.00&...` opened the result page, which shows
   "Your figures sent: none".
 
-Evidence: `docs/evidence/p2/deweb/live/` (`deweb-live-receipts.json`, cut from the owner's
+At phone width (the live site in a 390 by 780 px frame on the same origin, in desktop Chrome,
+because the Chrome window would not resize): the narrow layout is used (segmented rule picker,
+Menu), nothing is wider than the page (`scrollWidth` 375 with the scroll bar), and the same check
+gives ¥32,610.90 with the breakdown and trap card in one column. This is not a phone test: touch,
+the on-screen keyboard and the 60-second timing still need a real phone.
+
+Evidence: `docs/evidence/p2/deweb/live/` (`gateway-390-check.jpg`, `gateway-390-result.jpg`,
+`deweb-live-receipts.json`, cut from the owner's
 `chain/broadcast/DeWebPublish.s.sol/196/run-latest.json`, which Git ignores;
 `deweb-live-landed.json`; `gateway-cn-36001.jpg`).
 

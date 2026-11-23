@@ -1,4 +1,12 @@
-# Publishes the static site to GitHub Pages (the mirror; DeWEB comes later).
+# Publishes the mirror to GitHub Pages: the landing page at the root and, under app/, the exact
+# app files published on DeWEB (chain/site, served at https://9-2-425.tapekit.org/).
+#
+# The mirror serves the committed chain/site bytes, not a fresh build, so it carries the same
+# file hashes as the site on X Layer. Before deploying, the job reads every file back from
+# SiteRegistry and stops if any differs. After deploying, it fetches the mirror and compares it
+# with the chain again. The app is still built and tested here; whether that build reproduces the
+# published hashes is written to the job summary.
+#
 # Action inputs read from each action.yml at the pinned commit on 2026-11-17
 # (setup-node on 2026-11-19).
 name: Publish site
@@ -9,6 +17,8 @@ on:
     paths:
       - "app/**"
       - "brand/**"
+      - "chain/site/**"
+      - "scripts/p2/deweb-plan.mts"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -21,6 +31,10 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  XLAYER_RPC: https://xlayerrpc.okx.com
+  SITE_CIRCUIT: "9"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,21 +45,47 @@ jobs:
         with:
           node-version: 24.22.1
           package-manager-cache: false
-      - name: Build the app
+      - name: Build and test the app
         working-directory: app
         run: |
           npm ci --no-audit --no-fund
           npx tsc -p tsconfig.json
           npx vitest run
           npx vite build
+      - name: Check chain/site against X Layer
+        run: node scripts/p2/deweb-plan.mts landed "$XLAYER_RPC" chain/site "$SITE_CIRCUIT" "$RUNNER_TEMP/landed.json"
+      - name: Compare this build with the published one
+        run: |
+          {
+            echo "### App build against the files on X Layer"
+            echo ""
+            echo "| File | Published SHA-256 | This build |"
+            echo "| --- | --- | --- |"
+            node -e '
+              const fs = require("fs"), c = require("crypto");
+              const m = JSON.parse(fs.readFileSync("chain/site/manifest.json", "utf8"));
+              m.paths.forEach((p, i) => {
+                const f = "app/dist/" + p;
+                const got = fs.existsSync(f) ? "0x" + c.createHash("sha256").update(fs.readFileSync(f)).digest("hex") : "missing";
+                console.log(`| ${p} | ${m.sha256[i].slice(0, 12)}… | ${got === m.sha256[i] ? "same" : "differs"} |`);
+              });'
+            echo ""
+            echo "The mirror serves the published files either way. A difference means app/ has changed since the DeWEB publish, or the build is not reproducible here."
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Assemble site
         run: |
-          # The landing page is the ad page at the root. "Open app" goes to
-          # app/, the web app (Check my pay first).
+          # The landing page is the ad page at the root. "Open app" goes to app/, the web app
+          # (Check my pay first), which is the DeWEB build byte for byte plus the icons.
           mkdir -p _site/media _site/app
           cp app/landing/index.html app/landing/landing.css app/landing/landing.js _site/
           cp app/landing/media/payproof-film.mp4 app/landing/media/poster.jpg _site/media/
-          cp -r app/dist/. _site/app/
+          node -e '
+            const fs = require("fs"), path = require("path");
+            const m = JSON.parse(fs.readFileSync("chain/site/manifest.json", "utf8"));
+            for (const p of m.paths) {
+              fs.mkdirSync(path.dirname("_site/app/" + p), { recursive: true });
+              fs.copyFileSync("chain/site/" + p, "_site/app/" + p);
+            }'
           for d in _site _site/app; do
             cp brand/favicon/favicon.svg brand/favicon/favicon-32.png brand/favicon/apple-touch-icon-180.png "$d/"
             cp brand/logo/payproof-lockup.svg brand/logo/payproof-lockup-on-dark.svg "$d/"
@@ -60,6 +100,29 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  check:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.1
+          package-manager-cache: false
+      - name: Check the mirror serves the files on X Layer
+        env:
+          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          node scripts/p2/deweb-plan.mts mirror "$XLAYER_RPC" chain/site "$SITE_CIRCUIT" "${PAGE_URL%/}/app/" "$RUNNER_TEMP/mirror.json"
+          {
+            echo "### Mirror against X Layer"
+            echo '```json'
+            cat "$RUNNER_TEMP/mirror.json"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

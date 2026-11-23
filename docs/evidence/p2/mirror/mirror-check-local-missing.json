@@ -1,0 +1,37 @@
+{
+  "rpc": "https://xlayerrpc.okx.com",
+  "block": 76677732,
+  "circuitId": "9",
+  "container": "0x2b6cedc361719b551d1410f9fa25d90719770adf",
+  "mirror": "http://127.0.0.1:8080/app/",
+  "checks": [
+    {
+      "path": "assets/index-BchCgAus.js",
+      "status": 404,
+      "contentType": "",
+      "mirrorSha": null,
+      "chainSha": "0x93c7096fe6053ca032cc6573a2169f1a6d15ffe9f3921fb15f0675fdaba79cfb",
+      "manifestSha": "0x93c7096fe6053ca032cc6573a2169f1a6d15ffe9f3921fb15f0675fdaba79cfb",
+      "sameAsChain": false
+    },
+    {
+      "path": "assets/index-J9SKQEqf.css",
+      "status": 200,
+      "contentType": "text/css",
+      "mirrorSha": "0xdb063f785636bff5c51bda055099e48c20c6f5d9d853005a71831da2620b5995",
+      "chainSha": "0xdb063f785636bff5c51bda055099e48c20c6f5d9d853005a71831da2620b5995",
+      "manifestSha": "0xdb063f785636bff5c51bda055099e48c20c6f5d9d853005a71831da2620b5995",
+      "sameAsChain": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "contentType": "text/html",
+      "mirrorSha": "0x33da535f72ccc5b8006261e3e218b9ee93283039dae1ed9ff7a042cde50ac1f9",
+      "chainSha": "0x33da535f72ccc5b8006261e3e218b9ee93283039dae1ed9ff7a042cde50ac1f9",
+      "manifestSha": "0x33da535f72ccc5b8006261e3e218b9ee93283039dae1ed9ff7a042cde50ac1f9",
+      "sameAsChain": true
+    }
+  ],
+  "ok": false
+}
