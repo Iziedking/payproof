@@ -35,7 +35,7 @@ export function Rules() {
             </div>
             <dl className="rows status">
               {r.status.map((s) => (
-                <div key={s.label} className="row"><dt>{t(s.label)}</dt><dd className={s.warn ? 'warn' : ''}>{t(s.value)}</dd></div>
+                <div key={s.label} className="row"><dt>{t(s.label)}</dt><dd className={s.warn ? 'warn' : ''}>{t(s.value, s.vars)}</dd></div>
               ))}
             </dl>
           </article>

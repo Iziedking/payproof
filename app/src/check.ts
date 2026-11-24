@@ -1,10 +1,11 @@
 // What a check needs to show, worked out once from typed figures, for both
 // the Check page and the Result page.
-import { cnTraps, CN_MAX_FEN, type CnResult } from './rules/cnBonus'
+import { CN_MAX_FEN, type CnResult } from './rules/cnBonus'
 import { ngPaye, ngTrap, NG_DEDUCTION_MAX, NG_GROSS_MAX, NG_RENT_MAX, type NgInput, type NgResult } from './rules/ngPaye'
 import { copyEngine, type Engine } from './chain/engine'
 import { fen, fenPlain, naira, parseAmount, type Parsed } from './rules/money'
 import type { Key } from './i18n/i18n'
+import { cnTrapsFromRecord, ngTrapFromRecord } from './proofs/proofs'
 
 export type RuleKey = 'cn' | 'ng'
 export const RULE_ID: Record<RuleKey, string> = { cn: 'cn-bonus-2023-30', ng: 'ng-paye-nta2025' }
@@ -13,6 +14,10 @@ export interface Line { label: Key; vars?: Record<string, string>; value: string
 export interface TrapView {
   kind: 'inside' | 'next' | 'none' | 'past'
   vars: Record<string, string>
+  // Where the range comes from: the trap finder's record on the circuit from X Layer (with its
+  // block), or this page working it out from the rule (Nigeria with deductions, which the prover
+  // has not run).
+  proof: { block: number } | null
 }
 export interface ChartView { lo: number; hi: number; you: number; trap?: [number, number]; keep: (x: number) => number }
 export interface Compare { kind: 'match' | 'more' | 'less'; paid: string; diff: string }
@@ -89,7 +94,8 @@ export function viewCn(form: CnForm, eng: Engine = copyEngine): CheckView | null
     { label: 'cn.tax', value: fen(r.taxFen) },
     { label: 'cn.keep', value: fen(r.keepFen), strong: true },
   ]
-  const traps = cnTraps(cnKeep)
+  const { block, traps } = cnTrapsFromRecord()
+  const proof = { block }
   const x = r.bonusFen
   const inside = traps.find((t) => x >= t.fromFen && x <= t.toFen)
   const next = traps.find((t) => t.fromFen > x)
@@ -97,11 +103,11 @@ export function viewCn(form: CnForm, eng: Engine = copyEngine): CheckView | null
   let shown: (typeof traps)[number] | undefined
   if (inside) {
     shown = inside
-    trap = { kind: 'inside', vars: { edge: fen(inside.edgeFen), diff: fen(cnKeep(inside.edgeFen) - r.keepFen), from: fen(inside.fromFen), to: fen(inside.toFen) } }
+    trap = { kind: 'inside', proof, vars: { edge: fen(inside.edgeFen), diff: fen(cnKeep(inside.edgeFen) - r.keepFen), from: fen(inside.fromFen), to: fen(inside.toFen) } }
   } else if (next) {
     shown = next.fromFen - x <= Math.max(x * 0.5, 2_000_000) ? next : undefined
-    trap = { kind: 'next', vars: { from: fen(next.fromFen), to: fen(next.toFen), edge: fen(next.edgeFen), gap: fen(next.fromFen - x) } }
-  } else trap = { kind: 'past', vars: {} }
+    trap = { kind: 'next', proof, vars: { from: fen(next.fromFen), to: fen(next.toFen), edge: fen(next.edgeFen), gap: fen(next.fromFen - x) } }
+  } else trap = { kind: 'past', proof, vars: {} }
   return {
     rule: 'cn', source, mismatch, keep: fen(r.keepFen), ofKey: 'ans.ofBonus', ofAmount: fen(r.bonusFen), lines,
     compare: compare(r.taxFen, p.paid, fen), trap,
@@ -126,14 +132,18 @@ export function viewNg(form: NgForm, eng: Engine = copyEngine): CheckView | null
   lines.push({ label: 'ng.monthly', value: naira(r.monthlyTax) })
   lines.push({ label: 'ng.keep', value: naira(r.keep), strong: true })
   const { gross: _g, ...rest } = input
-  const t = ngTrap(rest, rule)
+  // With no deductions the trap is the prover's record; otherwise the page works it out.
+  const none = Object.values(rest).every((v) => v === 0)
+  const rec = none ? ngTrapFromRecord() : null
+  const t = rec ? rec.trap : ngTrap(rest, rule)
+  const proof = rec ? { block: rec.block } : null
   const keepAt = (g: number) => rule({ ...rest, gross: g }).keep
   let trap: TrapView
   if (t && input.gross >= t.from && input.gross <= t.to) {
-    trap = { kind: 'inside', vars: { edge: naira(t.edge), diff: naira(keepAt(t.edge) - r.keep), from: naira(t.from), to: naira(t.to) } }
+    trap = { kind: 'inside', proof, vars: { edge: naira(t.edge), diff: naira(keepAt(t.edge) - r.keep), from: naira(t.from), to: naira(t.to) } }
   } else if (t && input.gross < t.from) {
-    trap = { kind: 'next', vars: { from: naira(t.from), to: naira(t.to), edge: naira(t.edge), gap: naira(t.from - input.gross) } }
-  } else trap = { kind: t ? 'past' : 'none', vars: {} }
+    trap = { kind: 'next', proof, vars: { from: naira(t.from), to: naira(t.to), edge: naira(t.edge), gap: naira(t.from - input.gross) } }
+  } else trap = { kind: t ? 'past' : 'none', proof, vars: {} }
   const near = t && Math.abs(input.gross - t.edge) <= t.edge
   const query: Record<string, string> = { rule: 'ng' }
   for (const k of NG_FIELDS) if (p[k].kind === 'ok') query[k] = String(val(p[k]))

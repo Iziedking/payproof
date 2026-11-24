@@ -6,6 +6,7 @@ import { CheckPay } from './pages/CheckPay'
 import { Result } from './pages/Result'
 import { Rules } from './pages/Rules'
 import { Rule } from './pages/Rule'
+import { Proofs } from './pages/Proofs'
 
 // Privy is large and contacts its own servers, so it loads only on the sign-in page (L4, L25).
 const SignIn = lazy(() => import('./auth/SignIn'))
@@ -25,6 +26,7 @@ export function App() {
   if (path === '/check/pay' || path === '/' || path === '/check') page = <CheckPay key={query.toString()} query={query} />
   else if (path === '/result') { page = <Result query={query} />; title = t('res.crumb') }
   else if (path === '/rules') { page = <Rules />; title = t('rules.title') }
+  else if (path === '/proofs') { page = <Proofs />; title = t('proof.title') }
   else if (path.startsWith('/rules/')) { page = <Rule key={path} id={path.slice('/rules/'.length)} />; title = t('rules.title') }
   else if (path === '/sign-in') {
     title = t('nav.signin')

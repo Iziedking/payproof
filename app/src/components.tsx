@@ -20,6 +20,7 @@ export function Mark({ size = 28 }: { size?: number }) {
 const TABS: { key: Key; path: string }[] = [
   { key: 'nav.check', path: '/check/pay' },
   { key: 'nav.rules', path: '/rules' },
+  { key: 'nav.proofs', path: '/proofs' },
   { key: 'nav.splits', path: '/splits' },
   { key: 'nav.engines', path: '/engines' },
   { key: 'nav.how', path: '/how' },
@@ -93,6 +94,16 @@ export function CompareLine({ view }: { view: CheckView }) {
   )
 }
 
+function TrapSource({ trap }: { trap: TrapView }) {
+  const { t } = useI18n()
+  return (
+    <p className="fine trap-src">
+      {trap.proof ? t('trap.byProver', { block: trap.proof.block.toLocaleString('en-US') }) : t('trap.byPage')}{' '}
+      <a href={href('/proofs')}>{t('trap.seeProofs')}</a>
+    </p>
+  )
+}
+
 export function TrapCard({ trap, rule }: { trap: TrapView; rule: CheckView['rule'] }) {
   const { t } = useI18n()
   if (trap.kind === 'inside') {
@@ -101,6 +112,7 @@ export function TrapCard({ trap, rule }: { trap: TrapView; rule: CheckView['rule
         <h3><i className="dot" aria-hidden="true" />{t('trap.inside')}</h3>
         <p>{t(rule === 'ng' ? 'trap.insideBodyNg' : 'trap.insideBody', trap.vars)}</p>
         <p className="mono small">{t('trap.range')} {trap.vars.from} – {trap.vars.to}</p>
+        <TrapSource trap={trap} />
       </section>
     )
   }
@@ -109,6 +121,7 @@ export function TrapCard({ trap, rule }: { trap: TrapView; rule: CheckView['rule
       <section className="trap" aria-label={t('trap.next')}>
         <h3>{t('trap.next')}</h3>
         <p>{t('trap.nextBody', trap.vars)}</p>
+        <TrapSource trap={trap} />
       </section>
     )
   }
@@ -116,6 +129,7 @@ export function TrapCard({ trap, rule }: { trap: TrapView; rule: CheckView['rule
     <section className="trap" aria-label={t('trap.none')}>
       <h3>{t('trap.none')}</h3>
       <p>{trap.kind === 'past' ? t('trap.past') : t('trap.noneBody')}</p>
+      <TrapSource trap={trap} />
     </section>
   )
 }

@@ -1,6 +1,8 @@
 import { useI18n } from '../i18n/i18n'
 import { href } from '../router'
-import { ruleById, type FactStatus } from '../ruleInfo'
+import { ruleById, type Fact } from '../ruleInfo'
+import { factProof } from '../proofs/proofs'
+import { StatusPill } from './Proofs'
 import { CN_BRACKETS } from '../rules/cnBonus'
 import { NG_BANDS } from '../rules/ngPaye'
 
@@ -18,10 +20,14 @@ export function Rule({ id }: { id: string }) {
       </div>
     )
   }
-  const pill = (s: FactStatus, cases?: number) =>
-    s === 'tested' ? <span className="pill">{t('fact.tested', { cases: (cases ?? 0).toLocaleString('en-US') })}</span>
+  const pill = (f: Fact) => {
+    const p = f.factId ? factProof(r.id, f.factId) : undefined
+    if (p) return <StatusPill f={p} />
+    const s = f.status, cases = f.cases
+    return s === 'tested' ? <span className="pill">{t('fact.tested', { cases: (cases ?? 0).toLocaleString('en-US') })}</span>
       : s === 'expectFail' ? <span className="pill warn">{t('fact.expectFail')}</span>
         : <span className="pill quiet">{t('fact.notRun')}</span>
+  }
 
   return (
     <div className="page rule-page">
@@ -75,14 +81,14 @@ export function Rule({ id }: { id: string }) {
             <h2 id="facts-h">{t('rule.proved')}</h2>
             <p className="fine">{t('rule.provedHint')}</p>
             <dl className="rows facts">
-              {r.facts.map((f) => <div key={f.label} className="row"><dt>{t(f.label)}</dt><dd>{pill(f.status, f.cases)}</dd></div>)}
+              {r.facts.map((f) => <div key={f.label} className="row"><dt>{t(f.label)}</dt><dd>{pill(f)}</dd></div>)}
             </dl>
           </section>
           <section className="trap trap-in" aria-labelledby="traps-h">
             <h3 id="traps-h"><i className="dot" aria-hidden="true" />{t(r.traps.title)}</h3>
-            <p>{t(r.traps.body)}</p>
+            <p>{t(r.traps.body, r.traps.bodyVars)}</p>
             {r.traps.list && <p className="mono small pre-line">{r.traps.list}</p>}
-            <p className="small">{t(r.traps.after)}</p>
+            <p className="small">{t(r.traps.after, r.traps.afterVars)} <a href={href('/proofs')}>{t('trap.seeProofs')}</a></p>
           </section>
           <section className="card" aria-labelledby="open-h">
             <h2 id="open-h">{t('rule.open')}</h2>
