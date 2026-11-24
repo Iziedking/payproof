@@ -1,0 +1,6 @@
+pinned block 76763451; Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8); ran on karwan-test
+circuit 9: keccak 0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537, 3573 gates, nIn 32, nOut 64
+circuit 12: keccak 0xcb907d2a913da336a5df02bfa5b96d12577148ff3c3cf2a733ae0c855487b18b, 3045 gates, nIn 32, nOut 63
+tax-within-bonus: skipped (PAYPROOF_FACTS)
+breakdown-adds-up: holds (smt-bitwuzla holds 522.8s); mutant fails
+ALL CHECKS PASSED (selected facts only: breakdown-adds-up)

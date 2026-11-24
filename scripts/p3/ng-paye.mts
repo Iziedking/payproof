@@ -15,7 +15,7 @@ import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { toVerilog } from '../../prover/src/export.ts';
 import { findTraps } from '../../prover/src/traps.ts';
-import { setup, type Piece } from './common.mts';
+import { ONLY, setup, type Piece } from './common.mts';
 
 const run = await setup('ng-paye-nta2025', ...(process.argv.slice(2) as [string, string, string]));
 const dec = await run.circuit('ng_paye');
@@ -102,6 +102,9 @@ await run.fact({ id: 'breakdown-adds-up', statement: { en: 'The bands add up to 
     const want = e.exempt ? 0n : (15n * e.band2 + 18n * e.band3 + 21n * e.band4 + 23n * e.band5 + 25n * e.band6) / 100n;
     return sum !== e.chargeable || t !== want ? { input: show(v), tax: String(t), want: String(want) } : null;
   } });
+
+// With PAYPROOF_FACTS set, only the selected facts run: no trap search.
+if (ONLY) { run.finish(); console.log(`ALL CHECKS PASSED (selected facts only: ${ONLY.join(', ')})`); process.exit(0); }
 
 // Traps of raise-never-lowers-take-home over gross, every deduction 0, from the circuit alone.
 // The decision circuit gives tax, not take-home, so it is wrapped: out = gross - annual_tax

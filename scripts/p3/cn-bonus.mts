@@ -25,6 +25,7 @@ import { toolsFromEnv } from '../../prover/src/run.ts';
 import { findTraps } from '../../prover/src/traps.ts';
 import { ask, verdict, type Question } from '../../prover/src/fact.ts';
 import { CIRCUITS, latestBlock, readCircuit, rpcAt, type ChainCircuit, type Rpc } from '../../prover/src/chain.ts';
+import { CHOSEN, ONLY, toolList } from './common.mts';
 
 const [rpcUrl, timeoutArg, outDir] = process.argv.slice(2);
 if (!rpcUrl || !timeoutArg || !outDir) throw new Error('usage: cn-bonus.mts <rpc> <timeout-seconds> <out-dir>');
@@ -82,7 +83,7 @@ const circuitsOf = (...cs: ChainCircuit[]) => cs.flatMap((c) => c.read);
 const record = (kind: string, factId: string, statement: { en: string; zh: string }, cs: ChainCircuit[],
   domain: string, status: string, extra: Record<string, unknown>) => {
   const r = { kind, ruleId: 'cn-bonus-2023-30', factId, statement, circuits: circuitsOf(...cs), blockNumber: block,
-    domain, status, ...extra, tools: [{ name: 'yosys', version: toolVersion }, { name: 'yosys-abc', version: 'bundled with the same OSS CAD Suite 2026-10-29' }],
+    domain, status, ...extra, tools: toolList(tools.yosys, toolVersion, tools.bitwuzla), ...(ONLY ? { selectedFacts: ONLY } : {}),
     timeoutSeconds: TIMEOUT, ranOn, ranAt: new Date().toISOString() };
   records.push(r);
   writeFileSync(join(outDir, `${factId}.json`), JSON.stringify(r, null, 2) + '\n');
@@ -95,9 +96,10 @@ const answersOut = (q: Question) => q.answers.map((a) => ({ tool: a.tool, status
 // A fact on the decision circuit, its mutant, and the replay of any counterexample.
 async function fact(id: string, statement: { en: string; zh: string }, circuitV: string, q: (inst: string) => string,
   mutantNote: string, mutant: (inst: string) => string, check: (x: bigint) => Promise<boolean>, cs: ChainCircuit[]) {
+  if (ONLY && !ONLY.includes(id)) { console.log(`${id}: skipped (PAYPROOF_FACTS)`); return null; }
   const question = q('c');
   writeFileSync(join(outDir, `${id}.q.v`), question);
-  const r = ask(tools, circuitV, question, 32, TIMEOUT);
+  const r = ask(tools, circuitV, question, 32, TIMEOUT, CHOSEN ?? true);
   const v = verdict(r);
   let replay: unknown = null;
   if (v === 'fails') {
@@ -107,13 +109,13 @@ async function fact(id: string, statement: { en: string; zh: string }, circuitV:
   }
   const mq = mutant('c');
   writeFileSync(join(outDir, `${id}.mutant.q.v`), mq);
-  const m = ask(tools, circuitV, mq, 32, TIMEOUT, false);
+  const m = ask(tools, circuitV, mq, 32, TIMEOUT, CHOSEN ?? false);
   const mv = verdict(m);
   console.log(`${id}: ${v} (${r.answers.map((a) => `${a.tool} ${a.status} ${a.seconds.toFixed(1)}s`).join(', ')}); mutant ${mv}`);
   if (mv !== 'fails') throw new Error(`${id}: the mutant did not fail (${mv}), so the question cannot tell a broken rule`);
   return record('fact', id, statement, cs, 'every 32-bit bonus (no validity circuit, owner decision 2026-11-22)', v, {
-    questionSha256: sha(question), aigSha256: r.aigSha256, answers: answersOut(r), counterexample: replay,
-    mutant: { note: mutantNote, questionSha256: sha(mq), aigSha256: m.aigSha256, status: mv, answers: answersOut(m) } });
+    questionSha256: sha(question), aigSha256: r.aigSha256, smt2Sha256: r.smt2Sha256, answers: answersOut(r), counterexample: replay,
+    mutant: { note: mutantNote, questionSha256: sha(mq), aigSha256: m.aigSha256, smt2Sha256: m.smt2Sha256, status: mv, answers: answersOut(m) } });
 }
 
 // Decision outputs: tax = out[31:0], net = out[63:32].
@@ -136,6 +138,13 @@ await fact('breakdown-adds-up', { en: 'The tax equals the tax before the quick d
   (n) => breakdown(n, false), 'tax is raised by one fen when the bonus is 50,000.00 yuan', (n) => breakdown(n, true),
   async (x) => { const t = decSim({ bonus: x }).tax; const e = expSim({ bonus: x }); return t !== e.tax_before_deduction - e.quick_deduction; },
   [dec, exp]);
+
+// With PAYPROOF_FACTS set, only the selected facts run: no trap search.
+if (ONLY) {
+  writeFileSync(join(outDir, 'records.json'), JSON.stringify({ started, finished: new Date().toISOString(), block, records }, null, 2) + '\n');
+  console.log(`ALL CHECKS PASSED (selected facts only: ${ONLY.join(', ')})`);
+  process.exit(0);
+}
 
 // raise-never-lowers-take-home, by the trap finder, from the circuit alone.
 const t0 = Date.now();

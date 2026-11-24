@@ -1,10 +1,17 @@
 // One fact question: "is there an input x with bad(x) = 1?" (PLAN 11.2 prover rule 2).
 //
 // The question is a Verilog module `q (input [W-1:0] x, output bad)` that instantiates the
-// circuit exported from the chain bytes. Two independent tools answer it:
+// circuit exported from the chain bytes. Three tools can answer it:
 //   ABC   : Yosys maps q to an AIG, then `yosys-abc -c "read_aiger q.aig; strash; iprove; write_cex -n q.cex"`
 //           (the invocation P0 used for the bonus traps, scripts/p0/bonus-traps.sh).
 //   Yosys : `sat -prove bad 0 -show-inputs` on the same flattened design (P0's "sat" column).
+//   SMT   : Yosys `write_smt2 -tpl` writes the flattened design, word-level (no techmap), as
+//           SMT-LIB 2 with one uninterpreted state sort; the template asserts the hierarchy
+//           function |q_h| and the output |q_n bad|, then asks (check-sat) and (get-value) of x.
+//           Bitwuzla 0.9.1 (OSS CAD Suite 2026-10-29) answers. Sources: `yosys -h write_smt2` and
+//           `bitwuzla --help` from that suite, read on the test host 2026-11-24 (task p3-smt-help).
+//           It shares only the Verilog front end with the other two.
+// By default ABC and Yosys sat are asked, as in the first P3 runs.
 // "holds" means a tool proved bad can never be 1; "fails" comes with an x, which the caller
 // replays in the simulator and with eval on chain before reporting it (rule 3).
 import { execFileSync } from 'node:child_process';
@@ -15,14 +22,33 @@ import { join } from 'node:path';
 import { yosys, type Tools } from './run.ts';
 
 export type Answer = {
-  tool: 'abc-iprove' | 'yosys-sat';
+  tool: ToolName;
   status: 'holds' | 'fails' | 'undecided';
   x: bigint | null;
   seconds: number;
   command: string;
   tail: string;
 };
-export type Question = { answers: Answer[]; aigSha256: string };
+export type ToolName = 'abc-iprove' | 'yosys-sat' | 'smt-bitwuzla';
+export type Question = { answers: Answer[]; aigSha256: string | null; smt2Sha256?: string };
+
+const SMT_TEMPLATE = `(set-option :produce-models true)
+(set-logic QF_UFBV)
+%%
+(declare-fun s () |q_s|)
+(assert (|q_h| s))
+(assert (|q_n bad| s))
+(check-sat)
+(get-value ((|q_n x| s)))
+`;
+
+/** Tools named in PAYPROOF_TOOLS (comma list), or null for the default. */
+export function toolsFromList(list: string | undefined): ToolName[] | null {
+  if (!list) return null;
+  const names = list.split(',').map((t) => t.trim()).filter(Boolean);
+  for (const n of names) if (!['abc-iprove', 'yosys-sat', 'smt-bitwuzla'].includes(n)) throw new Error(`unknown tool ${n}`);
+  return names as ToolName[];
+}
 
 const PREP = 'read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast';
 
@@ -36,21 +62,29 @@ function run(cmd: string, args: string[], cwd: string): string {
 
 const tailOf = (log: string) => log.trim().split('\n').slice(-6).join('\n');
 
-/** Ask both tools (or only ABC when `second` is false). `w` is the width of x. */
+/**
+ * Ask the tools in `which`: true (the default) means ABC and Yosys sat, false means ABC only.
+ * `w` is the width of x.
+ */
 export function ask(tools: Tools, circuitV: string, question: string, w: number, timeoutSec: number,
-  second = true): Question {
+  which: boolean | ToolName[] = true): Question {
+  const use: ToolName[] = which === true ? ['abc-iprove', 'yosys-sat'] : which === false ? ['abc-iprove'] : which;
   const d = mkdtempSync(join(tmpdir(), 'payproof-fact-'));
   try {
     writeFileSync(join(d, 'c.v'), circuitV);
     writeFileSync(join(d, 'q.v'), question);
-    yosys(tools, `${PREP}; aigmap; write_aiger -zinit q.aig`, d);
-    const aigSha256 = createHash('sha256').update(readFileSync(join(d, 'q.aig'))).digest('hex');
     const answers: Answer[] = [];
+    let aigSha256: string | null = null;
+    let smt2Sha256: string | undefined;
+    let t0: bigint, log: string, seconds: number;
 
+    if (use.includes('abc-iprove')) {
+    yosys(tools, `${PREP}; aigmap; write_aiger -zinit q.aig`, d);
+    aigSha256 = createHash('sha256').update(readFileSync(join(d, 'q.aig'))).digest('hex');
     const abcScript = 'read_aiger q.aig; strash; iprove; write_cex -n q.cex';
-    let t0 = process.hrtime.bigint();
-    let log = run('timeout', ['--kill-after=10', String(timeoutSec), tools.abc, '-c', abcScript], d);
-    let seconds = Number(process.hrtime.bigint() - t0) / 1e9;
+    t0 = process.hrtime.bigint();
+    log = run('timeout', ['--kill-after=10', String(timeoutSec), tools.abc, '-c', abcScript], d);
+    seconds = Number(process.hrtime.bigint() - t0) / 1e9;
     let a: Answer = { tool: 'abc-iprove', status: 'undecided', x: null, seconds,
       command: `yosys-abc -c "${abcScript}"`, tail: tailOf(log) };
     if (/^UNSATISFIABLE/m.test(log)) a.status = 'holds';
@@ -62,8 +96,9 @@ export function ask(tools: Tools, circuitV: string, question: string, w: number,
       a = { ...a, status: 'fails', x };
     }
     answers.push(a);
+    }
 
-    if (second) {
+    if (use.includes('yosys-sat')) {
       const satScript = `${PREP}; sat -prove bad 0 -show-inputs`;
       t0 = process.hrtime.bigint();
       log = run('timeout', ['--kill-after=10', String(timeoutSec), tools.yosys, '-p', satScript], d);
@@ -79,7 +114,33 @@ export function ask(tools: Tools, circuitV: string, question: string, w: number,
       }
       answers.push(b);
     }
-    return { answers, aigSha256 };
+
+    if (use.includes('smt-bitwuzla')) {
+      if (!tools.bitwuzla) throw new Error('no bitwuzla in the tool set');
+      writeFileSync(join(d, 'q.tpl'), SMT_TEMPLATE);
+      // Word-level on purpose: no techmap or aigmap, so the solver sees the question's arithmetic.
+      yosys(tools, 'read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2', d);
+      smt2Sha256 = createHash('sha256').update(readFileSync(join(d, 'q.smt2'))).digest('hex');
+      t0 = process.hrtime.bigint();
+      log = run('timeout', ['--kill-after=10', String(timeoutSec), tools.bitwuzla, 'q.smt2'], d);
+      seconds = Number(process.hrtime.bigint() - t0) / 1e9;
+      const c: Answer = { tool: 'smt-bitwuzla', status: 'undecided', x: null, seconds,
+        command: 'yosys -p "read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2"; bitwuzla q.smt2',
+        tail: tailOf(log) };
+      // The first answer line; Bitwuzla may exit non-zero on sat or unsat, and an error from
+      // (get-value) after unsat goes to stderr, which run() appends after stdout.
+      const first = log.match(/^(sat|unsat|unknown)$/m)?.[1];
+      if (first === 'unsat') c.status = 'holds';
+      else if (first === 'sat') {
+        // (get-value) prints ((|q_n x| s) #b...) in binary, Bitwuzla's default output format.
+        const m = log.match(/\|q_n x\| s\)\s+#b([01]+)/);
+        if (!m) throw new Error('bitwuzla said sat but printed no value for x');
+        c.status = 'fails';
+        c.x = BigInt('0b' + m[1]);
+      }
+      answers.push(c);
+    }
+    return { answers, aigSha256, smt2Sha256 };
   } finally {
     rmSync(d, { recursive: true, force: true });
   }

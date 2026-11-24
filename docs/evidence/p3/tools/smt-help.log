@@ -1,0 +1,419 @@
+aigand
+aigbmc
+aigcexmin
+aigdd
+aigdep
+aigflip
+aigfuzz
+aiginfo
+aigjoin
+aigmiter
+aigmove
+aignm
+aigor
+aigreset
+aigselect
+aigsim
+aigsplit
+aigstrip
+aigtoaig
+aigtoblif
+aigtobtor
+aigtocnf
+aigtodot
+aigtosmv
+aiguncomment
+aigunconstraint
+aigunfair
+aigunor
+aigunroll
+amaranth-rpc
+andtoaig
+avy
+avybmc
+bitwuzla
+bliftoaig
+boolector
+btormc
+btorsim
+bwrap
+cocotb-config
+cvc4
+cvc5
+dfu-prefix
+dfu-suffix
+dfu-util
+dot
+ecpbram
+ecpdap
+ecpmulti
+ecppack
+ecppll
+ecpprog
+ecpunpack
+eqy
+evcd2vcd
+find_libpython
+fst2vcd
+fstminer
+fujprog
+ghdl
+ghdl1-llvm
+ghwdump
+gmpack
+gmunpack
+gowin_pack
+gowin_pll
+gowin_unpack
+gtkwave
+icebox_asc2hlc
+icebox_chipdb
+icebox_colbuf
+icebox_diff
+icebox_explain
+icebox_hlc2asc
+icebox_html
+icebox_maps
+icebox_stat
+icebox_vlog
+icebram
+icemulti
+icepack
+icepll
+iceprog
+iceprogduino
+icesprog
+icetime
+iceunpack
+imctk-eqy-engine
+iverilog
+iverilog-vpi
+lsftdi
+lsusb
+lxt2miner
+lxt2vcd
+mcy
+mcy-dash
+mcy-gui
+nextpnr-ecp5
+nextpnr-generic
+nextpnr-himbaechel
+nextpnr-ice40
+nextpnr-machxo2
+nextpnr-nexus
+openFPGALoader
+openocd
+pono
+prjoxide
+rIC3
+rtlbrowse
+sby
+sby-gui
+scy
+slang
+slang-hier
+slang-reflect
+slang-tidy
+smvtoaig
+sn
+soltostim
+suprove
+surfer
+surver
+tabbyadm
+tabbypip
+tabbypy3
+twinwave
+vcd2fst
+vcd2lxt
+vcd2lxt2
+vcd2vzt
+verilator
+verilator_bin
+verilator_bin_dbg
+verilator_coverage
+verilator_coverage_bin
+verilator_coverage_bin_dbg
+verilator_gantt
+verilator_profcfunc
+vvp
+vzt2vcd
+vztminer
+wrapstim
+xdot
+xml2stems
+yices
+yices-sat
+yices-smt
+yices-smt2
+yosys
+yosys-abc
+yosys-config
+yosys-filterlib
+yosys-smtbmc
+yosys-witness
+z3
+== yosys write_smt2
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+
+-- Running command `help write_smt2' --
+
+    write_smt2 [options] [filename]
+
+Write a SMT-LIBv2 [1] description of the current design. For a module with name
+'<mod>' this will declare the sort '<mod>_s' (state of the module) and will
+define and declare functions operating on that state.
+
+The following SMT2 functions are generated for a module with name '<mod>'.
+Some declarations/definitions are printed with a special comment. A prover
+using the SMT2 files can use those comments to collect all relevant metadata
+about the design.
+
+    ; yosys-smt2-module <mod>
+    (declare-sort |<mod>_s| 0)
+        The sort representing a state of module <mod>.
+
+    (define-fun |<mod>_h| ((state |<mod>_s|)) Bool (...))
+        This function must be asserted for each state to establish the
+        design hierarchy.
+
+    ; yosys-smt2-input <wirename> <width>
+    ; yosys-smt2-output <wirename> <width>
+    ; yosys-smt2-register <wirename> <width>
+    ; yosys-smt2-wire <wirename> <width>
+    (define-fun |<mod>_n <wirename>| (|<mod>_s|) (_ BitVec <width>))
+    (define-fun |<mod>_n <wirename>| (|<mod>_s|) Bool)
+        For each port, register, and wire with the 'keep' attribute set an
+        accessor function is generated. Single-bit wires are returned as Bool,
+        multi-bit wires as BitVec.
+
+    ; yosys-smt2-cell <submod> <instancename>
+    (declare-fun |<mod>_h <instancename>| (|<mod>_s|) |<submod>_s|)
+        There is a function like that for each hierarchical instance. It
+        returns the sort that represents the state of the sub-module that
+        implements the instance.
+
+    (declare-fun |<mod>_is| (|<mod>_s|) Bool)
+        This function must be asserted 'true' for initial states, and 'false'
+        otherwise.
+
+    (define-fun |<mod>_i| ((state |<mod>_s|)) Bool (...))
+        This function must be asserted 'true' for initial states. For
+        non-initial states it must be left unconstrained.
+
+    (define-fun |<mod>_t| ((state |<mod>_s|) (next_state |<mod>_s|)) Bool (...))
+        This function evaluates to 'true' if the states 'state' and
+        'next_state' form a valid state transition.
+
+    (define-fun |<mod>_a| ((state |<mod>_s|)) Bool (...))
+        This function evaluates to 'true' if all assertions hold in the state.
+
+    (define-fun |<mod>_u| ((state |<mod>_s|)) Bool (...))
+        This function evaluates to 'true' if all assumptions hold in the state.
+
+    ; yosys-smt2-assert <id> <filename:linenum>
+    (define-fun |<mod>_a <id>| ((state |<mod>_s|)) Bool (...))
+        Each $assert cell is converted into one of this functions. The function
+        evaluates to 'true' if the assert statement holds in the state.
+
+    ; yosys-smt2-assume <id> <filename:linenum>
+    (define-fun |<mod>_u <id>| ((state |<mod>_s|)) Bool (...))
+        Each $assume cell is converted into one of this functions. The function
+        evaluates to 'true' if the assume statement holds in the state.
+
+    ; yosys-smt2-cover <id> <filename:linenum>
+    (define-fun |<mod>_c <id>| ((state |<mod>_s|)) Bool (...))
+        Each $cover cell is converted into one of this functions. The function
+        evaluates to 'true' if the cover statement is activated in the state.
+
+Options:
+
+    -verbose
+        this will print the recursive walk used to export the modules.
+
+    -stbv
+        Use a BitVec sort to represent a state instead of an uninterpreted
+        sort. As a side-effect this will prevent use of arrays to model
+        memories.
+
+    -stdt
+        Use SMT-LIB 2.6 style datatypes to represent a state instead of an
+        uninterpreted sort.
+
+    -nobv
+        disable support for BitVec (FixedSizeBitVectors theory). without this
+        option multi-bit wires are represented using the BitVec sort and
+        support for coarse grain cells (incl. arithmetic) is enabled.
+
+    -nomem
+        disable support for memories (via ArraysEx theory). this option is
+        implied by -nobv. only $mem cells without merged registers in
+        read ports are supported. call "memory" with -nordff to make sure
+        that no registers are merged into $mem read ports. '<mod>_m' functions
+        will be generated for accessing the arrays that are used to represent
+        memories.
+
+    -wires
+        create '<mod>_n' functions for all public wires. by default only ports,
+        registers, and wires with the 'keep' attribute are exported.
+
+    -tpl <template_file>
+        use the given template file. the line containing only the token '%%'
+        is replaced with the regular output of this command.
+
+    -solver-option <option> <value>
+        emit a `; yosys-smt2-solver-option` directive for yosys-smtbmc to write
+        the given option as a `(set-option ...)` command in the SMT-LIBv2.
+
+[1] For more information on SMT-LIBv2 visit http://smt-lib.org/ or read David
+R. Cok's tutorial: https://smtlib.github.io/jSMTLIB/SMTLIBTutorial.pdf
+
+---------------------------------------------------------------------------
+
+Example:
+
+Consider the following module (test.v). We want to prove that the output can
+never transition from a non-zero value to a zero value.
+
+        module test(input clk, output reg [3:0] y);
+          always @(posedge clk)
+            y <= (y << 1) | ^y;
+        endmodule
+
+For this proof we create the following template (test.tpl).
+
+        ; we need QF_UFBV for this proof
+        (set-logic QF_UFBV)
+
+        ; insert the auto-generated code here
+        %%
+
+        ; declare two state variables s1 and s2
+        (declare-fun s1 () test_s)
+        (declare-fun s2 () test_s)
+
+        ; state s2 is the successor of state s1
+        (assert (test_t s1 s2))
+
+        ; we are looking for a model with y non-zero in s1
+        (assert (distinct (|test_n y| s1) #b0000))
+
+        ; we are looking for a model with y zero in s2
+        (assert (= (|test_n y| s2) #b0000))
+
+        ; is there such a model?
+        (check-sat)
+
+The following yosys script will create a 'test.smt2' file for our proof:
+
+        read_verilog test.v
+        hierarchy -check; proc; opt; check -assert
+        write_smt2 -bv -tpl test.tpl test.smt2
+
+Running 'cvc4 test.smt2' will print 'unsat' because y can never transition
+from non-zero to zero in the test design.
+
+End of script. Logfile hash: 041d266dec, time: 0.00s, user: 0.00s, system: 0.00s, MEM: 13.96 MB peak
+Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+Time spent: 100% 1x help (0 sec)
+== bitwuzla
+0.9.1
+== z3
+Z3 version 4.15.5 - 64 bit
+== yices-smt2
+Yices 2.7.0
+Copyright SRI International.
+Linked with GMP 6.3.0
+== cvc5
+This is cvc5 version 1.0.1-dev.2.77d0bec48 [git 77d0bec48 on branch main with local modifications]
+compiled with GCC version 15.2.0
+on Jul 28 2026 14:05:41
+== boolector
+3.2.4
+== bitwuzla help
+Usage:
+  bitwuzla [<options>] [<input>]
+
+Options:
+  <input>                           [<stdin>]    input file 
+  -h, --help                                     print this message and exit 
+  -V, --version                                  print version and exit 
+  -c, --copyright                                print copyright and exit 
+  -p, --print-formula                            print formula in smt2 format 
+  --print-unsat-core                             print unsat core in smt2 format 
+  --print-model                                  print model in smt2 format 
+  --print-no-letify                              do not letify expressions when 
+                                                 printing 
+  -P, --parse-only                  [false]      only parse input without calling 
+                                                 check-sat 
+  --pp-only                         [false]      exit after preprocessing 
+  --bv-output-format                [2]          output number format for bit-vector 
+                                                 values {2, 10, 16} 
+  -t <n>, --time-limit <n>          [0]          time limit in milliseconds 
+  --lang <M>                        [smt2]       input language {smt2, btor2} 
+  -l <n>, --log-level <n>           [0]          log level 
+  -m, --produce-models              [false]      model production 
+  --produce-interpolants            [false]      interpolants production 
+  --produce-unsat-assumptions       [false]      unsat assumptions production 
+  --produce-unsat-cores             [false]      unsat core production 
+  -s <n>, --seed <n>                [27644437]   seed for the random number generator 
+  -v <n>, --verbosity <n>           [0]          verbosity level 
+  -T <n>, --time-limit-per <n>      [0]          time limit in milliseconds per 
+                                                 satisfiability check 
+  -M <n>, --memory-limit <n>        [0]          set maximum memory limit in MB per 
+                                                 satisfiability check 
+  -j <n>, --nthreads <n>            [1]          set number of threads to utilize in 
+                                                 parallel (currently, this only 
+                                                 configures parallel threads in the 
+                                                 CryptoMiniSat back end) 
+  --bv-solver <M>                   [bitblast]   bv solver engine {preprop, prop, 
+                                                 bitblast} 
+  -rwl <n>, --rewrite-level <n>     [2]          rewrite level 
+  -S <M>, --sat-solver <M>          [cadical]    backend SAT solver {kissat, 
+                                                 gimsatul, cms, cadical} 
+  --write-aiger <...>               []           write bv abstraction as AIGER to 
+                                                 filename 
+  --write-cnf <...>                 []           write bv abstraction as CNF to 
+                                                 filename 
+  --prop-const-bits                 [true]       use constant bits propagation 
+  --prop-ineq-bounds                [true]       infer inequality bounds for 
+                                                 invertibility conditions and 
+                                                 inverse value computation 
+  --prop-nprops <n>                 [0]          number of propagation steps used as a 
+                                                 limit for propagation-based local 
+                                                 search engine 
+  --prop-nupdates <n>               [0]          number of model value updates used as a 
+                                                 limit for propagation-based local 
+                                                 search engine 
+  --prop-opt-lt-concat-sext         [false]      optimization for inverse value 
+                                                 computation of inequalities over 
+                                                 concat and sign extension operands 
+  --prop-path-sel <M>               [essential]  propagation path selection mode for 
+                                                 propagation-based local search 
+                                                 engine {random, essential} 
+  --prop-prob-pick-rand-input <n>   [10]         probability for selecting a random 
+                                                 input instead of an essential input 
+                                                 (interpreted as <n>/1000) 
+  --prop-prob-pick-inv-value <n>    [990]        probability for producing inverse 
+                                                 rather than consistent values 
+                                                 (interpreted as <n>/1000) 
+  --prop-sext                       [true]       use sign_extend nodes for concats 
+                                                 that represent sign_extend nodes for 
+                                                 propagation-based local search 
+                                                 engine 
+  --abstraction                     [true]       enable abstraction module 
+  --abstraction-bv-size <n>         [33]         enable abstraction for bit-vector 
+                                                 terms of given minimum size 
+  --abstraction-eager-refine        [false]      add all violated abstraction lemmas 
+                                                 at once 
+  --abstraction-value-limit <n>     [8]          value instantiation limit 
+                                                 bv-size/<n> until adding original 
+                                                 term as refinement 
+  --abstraction-value-only          [false]      only add value instantiations 
+  --abstraction-assert              [false]      assertion abstraction 

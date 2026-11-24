@@ -1,0 +1,21 @@
+✔ a true fact holds in both tools, a broken one fails with the hand-worked input (221.658936ms)
+✔ a forced timeout gives undecided, never holds (3296.651959ms)
+✔ the SMT tool agrees on the hand-worked step: holds, fails only at x = 49, and the mutant is caught (109.249161ms)
+✔ a forced timeout gives undecided for the SMT tool too (3351.683865ms)
+﹣ adder8: export, re-synthesise, import: same outputs, and proved equal (0.610151ms) # SKIP
+﹣ adder8: known-different pair (one NAND rewired) fails, and the counterexample replays (0.101955ms) # SKIP
+﹣ cn_bonus: export, re-synthesise, import: same outputs, and proved equal (0.078483ms) # SKIP
+﹣ cn_bonus: known-different pair (one NAND rewired) fails, and the counterexample replays (0.069572ms) # SKIP
+﹣ split_check_8: export, re-synthesise, import: same outputs, and proved equal (0.076252ms) # SKIP
+﹣ split_check_8: known-different pair (one NAND rewired) fails, and the counterexample replays (0.082256ms) # SKIP
+﹣ known-equal pair: a netlist against its own export (0.066118ms) # SKIP
+  {"ranges":[{"edge":"49","from":"50","to":"78","resultAtEdge":"49","lossAtFrom":"29"},{"edge":"119","from":"120","to":"148","resultAtEdge":"89","lossAtFrom":"29"}],"complete":true,"queries":18,"seconds":0.46}
+✔ trap finder returns the two hand-worked ranges and proves none is left (1030.076868ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 7
+ℹ todo 0
+ℹ duration_ms 8277.756274

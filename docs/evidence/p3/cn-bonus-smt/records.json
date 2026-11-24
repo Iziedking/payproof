@@ -1,0 +1,90 @@
+{
+  "started": "2026-11-24T15:01:27.683Z",
+  "finished": "2026-11-24T15:10:51.657Z",
+  "block": 76763451,
+  "records": [
+    {
+      "kind": "fact",
+      "ruleId": "cn-bonus-2023-30",
+      "factId": "breakdown-adds-up",
+      "statement": {
+        "en": "The tax equals the tax before the quick deduction minus the quick deduction",
+        "zh": "税额等于扣除速算扣除数之前的税额减去速算扣除数"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "9",
+          "netlistKeccak": "0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537",
+          "gateCount": 3573,
+          "nIn": 32,
+          "nOut": 64
+        },
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "12",
+          "netlistKeccak": "0xcb907d2a913da336a5df02bfa5b96d12577148ff3c3cf2a733ae0c855487b18b",
+          "gateCount": 3045,
+          "nIn": 32,
+          "nOut": 63
+        }
+      ],
+      "blockNumber": 76763451,
+      "domain": "every 32-bit bonus (no validity circuit, owner decision 2026-11-22)",
+      "status": "holds",
+      "questionSha256": "b64a8a7a60f3e4abe6b9f529e4205230e0fc50187b6dfc3425802e4a00b887c3",
+      "aigSha256": null,
+      "smt2Sha256": "32b69f258eb415db8ac21dd9a9e13dee84269d76bc3f078f80073f3b16e0144f",
+      "answers": [
+        {
+          "tool": "smt-bitwuzla",
+          "status": "holds",
+          "seconds": 522.8,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2\"; bitwuzla q.smt2",
+          "tail": "unsat"
+        }
+      ],
+      "counterexample": null,
+      "mutant": {
+        "note": "tax is raised by one fen when the bonus is 50,000.00 yuan",
+        "questionSha256": "4ccd6e756499bfc9c3792e3cbd630d22c784f6dfe7e5488d9a76c777ecbff538",
+        "aigSha256": null,
+        "smt2Sha256": "b642ad9602a57e0cc4334279c37e5b5ab0250d40faa38901e98061e94f88b41e",
+        "status": "fails",
+        "answers": [
+          {
+            "tool": "smt-bitwuzla",
+            "status": "fails",
+            "seconds": 39.01,
+            "x": "5000000",
+            "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2\"; bitwuzla q.smt2",
+            "tail": "sat\n(((|q_n x| s) #b00000000010011000100101101000000))"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        },
+        {
+          "name": "bitwuzla",
+          "version": "0.9.1 (OSS CAD Suite 2026-10-29)"
+        }
+      ],
+      "selectedFacts": [
+        "breakdown-adds-up"
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "karwan-test",
+      "ranAt": "2026-11-24T15:10:51.657Z"
+    }
+  ]
+}

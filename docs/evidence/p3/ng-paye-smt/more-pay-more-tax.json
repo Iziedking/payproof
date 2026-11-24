@@ -1,0 +1,76 @@
+{
+  "kind": "fact",
+  "ruleId": "ng-paye-nta2025",
+  "factId": "more-pay-more-tax",
+  "statement": {
+    "en": "With the same deductions, more pay never means less tax",
+    "zh": "扣除项相同时，收入越高，税额不会更少"
+  },
+  "circuits": [
+    {
+      "chainId": 196,
+      "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+      "id": "10",
+      "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+      "gateCount": 8482,
+      "nIn": 195,
+      "nOut": 57
+    }
+  ],
+  "blockNumber": 76763316,
+  "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+  "status": "holds",
+  "questionSha256": "25d79340eec77efb30e2e86ebd5d10d1c34cb975823a394569f32c37f45a8ad8",
+  "aigSha256": null,
+  "smt2Sha256": "eba6b810ef29a5f90529ded51c03a91880bad4b7cbd725753ea6b03150888c58",
+  "answers": [
+    {
+      "tool": "smt-bitwuzla",
+      "status": "holds",
+      "seconds": 808.91,
+      "x": null,
+      "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2\"; bitwuzla q.smt2",
+      "tail": "unsat"
+    }
+  ],
+  "counterexample": null,
+  "mutant": {
+    "note": "tax is set to 0 when gross is N2,000,000",
+    "questionSha256": "d0032d85408904e673fa5227814986e7f321a579de0ad4a7451756414292396c",
+    "aigSha256": null,
+    "smt2Sha256": "ad843804086d7078a3b535ead55f7113660df398b3139c5375865e49ce93282f",
+    "status": "fails",
+    "answers": [
+      {
+        "tool": "smt-bitwuzla",
+        "status": "fails",
+        "seconds": 79.59,
+        "x": "100433627766930597790654175881465973125130358198489950686377368201",
+        "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2\"; bitwuzla q.smt2",
+        "tail": "sat\n(((|q_n x| s) #b000000000111101000010010000000000000000000000011111000011110000000000000000000100100111000000000000010110101100111000000000000011110101110111000000000000001111010111011000000000000001111010111011000000000100110101101010001001))"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "yosys",
+      "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+    },
+    {
+      "name": "yosys-abc",
+      "version": "bundled with the same OSS CAD Suite 2026-10-29"
+    },
+    {
+      "name": "bitwuzla",
+      "version": "0.9.1 (OSS CAD Suite 2026-10-29)"
+    }
+  ],
+  "selectedFacts": [
+    "breakdown-adds-up",
+    "more-pay-more-tax",
+    "relief-never-raises-tax"
+  ],
+  "timeoutSeconds": 900,
+  "ranOn": "karwan-test",
+  "ranAt": "2026-11-24T15:14:04.433Z"
+}

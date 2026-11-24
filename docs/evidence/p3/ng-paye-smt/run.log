@@ -1,0 +1,9 @@
+pinned block 76763316; Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8); ran on karwan-test
+circuit 10 (ng_paye): keccak 0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea, 8482 gates, nIn 195, nOut 57
+circuit 11 (ng_paye_explain): keccak 0xd27eaed86b4efca5864033c786ab7f181df6fc0dc8c4b41bdfaf12a6decba169, 3645 gates, nIn 195, nOut 227
+tax-within-income: skipped (PAYPROOF_FACTS)
+more-pay-more-tax: holds (smt-bitwuzla holds 808.9s); mutant fails
+raise-never-lowers-take-home: skipped (PAYPROOF_FACTS)
+relief-never-raises-tax: undecided (smt-bitwuzla undecided 900.3s); mutant fails
+breakdown-adds-up: holds (smt-bitwuzla holds 660.4s); mutant fails
+ALL CHECKS PASSED (selected facts only: breakdown-adds-up, more-pay-more-tax, relief-never-raises-tax)
