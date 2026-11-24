@@ -1,0 +1,73 @@
+{
+  "kind": "fact",
+  "ruleId": "ng-paye-nta2025",
+  "factId": "tax-within-income",
+  "statement": {
+    "en": "The yearly tax is never more than the yearly gross pay",
+    "zh": "年度税额不会超过年度总收入"
+  },
+  "circuits": [
+    {
+      "chainId": 196,
+      "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+      "id": "10",
+      "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+      "gateCount": 8482,
+      "nIn": 195,
+      "nOut": 57
+    }
+  ],
+  "blockNumber": 76749414,
+  "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+  "status": "holds",
+  "questionSha256": "6eb5a39385aada1a2130fcd5edf836a101b6aa58a9f188c4e3b5c3ab40e4d71d",
+  "aigSha256": "5fde34c2f2735b8496333587e15982422dccfc980bdfcf7ec99b7733df003c20",
+  "answers": [
+    {
+      "tool": "abc-iprove",
+      "status": "holds",
+      "seconds": 0.06,
+      "x": null,
+      "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+      "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nUNSATISFIABLE  Time =     0.03 sec\nCounter-example is not available."
+    },
+    {
+      "tool": "yosys-sat",
+      "status": "holds",
+      "seconds": 1.44,
+      "x": null,
+      "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+      "tail": "                 \\____ $$$|__/|________/|__/|_______/|__/\n                       \\__/                              \n\nEnd of script. Logfile hash: 64ab8f9368, time: 1.41s, user: 1.37s, system: 0.05s, MEM: 94.04 MB peak\nYosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)\nTime spent: 38% 5x read_verilog (0 sec), 18% 1x sat (0 sec), ..."
+    }
+  ],
+  "counterexample": null,
+  "mutant": {
+    "note": "tax is replaced by gross + 1 when gross is N1,000",
+    "questionSha256": "23bbe696a2888f650822f484825d591591384ed76d48ca18971e5c78a073bd59",
+    "aigSha256": "a6cfcc990e9297e1c3dcfa05b21123dd5c8e5f6fbf4474e9ee7c6cdff9799ee6",
+    "status": "fails",
+    "answers": [
+      {
+        "tool": "abc-iprove",
+        "status": "fails",
+        "seconds": 0.04,
+        "x": "1000",
+        "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+        "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.02 sec"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "yosys",
+      "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+    },
+    {
+      "name": "yosys-abc",
+      "version": "bundled with the same OSS CAD Suite 2026-10-29"
+    }
+  ],
+  "timeoutSeconds": 900,
+  "ranOn": "karwan-test",
+  "ranAt": "2026-11-24T11:07:35.854Z"
+}

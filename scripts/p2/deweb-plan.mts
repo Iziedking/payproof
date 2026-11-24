@@ -120,8 +120,12 @@ async function command(url: string, site: string, idS: string, monthsS: string) 
   console.log(`Estimated cost ${okb(cost)} OKB at ${gasPrice} wei (gas estimated from the fork rehearsal). Deployer holds ${okb(balance)} OKB.`);
   if (balance < cost) console.log('WARNING: the deployer holds less than the estimate. Top it up before broadcasting.');
   console.log('Run from chain/. First without --broadcast (simulation only), then the same line with --broadcast:\n');
+  // --gas-limit: forge simulates the whole script as one call, and a large publish (the sign-in build,
+  // 1.26 billion gas over 470 transactions) passes forge's default limit for that call. It does not
+  // change the gas of any transaction sent (docs/evidence/p2/privy.md).
   console.log(`forge script script/DeWebPublish.s.sol --sig "run(uint256,uint256)" ${idS} ${monthsS} ` +
-    `--rpc-url ${url} --chain 196 --sender ${DEPLOYER} --account ${ACCOUNT} --legacy --with-gas-price ${gasPrice} --slow`);
+    `--rpc-url ${url} --chain 196 --sender ${DEPLOYER} --account ${ACCOUNT} --legacy --with-gas-price ${gasPrice} --slow ` +
+    `--gas-limit 100000000000`);
 }
 
 // Reads one file of a container back from SiteRegistry; null when it is not there.

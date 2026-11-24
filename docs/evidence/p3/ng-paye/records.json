@@ -1,0 +1,612 @@
+{
+  "started": "2026-11-24T11:07:30.983Z",
+  "finished": "2026-11-24T12:56:03.485Z",
+  "block": 76749414,
+  "records": [
+    {
+      "kind": "fact",
+      "ruleId": "ng-paye-nta2025",
+      "factId": "tax-within-income",
+      "statement": {
+        "en": "The yearly tax is never more than the yearly gross pay",
+        "zh": "年度税额不会超过年度总收入"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "10",
+          "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+          "gateCount": 8482,
+          "nIn": 195,
+          "nOut": 57
+        }
+      ],
+      "blockNumber": 76749414,
+      "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+      "status": "holds",
+      "questionSha256": "6eb5a39385aada1a2130fcd5edf836a101b6aa58a9f188c4e3b5c3ab40e4d71d",
+      "aigSha256": "5fde34c2f2735b8496333587e15982422dccfc980bdfcf7ec99b7733df003c20",
+      "answers": [
+        {
+          "tool": "abc-iprove",
+          "status": "holds",
+          "seconds": 0.06,
+          "x": null,
+          "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+          "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nUNSATISFIABLE  Time =     0.03 sec\nCounter-example is not available."
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "holds",
+          "seconds": 1.44,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+          "tail": "                 \\____ $$$|__/|________/|__/|_______/|__/\n                       \\__/                              \n\nEnd of script. Logfile hash: 64ab8f9368, time: 1.41s, user: 1.37s, system: 0.05s, MEM: 94.04 MB peak\nYosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)\nTime spent: 38% 5x read_verilog (0 sec), 18% 1x sat (0 sec), ..."
+        }
+      ],
+      "counterexample": null,
+      "mutant": {
+        "note": "tax is replaced by gross + 1 when gross is N1,000",
+        "questionSha256": "23bbe696a2888f650822f484825d591591384ed76d48ca18971e5c78a073bd59",
+        "aigSha256": "a6cfcc990e9297e1c3dcfa05b21123dd5c8e5f6fbf4474e9ee7c6cdff9799ee6",
+        "status": "fails",
+        "answers": [
+          {
+            "tool": "abc-iprove",
+            "status": "fails",
+            "seconds": 0.04,
+            "x": "1000",
+            "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+            "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.02 sec"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "karwan-test",
+      "ranAt": "2026-11-24T11:07:35.854Z"
+    },
+    {
+      "kind": "fact",
+      "ruleId": "ng-paye-nta2025",
+      "factId": "more-pay-more-tax",
+      "statement": {
+        "en": "With the same deductions, more pay never means less tax",
+        "zh": "扣除项相同时，收入越高，税额不会更少"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "10",
+          "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+          "gateCount": 8482,
+          "nIn": 195,
+          "nOut": 57
+        }
+      ],
+      "blockNumber": 76749414,
+      "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+      "status": "undecided",
+      "questionSha256": "25d79340eec77efb30e2e86ebd5d10d1c34cb975823a394569f32c37f45a8ad8",
+      "aigSha256": "c7ee8f3d58d9ad80184731dc6a3e63be6295f2689b721ad98f16f376683eb995",
+      "answers": [
+        {
+          "tool": "abc-iprove",
+          "status": "undecided",
+          "seconds": 900.01,
+          "x": null,
+          "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+          "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\""
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "undecided",
+          "seconds": 900.03,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+          "tail": "Imported 18748 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 85082 variables and 217077 clauses.."
+        }
+      ],
+      "counterexample": null,
+      "mutant": {
+        "note": "tax is set to 0 when gross is N2,000,000",
+        "questionSha256": "d0032d85408904e673fa5227814986e7f321a579de0ad4a7451756414292396c",
+        "aigSha256": "5a58b44e0e1901025bc35e4307af0e9bdf93b18c426834934a5e4810fe551539",
+        "status": "fails",
+        "answers": [
+          {
+            "tool": "abc-iprove",
+            "status": "fails",
+            "seconds": 1.34,
+            "x": "100433627796622371533570321333107997800651786442042337936660818618",
+            "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+            "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     1.32 sec"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "karwan-test",
+      "ranAt": "2026-11-24T11:37:44.726Z"
+    },
+    {
+      "kind": "fact",
+      "ruleId": "ng-paye-nta2025",
+      "factId": "raise-never-lowers-take-home",
+      "statement": {
+        "en": "With the same deductions, a raise never leaves you with less after tax",
+        "zh": "扣除项相同时，加薪后税后收入不会更少"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "10",
+          "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+          "gateCount": 8482,
+          "nIn": 195,
+          "nOut": 57
+        }
+      ],
+      "blockNumber": 76749414,
+      "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+      "status": "fails",
+      "questionSha256": "031cf82b7cbf68c9a24136f2d8f35c06facc68e722acf7415c8ce089f71ebd4e",
+      "aigSha256": "339c6b46e62b9db002effcb7c4211ffab5c2a51c8fc26c7965a59316e9662c0c",
+      "answers": [
+        {
+          "tool": "abc-iprove",
+          "status": "fails",
+          "seconds": 13.13,
+          "x": "42437827679258163004106928211132303988834067611360519615333323028",
+          "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+          "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =    13.10 sec"
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "undecided",
+          "seconds": 900.02,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+          "tail": "Imported 19223 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 87647 variables and 223822 clauses.."
+        }
+      ],
+      "counterexample": {
+        "first": {
+          "gross": "839956",
+          "pension": "1086",
+          "nhf": "30",
+          "nhis": "1276",
+          "life": "2401",
+          "mortgage": "531",
+          "rent": "24952"
+        },
+        "second": {
+          "gross": "845092",
+          "pension": "1086",
+          "nhf": "30",
+          "nhis": "1276",
+          "life": "2401",
+          "mortgage": "531",
+          "rent": "24952"
+        },
+        "taxFirst": "0",
+        "taxSecond": "5216"
+      },
+      "mutant": null,
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "karwan-test",
+      "ranAt": "2026-11-24T11:53:02.502Z",
+      "traps": {
+        "over": "gross",
+        "result": "gross - annual_tax",
+        "fixed": "every deduction 0",
+        "ranges": [
+          {
+            "edge": "840000",
+            "from": "840001",
+            "to": "847057",
+            "resultAtEdge": "840000",
+            "lossAtFrom": "5999",
+            "onChain": {
+              "takeHomeAtEdge": "840000",
+              "takeHomeAtFrom": "834001",
+              "takeHomeAtTo": "839999"
+            }
+          }
+        ],
+        "complete": false,
+        "seconds": 1041.922,
+        "queries": [
+          {
+            "kind": "edge",
+            "answer": "sat",
+            "seconds": 103.69,
+            "detail": "x = 840000"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 537290912]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 269065456]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 134952728]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 67896364]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 34368182]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 17604091]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 9222045]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 5031022]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 2935511]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 1887755]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 1363877]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(840000, 1101938]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 970969]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(840000, 905484]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 872742]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 856371]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(840000, 848185]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(840000, 844092]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(840000, 846138]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 847161]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(840000, 846649]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(840000, 846905]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(840000, 847033]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 847097]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 847065]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(840000, 847049]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(840000, 847057]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 847061]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 847059]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(840000, 847058]"
+          },
+          {
+            "kind": "edge",
+            "answer": "undecided",
+            "seconds": 900.01,
+            "detail": ""
+          }
+        ]
+      },
+      "expectedFromReadme": {
+        "note": "rules/ng-paye-nta2025/README.md, our reading of section 162 (1) (t) and the Fourth Schedule (D3, D4)",
+        "expected": [
+          {
+            "from": "840001",
+            "to": "847057"
+          }
+        ],
+        "match": true
+      }
+    },
+    {
+      "kind": "fact",
+      "ruleId": "ng-paye-nta2025",
+      "factId": "relief-never-raises-tax",
+      "statement": {
+        "en": "Claiming more of any relief or deduction never raises the tax",
+        "zh": "多申报任何一项减免或扣除，税额不会因此增加"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "10",
+          "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+          "gateCount": 8482,
+          "nIn": 195,
+          "nOut": 57
+        }
+      ],
+      "blockNumber": 76749414,
+      "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+      "status": "undecided",
+      "questionSha256": "8b89c2978394bf5e1d899a7a3ce4e8412d1024b9fd65814c5c0e239083dc703b",
+      "aigSha256": "56422ab3da490c36084889f38cb930db94fd8a7efca4fbf79c6dcb955e904ac3",
+      "answers": [
+        {
+          "tool": "abc-iprove",
+          "status": "undecided",
+          "seconds": 900.01,
+          "x": null,
+          "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+          "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\""
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "undecided",
+          "seconds": 900.02,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+          "tail": "Imported 22085 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 100788 variables and 257116 clauses.."
+        }
+      ],
+      "counterexample": null,
+      "mutant": {
+        "note": "tax is raised by N1,000 when the rent is N1,000,000",
+        "questionSha256": "34be3b39ad8005f1e30282992174ae78cf42783d9e94161737b8407360e3dd0d",
+        "aigSha256": "92a8497fe7cdadc851060ebd8dec51ff73403c35ca403cb2fbd5deac0a43fdc3",
+        "status": "fails",
+        "answers": [
+          {
+            "tool": "abc-iprove",
+            "status": "fails",
+            "seconds": 1.48,
+            "x": "2187252775371139072786009598030454419508885892347170219592007085632153157820000480893986786967719470670307",
+            "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+            "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     1.45 sec"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "karwan-test",
+      "ranAt": "2026-11-24T12:23:06.878Z"
+    },
+    {
+      "kind": "fact",
+      "ruleId": "ng-paye-nta2025",
+      "factId": "breakdown-adds-up",
+      "statement": {
+        "en": "The bands add up to the chargeable income, and the tax is the sum of each band times its rate",
+        "zh": "各税级收入之和等于应纳税所得额，税额等于各税级收入乘以税率之和"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "10",
+          "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+          "gateCount": 8482,
+          "nIn": 195,
+          "nOut": 57
+        },
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "11",
+          "netlistKeccak": "0xd27eaed86b4efca5864033c786ab7f181df6fc0dc8c4b41bdfaf12a6decba169",
+          "gateCount": 3645,
+          "nIn": 195,
+          "nOut": 227
+        }
+      ],
+      "blockNumber": 76749414,
+      "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+      "status": "holds",
+      "questionSha256": "9087a78f8b87c116c1e0e33f317c89be242a662aa318be882800c668349de1e6",
+      "aigSha256": "42b315a9a9e50c0e2160f4b63e372b5224ad0e0260506105654635ae33fa7da2",
+      "answers": [
+        {
+          "tool": "abc-iprove",
+          "status": "holds",
+          "seconds": 19.4,
+          "x": null,
+          "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+          "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nUNSATISFIABLE  Time =    19.36 sec\nCounter-example is not available."
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "undecided",
+          "seconds": 900.03,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+          "tail": "Imported 26876 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 134648 variables and 349609 clauses.."
+        }
+      ],
+      "counterexample": null,
+      "mutant": {
+        "note": "tax is raised by N1 when gross is N5,000,000",
+        "questionSha256": "247cbc230d573a489d0a4dac59dfc647863713774c057ece940f92dd3e2e49b3",
+        "aigSha256": "472a4de8781f30919651c4564735161c6e387e83574e682bd7ef9c3206b636df",
+        "status": "fails",
+        "answers": [
+          {
+            "tool": "abc-iprove",
+            "status": "fails",
+            "seconds": 0.87,
+            "x": "264426474702900814006969524377862360338195305154810235712",
+            "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+            "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.84 sec"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "karwan-test",
+      "ranAt": "2026-11-24T12:38:39.822Z"
+    }
+  ]
+}

@@ -1,0 +1,304 @@
+{
+  "kind": "fact",
+  "ruleId": "ng-paye-nta2025",
+  "factId": "raise-never-lowers-take-home",
+  "statement": {
+    "en": "With the same deductions, a raise never leaves you with less after tax",
+    "zh": "扣除项相同时，加薪后税后收入不会更少"
+  },
+  "circuits": [
+    {
+      "chainId": 196,
+      "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+      "id": "10",
+      "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+      "gateCount": 8482,
+      "nIn": 195,
+      "nOut": 57
+    }
+  ],
+  "blockNumber": 76749414,
+  "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+  "status": "fails",
+  "questionSha256": "031cf82b7cbf68c9a24136f2d8f35c06facc68e722acf7415c8ce089f71ebd4e",
+  "aigSha256": "339c6b46e62b9db002effcb7c4211ffab5c2a51c8fc26c7965a59316e9662c0c",
+  "answers": [
+    {
+      "tool": "abc-iprove",
+      "status": "fails",
+      "seconds": 13.13,
+      "x": "42437827679258163004106928211132303988834067611360519615333323028",
+      "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+      "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =    13.10 sec"
+    },
+    {
+      "tool": "yosys-sat",
+      "status": "undecided",
+      "seconds": 900.02,
+      "x": null,
+      "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+      "tail": "Imported 19223 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 87647 variables and 223822 clauses.."
+    }
+  ],
+  "counterexample": {
+    "first": {
+      "gross": "839956",
+      "pension": "1086",
+      "nhf": "30",
+      "nhis": "1276",
+      "life": "2401",
+      "mortgage": "531",
+      "rent": "24952"
+    },
+    "second": {
+      "gross": "845092",
+      "pension": "1086",
+      "nhf": "30",
+      "nhis": "1276",
+      "life": "2401",
+      "mortgage": "531",
+      "rent": "24952"
+    },
+    "taxFirst": "0",
+    "taxSecond": "5216"
+  },
+  "mutant": null,
+  "tools": [
+    {
+      "name": "yosys",
+      "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+    },
+    {
+      "name": "yosys-abc",
+      "version": "bundled with the same OSS CAD Suite 2026-10-29"
+    }
+  ],
+  "timeoutSeconds": 900,
+  "ranOn": "karwan-test",
+  "ranAt": "2026-11-24T11:53:02.502Z",
+  "traps": {
+    "over": "gross",
+    "result": "gross - annual_tax",
+    "fixed": "every deduction 0",
+    "ranges": [
+      {
+        "edge": "840000",
+        "from": "840001",
+        "to": "847057",
+        "resultAtEdge": "840000",
+        "lossAtFrom": "5999",
+        "onChain": {
+          "takeHomeAtEdge": "840000",
+          "takeHomeAtFrom": "834001",
+          "takeHomeAtTo": "839999"
+        }
+      }
+    ],
+    "complete": false,
+    "seconds": 1041.922,
+    "queries": [
+      {
+        "kind": "edge",
+        "answer": "sat",
+        "seconds": 103.69,
+        "detail": "x = 840000"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 537290912]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 269065456]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 134952728]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 67896364]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 34368182]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 17604091]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 9222045]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 5031022]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 2935511]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 1887755]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 1363877]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.05,
+        "detail": "(840000, 1101938]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 970969]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.05,
+        "detail": "(840000, 905484]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 872742]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 856371]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.05,
+        "detail": "(840000, 848185]"
+      },
+      {
+        "kind": "widen",
+        "answer": "unsat",
+        "seconds": 0.04,
+        "detail": "(840000, 844092]"
+      },
+      {
+        "kind": "widen",
+        "answer": "unsat",
+        "seconds": 0.04,
+        "detail": "(840000, 846138]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 847161]"
+      },
+      {
+        "kind": "widen",
+        "answer": "unsat",
+        "seconds": 0.05,
+        "detail": "(840000, 846649]"
+      },
+      {
+        "kind": "widen",
+        "answer": "unsat",
+        "seconds": 0.04,
+        "detail": "(840000, 846905]"
+      },
+      {
+        "kind": "widen",
+        "answer": "unsat",
+        "seconds": 0.04,
+        "detail": "(840000, 847033]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 847097]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 847065]"
+      },
+      {
+        "kind": "widen",
+        "answer": "unsat",
+        "seconds": 0.05,
+        "detail": "(840000, 847049]"
+      },
+      {
+        "kind": "widen",
+        "answer": "unsat",
+        "seconds": 0.04,
+        "detail": "(840000, 847057]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 847061]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 847059]"
+      },
+      {
+        "kind": "widen",
+        "answer": "sat",
+        "seconds": 0.04,
+        "detail": "(840000, 847058]"
+      },
+      {
+        "kind": "edge",
+        "answer": "undecided",
+        "seconds": 900.01,
+        "detail": ""
+      }
+    ]
+  },
+  "expectedFromReadme": {
+    "note": "rules/ng-paye-nta2025/README.md, our reading of section 162 (1) (t) and the Fourth Schedule (D3, D4)",
+    "expected": [
+      {
+        "from": "840001",
+        "to": "847057"
+      }
+    ],
+    "match": true
+  }
+}

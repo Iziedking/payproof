@@ -1,0 +1,73 @@
+{
+  "kind": "fact",
+  "ruleId": "ng-paye-nta2025",
+  "factId": "relief-never-raises-tax",
+  "statement": {
+    "en": "Claiming more of any relief or deduction never raises the tax",
+    "zh": "多申报任何一项减免或扣除，税额不会因此增加"
+  },
+  "circuits": [
+    {
+      "chainId": 196,
+      "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+      "id": "10",
+      "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+      "gateCount": 8482,
+      "nIn": 195,
+      "nOut": 57
+    }
+  ],
+  "blockNumber": 76749414,
+  "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+  "status": "undecided",
+  "questionSha256": "8b89c2978394bf5e1d899a7a3ce4e8412d1024b9fd65814c5c0e239083dc703b",
+  "aigSha256": "56422ab3da490c36084889f38cb930db94fd8a7efca4fbf79c6dcb955e904ac3",
+  "answers": [
+    {
+      "tool": "abc-iprove",
+      "status": "undecided",
+      "seconds": 900.01,
+      "x": null,
+      "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+      "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\""
+    },
+    {
+      "tool": "yosys-sat",
+      "status": "undecided",
+      "seconds": 900.02,
+      "x": null,
+      "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+      "tail": "Imported 22085 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 100788 variables and 257116 clauses.."
+    }
+  ],
+  "counterexample": null,
+  "mutant": {
+    "note": "tax is raised by N1,000 when the rent is N1,000,000",
+    "questionSha256": "34be3b39ad8005f1e30282992174ae78cf42783d9e94161737b8407360e3dd0d",
+    "aigSha256": "92a8497fe7cdadc851060ebd8dec51ff73403c35ca403cb2fbd5deac0a43fdc3",
+    "status": "fails",
+    "answers": [
+      {
+        "tool": "abc-iprove",
+        "status": "fails",
+        "seconds": 1.48,
+        "x": "2187252775371139072786009598030454419508885892347170219592007085632153157820000480893986786967719470670307",
+        "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+        "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     1.45 sec"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "yosys",
+      "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+    },
+    {
+      "name": "yosys-abc",
+      "version": "bundled with the same OSS CAD Suite 2026-10-29"
+    }
+  ],
+  "timeoutSeconds": 900,
+  "ranOn": "karwan-test",
+  "ranAt": "2026-11-24T12:23:06.878Z"
+}

@@ -1,0 +1,82 @@
+{
+  "kind": "fact",
+  "ruleId": "ng-paye-nta2025",
+  "factId": "breakdown-adds-up",
+  "statement": {
+    "en": "The bands add up to the chargeable income, and the tax is the sum of each band times its rate",
+    "zh": "各税级收入之和等于应纳税所得额，税额等于各税级收入乘以税率之和"
+  },
+  "circuits": [
+    {
+      "chainId": 196,
+      "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+      "id": "10",
+      "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+      "gateCount": 8482,
+      "nIn": 195,
+      "nOut": 57
+    },
+    {
+      "chainId": 196,
+      "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+      "id": "11",
+      "netlistKeccak": "0xd27eaed86b4efca5864033c786ab7f181df6fc0dc8c4b41bdfaf12a6decba169",
+      "gateCount": 3645,
+      "nIn": 195,
+      "nOut": 227
+    }
+  ],
+  "blockNumber": 76749414,
+  "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+  "status": "holds",
+  "questionSha256": "9087a78f8b87c116c1e0e33f317c89be242a662aa318be882800c668349de1e6",
+  "aigSha256": "42b315a9a9e50c0e2160f4b63e372b5224ad0e0260506105654635ae33fa7da2",
+  "answers": [
+    {
+      "tool": "abc-iprove",
+      "status": "holds",
+      "seconds": 19.4,
+      "x": null,
+      "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+      "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nUNSATISFIABLE  Time =    19.36 sec\nCounter-example is not available."
+    },
+    {
+      "tool": "yosys-sat",
+      "status": "undecided",
+      "seconds": 900.03,
+      "x": null,
+      "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+      "tail": "Imported 26876 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 134648 variables and 349609 clauses.."
+    }
+  ],
+  "counterexample": null,
+  "mutant": {
+    "note": "tax is raised by N1 when gross is N5,000,000",
+    "questionSha256": "247cbc230d573a489d0a4dac59dfc647863713774c057ece940f92dd3e2e49b3",
+    "aigSha256": "472a4de8781f30919651c4564735161c6e387e83574e682bd7ef9c3206b636df",
+    "status": "fails",
+    "answers": [
+      {
+        "tool": "abc-iprove",
+        "status": "fails",
+        "seconds": 0.87,
+        "x": "264426474702900814006969524377862360338195305154810235712",
+        "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+        "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.84 sec"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "yosys",
+      "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+    },
+    {
+      "name": "yosys-abc",
+      "version": "bundled with the same OSS CAD Suite 2026-10-29"
+    }
+  ],
+  "timeoutSeconds": 900,
+  "ranOn": "karwan-test",
+  "ranAt": "2026-11-24T12:38:39.822Z"
+}

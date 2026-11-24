@@ -1,0 +1,62 @@
+{
+  "rpc": "http://127.0.0.1:8545",
+  "block": 76754611,
+  "circuitId": "9",
+  "name": "9.2.425.tape",
+  "gatewayUrl": "https://9-2-425.tapekit.org/",
+  "container": "0x2b6cedc361719b551d1410f9fa25d90719770adf",
+  "opened": true,
+  "live": true,
+  "containerLive": true,
+  "checks": [
+    {
+      "path": "apple-touch-icon-180.png",
+      "bytes": 1049,
+      "chunkCount": 1,
+      "sameBytes": true,
+      "declaredSha": true,
+      "contentTypeOk": true
+    },
+    {
+      "path": "assets/index-BchCgAus.js",
+      "bytes": 301291,
+      "chunkCount": 13,
+      "sameBytes": true,
+      "declaredSha": true,
+      "contentTypeOk": true
+    },
+    {
+      "path": "assets/index-J9SKQEqf.css",
+      "bytes": 14320,
+      "chunkCount": 1,
+      "sameBytes": true,
+      "declaredSha": true,
+      "contentTypeOk": true
+    },
+    {
+      "path": "favicon-32.png",
+      "bytes": 368,
+      "chunkCount": 1,
+      "sameBytes": true,
+      "declaredSha": true,
+      "contentTypeOk": true
+    },
+    {
+      "path": "favicon.svg",
+      "bytes": 371,
+      "chunkCount": 1,
+      "sameBytes": true,
+      "declaredSha": true,
+      "contentTypeOk": true
+    },
+    {
+      "path": "index.html",
+      "bytes": 1252,
+      "chunkCount": 1,
+      "sameBytes": true,
+      "declaredSha": true,
+      "contentTypeOk": true
+    }
+  ],
+  "ok": true
+}

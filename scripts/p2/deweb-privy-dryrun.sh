@@ -55,7 +55,10 @@ COMMON="--rpc-url $FORK --chain 196 --sender $DEPLOYER --unlocked --legacy --wit
 RUN="forge script script/DeWebPublish.s.sol --sig 'run(uint256,uint256)' $ID $MONTHS $COMMON"
 
 echo "== 1. prepare $SITE from app/dist"
-node_run landed "$FORK" "$SITE" "$ID" out/deweb-privy-before.json >/dev/null
+# chain/site must hold the committed copy of the live site here. A previous rehearsal leaves the
+# new build in it, and then this read cannot match the live site.
+node_run landed "$FORK" "$SITE" "$ID" out/deweb-privy-before.json >/dev/null \
+  || { echo "FAIL: $SITE does not match the live site; copy the committed chain/site to the host first"; exit 1; }
 cp "$SITE/manifest.json" out/deweb-privy-manifest-before.json
 node_run prepare app/dist "$SITE"
 EXPECT=$(docker run --rm --user 1000:1000 -v "$PWD:/w" -w /w "$NODE" node -e '

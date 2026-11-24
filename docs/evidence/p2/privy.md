@@ -44,10 +44,48 @@ loads them on demand, and some are never used by email login. The largest is 401
 Every file must be published to SiteRegistry to be served. That means at least one
 transaction per file, so over 300 transactions.
 
-The gas is not measured. A rough figure comes from the first publish (deweb.md), which spent
-about 227 gas a byte, container opening included. On that basis, 5.27 MB is roughly
-1.2 billion gas, about **0.024 OKB** at 20,000,001 wei. The deployer holds 0.0150 OKB. A
-rehearsal on a fork would give the real figure before anything is sent.
+Before measuring, a rough figure came from the first publish (deweb.md): about 227 gas a
+byte, so roughly 1.2 billion gas, about 0.024 OKB.
+
+### Measured on a fork (SIMULATION, 2026-11-24)
+
+`scripts/p2/deweb-privy-dryrun.sh` (task `p2-deweb-privy-dryrun`, on `karwan-test`) published
+this build to circuit 9's site with the owner's script, on an anvil fork of X Layer at block
+76,754,611. The deployer was impersonated and nothing was sent to the live chain. Its live
+balance is not enough, so on the fork only it was raised to 1 OKB.
+
+| | Measured |
+| --- | --- |
+| Transactions | 470, one per 24,000-byte chunk of the 308 new or changed files, 5,255,756 bytes (470 expected) |
+| Gas used | 1,264,274,867 |
+| Largest single transaction | 5,537,104 gas |
+| OKB spent at 20,000,001 wei | 0.025285 |
+| Forge's own estimate in the simulation step | 1,774,227,041 gas, 0.035485 OKB |
+| Time | simulation 739 s, publish 1,113 s |
+
+All checks passed:
+
+- the simulation did not move the nonce (39);
+- the publish moved it from 39 to 509, exactly 470 transactions;
+- all 312 files read back byte for byte, and the name is still live;
+- a second run sent nothing.
+
+The first attempt failed in simulation with `DeployFailed()`: forge runs the whole script as one
+call while simulating, and this publish passes forge's default gas limit for that call. The
+script and the command printed by `scripts/p2/deweb-plan.mts` now add
+`--gas-limit 100000000000`. That flag does not change the gas of any transaction sent.
+
+What this means for the live publish:
+
+- The deployer holds 0.014963 OKB. The measured spend is 0.025285 OKB, so it is short by
+  about 0.0103 OKB before any margin.
+- Forge's simulation estimate is higher, 0.035485 OKB. If the live run needs that much in
+  the account to start, the shortfall is about 0.0205 OKB.
+- The P4 estimate (`docs/evidence/p4/cost-estimate.md`) needs its own OKB on top of this.
+
+Evidence is in `docs/evidence/p2/deweb-privy/`: `run.log`, the forge and anvil logs, the
+read-backs before and after, the gas summary and the run summary. Forge's broadcast record
+(`run-latest.json`, 33.6 MB) is not copied; its SHA-256 is in `deweb-privy-run-latest.sha256`.
 
 ## Not done
 

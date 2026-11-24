@@ -1,0 +1,43 @@
+expected transactions: 470
+== owner command and cost estimate, as printed for the live chain
+Site 9.2.425.tape (https://9-2-425.tapekit.org/): 312 files in the manifest.
+Container opened already: true. Name live already: true. Opening fee 0.080000 OKB, monthly fee 0.000000 OKB x 12.
+Estimated cost 0.024320 OKB at 20000001 wei (gas estimated from the fork rehearsal). Deployer holds 0.014963 OKB.
+WARNING: the deployer holds less than the estimate. Top it up before broadcasting.
+Run from chain/. First without --broadcast (simulation only), then the same line with --broadcast:
+
+forge script script/DeWebPublish.s.sol --sig "run(uint256,uint256)" 9 12 --rpc-url https://xlayerrpc.okx.com --chain 196 --sender 0x5c807eA36fC11a72192d83ecff2b3D4746767612 --account payproof-deployer --legacy --with-gas-price 20000001 --slow
+== 2. simulation only (no --broadcast)
+Estimated total gas used for script: 1774227041
+
+Estimated amount required: 0.035484542594227041 ETH
+
+==========================
+
+SIMULATION COMPLETE. To broadcast these transactions, add --broadcast and wallet configuration(s) to the previous command. See forge script --help for more.
+
+Transactions saved to: /w/chain/broadcast/DeWebPublish.s.sol/196/dry-run/run-latest.json
+
+Sensitive values saved to: /w/chain/cache/DeWebPublish.s.sol/196/dry-run/run-latest.json
+
+nonce before and after 39; simulation took 739 s
+== 3. publish with --broadcast (fork)
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: /w/chain/broadcast/DeWebPublish.s.sol/196/run-latest.json
+
+Sensitive values saved to: /w/chain/cache/DeWebPublish.s.sol/196/run-latest.json
+
+nonce 39 -> 509: 470 transactions (expected 470); spent 25285498604274867 wei; blocks 76754611 -> 76755081; took 1113 s
+{"receipts":470,"gasUsed":1264274867,"maxGasOneTx":5537104,"okbAt20000001":0.02528549860427487}
+== 4. read every file back
+== 5. a second run with --broadcast must send nothing
+nonce before and after 509
+ALL CHECKS PASSED
+
+[exited with code 0]
+{"receipts":470,"gasUsed":1264274867,"maxGasOneTx":5537104,"okbAt20000001":0.02528549860427487}
+{"liveBalanceWei":"14962865694259800","balanceRaisedOnForkOnly":true,"nonceStart":39,"nonceAfterPublish":509,"transactions":470,"expected":470,"spentWei":"25285498604274867"}
+True 312 76755081
