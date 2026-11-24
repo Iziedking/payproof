@@ -42,10 +42,28 @@ run on GitHub yet. The real mirror check happens on the first run after the push
 
 Evidence: `docs/evidence/p2/mirror/mirror-check-local-{pass,tampered,missing}.json`.
 
+## First run on GitHub (2026-11-24)
+
+The owner enabled Pages (source: GitHub Actions). The first attempt of run 45344066428 had
+stopped at `configure-pages` because Pages was off; the second attempt passed all three jobs:
+
+| Job | Result |
+| --- | --- |
+| `build` | tests passed; `chain/site` read back from X Layer at block 76,734,412, all six files match |
+| `deploy` | published to `https://iziedking.github.io/payproof/` |
+| `check` | at block 76,734,451, all six files under `https://iziedking.github.io/payproof/app/` (HTTP 200) are byte for byte the files in SiteRegistry |
+
+In Chrome, the mirror's app ran the China bonus check for 36,001 and gave ¥32,610.90 kept,
+inside the trap ¥36,000.01 to ¥38,566.65, as on DeWEB. The landing page loads at the root.
+
+Whether the runner's own build reproduces the published hashes is in that run's job summary,
+which was not copied here.
+
+Evidence: `docs/evidence/p2/mirror/mirror-check-github-run-45344066428.json`,
+`mirror-cn-36001.jpg`.
+
 ## Not settled
 
-- **GitHub Pages is not enabled yet.** The site gave 404 when last checked. The owner turns on
-  Pages (Settings, Pages, Source: GitHub Actions) and pushes, and the first run needs checking.
 - **Icons.** `chain/site/` now has six files, the three icons included, and all six are on
   chain since 2026-11-24 (see `deweb.md`, "Adding the icons"), so the workflow's check against
   X Layer passes. The rehearsal above was run with the three-file `chain/site/`.

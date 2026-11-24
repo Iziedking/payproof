@@ -1,0 +1,66 @@
+{
+  "run": "https://github.com/Iziedking/payproof/actions/runs/45344066428",
+  "attempt": 2,
+  "rpc": "https://xlayerrpc.okx.com",
+  "block": 76734451,
+  "circuitId": "9",
+  "container": "0x2b6cedc361719b551d1410f9fa25d90719770adf",
+  "mirror": "https://iziedking.github.io/payproof/app/",
+  "checks": [
+    {
+      "path": "apple-touch-icon-180.png",
+      "status": 200,
+      "contentType": "image/png",
+      "mirrorSha": "0x1d023087845ffd8eb51d68ddbb605a2b6956e73180fa787caf7d28449192e4f3",
+      "chainSha": "0x1d023087845ffd8eb51d68ddbb605a2b6956e73180fa787caf7d28449192e4f3",
+      "manifestSha": "0x1d023087845ffd8eb51d68ddbb605a2b6956e73180fa787caf7d28449192e4f3",
+      "sameAsChain": true
+    },
+    {
+      "path": "assets/index-BchCgAus.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorSha": "0x93c7096fe6053ca032cc6573a2169f1a6d15ffe9f3921fb15f0675fdaba79cfb",
+      "chainSha": "0x93c7096fe6053ca032cc6573a2169f1a6d15ffe9f3921fb15f0675fdaba79cfb",
+      "manifestSha": "0x93c7096fe6053ca032cc6573a2169f1a6d15ffe9f3921fb15f0675fdaba79cfb",
+      "sameAsChain": true
+    },
+    {
+      "path": "assets/index-J9SKQEqf.css",
+      "status": 200,
+      "contentType": "text/css; charset=utf-8",
+      "mirrorSha": "0xdb063f785636bff5c51bda055099e48c20c6f5d9d853005a71831da2620b5995",
+      "chainSha": "0xdb063f785636bff5c51bda055099e48c20c6f5d9d853005a71831da2620b5995",
+      "manifestSha": "0xdb063f785636bff5c51bda055099e48c20c6f5d9d853005a71831da2620b5995",
+      "sameAsChain": true
+    },
+    {
+      "path": "favicon-32.png",
+      "status": 200,
+      "contentType": "image/png",
+      "mirrorSha": "0x90ea5c003d0c53700aa97db4ae8b5fd13211870122219970242ec28bbcdc5f8e",
+      "chainSha": "0x90ea5c003d0c53700aa97db4ae8b5fd13211870122219970242ec28bbcdc5f8e",
+      "manifestSha": "0x90ea5c003d0c53700aa97db4ae8b5fd13211870122219970242ec28bbcdc5f8e",
+      "sameAsChain": true
+    },
+    {
+      "path": "favicon.svg",
+      "status": 200,
+      "contentType": "image/svg+xml",
+      "mirrorSha": "0x527f5a0819d691d4be85a8404e4b1fef5e54e9c07aa8692d7427ef6f74001fc7",
+      "chainSha": "0x527f5a0819d691d4be85a8404e4b1fef5e54e9c07aa8692d7427ef6f74001fc7",
+      "manifestSha": "0x527f5a0819d691d4be85a8404e4b1fef5e54e9c07aa8692d7427ef6f74001fc7",
+      "sameAsChain": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "mirrorSha": "0x33da535f72ccc5b8006261e3e218b9ee93283039dae1ed9ff7a042cde50ac1f9",
+      "chainSha": "0x33da535f72ccc5b8006261e3e218b9ee93283039dae1ed9ff7a042cde50ac1f9",
+      "manifestSha": "0x33da535f72ccc5b8006261e3e218b9ee93283039dae1ed9ff7a042cde50ac1f9",
+      "sameAsChain": true
+    }
+  ],
+  "ok": true
+}
