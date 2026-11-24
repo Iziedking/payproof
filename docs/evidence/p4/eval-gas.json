@@ -1,0 +1,109 @@
+{
+  "method": "eth_estimateGas on the live chain, read only",
+  "rpc": "https://xlayerrpc.okx.com",
+  "block": 76743905,
+  "blockGasLimit": 210000000,
+  "gasPriceWei": "20000001",
+  "deployer": "0x5c807eA36fC11a72192d83ecff2b3D4746767612",
+  "deployerBalanceWei": "14962865694259800",
+  "circuits": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+  "rows": [
+    {
+      "name": "m_mul_tmc_32",
+      "id": "3",
+      "nIn": 64,
+      "nOut": 64,
+      "gasZeroInput": 35301359,
+      "gasOtherInput": 35295004
+    },
+    {
+      "name": "m_x8500",
+      "id": "4",
+      "nIn": 64,
+      "nOut": 78,
+      "gasZeroInput": 8453316,
+      "gasOtherInput": 8464874
+    },
+    {
+      "name": "m_add",
+      "id": "5",
+      "nIn": 124,
+      "nOut": 79,
+      "gasZeroInput": 1947618,
+      "gasOtherInput": 1958781
+    },
+    {
+      "name": "m_x10000_narrow",
+      "id": "6",
+      "nIn": 32,
+      "nOut": 46,
+      "gasZeroInput": 3808276,
+      "gasOtherInput": 3819101
+    },
+    {
+      "name": "m_x10000_wide",
+      "id": "7",
+      "nIn": 64,
+      "nOut": 78,
+      "gasZeroInput": 7676172,
+      "gasOtherInput": 7687016
+    },
+    {
+      "name": "split_v1_top",
+      "id": "8",
+      "nIn": 128,
+      "nOut": 1,
+      "gasZeroInput": 97130345,
+      "gasOtherInput": 97226124
+    },
+    {
+      "name": "cn_bonus",
+      "id": "9",
+      "nIn": 32,
+      "nOut": 64,
+      "gasZeroInput": 8313412,
+      "gasOtherInput": 8322963
+    },
+    {
+      "name": "ng_paye",
+      "id": "10",
+      "nIn": 195,
+      "nOut": 57,
+      "gasZeroInput": 19747319,
+      "gasOtherInput": 19767840
+    },
+    {
+      "name": "ng_paye_explain",
+      "id": "11",
+      "nIn": 195,
+      "nOut": 227,
+      "gasZeroInput": 8580821,
+      "gasOtherInput": 8607304
+    },
+    {
+      "name": "cn_bonus_explain",
+      "id": "12",
+      "nIn": 32,
+      "nOut": 63,
+      "gasZeroInput": 7041011,
+      "gasOtherInput": 7047601
+    },
+    {
+      "name": "split_v1_validity",
+      "id": "13",
+      "nIn": 128,
+      "nOut": 1,
+      "gasZeroInput": 969235,
+      "gasOtherInput": 981251
+    },
+    {
+      "name": "split_v1_explain",
+      "id": "14",
+      "nIn": 128,
+      "nOut": 203,
+      "gasZeroInput": 92923638,
+      "gasOtherInput": 93049994
+    }
+  ],
+  "at": "2026-11-24T09:35:48.806Z"
+}
