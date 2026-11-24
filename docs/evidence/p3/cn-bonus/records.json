@@ -1,0 +1,1505 @@
+{
+  "started": "2026-11-24T09:34:51.332Z",
+  "finished": "2026-11-24T10:06:49.656Z",
+  "block": 76743855,
+  "records": [
+    {
+      "kind": "fact",
+      "ruleId": "cn-bonus-2023-30",
+      "factId": "tax-within-bonus",
+      "statement": {
+        "en": "The tax on a bonus is never more than the bonus",
+        "zh": "年终奖的税额不会超过年终奖本身"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "9",
+          "netlistKeccak": "0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537",
+          "gateCount": 3573,
+          "nIn": 32,
+          "nOut": 64
+        }
+      ],
+      "blockNumber": 76743855,
+      "domain": "every 32-bit bonus (no validity circuit, owner decision 2026-11-22)",
+      "status": "holds",
+      "questionSha256": "7e5ed6c0db94a9a7fd29a17cd1c4f6a00359680a78956e100b7bc0a5af6483f4",
+      "aigSha256": "567057b20a0a4974b8d4ae7a5c3bbd1fa45cdf0fa57453322dfb0d7d9740740c",
+      "answers": [
+        {
+          "tool": "abc-iprove",
+          "status": "holds",
+          "seconds": 0.03,
+          "x": null,
+          "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+          "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nUNSATISFIABLE  Time =     0.01 sec\nCounter-example is not available."
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "holds",
+          "seconds": 0.49,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+          "tail": "                 \\____ $$$|__/|________/|__/|_______/|__/\n                       \\__/                              \n\nEnd of script. Logfile hash: 33fa35a716, time: 0.48s, user: 0.46s, system: 0.02s, MEM: 52.59 MB peak\nYosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)\nTime spent: 40% 5x read_verilog (0 sec), 20% 1x sat (0 sec), ..."
+        }
+      ],
+      "counterexample": null,
+      "mutant": {
+        "note": "tax is replaced by bonus + 1 when the bonus is 100 fen",
+        "questionSha256": "d34aeedfa16d5e58894d968c034502c488fbb120c3e442a18d4e70f043286bd0",
+        "aigSha256": "501ce40d2bca499f1598bd4611a9c0a7e56600e8b920f9c73078b26836ecd6f6",
+        "status": "fails",
+        "answers": [
+          {
+            "tool": "abc-iprove",
+            "status": "fails",
+            "seconds": 0.04,
+            "x": "100",
+            "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+            "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.01 sec"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "bd24178cf4e8",
+      "ranAt": "2026-11-24T09:34:54.044Z"
+    },
+    {
+      "kind": "fact",
+      "ruleId": "cn-bonus-2023-30",
+      "factId": "breakdown-adds-up",
+      "statement": {
+        "en": "The tax equals the tax before the quick deduction minus the quick deduction",
+        "zh": "税额等于扣除速算扣除数之前的税额减去速算扣除数"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "9",
+          "netlistKeccak": "0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537",
+          "gateCount": 3573,
+          "nIn": 32,
+          "nOut": 64
+        },
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "12",
+          "netlistKeccak": "0xcb907d2a913da336a5df02bfa5b96d12577148ff3c3cf2a733ae0c855487b18b",
+          "gateCount": 3045,
+          "nIn": 32,
+          "nOut": 63
+        }
+      ],
+      "blockNumber": 76743855,
+      "domain": "every 32-bit bonus (no validity circuit, owner decision 2026-11-22)",
+      "status": "holds",
+      "questionSha256": "b64a8a7a60f3e4abe6b9f529e4205230e0fc50187b6dfc3425802e4a00b887c3",
+      "aigSha256": "249a67ccf05a0928e57deb27b55e3a64033dbcfb9b95d8606688d60497ce6db5",
+      "answers": [
+        {
+          "tool": "abc-iprove",
+          "status": "holds",
+          "seconds": 0.43,
+          "x": null,
+          "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+          "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nUNSATISFIABLE  Time =     0.41 sec\nCounter-example is not available."
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "undecided",
+          "seconds": 900.01,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+          "tail": "Imported 7976 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 36360 variables and 93034 clauses.."
+        }
+      ],
+      "counterexample": null,
+      "mutant": {
+        "note": "tax is raised by one fen when the bonus is 50,000.00 yuan",
+        "questionSha256": "4ccd6e756499bfc9c3792e3cbd630d22c784f6dfe7e5488d9a76c777ecbff538",
+        "aigSha256": "2abd0649e9fc7095e9bb4befd65e87e6e341a8462c0f7fc8c619164b36fe83ab",
+        "status": "fails",
+        "answers": [
+          {
+            "tool": "abc-iprove",
+            "status": "fails",
+            "seconds": 0.41,
+            "x": "5000000",
+            "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+            "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.39 sec"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "bd24178cf4e8",
+      "ranAt": "2026-11-24T09:49:56.353Z"
+    },
+    {
+      "kind": "fact",
+      "ruleId": "cn-bonus-2023-30",
+      "factId": "raise-never-lowers-take-home",
+      "statement": {
+        "en": "A bigger bonus never leaves you with less after tax",
+        "zh": "年终奖越高，税后到手不会更少"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "9",
+          "netlistKeccak": "0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537",
+          "gateCount": 3573,
+          "nIn": 32,
+          "nOut": 64
+        }
+      ],
+      "blockNumber": 76743855,
+      "domain": "every 32-bit bonus",
+      "status": "fails",
+      "method": "trap finder (prover/src/traps.ts): edge query, then binary-search widening, each by ABC iprove",
+      "traps": {
+        "over": "bonus",
+        "result": "net",
+        "ranges": [
+          {
+            "edge": "3600000",
+            "from": "3600001",
+            "to": "3856665",
+            "resultAtEdge": "3492000",
+            "lossAtFrom": "230999",
+            "onChain": {
+              "netAtEdge": "3492000",
+              "netAtFrom": "3261001",
+              "netAtTo": "3491999"
+            }
+          },
+          {
+            "edge": "14400000",
+            "from": "14400001",
+            "to": "16049998",
+            "resultAtEdge": "12981000",
+            "lossAtFrom": "1319999",
+            "onChain": {
+              "netAtEdge": "12981000",
+              "netAtFrom": "11661001",
+              "netAtTo": "12980999"
+            }
+          },
+          {
+            "edge": "30000000",
+            "from": "30000001",
+            "to": "31833332",
+            "resultAtEdge": "24141000",
+            "lossAtFrom": "1374999",
+            "onChain": {
+              "netAtEdge": "24141000",
+              "netAtFrom": "22766001",
+              "netAtTo": "24140999"
+            }
+          },
+          {
+            "edge": "42000000",
+            "from": "42000001",
+            "to": "44749998",
+            "resultAtEdge": "31766000",
+            "lossAtFrom": "1924999",
+            "onChain": {
+              "netAtEdge": "31766000",
+              "netAtFrom": "29841001",
+              "netAtTo": "31765999"
+            }
+          },
+          {
+            "edge": "66000000",
+            "from": "66000001",
+            "to": "70653844",
+            "resultAtEdge": "46641000",
+            "lossAtFrom": "3024999",
+            "onChain": {
+              "netAtEdge": "46641000",
+              "netAtFrom": "43616001",
+              "netAtTo": "46640999"
+            }
+          },
+          {
+            "edge": "96000000",
+            "from": "96000001",
+            "to": "111999998",
+            "resultAtEdge": "63116000",
+            "lossAtFrom": "8799999",
+            "onChain": {
+              "netAtEdge": "63116000",
+              "netAtFrom": "54316001",
+              "netAtTo": "63115999"
+            }
+          }
+        ],
+        "complete": false,
+        "seconds": 1007.175,
+        "queries": [
+          {
+            "kind": "edge",
+            "answer": "sat",
+            "seconds": 0.32,
+            "detail": "x = 66000000"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 2180483648]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 1123241824]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 594620912]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 330310456]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 198155228]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 132077614]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 99038807]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 82519403]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(66000000, 74259701]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(66000000, 70129850]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 72194775]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(66000000, 71162312]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70646081]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70904196]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.06,
+            "detail": "(66000000, 70775138]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70710609]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(66000000, 70678345]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70662213]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70654147]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70650114]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70652130]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70653138]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70653642]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70653894]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70653768]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.06,
+            "detail": "(66000000, 70653831]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.06,
+            "detail": "(66000000, 70653862]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70653846]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.06,
+            "detail": "(66000000, 70653838]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70653842]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70653844]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(66000000, 70653845]"
+          },
+          {
+            "kind": "edge",
+            "answer": "sat",
+            "seconds": 0.34,
+            "detail": "x = 30000000"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(30000000, 2162483648]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(30000000, 1096241824]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(30000000, 563120912]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(30000000, 296560456]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(30000000, 163280228]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 96640114]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 63320057]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 46660028]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 38330014]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(30000000, 34165007]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 32082503]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31041251]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31561877]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31822190]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31952346]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(30000000, 31887268]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31854729]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(30000000, 31838459]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(30000000, 31830324]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(30000000, 31834391]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31832357]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833374]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31832865]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833119]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833246]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833310]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833342]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833326]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833334]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833330]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833332]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(30000000, 31833333]"
+          },
+          {
+            "kind": "edge",
+            "answer": "sat",
+            "seconds": 0.32,
+            "detail": "x = 96000000"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 2195483648]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 1145741824]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 620870912]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 358435456]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 227217728]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 161608864]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 128804432]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 112402216]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(96000000, 104201108]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(96000000, 108301662]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(96000000, 110351939]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(96000000, 111377077]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(96000000, 111889646]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 112145931]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(96000000, 112017788]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(96000000, 111953717]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(96000000, 111985752]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(96000000, 112001770]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(96000000, 111993761]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(96000000, 111997765]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(96000000, 111999767]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(96000000, 112000768]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(96000000, 112000267]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(96000000, 112000017]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(96000000, 111999892]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(96000000, 111999954]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(96000000, 111999985]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(96000000, 112000001]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.06,
+            "detail": "(96000000, 111999993]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(96000000, 111999997]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.06,
+            "detail": "(96000000, 111999999]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(96000000, 111999998]"
+          },
+          {
+            "kind": "edge",
+            "answer": "sat",
+            "seconds": 0.33,
+            "detail": "x = 42000000"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 2168483648]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 1105241824]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 573620912]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 307810456]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 174905228]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 108452614]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 75226307]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 58613153]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 50306576]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(42000000, 46153288]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44076644]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 45114966]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(42000000, 44595805]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44855385]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(42000000, 44725595]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44790490]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44758042]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44741818]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44749930]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 44753986]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 44751958]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 44750944]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44750437]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 44750183]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(42000000, 44750056]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44749993]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44750024]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(42000000, 44750008]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44750000]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44749996]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44749998]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(42000000, 44749999]"
+          },
+          {
+            "kind": "edge",
+            "answer": "sat",
+            "seconds": 0.58,
+            "detail": "x = 3600000"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 2149283648]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(3600000, 1076441824]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(3600000, 540020912]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(3600000, 271810456]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 137705228]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(3600000, 70652614]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 37126307]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(3600000, 20363153]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(3600000, 11981576]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 7790788]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(3600000, 5695394]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(3600000, 4647697]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 4123848]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3861924]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3730962]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3796443]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3829183]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3845553]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.03,
+            "detail": "(3600000, 3853738]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3857831]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3855784]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(3600000, 3856807]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(3600000, 3856295]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(3600000, 3856551]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3856679]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3856615]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(3600000, 3856647]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.06,
+            "detail": "(3600000, 3856663]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3856671]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(3600000, 3856667]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3856665]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(3600000, 3856666]"
+          },
+          {
+            "kind": "edge",
+            "answer": "sat",
+            "seconds": 0.58,
+            "detail": "x = 14400000"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 2154683648]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 1084541824]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 549470912]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 281935456]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(14400000, 148167728]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(14400000, 81283864]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 47841932]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(14400000, 31120966]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(14400000, 22760483]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 18580241]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(14400000, 16490120]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(14400000, 15445060]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(14400000, 15967590]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(14400000, 16228855]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 16098222]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(14400000, 16032906]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(14400000, 16065564]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(14400000, 16049235]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.03,
+            "detail": "(14400000, 16057399]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(14400000, 16053317]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 16051276]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 16050255]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(14400000, 16049745]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.05,
+            "detail": "(14400000, 16050000]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(14400000, 16049872]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(14400000, 16049936]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(14400000, 16049968]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(14400000, 16049984]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(14400000, 16049992]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.04,
+            "detail": "(14400000, 16049996]"
+          },
+          {
+            "kind": "widen",
+            "answer": "unsat",
+            "seconds": 0.05,
+            "detail": "(14400000, 16049998]"
+          },
+          {
+            "kind": "widen",
+            "answer": "sat",
+            "seconds": 0.04,
+            "detail": "(14400000, 16049999]"
+          },
+          {
+            "kind": "edge",
+            "answer": "undecided",
+            "seconds": 900.01,
+            "detail": ""
+          }
+        ]
+      },
+      "publishedTable": {
+        "source": "Announcement 2023 No. 30, attachment (rules/cn-bonus-2023-30/README.md)",
+        "expected": [
+          {
+            "from": "3600001",
+            "to": "3856665"
+          },
+          {
+            "from": "14400001",
+            "to": "16049998"
+          },
+          {
+            "from": "30000001",
+            "to": "31833332"
+          },
+          {
+            "from": "42000001",
+            "to": "44749998"
+          },
+          {
+            "from": "66000001",
+            "to": "70653844"
+          },
+          {
+            "from": "96000001",
+            "to": "111999998"
+          }
+        ],
+        "match": true
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "bd24178cf4e8",
+      "ranAt": "2026-11-24T10:06:49.656Z"
+    }
+  ]
+}

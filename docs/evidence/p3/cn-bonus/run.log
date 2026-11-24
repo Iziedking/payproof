@@ -1,0 +1,8 @@
+pinned block 76743855; Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8); ran on bd24178cf4e8
+circuit 9: keccak 0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537, 3573 gates, nIn 32, nOut 64
+circuit 12: keccak 0xcb907d2a913da336a5df02bfa5b96d12577148ff3c3cf2a733ae0c855487b18b, 3045 gates, nIn 32, nOut 63
+tax-within-bonus: holds (abc-iprove holds 0.0s, yosys-sat holds 0.5s); mutant fails
+breakdown-adds-up: holds (abc-iprove holds 0.4s, yosys-sat undecided 900.0s); mutant fails
+traps: 3600001..3856665, 14400001..16049998, 30000001..31833332, 42000001..44749998, 66000001..70653844, 96000001..111999998; complete false; 199 queries, 1007.2 s
+published table: 3600001..3856665, 14400001..16049998, 30000001..31833332, 42000001..44749998, 66000001..70653844, 96000001..111999998; match true
+ALL CHECKS PASSED

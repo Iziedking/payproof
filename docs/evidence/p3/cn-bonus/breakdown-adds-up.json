@@ -1,0 +1,82 @@
+{
+  "kind": "fact",
+  "ruleId": "cn-bonus-2023-30",
+  "factId": "breakdown-adds-up",
+  "statement": {
+    "en": "The tax equals the tax before the quick deduction minus the quick deduction",
+    "zh": "税额等于扣除速算扣除数之前的税额减去速算扣除数"
+  },
+  "circuits": [
+    {
+      "chainId": 196,
+      "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+      "id": "9",
+      "netlistKeccak": "0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537",
+      "gateCount": 3573,
+      "nIn": 32,
+      "nOut": 64
+    },
+    {
+      "chainId": 196,
+      "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+      "id": "12",
+      "netlistKeccak": "0xcb907d2a913da336a5df02bfa5b96d12577148ff3c3cf2a733ae0c855487b18b",
+      "gateCount": 3045,
+      "nIn": 32,
+      "nOut": 63
+    }
+  ],
+  "blockNumber": 76743855,
+  "domain": "every 32-bit bonus (no validity circuit, owner decision 2026-11-22)",
+  "status": "holds",
+  "questionSha256": "b64a8a7a60f3e4abe6b9f529e4205230e0fc50187b6dfc3425802e4a00b887c3",
+  "aigSha256": "249a67ccf05a0928e57deb27b55e3a64033dbcfb9b95d8606688d60497ce6db5",
+  "answers": [
+    {
+      "tool": "abc-iprove",
+      "status": "holds",
+      "seconds": 0.43,
+      "x": null,
+      "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+      "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nUNSATISFIABLE  Time =     0.41 sec\nCounter-example is not available."
+    },
+    {
+      "tool": "yosys-sat",
+      "status": "undecided",
+      "seconds": 900.01,
+      "x": null,
+      "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+      "tail": "Imported 7976 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 36360 variables and 93034 clauses.."
+    }
+  ],
+  "counterexample": null,
+  "mutant": {
+    "note": "tax is raised by one fen when the bonus is 50,000.00 yuan",
+    "questionSha256": "4ccd6e756499bfc9c3792e3cbd630d22c784f6dfe7e5488d9a76c777ecbff538",
+    "aigSha256": "2abd0649e9fc7095e9bb4befd65e87e6e341a8462c0f7fc8c619164b36fe83ab",
+    "status": "fails",
+    "answers": [
+      {
+        "tool": "abc-iprove",
+        "status": "fails",
+        "seconds": 0.41,
+        "x": "5000000",
+        "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+        "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.39 sec"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "yosys",
+      "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+    },
+    {
+      "name": "yosys-abc",
+      "version": "bundled with the same OSS CAD Suite 2026-10-29"
+    }
+  ],
+  "timeoutSeconds": 900,
+  "ranOn": "bd24178cf4e8",
+  "ranAt": "2026-11-24T09:49:56.353Z"
+}
