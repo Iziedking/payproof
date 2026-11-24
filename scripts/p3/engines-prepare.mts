@@ -27,6 +27,7 @@ if (!jsonDir || !outDir || !timeoutArg) throw new Error('usage: engines-prepare.
 const ENGINES = [
   { name: 'cn_vendor_a', label: 'Simulated engine A (China bonus)', expect: 'equal' },
   { name: 'cn_vendor_b', label: 'Simulated engine B (China bonus)', expect: 'different' },
+  { name: 'cn_vendor_a2', label: 'Simulated engine A, second candidate (China bonus)', expect: 'equal' },
 ] as const;
 
 const manifest = JSON.parse(readFileSync('chain/netlists/manifest.json', 'utf8'));

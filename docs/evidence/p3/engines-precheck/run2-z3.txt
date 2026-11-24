@@ -1,0 +1,3 @@
+cn_vendor_a: 3682 gates, 25774 bytes, keccak 0x373b41a548377c13ab24be2835c944c4447c491116290c28e4cca38f430b7d8c; pre-check undecided (smt-z3 undecided 900.0s), expected equal
+cn_vendor_b: 3787 gates, keccak 0x2b8f72f8812b54103cd373b262de69f498c99a54498025848296c015420bb9f3; pre-check skipped (PAYPROOF_ENGINES)
+FAIL: a pre-check differs from what the engine was written to show
