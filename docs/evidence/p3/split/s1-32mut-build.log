@@ -1,0 +1,590 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+
+-- Running command `read_verilog spikes/p0/rtl/split_check.v; chparam -set W 32 split_check; read_verilog -DMUTANT_VALID_OR spikes/p0/rtl/split_check_mod.v; chparam -set W 32 split_check_mod; hierarchy; proc; miter -equiv -flatten split_check split_check_mod miter;
+    hierarchy -top miter; techmap; opt -fast; aigmap; write_aiger -symbols out/p3/split/s1-32mut.aig' --
+
+1. Executing Verilog-2005 frontend: spikes/p0/rtl/split_check.v
+Parsing Verilog input from `spikes/p0/rtl/split_check.v' to AST representation.
+Generating RTLIL representation for module `\split_check'.
+Successfully finished Verilog frontend.
+Parameter \W = 32
+
+2. Executing AST frontend in derive mode using pre-parsed AST for module `\split_check'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\split_check\W=s32'00000000000000000000000000100000'.
+
+3. Executing Verilog-2005 frontend: spikes/p0/rtl/split_check_mod.v
+Parsing Verilog input from `spikes/p0/rtl/split_check_mod.v' to AST representation.
+Generating RTLIL representation for module `\m_mul'.
+Generating RTLIL representation for module `\m_x10000_wide'.
+Generating RTLIL representation for module `\m_x10000_narrow'.
+Generating RTLIL representation for module `\m_x8500'.
+Generating RTLIL representation for module `\m_add'.
+Generating RTLIL representation for module `\m_cmp'.
+Generating RTLIL representation for module `\split_check_mod'.
+Successfully finished Verilog frontend.
+Parameter \W = 32
+
+4. Executing AST frontend in derive mode using pre-parsed AST for module `\split_check_mod'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\split_check_mod\W=s32'00000000000000000000000000100000'.
+
+5. Executing HIERARCHY pass (managing design hierarchy).
+Parameter \W = 32
+
+5.1. Executing AST frontend in derive mode using pre-parsed AST for module `\m_cmp'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_cmp\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+
+5.2. Executing AST frontend in derive mode using pre-parsed AST for module `\m_add'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_add\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+Parameter \HOLDER_BPS = 8500
+
+5.3. Executing AST frontend in derive mode using pre-parsed AST for module `\m_x8500'.
+Parameter \W = 32
+Parameter \HOLDER_BPS = 8500
+Generating RTLIL representation for module `$paramod$fefeed225e00891b7d3d2c7596c0783970263577\m_x8500'.
+Parameter \W = 32
+
+5.4. Executing AST frontend in derive mode using pre-parsed AST for module `\m_x10000_narrow'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_x10000_narrow\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+
+5.5. Executing AST frontend in derive mode using pre-parsed AST for module `\m_x10000_wide'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_x10000_wide\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+
+5.6. Executing AST frontend in derive mode using pre-parsed AST for module `\m_mul'.
+Parameter \W = 32
+Generating RTLIL representation for module `$paramod\m_mul\W=s32'00000000000000000000000000100000'.
+Parameter \W = 32
+Found cached RTLIL representation for module `$paramod\m_mul\W=s32'00000000000000000000000000100000'.
+
+6. Executing PROC pass (convert processes to netlists).
+
+6.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+6.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+6.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+6.4. Executing PROC_INIT pass (extract init attributes).
+
+6.5. Executing PROC_ARST pass (detect async resets in processes).
+
+6.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+6.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+6.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+6.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+6.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+6.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+6.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod\m_mul\W=s32'00000000000000000000000000100000.
+Optimizing module $paramod\m_x10000_wide\W=s32'00000000000000000000000000100000.
+Optimizing module $paramod\m_x10000_narrow\W=s32'00000000000000000000000000100000.
+Optimizing module $paramod$fefeed225e00891b7d3d2c7596c0783970263577\m_x8500.
+Optimizing module $paramod\m_add\W=s32'00000000000000000000000000100000.
+Optimizing module $paramod\m_cmp\W=s32'00000000000000000000000000100000.
+<suppressed ~1 debug messages>
+Optimizing module split_check_mod.
+Optimizing module m_cmp.
+<suppressed ~1 debug messages>
+Optimizing module m_add.
+Optimizing module m_x8500.
+Optimizing module m_x10000_narrow.
+Optimizing module m_x10000_wide.
+Optimizing module m_mul.
+Optimizing module split_check.
+<suppressed ~1 debug messages>
+
+7. Executing MITER pass (creating miter circuit).
+Creating miter cell "miter" with gold cell "split_check" and gate cell "split_check_mod".
+
+7.1. Executing FLATTEN pass (flatten design).
+<suppressed ~9 debug messages>
+
+7.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+Removed 0 unused cells and 16 unused wires.
+
+8. Executing HIERARCHY pass (managing design hierarchy).
+
+8.1. Analyzing design hierarchy..
+Top module:  \miter
+
+8.2. Analyzing design hierarchy..
+Top module:  \miter
+Removing unused module `$paramod\m_mul\W=s32'00000000000000000000000000100000'.
+Removing unused module `$paramod\m_x10000_wide\W=s32'00000000000000000000000000100000'.
+Removing unused module `$paramod\m_x10000_narrow\W=s32'00000000000000000000000000100000'.
+Removing unused module `$paramod$fefeed225e00891b7d3d2c7596c0783970263577\m_x8500'.
+Removing unused module `$paramod\m_add\W=s32'00000000000000000000000000100000'.
+Removing unused module `$paramod\m_cmp\W=s32'00000000000000000000000000100000'.
+Removing unused module `\split_check_mod'.
+Removing unused module `\m_cmp'.
+Removing unused module `\m_add'.
+Removing unused module `\m_x8500'.
+Removing unused module `\m_x10000_narrow'.
+Removing unused module `\m_x10000_wide'.
+Removing unused module `\m_mul'.
+Removing unused module `\split_check'.
+Removed 14 unused modules.
+
+9. Executing TECHMAP pass (map to technology primitives).
+
+9.1. Executing Verilog-2005 frontend: /w/oss-cad-suite/lib/../share/yosys/techmap.v
+Parsing Verilog input from `/w/oss-cad-suite/lib/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `$__div_mod_u'.
+Generating RTLIL representation for module `$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `$connect'.
+Generating RTLIL representation for module `$input_port'.
+Successfully finished Verilog frontend.
+
+9.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $eqx.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $logic_and.
+Running "alumacc" on wrapper $extern:wrap:$lt:Y_WIDTH=1:B_WIDTH=79:A_WIDTH=79:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$lt:Y_WIDTH=1:B_WIDTH=79:A_WIDTH=79:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$lt:Y_WIDTH=1:B_WIDTH=79:A_WIDTH=79:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Running "alumacc" on wrapper $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=78:A_WIDTH=78:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=78:A_WIDTH=78:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=78:A_WIDTH=78:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Running "alumacc" on wrapper $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$le:Y_WIDTH=1:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using extmapper simplemap for cells of type $reduce_bool.
+Running "alumacc" on wrapper $extern:wrap:$mul:Y_WIDTH=78:B_WIDTH=32:A_WIDTH=64:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$mul:Y_WIDTH=78:B_WIDTH=32:A_WIDTH=64:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$mul:Y_WIDTH=78:B_WIDTH=32:A_WIDTH=64:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Running "alumacc" on wrapper $extern:wrap:$mul:Y_WIDTH=64:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$mul:Y_WIDTH=64:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$mul:Y_WIDTH=64:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Running "alumacc" on wrapper $extern:wrap:$add:Y_WIDTH=79:B_WIDTH=46:A_WIDTH=78:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$add:Y_WIDTH=79:B_WIDTH=46:A_WIDTH=78:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$add:Y_WIDTH=79:B_WIDTH=46:A_WIDTH=78:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Running "alumacc" on wrapper $extern:wrap:$mul:Y_WIDTH=46:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$mul:Y_WIDTH=46:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$mul:Y_WIDTH=46:B_WIDTH=32:A_WIDTH=32:B_SIGNED=0:A_SIGNED=0:394426c56d1a028ba8fdd5469b163e04011def47.
+Using extmapper simplemap for cells of type $logic_or.
+Using template $paramod$23d2ec7017831dd963429495465ec1ad908df4d4\_90_alu for cells of type $alu.
+Using template $paramod$843b956ba44a9ae53d2e60f0c110dbb0d05fe52f\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $reduce_and.
+Using template $paramod$3f4e6bd0a788d8a6cef996bad831fad0bfd04bdd\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $reduce_or.
+Using template $paramod$fbc7873bff55778c0b3173955b7e4bce1d9d6834\_90_alu for cells of type $alu.
+Using extmapper maccmap for cells of type $macc_v2.
+  add \gold.ps * 8500 (64x32 bits, unsigned)
+  add \in_pot * \in_shares (32x32 bits, unsigned)
+  add \in_total * 10000 (32x32 bits, unsigned)
+  add \gold.pt * 10000 (64x32 bits, unsigned)
+  add \in_payout * \in_total (32x32 bits, unsigned)
+  add \in_payout * \in_total (32x32 bits, unsigned)
+  add \in_pot * \in_shares (32x32 bits, unsigned)
+  add \gate.u_lhs.a * 10000 (64x32 bits, unsigned)
+  add \in_total * 10000 (32x32 bits, unsigned)
+  add \gate.u_rhs.a * 8500 (64x32 bits, unsigned)
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000001001111 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000001001111 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using extmapper simplemap for cells of type $mux.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000001001110 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000001001110 for cells of type $lcu.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000100000 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000100000 for cells of type $lcu.
+Using extmapper simplemap for cells of type $and.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000001000000 for cells of type $fa.
+Using template $paramod$039520c137afc9cd69dd56c3fb11a4e1fbe5f664\_90_alu for cells of type $alu.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000101110 for cells of type $fa.
+Using template $paramod$fbf9cabb1106ebb19d2876bda35dcfbc3788d13d\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $or.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000001000000 for cells of type $lcu.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000101110 for cells of type $lcu.
+No more expansions possible.
+<suppressed ~8924 debug messages>
+
+10. Executing OPT pass (performing simple optimizations).
+
+10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+<suppressed ~94197 debug messages>
+
+10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\miter'.
+Computing hashes of 41333 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 38983 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 37456 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 36092 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 35370 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 34392 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 33449 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 32911 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 32189 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 31504 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 31077 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 30617 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 30146 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 29789 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 29384 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 29033 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 28818 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 28562 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 28331 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 28157 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 27931 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 27724 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 27534 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 27337 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 27150 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 27045 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 26899 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 26792 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 26691 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 26598 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 26495 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 26392 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 26288 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 26162 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 26043 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 25899 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 25746 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 25588 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 25406 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 25217 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 25018 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 24803 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 24582 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 24354 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 24142 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 23936 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 23749 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 23563 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 23378 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 23198 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 23025 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 22855 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 22707 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 22554 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 22403 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 22256 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 22122 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 22008 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21913 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21839 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21768 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21699 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21639 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21584 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21526 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21465 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21401 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21339 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21268 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21197 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21127 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21062 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 21001 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20956 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20910 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20867 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20822 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20782 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20746 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20715 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20686 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20660 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20636 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20617 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20601 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20589 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20580 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20573 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20569 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20565 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 20564 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+<suppressed ~62307 debug messages>
+Removed a total of 20769 cells.
+
+10.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+10.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \miter..
+Removed 926 unused cells and 7972 unused wires.
+<suppressed ~927 debug messages>
+
+10.5. Finished fast OPT passes.
+
+11. Executing AIGMAP pass (map logic to AIG).
+Module miter: replaced 9764 cells with 59213 new cells, skipped 9874 cells.
+  replaced 2 cell types:
+    3045 $_OR_
+    6719 $_XOR_
+  not replaced 3 cell types:
+    9679 $_AND_
+     186 $_NOT_
+       9 $scopeinfo
+
+12. Executing AIGER backend.
+Warning: Treating undriven bit miter.\in_payout [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_payout [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_total [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_shares [31] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [0] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [1] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [2] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [3] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [4] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [5] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [6] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [7] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [8] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [9] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [10] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [11] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [12] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [13] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [14] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [15] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [16] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [17] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [18] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [19] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [20] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [21] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [22] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [23] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [24] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [25] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [26] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [27] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [28] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [29] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [30] like $anyseq.
+Warning: Treating undriven bit miter.\in_pot [31] like $anyseq.
+Warning: Treating a total of 128 undriven bits in miter like $anyseq.
+
+Warnings: 129 unique messages, 129 total
+End of script. Logfile hash: f8ae522af4, time: 3.66s, user: 4.30s, system: 0.18s, MEM: 216.23 MB peak
+Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+Time spent: 38% 6x opt_merge (1 sec), 33% 13x opt_expr (1 sec), ...

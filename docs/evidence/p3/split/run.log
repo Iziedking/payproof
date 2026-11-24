@@ -1,0 +1,63 @@
+== A: integer facts (Z3 Z3 version 4.15.5 - 64 bit; cvc5 This is cvc5 version 1.0.1-dev.2.77d0bec48 [git 77d0bec48 on branch main with local modifications])
+A a-payout-accepted.mutant z3 sat (want sat) 0.0 rc=0
+A a-payout-accepted.mutant cvc5 sat (want sat) 0.1 rc=0
+A a-payout-accepted z3 unsat (want unsat) 0.0 rc=0
+A a-payout-accepted cvc5 unsat (want unsat) 0.0 rc=0
+A at-most-one-unit-short.mutant z3 sat (want sat) 0.2 rc=0
+A at-most-one-unit-short.mutant cvc5 sat (want sat) 0.0 rc=0
+A at-most-one-unit-short z3 unsat (want unsat) 0.0 rc=0
+A at-most-one-unit-short cvc5 unsat (want unsat) 0.0 rc=0
+A bigger-pot-never-less.mutant z3 sat (want sat) 0.2 rc=0
+A bigger-pot-never-less.mutant cvc5 sat (want sat) 0.0 rc=0
+A bigger-pot-never-less z3 unsat (want unsat) 0.4 rc=0
+A bigger-pot-never-less cvc5 unsat (want unsat) 0.1 rc=0
+A more-shares-never-less.mutant z3 sat (want sat) 0.3 rc=0
+A more-shares-never-less.mutant cvc5 sat (want sat) 0.0 rc=0
+A more-shares-never-less z3 unsat (want unsat) 0.4 rc=0
+A more-shares-never-less cvc5 unsat (want unsat) 0.1 rc=0
+A never-overpays.mutant z3 sat (want sat) 0.2 rc=0
+A never-overpays.mutant cvc5 sat (want sat) 0.0 rc=0
+A never-overpays z3 unsat (want unsat) 0.0 rc=0
+A never-overpays cvc5 unsat (want unsat) 0.0 rc=0
+A no-overflow.mutant z3 sat (want sat) 0.2 rc=0
+A no-overflow.mutant cvc5 sat (want sat) 0.7 rc=0
+A no-overflow z3 unsat (want unsat) 0.2 rc=0
+A no-overflow cvc5 unsat (want unsat) 0.1 rc=0
+A one-payout-accepted.mutant z3 sat (want sat) 0.3 rc=0
+A one-payout-accepted.mutant cvc5 sat (want sat) 0.0 rc=0
+A one-payout-accepted z3 unsat (want unsat) 0.3 rc=0
+scripts/p3/split-chain.sh: line 31:   386 Aborted                 timeout --kill-after=10 $((T + 30)) $O/cvc5 --tlimit=$((T * 1000)) "$f" > "$log" 2>&1
+A one-payout-accepted cvc5 none (want unsat) 900.2 rc=134
+A splitting-never-pays-more.mutant z3 sat (want sat) 0.4 rc=0
+A splitting-never-pays-more.mutant cvc5 sat (want sat) 0.2 rc=0
+A splitting-never-pays-more z3 unsat (want unsat) 0.5 rc=0
+A splitting-never-pays-more cvc5 unsat (want unsat) 0.1 rc=0
+A zero-in-zero-out.mutant z3 sat (want sat) 0.0 rc=0
+A zero-in-zero-out.mutant cvc5 sat (want sat) 0.0 rc=0
+A zero-in-zero-out z3 unsat (want unsat) 0.0 rc=0
+A zero-in-zero-out cvc5 unsat (want unsat) 0.0 rc=0
+== 1: joined RTL against the original RTL, W = 32
+s1-32 [Networks are equivalent. Time = 0.00 sec] (want equivalent) 0.0 rc=0 sha256 c5b6dcd0aae24963
+s1-32mut [Networks are NOT EQUIVALENT. Time = 89.31 sec] (want different) 89.3 rc=0 sha256 be009e6090c7f548
+== 2: each REF target read from chain against its RTL module
+m4 [Networks are equivalent. Time = 522.26 sec] (want equivalent) 522.3 rc=0 sha256 5bb89deb3225c21e
+m4-mut [Networks are NOT EQUIVALENT. Output 0 trivially differs (PI vs. constant). Time = 0.00 sec] (want different) 0.0 rc=0 sha256 55869205709c973b
+m5 [Networks are equivalent. Time = 0.02 sec] (want equivalent) 0.0 rc=0 sha256 dd126dcb393ae588
+m5-mut [Networks are NOT EQUIVALENT. Output 0 trivially differs (different phase). Time = 0.00 sec] (want different) 0.0 rc=0 sha256 9a6cc8c571fcdff1
+m6 [Networks are equivalent. Time = 2.87 sec] (want equivalent) 2.9 rc=0 sha256 ee915c2a490d2dd6
+m6-mut [Networks are NOT EQUIVALENT. Output 0 trivially differs (PI vs. constant). Time = 0.00 sec] (want different) 0.0 rc=0 sha256 f9bcdf5fcb62f981
+m7 [Networks are equivalent. Time = 173.69 sec] (want equivalent) 173.7 rc=0 sha256 e0dc5bd6f0fd5195
+m7-mut [Networks are NOT EQUIVALENT. Output 0 trivially differs (PI vs. constant). Time = 0.00 sec] (want different) 0.0 rc=0 sha256 b69b4b1199b5c0fb
+amul gate substitute [[amulet2] build adder miter] 0.0 rc=1
+amul gate adder-miter yices-sat [unsat] (want unsat)
+amul gate verify [CORRECT MULTIPLIER] (want CORRECT MULTIPLIER) 0.0 rc=1
+amul gate certify [CORRECT MULTIPLIER] 0.1 rc=1
+amul gate pacheck [TARGET CHECKED] (want TARGET CHECKED) 0.1 rc=0
+amul mutant substitute [[amulet2] build adder miter] 0.0 rc=1
+amul mutant adder-miter yices-sat [unsat] (want unsat)
+amul mutant verify [INCORRECT MULTIPLIER] (want INCORRECT MULTIPLIER) 0.1 rc=0
+amul input order: input 0 0 in input 1 1 in 
+== 3: circuit 8 from chain, REF targets replaced by RTL, against split_check_mod
+s3 [Networks are equivalent. Time = 171.85 sec] (want equivalent) 171.9 rc=0 sha256 0b4aa045c26ae46d
+s3-mut [Networks are NOT EQUIVALENT. Time = 184.57 sec] (want different) 184.6 rc=0 sha256 5f820873cc2aae4e
+CHAIN: every link holds

@@ -1,0 +1,55 @@
+{
+  "block": 76749398,
+  "circuit8": {
+    "chainId": 196,
+    "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+    "id": "8",
+    "netlistKeccak": "0x2e4c44e912da662903c6ebf368ca177c1eb77ebbb4d6838069fc7a14af6be5b7",
+    "gateCount": 41158,
+    "nIn": 128,
+    "nOut": 1
+  },
+  "refs": [
+    {
+      "id": "3",
+      "piece": "m_mul_tmc_32",
+      "keccak": "0x9f63c8ba02c786f1573c9f2f79da68f28614661d6e2b974e51349dbd63844327",
+      "gates": 14969,
+      "nIn": 64,
+      "nOut": 64
+    },
+    {
+      "id": "4",
+      "piece": "m_x8500",
+      "keccak": "0xe74acf21863c228ee6abc16ab63858d7d24f5e73c5a0c4c9f1ba2e727e7748e9",
+      "gates": 3630,
+      "nIn": 64,
+      "nOut": 78
+    },
+    {
+      "id": "7",
+      "piece": "m_x10000_wide",
+      "keccak": "0x2c83435eefa93042656d9385c7c32bfa67f9951ab16e7b4f2686e48d6238626b",
+      "gates": 3318,
+      "nIn": 64,
+      "nOut": 78
+    },
+    {
+      "id": "6",
+      "piece": "m_x10000_narrow",
+      "keccak": "0x398a6ce29e1de9cee1aad80a25f70028059a377dc32dc6c2a776f7d35876af33",
+      "gates": 1635,
+      "nIn": 32,
+      "nOut": 46
+    },
+    {
+      "id": "5",
+      "piece": "m_add",
+      "keccak": "0x479d5c4559cdff6365bd9a1dd2a9125b099129b8f9ff866c56f18a8c4cf91926",
+      "gates": 804,
+      "nIn": 124,
+      "nOut": 79
+    }
+  ],
+  "at": "2026-11-24T11:07:20.752Z"
+}

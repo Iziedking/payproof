@@ -1,0 +1,104 @@
+[amulet2] AMulet Version 2.2
+[amulet2] Aiger multiplier examination tool
+[amulet2] Copyright(C) 2020, 2021, Daniela Kaufmann, Johannes Kepler University Linz
+[amulet2] selected mode: verification
+[amulet2] reading 'out/p3/split/amul/gate-sub.aig'
+[amulet2] MILOA 10392 64 0 64 10328
+[amulet2] assuming ordering as in the ABC generated or AOKI benchmarks
+[amulet2] allocating 10456 gates
+[amulet2] found 1024 partial products
+[amulet2] assuming simple pp generator
+[amulet2] found 2119 xor-gates
+[amulet2] marking xor chain gates
+[amulet2] marked 7 xor gates in last slice
+[amulet2] remove internal xor gates
+[amulet2] removed 4120 internal xor gates
+[amulet2] slicing based on xor
+[amulet2] remove single occurence gates
+[amulet2] removed 1906 single occurence gates
+[amulet2] fix slice of l20736
+[amulet2] fix slice of l20744
+[amulet2] fix slice of l20752
+[amulet2] fix slice of l20760
+[amulet2] fix slice of l20768
+[amulet2] fix slice of l20776
+[amulet2] moved 6 gates to smaller slices
+[amulet2] moved 0 adjacent gates to smaller slices
+[amulet2] remove gates that are not assigned to slices
+[amulet2] removed 1045 gates that are not assigned to slices
+[amulet2] 
+[amulet2] 
+[amulet2] started reducing
+[amulet2] reducing by slice 63
+[amulet2] reducing by slice 62
+[amulet2] reducing by slice 61
+[amulet2] reducing by slice 60
+[amulet2] reducing by slice 59
+[amulet2] reducing by slice 58
+[amulet2] reducing by slice 57
+[amulet2] reducing by slice 56
+[amulet2] reducing by slice 55
+[amulet2] reducing by slice 54
+[amulet2] reducing by slice 53
+[amulet2] reducing by slice 52
+[amulet2] reducing by slice 51
+[amulet2] reducing by slice 50
+[amulet2] reducing by slice 49
+[amulet2] reducing by slice 48
+[amulet2] reducing by slice 47
+[amulet2] reducing by slice 46
+[amulet2] reducing by slice 45
+[amulet2] reducing by slice 44
+[amulet2] reducing by slice 43
+[amulet2] reducing by slice 42
+[amulet2] reducing by slice 41
+[amulet2] reducing by slice 40
+[amulet2] reducing by slice 39
+[amulet2] reducing by slice 38
+[amulet2] reducing by slice 37
+[amulet2] reducing by slice 36
+[amulet2] reducing by slice 35
+[amulet2] reducing by slice 34
+[amulet2] reducing by slice 33
+[amulet2] reducing by slice 32
+[amulet2] reducing by slice 31
+[amulet2] reducing by slice 30
+[amulet2] reducing by slice 29
+[amulet2] reducing by slice 28
+[amulet2] reducing by slice 27
+[amulet2] reducing by slice 26
+[amulet2] reducing by slice 25
+[amulet2] reducing by slice 24
+[amulet2] reducing by slice 23
+[amulet2] reducing by slice 22
+[amulet2] reducing by slice 21
+[amulet2] reducing by slice 20
+[amulet2] reducing by slice 19
+[amulet2] reducing by slice 18
+[amulet2] reducing by slice 17
+[amulet2] reducing by slice 16
+[amulet2] reducing by slice 15
+[amulet2] reducing by slice 14
+[amulet2] reducing by slice 13
+[amulet2] reducing by slice 12
+[amulet2] reducing by slice 11
+[amulet2] reducing by slice 10
+[amulet2] reducing by slice 9
+[amulet2] reducing by slice 8
+[amulet2] reducing by slice 7
+[amulet2] reducing by slice 6
+[amulet2] reducing by slice 5
+[amulet2] reducing by slice 4
+[amulet2] reducing by slice 3
+[amulet2] reducing by slice 2
+[amulet2] reducing by slice 1
+[amulet2] reducing by slice 0
+[amulet2] 
+[amulet2] CORRECT MULTIPLIER
+[amulet2] 
+[amulet2] maximum resident set size:                       8.76 MB
+[amulet2] used time for initializing:                      0.00 seconds
+[amulet2] used time for slicing/elimination:               0.02 seconds
+[amulet2] used time for reduction:                         0.02 seconds
+[amulet2] used time for freeing memory:                    0.00 seconds
+[amulet2] total process time:                              0.05 seconds

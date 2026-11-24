@@ -48,7 +48,10 @@ node_run() { docker run --rm --network "container:$NAME" --cpus 1 --memory 3g --
 forge_run() { docker run --rm --name payproof-p2-deweb-forge-privy --network "container:$NAME" --cpus 2 --memory 6g \
   --user 1000:1000 -e HOME=/w/.home -v "$PWD:/w" -w /w/chain "$FOUNDRY" "$1"; }
 nonce() { docker exec "$NAME" sh -c "cast nonce $DEPLOYER --rpc-url $FORK"; }
-COMMON="--rpc-url $FORK --chain 196 --sender $DEPLOYER --unlocked --legacy --with-gas-price 20000001 --slow"
+# --gas-limit: forge runs the whole script as one EVM call in simulation, and a publish of this size
+# (about 1.2 billion gas over all its transactions) passes forge's default limit for that call
+# (first rehearsal: DeployFailed from OutOfGas). It does not change any transaction's own gas.
+COMMON="--rpc-url $FORK --chain 196 --sender $DEPLOYER --unlocked --legacy --with-gas-price 20000001 --slow --gas-limit 100000000000"
 RUN="forge script script/DeWebPublish.s.sol --sig 'run(uint256,uint256)' $ID $MONTHS $COMMON"
 
 echo "== 1. prepare $SITE from app/dist"

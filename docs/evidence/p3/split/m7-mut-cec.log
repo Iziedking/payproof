@@ -1,0 +1,4 @@
+======== ABC command line "&r out/p3/split/m7-mut.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Networks are NOT EQUIVALENT. Output 0 trivially differs (PI vs. constant).  Time =     0.00 sec
+INPUT: a = 64'h0000000000000001.  OUTPUT: z = 78'h00000000000000002710 (m7-mut), z = 78'h00000000000000002711 (m7-mut).

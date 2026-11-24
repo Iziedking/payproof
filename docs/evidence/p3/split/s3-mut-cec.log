@@ -1,0 +1,65 @@
+======== ABC command line "&r out/p3/split/s3-mut.aig; &cec -m -v -T 900"
+Assuming the current network is a single-output miter.
+Simulating 15 words for 15 rounds. SAT solving with 1000 conflicts.
+cst =   26906  cls =      0  lit =   26906  unused =     128  proof =     0
+cst =     417  cls =    814  lit =    1687  unused =   24533  proof =     0
+cst =     203  cls =    535  lit =     948  unused =   25551  proof =     0
+cst =     119  cls =    467  lit =     731  unused =   25836  proof =     0
+cst =     102  cls =    438  lit =     669  unused =   25927  proof =     0
+cst =     100  cls =    436  lit =     661  unused =   25937  proof =     0
+cst =      93  cls =    429  lit =     643  unused =   25962  proof =     0
+cst =      90  cls =    428  lit =     634  unused =   25972  proof =     0
+cst =      88  cls =    426  lit =     628  unused =   25980  proof =     0
+cst =      88  cls =    426  lit =     628  unused =   25980  proof =     0
+  1 : P =    113. D =      2. F =     7. M =     643. And =   26526. Time =     0.43 sec
+Switching into reduced mode.
+  2 : P =     23. D =      5. F =    17. M =     282. And =   26387. Time =     0.81 sec
+  3 : P =      6. D =      7. F =    16. M =     156. And =   26343. Time =     0.60 sec
+Increasing conflict limit to 10000.
+  4 : P =      3. D =     10. F =     6. M =     117. And =   26306. Time =     4.81 sec
+  5 : P =      6. D =      1. F =     7. M =      85. And =   26272. Time =     4.04 sec
+Switching into normal mode.
+  6 : P =     30. D =     10. F =     0. M =       0. And =   26242. Time =     0.02 sec
+  7 : P =      4. D =     10. F =     0. M =       0. And =   26234. Time =     0.05 sec
+  8 : P =      2. D =      5. F =     1. M =       0. And =   26226. Time =     0.65 sec
+  9 : P =      3. D =      5. F =     1. M =       0. And =   26222. Time =     0.62 sec
+ 10 : P =      5. D =      4. F =     1. M =       0. And =   26216. Time =     0.61 sec
+ 11 : P =      2. D =      2. F =     2. M =       0. And =   26212. Time =     1.07 sec
+ 12 : P =      2. D =      0. F =     7. M =       0. And =   26210. Time =     3.64 sec
+Increasing conflict limit to 100000.
+ 13 : P =      2. D =      4. F =     3. M =       0. And =   26208. Time =    36.00 sec
+ 14 : P =      2. D =      2. F =     2. M =       0. And =   26201. Time =    11.63 sec
+ 15 : P =      6. D =      2. F =     4. M =       0. And =   26195. Time =    29.04 sec
+ 16 : P =      3. D =      5. F =     4. M =       0. And =   26191. Time =    28.72 sec
+ 17 : P =      1. D =      2. F =     5. M =       0. And =   26187. Time =    35.56 sec
+Performed 372 SAT calls: P = 213  D = 76  F = 83
+NBeg = 26906. NEnd = 26187. (Gain =   2.67 %).  RBeg = 0. REnd = 0. (Gain =   0.00 %).
+Sim  =     0.15 sec (  0.00 %)
+Sat  =   158.20 sec (  3.55 %)
+Pat  =     0.02 sec (  0.00 %)
+Time =   158.42 sec
+Networks are UNDECIDED after the new CEC engine.  Time =   158.42 sec
+Calling the old CEC engine.
+Original miter:   Nodes =  26190.
+Initial SAT:      Nodes =  26190.  Time =     0.07 sec
+Rewriting:        Nodes =  25295.  Time =     0.23 sec
+Balance-X:        Nodes =  29001.  Time =     0.01 sec
+Fraiging (i=1):   Nodes =  28991.  Time =     0.03 sec
+Rewriting:        Nodes =  25438.  Time =     0.15 sec
+Balance-X:        Nodes =  28838.  Time =     0.01 sec
+Fraiging (i=2):   Nodes =  28836.  Time =     0.05 sec
+Rewriting:        Nodes =  25392.  Time =     0.14 sec
+Balance-X:        Nodes =  28789.  Time =     0.01 sec
+Fraiging (i=3):   Nodes =  28789.  Time =     0.36 sec
+Rewriting:        Nodes =  25383.  Time =     0.13 sec
+Balance-X:        Nodes =  28778.  Time =     0.01 sec
+Fraiging (i=4):   Nodes =  28778.  Time =     2.01 sec
+Rewriting:        Nodes =  25370.  Time =     0.15 sec
+Balance-X:        Nodes =  28769.  Time =     0.01 sec
+Fraiging (i=5):   Nodes =  28769.  Time =     5.77 sec
+Rewriting:        Nodes =  25380.  Time =     0.15 sec
+Balance-X:        Nodes =  28768.  Time =     0.01 sec
+Fraiging (i=6):   Nodes =  28768.  Time =    16.87 sec
+Networks are NOT EQUIVALENT.  Time =   184.57 sec
+Primary output 0 has failed, along with other 0 incorrect outputs.
+INPUT: a = 128'h8A45DBDCF29BB7FEFA014FEF9DDC6956.  OUTPUT: z = 1'h0 (s3-mut), z = 1'h1 (s3-mut).
