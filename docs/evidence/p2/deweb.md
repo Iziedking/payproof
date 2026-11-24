@@ -156,7 +156,42 @@ Evidence: `docs/evidence/p2/deweb/live/` (`gateway-390-check.jpg`, `gateway-390-
 `chain/broadcast/DeWebPublish.s.sol/196/run-latest.json`, which Git ignores;
 `deweb-live-landed.json`; `gateway-cn-36001.jpg`).
 
+## Adding the icons (task `p2-deweb-icons-dryrun`, simulation)
+
+`index.html` links `favicon.svg`, `favicon-32.png` and `apple-touch-icon-180.png`, which were not
+in the first publish, so the DeWEB site had no icon. They now sit in `app/public/` (copies of
+`brand/favicon/`), so every build carries them. The host-service build (task `p2-app-build`)
+gives the same JS, CSS and `index.html` SHA-256 as before, plus the three icons.
+`chain/site/manifest.json` now lists six files, `index.html` still last.
+
+| File | Bytes | Type | SHA-256 |
+| --- | --- | --- | --- |
+| `apple-touch-icon-180.png` | 1,049 | `image/png` | `1d023087…9192e4f3` |
+| `favicon-32.png` | 368 | `image/png` | `90ea5c00…bcdc5f8e` |
+| `favicon.svg` | 371 | `image/svg+xml` | `527f5a08…74001fc7` |
+
+Rehearsed with the same owner script on an anvil fork of X Layer at block 76,680,310 (after the
+live publish), deployer impersonated with its live balance (not raised):
+
+| Check | Result |
+| --- | --- |
+| Files already on chain | JS, CSS and `index.html` unchanged |
+| Without `--broadcast` | Simulation only; nonce 36 before and after |
+| With `--broadcast` | 3 transactions, one `putFile` per icon; open, the other files and bind skipped |
+| Read back | All six files byte for byte, SHA-256 and content type match; name still live |
+| Run again | No transactions; nonce 39 before and after |
+
+Gas used 516,401 + 368,779 + 369,775 = 1,254,955; at 20,000,001 wei that is 0.0000251 OKB. Gas
+limits add up to 1,805,324. `deweb-plan.mts command` now counts only what is still to send (here
+3 transactions, 1,788 bytes); its cost estimate, 0.000012 OKB, is low for small files, so the
+rehearsed figure is the one to use.
+
+Evidence: `docs/evidence/p2/deweb/icons-dryrun/` (receipts summary, read-back before and after,
+summary, anvil log with test keys and mnemonic cut, host sha256 in its first line).
+
 ## What is not settled
+
+- **The icons on the live site.** Rehearsed above; the owner has not signed them yet.
 
 - **Binding `payproof.kingizie.tech`.** The DNS record for an X Layer site, the CNAME target and
   who serves the certificate are HashPort's and are not in these repositories. The browser

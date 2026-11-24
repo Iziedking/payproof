@@ -1,0 +1,30 @@
+{
+  "simulation": true,
+  "forkOf": "X Layer",
+  "gasPriceWei": 20000001,
+  "txs": [
+    {
+      "fn": "putFile(address,string,string,bytes32,bytes)",
+      "file": "apple-touch-icon-180.png",
+      "gasUsed": 516401,
+      "gasLimit": 755236,
+      "status": "0x1"
+    },
+    {
+      "fn": "putFile(address,string,string,bytes32,bytes)",
+      "file": "favicon-32.png",
+      "gasUsed": 368779,
+      "gasLimit": 539338,
+      "status": "0x1"
+    },
+    {
+      "fn": "putFile(address,string,string,bytes32,bytes)",
+      "file": "favicon.svg",
+      "gasUsed": 369775,
+      "gasLimit": 510750,
+      "status": "0x1"
+    }
+  ],
+  "totalGasUsed": 1254955,
+  "gasLimitSum": 1805324
+}

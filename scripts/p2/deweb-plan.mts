@@ -88,13 +88,35 @@ async function command(url: string, site: string, idS: string, monthsS: string) 
   const fee = BigInt(await rpc('eth_call', [{ to: OPENER, data: '0x' + sel('FEE()') }, 'latest']));
   const monthly = BigInt(await rpc('eth_call', [{ to: DOMAIN, data: '0x' + sel('monthlyFee()') }, 'latest']));
   const opened = BigInt(await rpc('eth_call', [{ to: OPENER, data: callAddrUint('isOpened(address,uint256)', CIRCUITS, id) }, 'latest'])) === 1n;
-  const bytes = m.sizes.reduce((s, n) => s + n, 0);
-  const txs = m.sizes.reduce((s, n) => s + Math.ceil(n / CHUNK), 0) + (opened ? 0 : 1) + 1;
-  const gas = BigInt(bytes * GAS_PER_BYTE + txs * GAS_PER_TX + (opened ? 0 : GAS_OPEN) + GAS_BIND);
-  const cost = gas * gasPrice + (opened ? 0n : fee) + monthly * months;
+  const container = await containerOf(rpc, id);
+  const name = `${idS}.2.${PROCESSOR}.tape`;
+  const live = opened && BigInt(await rpc('eth_call', [{ to: DOMAIN, data: callStrAddr('isLive(string,address)', name, container) }, 'latest'])) === 1n;
+  // What the script will still send, by the same rule as DeWebPublish.s.sol chunksOnChain():
+  // a file with the same declared SHA-256 keeps its chunks; anything else is written from chunk 0.
+  let bytes = 0, txs = (opened ? 0 : 1) + (live ? 0 : 1);
+  const todo: string[] = [];
+  for (let i = 0; i < m.paths.length; i++) {
+    const total = Math.ceil(m.sizes[i] / CHUNK);
+    let have = 0;
+    if (opened) {
+      const info = (await rpc('eth_call', [{ to: SITES, data: callAddrStr('fileInfo(address,string)', container, m.paths[i]) }, 'latest'])).slice(2);
+      const w = (k: number) => BigInt('0x' + info.slice(64 * k, 64 * (k + 1)));
+      const same = '0x' + info.slice(128, 192) === m.sha256[i];
+      have = same && Number(w(4)) <= total && Number(w(0)) <= m.sizes[i] ? Number(w(4)) : 0;
+      if (have === total && Number(w(0)) !== m.sizes[i]) have = 0;
+    }
+    if (have === total) continue;
+    todo.push(have ? `${m.paths[i]} (from chunk ${have})` : m.paths[i]);
+    txs += total - have;
+    bytes += m.sizes[i] - Math.min(m.sizes[i], have * CHUNK);
+  }
+  const gas = BigInt(bytes * GAS_PER_BYTE + txs * GAS_PER_TX + (opened ? 0 : GAS_OPEN) + (live ? 0 : GAS_BIND));
+  const cost = gas * gasPrice + (opened ? 0n : fee) + (live ? 0n : monthly * months);
   const okb = (w: bigint) => (Number(w) / 1e18).toFixed(6);
-  console.log(`Site ${idS}.2.${PROCESSOR}.tape (https://${idS}-2-${PROCESSOR}.tapekit.org/): ${m.paths.length} files, ${bytes} bytes, about ${txs} transactions.`);
-  console.log(`Container opened already: ${opened}. Opening fee ${okb(fee)} OKB, monthly fee ${okb(monthly)} OKB x ${months}.`);
+  console.log(`Site ${name} (https://${idS}-2-${PROCESSOR}.tapekit.org/): ${m.paths.length} files in the manifest.`);
+  console.log(`Container opened already: ${opened}. Name live already: ${live}. Opening fee ${okb(fee)} OKB, monthly fee ${okb(monthly)} OKB x ${months}.`);
+  console.log(`Still to send: ${txs} transactions, ${bytes} bytes${todo.length ? ': ' + todo.join(', ') : ''}.`);
+  if (txs === 0) { console.log('Nothing to send: everything in the manifest is on chain.'); return; }
   console.log(`Estimated cost ${okb(cost)} OKB at ${gasPrice} wei (gas estimated from the fork rehearsal). Deployer holds ${okb(balance)} OKB.`);
   if (balance < cost) console.log('WARNING: the deployer holds less than the estimate. Top it up before broadcasting.');
   console.log('Run from chain/. First without --broadcast (simulation only), then the same line with --broadcast:\n');

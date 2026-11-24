@@ -75,7 +75,7 @@ jobs:
       - name: Assemble site
         run: |
           # The landing page is the ad page at the root. "Open app" goes to app/, the web app
-          # (Check my pay first), which is the DeWEB build byte for byte plus the icons.
+          # (Check my pay first), which is the DeWEB build byte for byte, icons included.
           mkdir -p _site/media _site/app
           cp app/landing/index.html app/landing/landing.css app/landing/landing.js _site/
           cp app/landing/media/payproof-film.mp4 app/landing/media/poster.jpg _site/media/
@@ -86,10 +86,8 @@ jobs:
               fs.mkdirSync(path.dirname("_site/app/" + p), { recursive: true });
               fs.copyFileSync("chain/site/" + p, "_site/app/" + p);
             }'
-          for d in _site _site/app; do
-            cp brand/favicon/favicon.svg brand/favicon/favicon-32.png brand/favicon/apple-touch-icon-180.png "$d/"
-            cp brand/logo/payproof-lockup.svg brand/logo/payproof-lockup-on-dark.svg "$d/"
-          done
+          cp brand/favicon/favicon.svg brand/favicon/favicon-32.png brand/favicon/apple-touch-icon-180.png _site/
+          cp brand/logo/payproof-lockup.svg brand/logo/payproof-lockup-on-dark.svg _site/
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: _site/

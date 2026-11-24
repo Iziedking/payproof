@@ -46,6 +46,8 @@ Evidence: `docs/evidence/p2/mirror/mirror-check-local-{pass,tampered,missing}.js
 
 - **GitHub Pages is not enabled yet.** The site gave 404 when last checked. The owner turns on
   Pages (Settings, Pages, Source: GitHub Actions) and pushes, and the first run needs checking.
-- **Icons on DeWEB.** `index.html` links `favicon.svg`, `favicon-32.png` and
-  `apple-touch-icon-180.png`. They are on the mirror but not on chain, so the DeWEB site shows
-  no icon. Publishing them adds three small files (1,788 bytes), with no opening fee.
+- **Icons on DeWEB.** `chain/site/` now includes the three icons (see `deweb.md`, "Adding the
+  icons"). Until the owner publishes them, the workflow's check against X Layer fails and the
+  mirror is not deployed, which is the intended behaviour. Publish first, then push.
+- **The rehearsal above** was run with the three-file `chain/site/`. Against the six-file one it
+  will pass only after the icons are on chain.
