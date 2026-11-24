@@ -1,5 +1,8 @@
 // SIMULATED ENGINE. Not a real vendor's code. Written by the Payproof team to show engine
-// equality on chain (PLAN L13, section 13 P3). Label: "Simulated engine A (China bonus)".
+// equality on chain (PLAN L13, section 13 P3). First candidate for simulated engine A; NOT taped
+// out. Its pre-check against circuit 9 was decided by Bitwuzla alone (equal, 623.1 s); ABC,
+// Yosys sat, Z3 and ABC &cec gave no answer (docs/evidence/p3/engines-precheck). Engine A is
+// cn_vendor_a2.v.
 //
 // It computes the China bonus tax of rule cn-bonus-2023-30 a different way from the reference
 // circuit (spikes/p0/rtl/cn_bonus.v, taped out as circuit 9): it subtracts the quick deduction,

@@ -1,0 +1,24 @@
+Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+cn_vendor_a2: 2442 NAND + 1149 NOT
+cn_vendor_a: 3682 gates, keccak 0x373b41a548377c13ab24be2835c944c4447c491116290c28e4cca38f430b7d8c; pre-check skipped (PAYPROOF_ENGINES)
+cn_vendor_b: 3787 gates, keccak 0x2b8f72f8812b54103cd373b262de69f498c99a54498025848296c015420bb9f3; pre-check skipped (PAYPROOF_ENGINES)
+cn_vendor_a2: 3642 gates, 25494 bytes, keccak 0xef19f8b6110fd22db6294adf1ea0e00f14c1498007b5ca0251b1ecf01b7ba9d1; pre-check equal (abc-iprove holds 11.4s, yosys-sat undecided 900.0s, smt-bitwuzla holds 206.6s, abc-cec holds 1.2s), expected equal
+ALL CHECKS PASSED
+==
+
+5. Printing statistics.
+
+=== cn_vendor_a2 ===
+
+        +----------Local Count, excluding submodules.
+        | 
+     3531 wires
+     3624 wire bits
+        3 public wires
+       96 public wire bits
+        3 ports
+       96 port bits
+     3591 cells
+     2442   $_NAND_
+     1149   $_NOT_
+

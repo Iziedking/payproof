@@ -11,7 +11,7 @@ mkdir -p out/engines logs
 "$Y" -V
 # PAYPROOF_SYNTH limits synthesis to the engines named (space separated); the others' JSON must
 # already be in out/engines from an earlier run.
-for m in ${PAYPROOF_SYNTH:-cn_vendor_a cn_vendor_b cn_vendor_a2}; do
+for m in ${PAYPROOF_SYNTH:-cn_vendor_a2 cn_vendor_b}; do
   "$Y" -q -l "logs/synth-$m.log" -p "
     read_verilog rules/sim-engines/$m.v;
     synth -flatten -top $m -noabc;

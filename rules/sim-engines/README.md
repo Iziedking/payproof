@@ -10,8 +10,15 @@ input `bonus[31:0]` in fen, outputs `tax[31:0]` and `net[31:0]`.
 
 | File | Label | What it changes | Written to show |
 | --- | --- | --- | --- |
-| `cn_vendor_a.v` | Simulated engine A (China bonus) | Subtracts the quick deduction, times 100, before dividing by 100 instead of after | equal to the reference for every bonus |
+| `cn_vendor_a2.v` | Simulated engine A (China bonus) | Picks the bracket by counting the limits the bonus is above, looks up rate and quick deduction by that count, and works out take-home as bonus plus the two's complement of the tax | equal to the reference for every bonus |
 | `cn_vendor_b.v` | Simulated engine B (China bonus) | Rounds bonus x rate to the nearest fen, halves up, where the reference rounds down | different from the reference, for example at a bonus of 0.17 yuan |
+
+`cn_vendor_a.v` is the first candidate for engine A and is not taped out. It subtracts the
+quick deduction, times 100, before dividing by 100 instead of after. Its pre-check was decided
+by Bitwuzla alone (equal, 623.1 s); ABC iprove, Yosys sat, Z3 and ABC &cec gave no answer, so it
+could not meet the two-tool rule. The second candidate keeps the reference's multiply and
+divide and was decided equal by ABC iprove, Bitwuzla and ABC &cec. The owner chose it on
+2026-11-24. Both pre-checks are in `docs/evidence/p3/engines-precheck/`.
 
 "Written to show" is what we expect, not a result. The prover decides, and the result is
 published either way, including undecided and timed out.
@@ -22,7 +29,7 @@ does not say which reading of the rule is right.
 
 ## How they are built and checked
 
-1. `scripts/p3/engines-build.sh` synthesises both to NAND with Yosys, the same flow as every
+1. `scripts/p3/engines-build.sh` synthesises engines A and B to NAND with Yosys, the same flow as every
    Payproof circuit, then runs `scripts/p3/engines-prepare.mts`.
 2. `engines-prepare.mts` writes the TAP-02 netlists to `chain/netlists/engines/` with a
    manifest (each piece carries `simulated: true`), and pre-checks each engine against

@@ -1,9 +1,9 @@
 // SIMULATED ENGINE. Not a real vendor's code. Written by the Payproof team to show engine
-// equality on chain (PLAN L13, section 13 P3). Candidate label: "Simulated engine A (China bonus)".
+// equality on chain (PLAN L13, section 13 P3). Label: "Simulated engine A (China bonus)".
 //
-// A second candidate for engine A. The first (cn_vendor_a.v) moves the quick deduction inside
-// the division by 100; ABC, Yosys sat and Z3 could not decide its equality with circuit 9 in
-// 900 s. This one keeps the reference's arithmetic (bonus x rate, floor divide by 100, minus the
+// The second candidate for engine A, chosen by the owner on 2026-11-24. The first
+// (cn_vendor_a.v) moves the quick deduction inside the division by 100; only Bitwuzla could
+// decide its equality with circuit 9 (ABC, Yosys sat, Z3 and ABC &cec gave no answer). This one keeps the reference's arithmetic (bonus x rate, floor divide by 100, minus the
 // quick deduction) and computes the rest a different way, as an engine built on a rate table
 // might:
 // - the bracket is a count of how many of the six limits the bonus is above, not a chain of

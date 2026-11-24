@@ -24,10 +24,12 @@ import { keccakHex } from '../../vendor/tapekit/keccak.js';
 
 const [jsonDir, outDir, timeoutArg] = process.argv.slice(2);
 if (!jsonDir || !outDir || !timeoutArg) throw new Error('usage: engines-prepare.mts <json dir> <out dir> <timeout-seconds>');
+// The engines taped out (owner decision 2026-11-24: engine A is the second candidate,
+// cn_vendor_a2). The first candidate, rules/sim-engines/cn_vendor_a.v, is not taped out: only
+// Bitwuzla could decide its equality with circuit 9 (docs/evidence/p3/engines-precheck).
 const ENGINES = [
-  { name: 'cn_vendor_a', label: 'Simulated engine A (China bonus)', expect: 'equal' },
+  { name: 'cn_vendor_a2', label: 'Simulated engine A (China bonus)', expect: 'equal' },
   { name: 'cn_vendor_b', label: 'Simulated engine B (China bonus)', expect: 'different' },
-  { name: 'cn_vendor_a2', label: 'Simulated engine A, second candidate (China bonus)', expect: 'equal' },
 ] as const;
 
 const manifest = JSON.parse(readFileSync('chain/netlists/manifest.json', 'utf8'));
