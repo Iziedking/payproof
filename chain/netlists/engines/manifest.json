@@ -1,0 +1,74 @@
+{
+  "circuits": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+  "note": "SIMULATED engines for engine equality (PLAN L13). TAP-02 netlists for tapeout(bytes,uint32,uint32); made by scripts/p3/engines-prepare.mts",
+  "pieces": [
+    {
+      "name": "cn_vendor_a2",
+      "label": "Simulated engine A (China bonus)",
+      "simulated": true,
+      "yosysModule": "cn_vendor_a2",
+      "file": "netlists/engines/cn_vendor_a2.bin",
+      "nIn": 32,
+      "nOut": 64,
+      "nandRecords": 3642,
+      "refRecords": 0,
+      "bytes": 25494,
+      "keccak256": "0xef19f8b6110fd22db6294adf1ea0e00f14c1498007b5ca0251b1ecf01b7ba9d1",
+      "sha256": "0c6db10f4b7fef79d21591816cbf926b0eb52f1dd667fa06de42df42f1e38e0b",
+      "inputs": [
+        {
+          "name": "bonus",
+          "offset": 0,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "tax",
+          "offset": 0,
+          "width": 32
+        },
+        {
+          "name": "net",
+          "offset": 32,
+          "width": 32
+        }
+      ],
+      "reference": "cn_bonus"
+    },
+    {
+      "name": "cn_vendor_b",
+      "label": "Simulated engine B (China bonus)",
+      "simulated": true,
+      "yosysModule": "cn_vendor_b",
+      "file": "netlists/engines/cn_vendor_b.bin",
+      "nIn": 32,
+      "nOut": 64,
+      "nandRecords": 3787,
+      "refRecords": 0,
+      "bytes": 26509,
+      "keccak256": "0x2b8f72f8812b54103cd373b262de69f498c99a54498025848296c015420bb9f3",
+      "sha256": "e3139b548d06d169955d4a076824a7f2bf71ab25934b6c2fd14845836b7119ee",
+      "inputs": [
+        {
+          "name": "bonus",
+          "offset": 0,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "tax",
+          "offset": 0,
+          "width": 32
+        },
+        {
+          "name": "net",
+          "offset": 32,
+          "width": 32
+        }
+      ],
+      "reference": "cn_bonus"
+    }
+  ]
+}
