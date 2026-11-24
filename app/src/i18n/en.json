@@ -262,5 +262,21 @@
   "rule.sp.trapAfter": "Earlier models were checked in P0. On the circuit on X Layer these facts are not run yet.",
   "rule.sp.units": "0.01 token · 32-bit amounts",
   "rule.sp.vault": "Not yet · the vault comes after the proofs",
-  "res.workLoading": "Reading the rule's circuits from X Layer. Until they arrive, these lines come from this page's own copy of the rule."
+  "res.workLoading": "Reading the rule's circuits from X Layer. Until they arrive, these lines come from this page's own copy of the rule.",
+  "auth.loading": "Loading sign-in…",
+  "auth.title": "Sign in",
+  "auth.body": "Sign in with your email. You only need this to claim a payout, run a split or keep a profile. Checking pay never needs it.",
+  "auth.email": "Email",
+  "auth.send": "Send me a code",
+  "auth.sent": "We sent a code to {email}. It can take a minute to arrive.",
+  "auth.code": "Code from the email",
+  "auth.verify": "Sign in",
+  "auth.other": "Use another email",
+  "auth.error": "Sign-in did not work.",
+  "auth.note": "Sign-in is run by Privy. Only your email goes to Privy; your pay figures never do.",
+  "auth.in.title": "You are signed in",
+  "auth.in.body": "Signed in as {email}.",
+  "auth.details": "Details",
+  "auth.wallet": "Account address on X Layer, made for you at sign-in",
+  "auth.out": "Sign out"
 }

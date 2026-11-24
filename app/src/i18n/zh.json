@@ -262,5 +262,21 @@
   "rule.sp.trapAfter": "P0 阶段已检验过早期模型。X Layer 上的电路尚未运行这些性质。",
   "rule.sp.units": "0.01 代币 · 32 位金额",
   "rule.sp.vault": "尚未 · 资金库在证明完成后上线",
-  "res.workLoading": "正在从 X Layer 读取规则电路。在读取完成之前，以下各行来自本页自带的规则副本。"
+  "res.workLoading": "正在从 X Layer 读取规则电路。在读取完成之前，以下各行来自本页自带的规则副本。",
+  "auth.loading": "正在加载登录…",
+  "auth.title": "登录",
+  "auth.body": "用邮箱登录。只有领取分配、运行分配或保存个人资料时才需要登录。核对工资从不需要登录。",
+  "auth.email": "邮箱",
+  "auth.send": "发送验证码",
+  "auth.sent": "验证码已发送至 {email}，可能需要一分钟才能收到。",
+  "auth.code": "邮件中的验证码",
+  "auth.verify": "登录",
+  "auth.other": "换一个邮箱",
+  "auth.error": "登录未成功。",
+  "auth.note": "登录由 Privy 提供。只有你的邮箱会发给 Privy，你的工资数字不会。",
+  "auth.in.title": "你已登录",
+  "auth.in.body": "当前登录：{email}。",
+  "auth.details": "详情",
+  "auth.wallet": "登录时为你创建的 X Layer 账户地址",
+  "auth.out": "退出登录"
 }
