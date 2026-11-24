@@ -272,6 +272,18 @@
                 }
               ],
               "mutant": "fails"
+            },
+            {
+              "block": 76772810,
+              "evidence": "docs/evidence/p3/ng-paye-z3/more-pay-more-tax.json",
+              "tools": [
+                {
+                  "tool": "smt-z3",
+                  "status": "undecided",
+                  "seconds": 900
+                }
+              ],
+              "mutant": "fails"
             }
           ]
         },
@@ -372,6 +384,18 @@
                   "tool": "smt-bitwuzla",
                   "status": "undecided",
                   "seconds": 900.3
+                }
+              ],
+              "mutant": "fails"
+            },
+            {
+              "block": 76772810,
+              "evidence": "docs/evidence/p3/ng-paye-z3/relief-never-raises-tax.json",
+              "tools": [
+                {
+                  "tool": "smt-z3",
+                  "status": "undecided",
+                  "seconds": 900
                 }
               ],
               "mutant": "fails"

@@ -17,8 +17,8 @@ import { fromYosys, type YosysJson } from '../../compiler/src/yosys.ts';
 import { evaluate } from '../../compiler/src/netlist.ts';
 import { pack, unpack } from '../../compiler/src/layout.ts';
 import { toVerilog } from '../../prover/src/export.ts';
-import { toolsFromEnv } from '../../prover/src/run.ts';
-import { ask, verdict } from '../../prover/src/fact.ts';
+import { equivalent, toolsFromEnv } from '../../prover/src/run.ts';
+import { ask, toolsFromList, verdict, type Answer } from '../../prover/src/fact.ts';
 // @ts-ignore: plain JS module, vendored unchanged
 import { keccakHex } from '../../vendor/tapekit/keccak.js';
 
@@ -35,6 +35,12 @@ const refBytes = new Uint8Array(readFileSync('chain/netlists/cn_bonus.bin'));
 if (keccakHex(refBytes) !== ref.keccak256) throw new Error('chain/netlists/cn_bonus.bin does not match its manifest keccak');
 const refV = toVerilog(refBytes, ref.nIn, ref.nOut, 'cn_ref');
 const tools = toolsFromEnv();
+// Launcher options. PAYPROOF_TOOLS picks the fact tools (default ABC iprove and Yosys sat).
+// PAYPROOF_CEC=1 also asks ABC &cec whether the two netlists are equal. PAYPROOF_ENGINES limits
+// the pre-check to the engines named; every engine is still compiled and written to the manifest.
+const CHOSEN = toolsFromList(process.env.PAYPROOF_TOOLS);
+const CEC = process.env.PAYPROOF_CEC === '1';
+const ONLY = process.env.PAYPROOF_ENGINES ? process.env.PAYPROOF_ENGINES.split(',').map((e) => e.trim()) : null;
 const sim = (b: Uint8Array, nIn: number, nOut: number, bonus: bigint) =>
   unpack(ref.outputs, evaluate(b, nIn, nOut, pack(ref.inputs, { bonus }, nIn), () => null));
 
@@ -53,9 +59,17 @@ for (const e of ENGINES) {
     nIn: c.nIn, nOut: c.nOut, nandRecords: c.gates, refRecords: 0, bytes: c.bytes.length, keccak256: keccakHex(c.bytes),
     sha256: createHash('sha256').update(c.bytes).digest('hex'), inputs: c.inputs, outputs: c.outputs, reference: 'cn_bonus' });
 
+  if (ONLY && !ONLY.includes(e.name)) {
+    console.log(`${e.name}: ${c.gates} gates, keccak ${keccakHex(c.bytes)}; pre-check skipped (PAYPROOF_ENGINES)`);
+    continue;
+  }
   const engV = toVerilog(c.bytes, c.nIn, c.nOut, 'cn_eng');
   const q = `module q (input [31:0] x, output bad);\n  wire [63:0] a, b;\n  cn_ref r (.in(x), .out(a));\n  cn_eng e (.in(x), .out(b));\n  assign bad = a != b;\nendmodule\n`;
-  const r = ask(tools, `${refV}\n${engV}`, q, 32, Number(timeoutArg));
+  const r = ask(tools, `${refV}\n${engV}`, q, 32, Number(timeoutArg), CHOSEN ?? true);
+  if (CEC) {
+    const k = equivalent(tools, { 'r.v': refV, 'e.v': engV }, 'cn_ref', 'cn_eng', Number(timeoutArg));
+    r.answers.push({ tool: 'abc-cec', status: k.status, seconds: k.seconds, x: null, command: '&cec -m', tail: k.verdictLine } as unknown as Answer);
+  }
   const v = verdict(r);
   let note = '';
   if (v === 'fails') {

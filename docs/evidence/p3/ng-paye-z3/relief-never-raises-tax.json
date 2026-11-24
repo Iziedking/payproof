@@ -1,0 +1,75 @@
+{
+  "kind": "fact",
+  "ruleId": "ng-paye-nta2025",
+  "factId": "relief-never-raises-tax",
+  "statement": {
+    "en": "Claiming more of any relief or deduction never raises the tax",
+    "zh": "多申报任何一项减免或扣除，税额不会因此增加"
+  },
+  "circuits": [
+    {
+      "chainId": 196,
+      "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+      "id": "10",
+      "netlistKeccak": "0x905bcd5b4c641aa810f592b6745e3a424d48a2e8e60d4bb9c47f9118523f10ea",
+      "gateCount": 8482,
+      "nIn": 195,
+      "nOut": 57
+    }
+  ],
+  "blockNumber": 76772810,
+  "domain": "every input (no validity circuit, owner decision 2026-11-22)",
+  "status": "undecided",
+  "questionSha256": "8b89c2978394bf5e1d899a7a3ce4e8412d1024b9fd65814c5c0e239083dc703b",
+  "aigSha256": null,
+  "smt2Sha256": "f62f43857265e3edfa623772a46c24c6c50a4fbab1f5863d423ba9ee8a169dbb",
+  "answers": [
+    {
+      "tool": "smt-z3",
+      "status": "undecided",
+      "seconds": 900.03,
+      "x": null,
+      "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2\"; z3 q.smt2",
+      "tail": ""
+    }
+  ],
+  "counterexample": null,
+  "mutant": {
+    "note": "tax is raised by N1,000 when the rent is N1,000,000",
+    "questionSha256": "34be3b39ad8005f1e30282992174ae78cf42783d9e94161737b8407360e3dd0d",
+    "aigSha256": null,
+    "smt2Sha256": "43ba4f3ab5f8b3e37243618d74f6b72f4710df3f05bbbae765a93a2fed20d10f",
+    "status": "fails",
+    "answers": [
+      {
+        "tool": "smt-z3",
+        "status": "fails",
+        "seconds": 41.62,
+        "x": "2187251254508908927198780709647924777522164437523488049948500103684912393769106868577428959407820926564326",
+        "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2\"; z3 q.smt2",
+        "tail": "sat\n(((|q_n x| s) #x003d0900f800221f0039c7c00261e908819c001c80004f9f0687ade8d041371c00050dc80fbabb009d4edf37e6))"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "yosys",
+      "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+    },
+    {
+      "name": "yosys-abc",
+      "version": "bundled with the same OSS CAD Suite 2026-10-29"
+    },
+    {
+      "name": "z3",
+      "version": "Z3 version 4.15.5 - 64 bit (OSS CAD Suite 2026-10-29)"
+    }
+  ],
+  "selectedFacts": [
+    "more-pay-more-tax",
+    "relief-never-raises-tax"
+  ],
+  "timeoutSeconds": 900,
+  "ranOn": "karwan-test",
+  "ranAt": "2026-11-24T18:08:38.176Z"
+}

@@ -1,0 +1,72 @@
+Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+cn_vendor_a: 2427 NAND + 1192 NOT
+cn_vendor_b: 2539 NAND + 1197 NOT
+cn_vendor_a: 3682 gates, 25774 bytes, keccak 0x373b41a548377c13ab24be2835c944c4447c491116290c28e4cca38f430b7d8c; pre-check undecided (abc-iprove undecided 900.0s, yosys-sat undecided 900.0s), expected equal
+cn_vendor_b: 3787 gates, 26509 bytes, keccak 0x2b8f72f8812b54103cd373b262de69f498c99a54498025848296c015420bb9f3; pre-check different (abc-iprove fails 0.0s, yosys-sat fails 0.7s), expected different; bonus 17 fen: reference tax 0, engine tax 1 (simulator)
+FAIL: a pre-check differs from what the engine was written to show
+==
+
+5. Printing statistics.
+
+=== cn_vendor_a ===
+
+        +----------Local Count, excluding submodules.
+        | 
+     3559 wires
+     3652 wire bits
+        3 public wires
+       96 public wire bits
+        3 ports
+       96 port bits
+     3619 cells
+     2427   $_NAND_
+     1192   $_NOT_
+
+
+5. Printing statistics.
+
+=== cn_vendor_b ===
+
+        +----------Local Count, excluding submodules.
+        | 
+     3676 wires
+     3769 wire bits
+        3 public wires
+       96 public wire bits
+        3 ports
+       96 port bits
+     3736 cells
+     2539   $_NAND_
+     1197   $_NOT_
+
+==
+{
+  "circuits": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+  "note": "SIMULATED engines for engine equality (PLAN L13). TAP-02 netlists for tapeout(bytes,uint32,uint32); made by scripts/p3/engines-prepare.mts",
+  "pieces": [
+    {
+      "name": "cn_vendor_a",
+      "label": "Simulated engine A (China bonus)",
+      "simulated": true,
+      "yosysModule": "cn_vendor_a",
+      "file": "netlists/engines/cn_vendor_a.bin",
+      "nIn": 32,
+      "nOut": 64,
+      "nandRecords": 3682,
+      "refRecords": 0,
+      "bytes": 25774,
+      "keccak256": "0x373b41a548377c13ab24be2835c944c4447c491116290c28e4cca38f430b7d8c",
+      "sha256": "ae1eaf7d4a0d0aff5b6adb5603462e3f0cf5b076a2eea3b6a6bd3fa42cb78f59",
+      "inputs": [
+        {
+          "name": "bonus",
+          "offset": 0,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "tax",
+          "offset": 0,
+          "width": 32
+        },
