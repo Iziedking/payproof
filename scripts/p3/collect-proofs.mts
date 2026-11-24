@@ -55,10 +55,13 @@ function facts(dirs: string[]): { facts: Fact[]; recs: Rec[] } {
         if (a.status === 'holds' && !f.holdsBy.includes(a.tool)) f.holdsBy.push(a.tool);
         if (a.status === 'fails' && !f.failsBy.includes(a.tool)) f.failsBy.push(a.tool);
       }
-      if (r.status === 'fails' && !answers.length) f.failsBy.push('trap-finder (abc-iprove)');
+      // The bonus trap record has no answers list: the trap finder ran instead, each query by ABC.
+      const finder = r.status === 'fails' && !answers.length && r.traps
+        ? [{ tool: 'trap-finder (abc-iprove)', status: 'fails' as const, seconds: (r.traps as { seconds: number }).seconds }] : [];
+      if (finder.length) f.failsBy.push(finder[0].tool);
       if (r.counterexample) f.counterexample = r.counterexample;
       f.runs.push({ block: r.blockNumber, evidence: `${EV}/${dir}/${r.factId}.json`,
-        tools: answers.map((a) => ({ tool: a.tool, status: a.status, seconds: round(a.seconds) })),
+        tools: [...answers, ...finder].map((a) => ({ tool: a.tool, status: a.status, seconds: round(a.seconds) })),
         mutant: r.mutant ? r.mutant.status : null });
       byId.set(r.factId, f);
     }
@@ -86,12 +89,13 @@ function trap(recs: Rec[], dir: string, unit: 'fen' | 'naira') {
 function split() {
   const lines = readFileSync(`${EV}/split/summary.txt`, 'utf8').split('\n');
   const chain = json(`${EV}/split/chain.json`);
-  const A = new Map<string, { z3?: string; cvc5?: string; mz3?: string; mcvc5?: string }>();
+  const A = new Map<string, { z3?: string; cvc5?: string; mz3?: string; mcvc5?: string; z3s?: string; cvc5s?: string }>();
   for (const l of lines) {
-    const m = l.match(/^A (\S+?)(\.mutant)? (z3|cvc5) (\S+) \(want/);
+    const m = l.match(/^A (\S+?)(\.mutant)? (z3|cvc5) (\S+) \(want \S+\) ([\d.]+)/);
     if (!m) continue;
     const e = A.get(m[1]) ?? {};
     (e as Record<string, string>)[(m[2] ? 'm' : '') + m[3]] = m[4];
+    if (!m[2]) (e as Record<string, string>)[m[3] + 's'] = m[5];
     A.set(m[1], e);
   }
   const want = (re: RegExp, word: string) => lines.some((l) => re.test(l) && l.includes(word));
@@ -125,7 +129,7 @@ function split() {
     return { factId: id, statement, status: chainHolds && holdsBy.length && mutantCaught ? 'holds' : 'undecided', holdsBy, failsBy: [],
       method: 'chain', circuits: ['8', ...chain.refs.map((r: { id: string }) => r.id)], counterexample: null,
       runs: [{ block: chain.block, evidence: `${EV}/split/summary.txt`,
-        tools: [{ tool: 'z3', status: tool(e.z3), seconds: 0 }, { tool: 'cvc5', status: tool(e.cvc5), seconds: 0 }],
+        tools: [{ tool: 'z3', status: tool(e.z3), seconds: Number(e.z3s) }, { tool: 'cvc5', status: tool(e.cvc5), seconds: Number(e.cvc5s) }],
         mutant: mutantCaught ? 'fails' : 'not caught' }] };
   });
   return { facts: list, links, support, block: chain.block };

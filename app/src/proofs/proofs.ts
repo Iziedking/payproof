@@ -49,7 +49,7 @@ export const factProof = (ruleId: string, factId: string): FactProof | undefined
 
 /** The tools' names as the page shows them. */
 export const TOOL_NAME: Record<string, string> = {
-  'abc-iprove': 'ABC', 'yosys-sat': 'Yosys sat', 'smt-bitwuzla': 'Bitwuzla', z3: 'Z3', cvc5: 'cvc5',
+  'abc-iprove': 'ABC', 'yosys-sat': 'Yosys sat', 'smt-bitwuzla': 'Bitwuzla', 'smt-z3': 'Z3', z3: 'Z3', cvc5: 'cvc5',
   'trap-finder (abc-iprove)': 'ABC',
 }
 

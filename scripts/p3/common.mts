@@ -37,16 +37,19 @@ export async function setup(ruleId: string, rpcUrl: string, timeoutArg: string, 
 
 const sha = (s: string) => createHash('sha256').update(s).digest('hex');
 
-// Launcher options. PAYPROOF_TOOLS (comma list of abc-iprove, yosys-sat, smt-bitwuzla) asks those
+// Launcher options. PAYPROOF_TOOLS (comma list of abc-iprove, yosys-sat, smt-bitwuzla, smt-z3) asks those
 // tools, for each fact and its mutant; unset, a fact goes to ABC and Yosys sat and its mutant to
 // ABC, as in the first P3 runs. PAYPROOF_FACTS (comma list of fact ids) runs only those facts and
 // no trap search.
 export const CHOSEN: ToolName[] | null = toolsFromList(process.env.PAYPROOF_TOOLS);
 export const ONLY: string[] | null = process.env.PAYPROOF_FACTS ? process.env.PAYPROOF_FACTS.split(',').map((f) => f.trim()) : null;
-export function toolList(yosysPath: string, toolVersion: string, bitwuzla?: string) {
+export function toolList(yosysPath: string, toolVersion: string, bitwuzla?: string, z3?: string) {
   const out = [{ name: 'yosys', version: toolVersion }, { name: 'yosys-abc', version: 'bundled with the same OSS CAD Suite 2026-10-29' }];
   if (CHOSEN?.includes('smt-bitwuzla') && bitwuzla) {
     out.push({ name: 'bitwuzla', version: execFileSync(bitwuzla, ['--version'], { encoding: 'utf8' }).trim() + ' (OSS CAD Suite 2026-10-29)' });
+  }
+  if (CHOSEN?.includes('smt-z3') && z3) {
+    out.push({ name: 'z3', version: execFileSync(z3, ['--version'], { encoding: 'utf8' }).trim() + ' (OSS CAD Suite 2026-10-29)' });
   }
   return out;
 }
@@ -89,7 +92,7 @@ export class Run {
   record(factId: string, statement: Statement, cs: ChainCircuit[], domain: string, status: string, extra: Record<string, unknown>) {
     const r = { kind: 'fact', ruleId: this.ruleId, factId, statement, circuits: cs.flatMap((c) => c.read),
       blockNumber: this.block, domain, status, ...extra,
-      tools: toolList(this.tools.yosys, this.toolVersion, this.tools.bitwuzla), ...(ONLY ? { selectedFacts: ONLY } : {}),
+      tools: toolList(this.tools.yosys, this.toolVersion, this.tools.bitwuzla, this.tools.z3), ...(ONLY ? { selectedFacts: ONLY } : {}),
       timeoutSeconds: this.timeout, ranOn: this.ranOn, ranAt: new Date().toISOString() };
     this.records.push(r);
     writeFileSync(join(this.outDir, `${factId}.json`), JSON.stringify(r, null, 2) + '\n');

@@ -69,14 +69,16 @@ endmodule
   assert.equal(verdict(r), 'undecided');
 });
 
-test('the SMT tool agrees on the hand-worked step: holds, fails only at x = 49, and the mutant is caught', { skip, timeout: 600_000 }, () => {
+const SMT: ('smt-bitwuzla' | 'smt-z3')[] = ['smt-bitwuzla', 'smt-z3'];
+
+test('the SMT tools (Bitwuzla and Z3) agree on the hand-worked step: holds, fails only at x = 49, and the mutant is caught', { skip, timeout: 600_000 }, () => {
   const { tools, v } = circuit();
   const holds = ask(tools, v, `module q (input [7:0] x, output bad);
   wire [7:0] y; step_tap c (.in(x), .out(y));
   assign bad = y > x;
 endmodule
-`, 8, 120, ['smt-bitwuzla']);
-  assert.deepEqual(holds.answers.map((a) => [a.tool, a.status]), [['smt-bitwuzla', 'holds']]);
+`, 8, 120, SMT);
+  assert.deepEqual(holds.answers.map((a) => [a.tool, a.status]), [['smt-bitwuzla', 'holds'], ['smt-z3', 'holds']]);
   assert.equal(holds.aigSha256, null);
   assert.match(holds.smt2Sha256 ?? '', /^[0-9a-f]{64}$/);
 
@@ -85,9 +87,8 @@ endmodule
   step_tap c0 (.in(x), .out(y0)); step_tap c1 (.in(x1), .out(y1));
   assign bad = (x != 8'd255) && (y1 < y0);
 endmodule
-`, 8, 120, ['smt-bitwuzla']);
-  assert.equal(fails.answers[0].status, 'fails');
-  assert.equal(fails.answers[0].x, 49n);
+`, 8, 120, SMT);
+  for (const a of fails.answers) { assert.equal(a.status, 'fails', a.tool); assert.equal(a.x, 49n, a.tool) }
 
   // A broken "y > x" that is true only at x = 7: the tool must find exactly that input.
   const mutant = ask(tools, v, `module q (input [7:0] x, output bad);
@@ -95,12 +96,11 @@ endmodule
   wire [7:0] y = (x == 8'd7) ? 8'd8 : y0;
   assign bad = y > x;
 endmodule
-`, 8, 120, ['smt-bitwuzla']);
-  assert.equal(mutant.answers[0].status, 'fails');
-  assert.equal(mutant.answers[0].x, 7n);
+`, 8, 120, SMT);
+  for (const a of mutant.answers) { assert.equal(a.status, 'fails', a.tool); assert.equal(a.x, 7n, a.tool) }
 });
 
-test('a forced timeout gives undecided for the SMT tool too', { skip, timeout: 600_000 }, () => {
+test('a forced timeout gives undecided for the SMT tools too', { skip, timeout: 600_000 }, () => {
   const tools = toolsFromEnv();
   // A word-level product is no use here: Bitwuzla's rewriter settles commutativity and even
   // distributivity at once (it proved the 64-bit distributive law instantly in the first try).
@@ -121,7 +121,8 @@ endmodule
   wire [63:0] a, b; mul_tap c0 (.in(x), .out(a)); mul_tap c1 (.in({x[31:0], x[63:32]}), .out(b));
   assign bad = a != b;
 endmodule
-`, 64, 1, ['smt-bitwuzla']);
-  assert.equal(r.answers[0].status, 'undecided');
+`, 64, 1, SMT);
+  for (const a of r.answers) assert.equal(a.status, 'undecided', a.tool);
+  assert.equal(r.answers.length, 2);
   assert.equal(verdict(r), 'undecided');
 });

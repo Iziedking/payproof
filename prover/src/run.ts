@@ -11,7 +11,7 @@ import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-export type Tools = { yosys: string; abc: string; bitwuzla?: string };
+export type Tools = { yosys: string; abc: string; bitwuzla?: string; z3?: string };
 export type Verdict = {
   status: 'holds' | 'fails' | 'undecided';
   verdictLine: string;
@@ -24,7 +24,7 @@ export type Verdict = {
 export function toolsFromEnv(): Tools {
   const dir = process.env.OSS_CAD_SUITE ?? '';
   if (!dir) throw new Error('set OSS_CAD_SUITE to the oss-cad-suite directory');
-  return { yosys: join(dir, 'bin', 'yosys'), abc: join(dir, 'bin', 'yosys-abc'), bitwuzla: join(dir, 'bin', 'bitwuzla') };
+  return { yosys: join(dir, 'bin', 'yosys'), abc: join(dir, 'bin', 'yosys-abc'), bitwuzla: join(dir, 'bin', 'bitwuzla'), z3: join(dir, 'bin', 'z3') };
 }
 
 export function yosys(tools: Tools, script: string, cwd: string): string {

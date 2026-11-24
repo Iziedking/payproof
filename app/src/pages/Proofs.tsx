@@ -24,7 +24,7 @@ function toolLine(f: FactProof, t: (k: Key, v?: Record<string, string | number>)
   for (const run of f.runs) {
     for (const x of run.tools) {
       const word = t(x.status === 'holds' ? 'proof.tHolds' : x.status === 'fails' ? 'proof.tFails' : 'proof.tUndecided')
-      seen.push(`${TOOL_NAME[x.tool] ?? x.tool}: ${word}${x.seconds ? ` ${x.seconds} s` : ''}`)
+      seen.push(`${TOOL_NAME[x.tool] ?? x.tool}: ${word}, ${x.seconds} s`)
     }
   }
   return seen.join(' · ')

@@ -83,7 +83,7 @@ const circuitsOf = (...cs: ChainCircuit[]) => cs.flatMap((c) => c.read);
 const record = (kind: string, factId: string, statement: { en: string; zh: string }, cs: ChainCircuit[],
   domain: string, status: string, extra: Record<string, unknown>) => {
   const r = { kind, ruleId: 'cn-bonus-2023-30', factId, statement, circuits: circuitsOf(...cs), blockNumber: block,
-    domain, status, ...extra, tools: toolList(tools.yosys, toolVersion, tools.bitwuzla), ...(ONLY ? { selectedFacts: ONLY } : {}),
+    domain, status, ...extra, tools: toolList(tools.yosys, toolVersion, tools.bitwuzla, tools.z3), ...(ONLY ? { selectedFacts: ONLY } : {}),
     timeoutSeconds: TIMEOUT, ranOn, ranAt: new Date().toISOString() };
   records.push(r);
   writeFileSync(join(outDir, `${factId}.json`), JSON.stringify(r, null, 2) + '\n');

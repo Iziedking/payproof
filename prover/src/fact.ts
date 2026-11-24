@@ -29,7 +29,7 @@ export type Answer = {
   command: string;
   tail: string;
 };
-export type ToolName = 'abc-iprove' | 'yosys-sat' | 'smt-bitwuzla';
+export type ToolName = 'abc-iprove' | 'yosys-sat' | 'smt-bitwuzla' | 'smt-z3';
 export type Question = { answers: Answer[]; aigSha256: string | null; smt2Sha256?: string };
 
 const SMT_TEMPLATE = `(set-option :produce-models true)
@@ -46,7 +46,7 @@ const SMT_TEMPLATE = `(set-option :produce-models true)
 export function toolsFromList(list: string | undefined): ToolName[] | null {
   if (!list) return null;
   const names = list.split(',').map((t) => t.trim()).filter(Boolean);
-  for (const n of names) if (!['abc-iprove', 'yosys-sat', 'smt-bitwuzla'].includes(n)) throw new Error(`unknown tool ${n}`);
+  for (const n of names) if (!['abc-iprove', 'yosys-sat', 'smt-bitwuzla', 'smt-z3'].includes(n)) throw new Error(`unknown tool ${n}`);
   return names as ToolName[];
 }
 
@@ -115,28 +115,35 @@ export function ask(tools: Tools, circuitV: string, question: string, w: number,
       answers.push(b);
     }
 
-    if (use.includes('smt-bitwuzla')) {
-      if (!tools.bitwuzla) throw new Error('no bitwuzla in the tool set');
+    // The SMT tools read one file, written once: Bitwuzla, and Z3 4.15.5 from the same suite
+    // (`z3 <file>` runs an SMT-LIB 2 script). Each is an independent solver.
+    const smtTools = (['smt-bitwuzla', 'smt-z3'] as const).filter((x) => use.includes(x));
+    if (smtTools.length) {
       writeFileSync(join(d, 'q.tpl'), SMT_TEMPLATE);
       // Word-level on purpose: no techmap or aigmap, so the solver sees the question's arithmetic.
       yosys(tools, 'read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2', d);
       smt2Sha256 = createHash('sha256').update(readFileSync(join(d, 'q.smt2'))).digest('hex');
+    }
+    for (const name of smtTools) {
+      const bin = name === 'smt-bitwuzla' ? tools.bitwuzla : tools.z3;
+      if (!bin) throw new Error(`no binary for ${name} in the tool set`);
       t0 = process.hrtime.bigint();
-      log = run('timeout', ['--kill-after=10', String(timeoutSec), tools.bitwuzla, 'q.smt2'], d);
+      log = run('timeout', ['--kill-after=10', String(timeoutSec), bin, 'q.smt2'], d);
       seconds = Number(process.hrtime.bigint() - t0) / 1e9;
-      const c: Answer = { tool: 'smt-bitwuzla', status: 'undecided', x: null, seconds,
-        command: 'yosys -p "read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2"; bitwuzla q.smt2',
+      const c: Answer = { tool: name, status: 'undecided', x: null, seconds,
+        command: `yosys -p "read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2"; ${name === 'smt-bitwuzla' ? 'bitwuzla' : 'z3'} q.smt2`,
         tail: tailOf(log) };
-      // The first answer line; Bitwuzla may exit non-zero on sat or unsat, and an error from
+      // The first answer line; a solver may exit non-zero on sat or unsat, and an error from
       // (get-value) after unsat goes to stderr, which run() appends after stdout.
       const first = log.match(/^(sat|unsat|unknown)$/m)?.[1];
       if (first === 'unsat') c.status = 'holds';
       else if (first === 'sat') {
-        // (get-value) prints ((|q_n x| s) #b...) in binary, Bitwuzla's default output format.
-        const m = log.match(/\|q_n x\| s\)\s+#b([01]+)/);
-        if (!m) throw new Error('bitwuzla said sat but printed no value for x');
+        // (get-value) prints ((|q_n x| s) <value>): #b binary (Bitwuzla's default), or #x hex,
+        // or (_ bvN w), as Z3 may print depending on the width.
+        const m = log.match(/\|q_n x\| s\)\s+(#b[01]+|#x[0-9a-fA-F]+|\(_ bv(\d+) \d+\))/);
+        if (!m) throw new Error(`${name} said sat but printed no value for x`);
         c.status = 'fails';
-        c.x = BigInt('0b' + m[1]);
+        c.x = m[2] ? BigInt(m[2]) : BigInt('0' + m[1].slice(1));
       }
       answers.push(c);
     }

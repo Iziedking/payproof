@@ -111,7 +111,13 @@
             {
               "block": 76743855,
               "evidence": "docs/evidence/p3/cn-bonus/raise-never-lowers-take-home.json",
-              "tools": [],
+              "tools": [
+                {
+                  "tool": "trap-finder (abc-iprove)",
+                  "status": "fails",
+                  "seconds": 1007.2
+                }
+              ],
               "mutant": null
             }
           ]
@@ -564,12 +570,12 @@
                 {
                   "tool": "z3",
                   "status": "holds",
-                  "seconds": 0
+                  "seconds": 0.4
                 },
                 {
                   "tool": "cvc5",
                   "status": "holds",
-                  "seconds": 0
+                  "seconds": 0.1
                 }
               ],
               "mutant": "fails"
@@ -606,12 +612,12 @@
                 {
                   "tool": "z3",
                   "status": "holds",
-                  "seconds": 0
+                  "seconds": 0.4
                 },
                 {
                   "tool": "cvc5",
                   "status": "holds",
-                  "seconds": 0
+                  "seconds": 0.1
                 }
               ],
               "mutant": "fails"
@@ -648,12 +654,12 @@
                 {
                   "tool": "z3",
                   "status": "holds",
-                  "seconds": 0
+                  "seconds": 0.5
                 },
                 {
                   "tool": "cvc5",
                   "status": "holds",
-                  "seconds": 0
+                  "seconds": 0.1
                 }
               ],
               "mutant": "fails"
