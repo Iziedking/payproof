@@ -189,9 +189,19 @@ rehearsed figure is the one to use.
 Evidence: `docs/evidence/p2/deweb/icons-dryrun/` (receipts summary, read-back before and after,
 summary, anvil log with test keys and mnemonic cut, host sha256 in its first line).
 
+Live, 2026-11-24: the owner signed the same command. Three `putFile` transactions, all
+succeeded: `apple-touch-icon-180.png` tx `0xf14b83ee…a75eb9d2` block 76,734,048 (516,401 gas),
+`favicon-32.png` tx `0x616dcfc5…b48c193f` block 76,734,049 (368,779), `favicon.svg` tx
+`0xe6005da0…6df32dab` block 76,734,051 (369,775). Total 1,254,955 gas, the same as the fork, at
+20,000,001 wei: 0.0000251 OKB. Read back at block 76,734,067 (task `p2-deweb-live-landed`): all
+six files byte for byte, SHA-256 and content type match, name still live. Through the gateway in
+Chrome the three icons load as images at 150 by 150 (SVG), 32 by 32 and 180 by 180.
+
+Evidence: `docs/evidence/p2/deweb/live/deweb-live-receipts-icons.json`,
+`deweb-live-landed-icons.json`, `gateway-icons.jpg`.
+
 ## What is not settled
 
-- **The icons on the live site.** Rehearsed above; the owner has not signed them yet.
 
 - **Binding `payproof.kingizie.tech`.** The DNS record for an X Layer site, the CNAME target and
   who serves the certificate are HashPort's and are not in these repositories. The browser
