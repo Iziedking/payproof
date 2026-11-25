@@ -341,5 +341,18 @@
   "proof.sup.no-overflow": "检查的每一步都不会溢出",
   "proof.repeatTitle": "复现任何结果",
   "proof.repeatBody": "每个结果的文件都包含所问的问题、确切的命令和求解器的输出。方法和每次运行都写在代码库中。",
-  "proof.notAudited": "未经独立审计。"
+  "proof.notAudited": "未经独立审计。",
+  "proof.engTitle": "与规则比对的计算引擎",
+  "proof.engLede": "把一个工资计算引擎和规则一起上链到 X Layer，再让工具检查两者是否会在某个输入上给出不同的税额或到手金额。这里的引擎都是模拟引擎：由 Payproof 团队编写，用来演示这项检查，不是任何厂商的代码。",
+  "proof.engSimulated": "模拟",
+  "proof.engColEngine": "引擎",
+  "proof.engEqual2": "对每一笔奖金都相同 · {tools}",
+  "proof.engEqual1": "相同，仅由 {tool} 证明",
+  "proof.engDiffers": "不同",
+  "proof.engCircuits": "引擎电路 {circuit}，规则电路 {ref}",
+  "proof.engAt": "奖金为 {bonus} 时，规则的税额是 {ref}，引擎的税额是 {eng}。两者都在 X Layer 上用 eval 运行过。",
+  "proof.engMutant": "故意改错的副本：在某一笔奖金上把引擎的税额加 0.01。工具必须发现这处改动。",
+  "proof.engNote": "“不同”只说明两个电路对某个有效输入给出的结果不一样，并不说明哪一方对规则的理解是对的。",
+  "proof.engTHolds": "证明相同",
+  "proof.engTFails": "找到不同"
 }

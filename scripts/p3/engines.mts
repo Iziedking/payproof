@@ -70,6 +70,7 @@ const question = (mutate: boolean) => `module q (input [31:0] x, output bad);\n 
   (mutate ? `  wire [63:0] b = (x == 32'd5000000) ? {b0[63:32], b0[31:0] + 32'd1} : b0;\n` : `  wire [63:0] b = b0;\n`) +
   `  assign bad = a != b;\nendmodule\n`;
 
+const ZH_LABEL: Record<string, string> = { cn_vendor_a2: '模拟引擎 A（年终奖）', cn_vendor_b: '模拟引擎 B（年终奖）' };
 const records: unknown[] = [];
 let allOk = true;
 for (const p of engManifest.pieces as (Piece & { label: string })[]) {
@@ -101,7 +102,7 @@ for (const p of engManifest.pieces as (Piece & { label: string })[]) {
     `; mutant ${verdict(m)}`);
   const rec = { kind: 'equality', ruleId: 'cn-bonus-2023-30', engine: p.name, label: p.label, simulated: true,
     statement: { en: `${p.label} gives the same tax and take-home as the rule for every bonus`,
-      zh: `${p.label}（模拟引擎）对每一笔奖金给出的税额和到手金额都与规则相同` },
+      zh: `${ZH_LABEL[p.name] ?? p.name}对每一笔奖金给出的税额和到手金额都与规则相同` },
     circuits: [...ref.read, ...eng.read], blockNumber: block, domain: 'every 32-bit bonus (no validity circuit, owner decision 2026-11-22)',
     status: v, result: status, questionSha256: sha(q), aigSha256: r.aigSha256, smt2Sha256: r.smt2Sha256, answers: answersOut(r), counterexample,
     mutant: { note: "engine's tax raised by one fen at a bonus of 50,000.00 yuan", questionSha256: sha(mq), status: verdict(m), answers: answersOut(m) },

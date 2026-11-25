@@ -1,0 +1,205 @@
+{
+  "block": 76787478,
+  "records": [
+    {
+      "kind": "equality",
+      "ruleId": "cn-bonus-2023-30",
+      "engine": "cn_vendor_a2",
+      "label": "Simulated engine A (China bonus)",
+      "simulated": true,
+      "statement": {
+        "en": "Simulated engine A (China bonus) gives the same tax and take-home as the rule for every bonus",
+        "zh": "模拟引擎 A（年终奖）对每一笔奖金给出的税额和到手金额都与规则相同"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "9",
+          "netlistKeccak": "0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537",
+          "gateCount": 3573,
+          "nIn": 32,
+          "nOut": 64
+        },
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "15",
+          "netlistKeccak": "0xef19f8b6110fd22db6294adf1ea0e00f14c1498007b5ca0251b1ecf01b7ba9d1",
+          "gateCount": 3642,
+          "nIn": 32,
+          "nOut": 64
+        }
+      ],
+      "blockNumber": 76787478,
+      "domain": "every 32-bit bonus (no validity circuit, owner decision 2026-11-22)",
+      "status": "holds",
+      "result": "equal",
+      "questionSha256": "da8db257831e9ddad652d1861e278c9ee893b1efe1a077e26682d76941e3e19d",
+      "aigSha256": "07a9f8669514ffd4aa6b32741c709751f4e32ef7614dd923a28f38b166d2b411",
+      "smt2Sha256": "78d0b3b1a311b2c87749efbfbcd1a603804f763d634096cdeebd37caced965c4",
+      "answers": [
+        {
+          "tool": "abc-iprove",
+          "status": "holds",
+          "seconds": 12.05,
+          "x": null,
+          "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+          "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nUNSATISFIABLE  Time =    12.03 sec\nCounter-example is not available."
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "undecided",
+          "seconds": 900.01,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+          "tail": "Imported 9295 cells to SAT database.\nImport proof-constraint: \\bad = 1'0\nFinal proof equation: \\bad = 1'0\nImport show expression: \\x\n\nSolving problem with 42211 variables and 107949 clauses.."
+        },
+        {
+          "tool": "smt-bitwuzla",
+          "status": "holds",
+          "seconds": 228.93,
+          "x": null,
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2\"; bitwuzla q.smt2",
+          "tail": "unsat"
+        }
+      ],
+      "counterexample": null,
+      "mutant": {
+        "note": "engine's tax raised by one fen at a bonus of 50,000.00 yuan",
+        "questionSha256": "33aa3efbff94bdead3bfe54fd07f0365d833210ad8d919469fc997c5282a1c2d",
+        "status": "fails",
+        "answers": [
+          {
+            "tool": "abc-iprove",
+            "status": "fails",
+            "seconds": 0.32,
+            "x": "5000000",
+            "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+            "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.30 sec"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        },
+        {
+          "name": "bitwuzla",
+          "version": "0.9.1 (OSS CAD Suite 2026-10-29)"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "karwan-test",
+      "ranAt": "2026-11-24T22:00:59.296Z"
+    },
+    {
+      "kind": "equality",
+      "ruleId": "cn-bonus-2023-30",
+      "engine": "cn_vendor_b",
+      "label": "Simulated engine B (China bonus)",
+      "simulated": true,
+      "statement": {
+        "en": "Simulated engine B (China bonus) gives the same tax and take-home as the rule for every bonus",
+        "zh": "模拟引擎 B（年终奖）对每一笔奖金给出的税额和到手金额都与规则相同"
+      },
+      "circuits": [
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "9",
+          "netlistKeccak": "0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537",
+          "gateCount": 3573,
+          "nIn": 32,
+          "nOut": 64
+        },
+        {
+          "chainId": 196,
+          "cpu": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+          "id": "16",
+          "netlistKeccak": "0x2b8f72f8812b54103cd373b262de69f498c99a54498025848296c015420bb9f3",
+          "gateCount": 3787,
+          "nIn": 32,
+          "nOut": 64
+        }
+      ],
+      "blockNumber": 76787478,
+      "domain": "every 32-bit bonus (no validity circuit, owner decision 2026-11-22)",
+      "status": "fails",
+      "result": "differs",
+      "questionSha256": "da8db257831e9ddad652d1861e278c9ee893b1efe1a077e26682d76941e3e19d",
+      "aigSha256": "1e378ba01b003e9d4457f980f2a114958ff4bb5d07a0579a82e44b95125c200a",
+      "smt2Sha256": "9dc5977a3f6c08d84084b524e268ef5f0db55e8d059e205d8ad989ff2a12600a",
+      "answers": [
+        {
+          "tool": "abc-iprove",
+          "status": "fails",
+          "seconds": 0.05,
+          "x": "17",
+          "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+          "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.02 sec"
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "fails",
+          "seconds": 0.91,
+          "x": "24566173",
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; techmap; opt -fast; sat -prove bad 0 -show-inputs\"",
+          "tail": "  --------------- ----------- --------- -----------------------------------\n  \\x                 24566173   176d99d    00000001011101101101100110011101\n\nEnd of script. Logfile hash: c166d92de2, time: 0.89s, user: 0.90s, system: 0.03s, MEM: 83.78 MB peak\nYosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)\nTime spent: 38% 5x read_verilog (0 sec), 20% 1x sat (0 sec), ..."
+        },
+        {
+          "tool": "smt-bitwuzla",
+          "status": "fails",
+          "seconds": 16.89,
+          "x": "4294967295",
+          "command": "yosys -p \"read_verilog c.v; read_verilog q.v; hierarchy -top q; proc; flatten; opt_clean; write_smt2 -tpl q.tpl q.smt2\"; bitwuzla q.smt2",
+          "tail": "sat\n(((|q_n x| s) #b11111111111111111111111111111111))"
+        }
+      ],
+      "counterexample": {
+        "bonusFen": "17",
+        "referenceTax": "0",
+        "engineTax": "1",
+        "referenceNet": "17",
+        "engineNet": "16"
+      },
+      "mutant": {
+        "note": "engine's tax raised by one fen at a bonus of 50,000.00 yuan",
+        "questionSha256": "33aa3efbff94bdead3bfe54fd07f0365d833210ad8d919469fc997c5282a1c2d",
+        "status": "fails",
+        "answers": [
+          {
+            "tool": "abc-iprove",
+            "status": "fails",
+            "seconds": 0.04,
+            "x": "19",
+            "command": "yosys-abc -c \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"",
+            "tail": "======== ABC command line \"read_aiger q.aig; strash; iprove; write_cex -n q.cex\"\nSATISFIABLE (output = 0) Time =     0.02 sec"
+          }
+        ]
+      },
+      "tools": [
+        {
+          "name": "yosys",
+          "version": "Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)"
+        },
+        {
+          "name": "yosys-abc",
+          "version": "bundled with the same OSS CAD Suite 2026-10-29"
+        },
+        {
+          "name": "bitwuzla",
+          "version": "0.9.1 (OSS CAD Suite 2026-10-29)"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "ranOn": "karwan-test",
+      "ranAt": "2026-11-24T22:01:21.348Z"
+    }
+  ]
+}

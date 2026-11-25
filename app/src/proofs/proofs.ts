@@ -38,7 +38,27 @@ export interface RuleProofs {
   chain?: { block: number; links: Record<string, boolean>; support: { factId: string; holdsBy: string[]; mutantCaught: boolean }[]; evidence: string }
 }
 
+/** A SIMULATED engine checked against a rule's circuit on X Layer (scripts/p3/engines.mts). */
+export interface EngineProof {
+  engine: string
+  label: string
+  simulated: true
+  ruleId: string
+  statement: { en: string; zh: string }
+  referenceCircuit: string
+  circuit: string
+  block: number
+  result: 'equal' | 'differs' | 'undecided'
+  holdsBy: string[]
+  failsBy: string[]
+  tools: ToolRun[]
+  counterexample: { bonusFen: string; referenceTax: string; engineTax: string; referenceNet: string; engineNet: string } | null
+  mutant: string
+  evidence: string
+}
+
 export const PROOFS = (data as unknown as { rules: RuleProofs[] }).rules
+export const ENGINES = (data as unknown as { engines: EngineProof[] }).engines
 /** Each solver query's time limit in every run, in seconds (one value; the collector checks). */
 export const LIMIT_SECONDS = (data as unknown as { limitSeconds: number }).limitSeconds
 export const LIMIT_MINUTES = LIMIT_SECONDS / 60
@@ -50,7 +70,7 @@ export const factProof = (ruleId: string, factId: string): FactProof | undefined
 /** The tools' names as the page shows them. */
 export const TOOL_NAME: Record<string, string> = {
   'abc-iprove': 'ABC', 'yosys-sat': 'Yosys sat', 'smt-bitwuzla': 'Bitwuzla', 'smt-z3': 'Z3', z3: 'Z3', cvc5: 'cvc5',
-  'trap-finder (abc-iprove)': 'ABC',
+  'trap-finder (abc-iprove)': 'ABC', 'abc-cec': 'ABC cec',
 }
 
 /** China bonus traps, in fen, from the trap finder's record (circuit 9 on X Layer). */

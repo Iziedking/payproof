@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest'
 import { cnKeep, cnTraps } from '../rules/cnBonus'
 import { ngPaye, ngTrap } from '../rules/ngPaye'
-import { cnTrapsFromRecord, ngTrapFromRecord, PROOFS, TOOL_NAME } from './proofs'
+import { cnTrapsFromRecord, ENGINES, ngTrapFromRecord, PROOFS, TOOL_NAME } from './proofs'
 import { viewCn, viewNg, emptyNg } from '../check'
 
 describe('proof records', () => {
@@ -34,6 +34,22 @@ describe('proof records', () => {
     expect(ng.trap.proof?.block).toBe(ngTrapFromRecord().block)
     const withPension = viewNg({ ...emptyNg(), gross: '840001', pension: '10000' })!
     expect(withPension.trap.proof).toBeNull()
+  })
+
+  it('every engine shown is labelled simulated, names known tools, and a difference carries its input', () => {
+    expect(ENGINES.length).toBeGreaterThan(0)
+    for (const e of ENGINES) {
+      expect(e.simulated).toBe(true)
+      expect(e.label).toMatch(/^Simulated engine/)
+      expect(e.statement.en && e.statement.zh).toBeTruthy()
+      expect(['equal', 'differs', 'undecided']).toContain(e.result)
+      for (const x of e.tools) expect(TOOL_NAME[x.tool], x.tool).toBeTruthy()
+      if (e.result === 'differs') {
+        expect(e.counterexample).not.toBeNull()
+        expect(e.counterexample!.referenceTax).not.toBe(e.counterexample!.engineTax)
+      }
+      if (e.result === 'equal') expect(e.holdsBy.length).toBeGreaterThan(0)
+    }
   })
 
   it('every fact has a statement in both languages, a status and a known tool name', () => {

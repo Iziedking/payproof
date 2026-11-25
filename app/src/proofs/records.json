@@ -769,5 +769,92 @@
       }
     }
   ],
+  "engines": [
+    {
+      "engine": "cn_vendor_a2",
+      "label": "Simulated engine A (China bonus)",
+      "simulated": true,
+      "ruleId": "cn-bonus-2023-30",
+      "statement": {
+        "en": "Simulated engine A (China bonus) gives the same tax and take-home as the rule for every bonus",
+        "zh": "模拟引擎 A（年终奖）对每一笔奖金给出的税额和到手金额都与规则相同"
+      },
+      "referenceCircuit": "9",
+      "circuit": "15",
+      "block": 76787478,
+      "result": "equal",
+      "holdsBy": [
+        "abc-iprove",
+        "smt-bitwuzla"
+      ],
+      "failsBy": [],
+      "tools": [
+        {
+          "tool": "abc-iprove",
+          "status": "holds",
+          "seconds": 12.1
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "undecided",
+          "seconds": 900
+        },
+        {
+          "tool": "smt-bitwuzla",
+          "status": "holds",
+          "seconds": 228.9
+        }
+      ],
+      "counterexample": null,
+      "mutant": "fails",
+      "evidence": "docs/evidence/p3/engines/cn_vendor_a2.json"
+    },
+    {
+      "engine": "cn_vendor_b",
+      "label": "Simulated engine B (China bonus)",
+      "simulated": true,
+      "ruleId": "cn-bonus-2023-30",
+      "statement": {
+        "en": "Simulated engine B (China bonus) gives the same tax and take-home as the rule for every bonus",
+        "zh": "模拟引擎 B（年终奖）对每一笔奖金给出的税额和到手金额都与规则相同"
+      },
+      "referenceCircuit": "9",
+      "circuit": "16",
+      "block": 76787478,
+      "result": "differs",
+      "holdsBy": [],
+      "failsBy": [
+        "abc-iprove",
+        "yosys-sat",
+        "smt-bitwuzla"
+      ],
+      "tools": [
+        {
+          "tool": "abc-iprove",
+          "status": "fails",
+          "seconds": 0.1
+        },
+        {
+          "tool": "yosys-sat",
+          "status": "fails",
+          "seconds": 0.9
+        },
+        {
+          "tool": "smt-bitwuzla",
+          "status": "fails",
+          "seconds": 16.9
+        }
+      ],
+      "counterexample": {
+        "bonusFen": "17",
+        "referenceTax": "0",
+        "engineTax": "1",
+        "referenceNet": "17",
+        "engineNet": "16"
+      },
+      "mutant": "fails",
+      "evidence": "docs/evidence/p3/engines/cn_vendor_b.json"
+    }
+  ],
   "limitSeconds": 900
 }

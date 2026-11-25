@@ -1,0 +1,5 @@
+pinned block 76787478; Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8); ran on karwan-test
+reference circuit 9: keccak 0x503c5c5010b765f8e0ba96ce4530fc4cba9c108597a83752532d1d111f12e537, 3573 gates
+cn_vendor_a2 (Simulated engine A (China bonus)): equal (abc-iprove holds 12.1s, yosys-sat undecided 900.0s, smt-bitwuzla holds 228.9s); mutant fails
+cn_vendor_b (Simulated engine B (China bonus)): differs (abc-iprove fails 0.1s, yosys-sat fails 0.9s, smt-bitwuzla fails 16.9s); bonus 17 fen: reference tax 0, engine tax 1 (eval on chain); mutant fails
+ALL CHECKS PASSED

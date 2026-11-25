@@ -4,7 +4,7 @@
 import { useI18n, type Key } from '../i18n/i18n'
 import { href } from '../router'
 import { ruleById } from '../ruleInfo'
-import { LIMIT_MINUTES, PROOFS, TOOL_NAME, type FactProof, type RuleProofs, type TrapProof } from '../proofs/proofs'
+import { ENGINES, LIMIT_MINUTES, PROOFS, TOOL_NAME, type EngineProof, type FactProof, type RuleProofs, type TrapProof } from '../proofs/proofs'
 import { fen, naira } from '../rules/money'
 
 const num = (n: number) => n.toLocaleString('en-US')
@@ -131,6 +131,62 @@ function Chain({ rule }: { rule: RuleProofs }) {
   )
 }
 
+function EnginePill({ e }: { e: EngineProof }) {
+  const { t } = useI18n()
+  if (e.result === 'differs') return <span className="pill warn">{t('proof.engDiffers')}</span>
+  if (e.result === 'undecided') return <span className="pill quiet">{t('proof.undecided')}</span>
+  const tools = e.holdsBy.map((x) => TOOL_NAME[x] ?? x)
+  return tools.length >= 2
+    ? <span className="pill ok">{t('proof.engEqual2', { tools: tools.join(' + ') })}</span>
+    : <span className="pill ok-one">{t('proof.engEqual1', { tool: tools[0] })}</span>
+}
+
+// Engine equality: each SIMULATED engine against the rule's circuit, both read from X Layer.
+function Engines() {
+  const { t, lang } = useI18n()
+  if (!ENGINES.length) return null
+  return (
+    <section className="proof-rule" aria-labelledby="p-engines">
+      <div className="proof-rule-head"><h2 id="p-engines">{t('proof.engTitle')}</h2></div>
+      <p className="fine">{t('proof.engLede')}</p>
+      <div className="scroll-x">
+        <table className="rate proof-table">
+          <thead>
+            <tr>
+              <th scope="col">{t('proof.engColEngine')}</th>
+              <th scope="col">{t('proof.colResult')}</th>
+              <th scope="col">{t('proof.colTools')}</th>
+              <th scope="col">{t('proof.colMutant')}</th>
+              <th scope="col">{t('proof.colBlock')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ENGINES.map((e) => {
+              const ce = e.counterexample
+              return (
+                <tr key={e.engine}>
+                  <th scope="row">
+                    <span className="fact-name">{lang === 'zh' ? e.statement.zh : e.statement.en}</span>
+                    <span className="pill quiet">{t('proof.engSimulated')}</span>{' '}
+                    <span className="mono fine">{t('proof.engCircuits', { circuit: e.circuit, ref: e.referenceCircuit })}</span>
+                    {ce && <span className="fine">{t('proof.engAt', { bonus: fen(Number(ce.bonusFen)), ref: fen(Number(ce.referenceTax)), eng: fen(Number(ce.engineTax)) })}</span>}
+                  </th>
+                  <td><EnginePill e={e} /></td>
+                  <td className="fine tools">{e.tools.map((x) => `${TOOL_NAME[x.tool] ?? x.tool}: ${t(x.status === 'holds' ? 'proof.engTHolds' : x.status === 'fails' ? 'proof.engTFails' : 'proof.tUndecided')}, ${x.seconds} s`).join(' · ')}</td>
+                  <td className="fine">{e.mutant === 'fails' ? t('proof.mutantCaught') : t('proof.mutantMissed')}</td>
+                  <td className="mono fine">{num(e.block)}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p className="small">{t('proof.engMutant')}</p>
+      <p className="small">{t('proof.engNote')}</p>
+    </section>
+  )
+}
+
 export function Proofs() {
   const { t } = useI18n()
   const all = PROOFS.flatMap((r) => r.facts)
@@ -167,6 +223,7 @@ export function Proofs() {
           </section>
         )
       })}
+      <Engines />
       <section className="card" aria-labelledby="repeat-h">
         <h2 id="repeat-h">{t('proof.repeatTitle')}</h2>
         <p className="body">{t('proof.repeatBody')}</p>

@@ -9,6 +9,7 @@
 //   cn-bonus/records.json, cn-bonus-smt/records.json      facts and traps on circuits 9 and 12
 //   ng-paye/records.json,  ng-paye-smt/records.json       facts and the trap on circuits 10 and 11
 //   split/summary.txt, split/chain.json                    split facts: integer predicate + chain
+//   engines/records.json                                   SIMULATED engines against circuit 9
 // A fact's status: "fails" if any tool found an input that breaks it (each such input was
 // replayed in the simulator and with eval on chain before it was recorded); else "holds" if at
 // least one tool proved it; else "undecided". `holdsBy` lists every tool that proved it, so the
@@ -135,6 +136,30 @@ function split() {
   return { facts: list, links, support, block: chain.block };
 }
 
+// Engine equality (scripts/p3/engines.mts): each SIMULATED engine against the rule's circuit.
+// "equal" if a tool proved the outputs never differ, "differs" if a tool found a bonus where they
+// do (replayed in the simulator and with eval on chain before it was recorded), else "undecided".
+type EngRec = {
+  engine: string; label: string; simulated: boolean; ruleId: string; blockNumber: number; result: string;
+  statement: { en: string; zh: string }; circuits: { id: string }[]; answers: Answer[];
+  counterexample: Record<string, string> | null; mutant: { status: string }; timeoutSeconds: number;
+};
+function engines() {
+  const file = `${EV}/engines/records.json`;
+  return (json(file).records as EngRec[]).map((r) => {
+    limits.add(r.timeoutSeconds);
+    if (!r.simulated) throw new Error(`${r.engine}: every engine shown must be labelled simulated`);
+    return {
+      engine: r.engine, label: r.label, simulated: true, ruleId: r.ruleId, statement: r.statement,
+      referenceCircuit: r.circuits[0].id, circuit: r.circuits[r.circuits.length - 1].id, block: r.blockNumber,
+      result: r.result, holdsBy: r.answers.filter((a) => a.status === 'holds').map((a) => a.tool),
+      failsBy: r.answers.filter((a) => a.status === 'fails').map((a) => a.tool),
+      tools: r.answers.map((a) => ({ tool: a.tool, status: a.status, seconds: round(a.seconds) })),
+      counterexample: r.counterexample, mutant: r.mutant.status, evidence: `${EV}/engines/${r.engine}.json`,
+    };
+  });
+}
+
 const cn = facts(['cn-bonus', 'cn-bonus-smt']);
 const ng = facts(['ng-paye', 'ng-paye-smt', 'ng-paye-z3']);
 const sp = split();
@@ -145,6 +170,7 @@ const out = {
     { ruleId: 'ng-paye-nta2025', facts: ng.facts, trap: trap(ng.recs, 'ng-paye', 'naira') },
     { ruleId: 'split-v1', facts: sp.facts, chain: { block: sp.block, links: sp.links, support: sp.support, evidence: `${EV}/split/summary.txt` } },
   ],
+  engines: engines(),
 };
 if (limits.size !== 1) throw new Error(`runs used different time limits: ${[...limits].join(', ')}`);
 (out as Record<string, unknown>).limitSeconds = [...limits][0];
@@ -157,4 +183,5 @@ if (process.argv.includes('--check')) {
   mkdirSync(dirname(OUT), { recursive: true });
   writeFileSync(OUT, text);
   for (const r of out.rules) console.log(r.ruleId, r.facts.map((f) => `${f.factId}=${f.status}[${f.holdsBy.join('+')}]`).join(' '));
+  for (const e of out.engines) console.log(`${e.engine} (circuit ${e.circuit}): ${e.result} [${[...e.holdsBy, ...e.failsBy].join('+')}], mutant ${e.mutant}`);
 }

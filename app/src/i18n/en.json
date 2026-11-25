@@ -341,5 +341,18 @@
   "proof.sup.no-overflow": "No step of the check overflows",
   "proof.repeatTitle": "Repeat any result",
   "proof.repeatBody": "Each result's file holds the question asked, the exact command and the solver's output. The method and every run are written up in the repository.",
-  "proof.notAudited": "Not independently audited."
+  "proof.notAudited": "Not independently audited.",
+  "proof.engTitle": "Engines checked against the rule",
+  "proof.engLede": "A payroll engine is taped out on X Layer next to the rule, and the tools ask whether the two can ever give a different tax or take-home. The engines here are simulated: the Payproof team wrote them to show the check. They are not any vendor's code.",
+  "proof.engSimulated": "Simulated",
+  "proof.engColEngine": "Engine",
+  "proof.engEqual2": "Equal for every bonus · {tools}",
+  "proof.engEqual1": "Equal, by {tool} only",
+  "proof.engDiffers": "Differs",
+  "proof.engCircuits": "engine circuit {circuit}, rule circuit {ref}",
+  "proof.engAt": "At a bonus of {bonus}, the rule's tax is {ref} and the engine's is {eng}. Both were run with eval on X Layer.",
+  "proof.engMutant": "Broken copy: the engine's tax raised by 0.01 at one bonus. The tools must see the change.",
+  "proof.engNote": "A difference says only that the two circuits disagree for a valid input. It does not say which one reads the rule right.",
+  "proof.engTHolds": "proved equal",
+  "proof.engTFails": "found a difference"
 }
