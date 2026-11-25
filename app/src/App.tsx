@@ -7,13 +7,17 @@ import { Result } from './pages/Result'
 import { Rules } from './pages/Rules'
 import { Rule } from './pages/Rule'
 import { Proofs } from './pages/Proofs'
+import { Splits } from './pages/Splits'
+import { CheckPayout } from './pages/CheckPayout'
+import { Run } from './pages/Run'
+import { Engines } from './pages/Engines'
+import { Hunt } from './pages/Hunt'
 
 // Privy is large and contacts its own servers, so it loads only on the sign-in page (L4, L25).
 const SignIn = lazy(() => import('./auth/SignIn'))
 
 const SOON: Record<string, Key> = {
-  '/splits': 'nav.splits', '/engines': 'nav.engines', '/how': 'nav.how', 
-  '/check/payout': 'nav.check', '/run': 'nav.splits', '/me': 'nav.signin', '/settings': 'nav.signin',
+  '/how': 'nav.how', '/me': 'nav.signin', '/settings': 'nav.signin',
 }
 
 export function App() {
@@ -23,7 +27,12 @@ export function App() {
 
   let page
   let title = t('check.title')
-  if (path === '/check/pay' || path === '/' || path === '/check') page = <CheckPay key={query.toString()} query={query} />
+  if (path === '/check/payout') { page = <CheckPayout key={query.toString()} query={query} />; title = t('payout.title') }
+  else if (path === '/splits') { page = <Splits />; title = t('splits.title') }
+  else if (path === '/run') { page = <Run />; title = t('run.title') }
+  else if (path === '/engines') { page = <Engines />; title = t('eng.title') }
+  else if (/^\/hunt\/\d+$/.test(path)) { page = <Hunt key={path} id={Number(path.slice('/hunt/'.length))} />; title = t('hunt.crumb', { id: path.slice('/hunt/'.length) }) }
+  else if (path === '/check/pay' || path === '/' || path === '/check') page = <CheckPay key={query.toString()} query={query} />
   else if (path === '/result') { page = <Result query={query} />; title = t('res.crumb') }
   else if (path === '/rules') { page = <Rules />; title = t('rules.title') }
   else if (path === '/proofs') { page = <Proofs />; title = t('proof.title') }

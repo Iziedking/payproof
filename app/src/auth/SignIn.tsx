@@ -11,19 +11,12 @@
 // The app ID is public configuration; no Privy secret is in this app.
 import { useState, type FormEvent } from 'react'
 import { PrivyProvider, useLoginWithEmail, usePrivy } from '@privy-io/react-auth'
-import { defineChain } from 'viem'
+import { xLayer } from '../chain/xlayer'
 import { useI18n } from '../i18n/i18n'
 
 export const PRIVY_APP_ID = 'cmwuj4hbm00ts0hk17hepnkzx'
 
-// X Layer mainnet, from PLAN section 6 (verified ground truth).
-export const xLayer = defineChain({
-  id: 196,
-  name: 'X Layer',
-  nativeCurrency: { name: 'OKB', symbol: 'OKB', decimals: 18 },
-  rpcUrls: { default: { http: ['https://xlayerrpc.okx.com', 'https://rpc.xlayer.tech'] } },
-  blockExplorers: { default: { name: 'OKLink', url: 'https://www.oklink.com/xlayer' } },
-})
+export { xLayer }
 
 export default function SignInPage() {
   return (

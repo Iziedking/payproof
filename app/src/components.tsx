@@ -29,7 +29,9 @@ const TABS: { key: Key; path: string }[] = [
 export function AppBar({ path }: { path: string }) {
   const { t, lang, setLang } = useI18n()
   const [open, setOpen] = useState(false)
-  const active = (p: string) => (p === '/check/pay' ? path.startsWith('/check') || path.startsWith('/result') : path.startsWith(p))
+  const active = (p: string) => (p === '/check/pay' ? path.startsWith('/check') || path.startsWith('/result')
+    : p === '/splits' ? path.startsWith('/splits') || path.startsWith('/run')
+    : p === '/engines' ? path.startsWith('/engines') || path.startsWith('/hunt') : path.startsWith(p))
   return (
     <header className="bar">
       <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus() }}>{t('nav.skip')}</a>
