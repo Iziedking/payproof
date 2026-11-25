@@ -1,0 +1,30 @@
+# Payproof contracts (P4): RuleRegistry, ShareToken, SplitVault, Listings.
+# Libraries are fetched at pinned commits by scripts/fetch-deps.sh into lib/ (not in Git); pins
+# and sources are in VERSIONS.md. Tests run only on the test host, through the resource hook.
+[profile.default]
+src = "src"
+test = "test"
+out = "out"
+cache_path = "cache"
+libs = ["lib"]
+solc_version = "0.8.28"
+# X Layer accepts PUSH0, TSTORE/TLOAD, MCOPY and BLOBBASEFEE and refuses 0xfe: read-only probe,
+# scripts/p4/evm-probe.mts, 2026-11-25 (docs/evidence/p4/evm-probe.json).
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+remappings = [
+  "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+  "forge-std/=lib/forge-std/src/",
+]
+# Fork tests run the real circuits on X Layer; circuit 8 costs about 100 M gas per eval.
+gas_limit = 9223372036854775807
+
+[fuzz]
+runs = 1000
+seed = "0x7061797072"
+
+[invariant]
+runs = 256
+depth = 64
+fail_on_revert = false

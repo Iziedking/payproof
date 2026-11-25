@@ -1,0 +1,278 @@
+Compiling 1 files with Solc 0.8.28
+Solc 0.8.28 finished in 1.94s
+Compiler run successful!
+
+╭--------------+------------------+-------------------+--------------------+---------------------╮
+| Contract     | Runtime Size (B) | Initcode Size (B) | Runtime Margin (B) | Initcode Margin (B) |
++================================================================================================+
+| Listings     | 8,642            | 9,034             | 15,934             | 40,118              |
+|--------------+------------------+-------------------+--------------------+---------------------|
+| MockCircuits | 3,835            | 3,863             | 20,741             | 45,289              |
+|--------------+------------------+-------------------+--------------------+---------------------|
+| MockToken    | 1,443            | 1,990             | 23,133             | 47,162              |
+|--------------+------------------+-------------------+--------------------+---------------------|
+| RuleRegistry | 4,192            | 4,220             | 20,384             | 44,932              |
+|--------------+------------------+-------------------+--------------------+---------------------|
+| ShareToken   | 3,493            | 5,838             | 21,083             | 43,314              |
+|--------------+------------------+-------------------+--------------------+---------------------|
+| SplitVault   | 10,742           | 10,973            | 13,834             | 38,179              |
+╰--------------+------------------+-------------------+--------------------+---------------------╯
+
+warning[uninitialized-local]: local variable is read before being initialized
+   ╭▸ src/RuleRegistry.sol:76:96
+   │
+76 │         _rules[ruleId] = Rule(decision, validity, decisionBits, nIn, msg.sender, decisionHash, validityHash, uri);
+   │                                                                                                ━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/uninitialized-local
+
+warning[missing-zero-check]: address parameter is used in a state write or value transfer without a zero-address check
+    ╭▸ src/SplitVault.sol:135:41
+    │
+135 │     constructor(RuleRegistry registry_, address treasury) {
+    │                                         ━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/missing-zero-check
+
+warning[unused-return]: return value of an external call is not used
+   ╭▸ src/RuleRegistry.sol:65:39
+   │
+65 │         (uint32 nIn, uint32 nOut,,) = ICircuits(decision.cpu).circuitInfo(decision.id);
+   │                                       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unused-return]: return value of an external call is not used
+   ╭▸ src/RuleRegistry.sol:70:43
+   │
+70 │             (uint32 vIn, uint32 vOut,,) = ICircuits(validity.cpu).circuitInfo(validity.id);
+   │                                           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[missing-zero-check]: address parameter is used in a state write or value transfer without a zero-address check
+   ╭▸ src/Listings.sol:88:41
+   │
+88 │     constructor(RuleRegistry registry_, address treasury, address owner_) Ownable(owner_) {
+   │                                         ━━━━━━━━━━━━━━━━
+   │
+   ╰ help: https://getfoundry.sh/forge/linting/missing-zero-check
+
+warning[unused-return]: return value of an external call is not used
+    ╭▸ src/Listings.sol:102:39
+    │
+102 │         (uint32 eIn, uint32 eOut,,) = ICircuits(engine.cpu).circuitInfo(engine.id);
+    │                                       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+
+warning[unsafe-typecast]: typecast can truncate values
+    ╭▸ src/Listings.sol:130:24
+    │
+130 │         l.withdrawAt = uint64(block.timestamp) + WITHDRAW_DELAY;
+    │                        ━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint64' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecast can truncate values
+    ╭▸ src/SplitVault.sol:182:27
+    │
+182 │         r.snapshotBlock = uint64(block.number - 1);
+    │                           ━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint64' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecast can truncate values
+    ╭▸ src/SplitVault.sol:185:22
+    │
+185 │         r.deadline = uint64(block.timestamp) + s.claimWindow;
+    │                      ━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint64' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[block-timestamp]: usage of `block.timestamp` in a comparison may be manipulated by validators
+    ╭▸ src/Listings.sol:138:13
+    │
+138 │         if (block.timestamp < l.withdrawAt) revert WithdrawTooEarly(l.withdrawAt);
+    │             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/block-timestamp
+
+warning[unsafe-typecast]: typecast can truncate values
+   ╭▸ src/Circuits.sol:32:34
+   │
+32 │             buf[at + i] = bytes1(uint8(value >> (8 * i)));
+   │                                  ━━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ├ note: consider disabling this lint if you're certain the cast is safe
+   │       
+   │       // casting to 'uint8' is safe because [explain why]
+   │       // forge-lint: disable-next-line(unsafe-typecast)
+   │       
+   │       
+   ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecast can truncate values
+   ╭▸ src/Circuits.sol:62:22
+   │
+62 │         uint8 mask = uint8((1 << rest) - 1);
+   │                      ━━━━━━━━━━━━━━━━━━━━━━
+   │
+   ├ note: consider disabling this lint if you're certain the cast is safe
+   │       
+   │       // casting to 'uint8' is safe because [explain why]
+   │       // forge-lint: disable-next-line(unsafe-typecast)
+   │       
+   │       
+   ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[block-timestamp]: usage of `block.timestamp` in a comparison may be manipulated by validators
+    ╭▸ src/SplitVault.sol:206:13
+    │
+206 │         if (block.timestamp <= r.deadline) revert ClaimWindowOpen(r.deadline);
+    │             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/block-timestamp
+
+warning[calls-loop]: external call inside a loop
+    ╭▸ src/SplitVault.sol:259:46
+    │
+259 │         p.push(Pinned(c.cpu, c.id, keccak256(ICircuits(c.cpu).netlist(c.id))));
+    │                                              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/calls-loop
+
+warning[unsafe-typecast]: typecast can truncate values
+    ╭▸ src/SplitVault.sol:267:16
+    │
+267 │         return uint32(uint256(deposit) + fromCarry);
+    │                ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint32' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecast can truncate values
+    ╭▸ src/SplitVault.sol:274:16
+    │
+274 │         return uint32(total);
+    │                ━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint32' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecast can truncate values
+    ╭▸ src/SplitVault.sol:286:17
+    │
+286 │         return (uint32(fee256), uint32(protocol256));
+    │                 ━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint32' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecast can truncate values
+    ╭▸ src/SplitVault.sol:286:33
+    │
+286 │         return (uint32(fee256), uint32(protocol256));
+    │                                 ━━━━━━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint32' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[block-timestamp]: usage of `block.timestamp` in a comparison may be manipulated by validators
+    ╭▸ src/SplitVault.sol:296:13
+    │
+296 │         if (block.timestamp > r.deadline) revert ClaimWindowClosed(r.deadline);
+    │             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/block-timestamp
+
+warning[unsafe-typecast]: typecast can truncate values
+    ╭▸ src/SplitVault.sol:305:75
+    │
+305 │         bytes memory out = ICircuits(d.cpu).eval(d.id, claimInputs(r.pot, uint32(shares), r.totalShares, payout));
+    │                                                                           ━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint32' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[unsafe-typecast]: typecast can truncate values
+    ╭▸ src/SplitVault.sol:315:48
+    │
+315 │         emit Claimed(splitId, roundId, holder, uint32(shares), payout, msg.sender);
+    │                                                ━━━━━━━━━━━━━━
+    │
+    ├ note: consider disabling this lint if you're certain the cast is safe
+    │       
+    │       // casting to 'uint32' is safe because [explain why]
+    │       // forge-lint: disable-next-line(unsafe-typecast)
+    │       
+    │       
+    ╰ help: https://getfoundry.sh/forge/linting/unsafe-typecast
+
+warning[calls-loop]: external call inside a loop
+    ╭▸ src/SplitVault.sol:338:27
+    │
+338 │             if (keccak256(ICircuits(p[i].cpu).netlist(p[i].id)) != p[i].netlistHash) revert CircuitChanged(p[i].cpu, p[i].id);
+    │                           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/calls-loop
+
+warning[require-revert-in-loop]: `require` or `revert` inside a loop
+    ╭▸ src/SplitVault.sol:338:86
+    │
+338 │             if (keccak256(ICircuits(p[i].cpu).netlist(p[i].id)) != p[i].netlistHash) revert CircuitChanged(p[i].cpu, p[i].id);
+    │                                                                                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/require-revert-in-loop
+
+warning[unused-return]: return value of an external call is not used
+    ╭▸ src/SplitVault.sol:343:43
+    │
+343 │         (uint32 gotIn, uint32 gotOut,,) = ICircuits(c.cpu).circuitInfo(c.id);
+    │                                           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    │
+    ╰ help: https://getfoundry.sh/forge/linting/unused-return
+

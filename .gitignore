@@ -25,6 +25,8 @@ OPERATIONS.md
 VERSIONS.local.md
 
 # Build output and dependencies
+# Solidity libraries are fetched at a pinned commit by contracts/scripts/fetch-deps.sh.
+contracts/lib/
 node_modules/
 dist/
 out/

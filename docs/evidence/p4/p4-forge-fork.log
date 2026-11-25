@@ -1,0 +1,13 @@
+No files changed, compilation skipped
+
+Ran 2 tests for test/ForkXLayer.t.sol:ForkXLayerTest
+[PASS] test_fork_engineBIsDisprovedAndEngineAIsNot() (gas: 53249383)
+[PASS] test_fork_threeHoldersClaimThroughCircuit8() (gas: 403655096)
+Logs:
+  claim gas 98288829
+  claim gas 98278891
+  claim gas 98272728
+
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 14.21s (19.17s CPU time)
+
+Ran 1 test suite in 14.22s (14.21s CPU time): 2 tests passed, 0 failed, 0 skipped (2 total tests)

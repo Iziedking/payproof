@@ -1,0 +1,75 @@
+No files changed, compilation skipped
+
+Ran 4 tests for test/ShareTokenRegistry.t.sol:RuleRegistryTest
+[PASS] test_attestationsAreEventsOnly() (gas: 234147)
+[PASS] test_refusesBadShapes() (gas: 118449)
+[PASS] test_registersAndPinsHashes() (gas: 232546)
+[PASS] test_ruleWithoutValidity() (gas: 183426)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 1.50ms (730.43µs CPU time)
+
+Ran 6 tests for test/ShareTokenRegistry.t.sol:ShareTokenTest
+[PASS] testFuzz_historyMatchesBalances(uint8,uint8) (runs: 1000, μ: 294840, ~: 296215)
+[PASS] test_currentAndFutureBlocksRevert() (gas: 20945)
+[PASS] test_declaresHistoryInterface() (gas: 16566)
+[PASS] test_historyAtPastBlocks() (gas: 193051)
+[PASS] test_mintsOnceAndHasNoDecimals() (gas: 22704)
+[PASS] test_twoChangesInOneBlockKeepTheLast() (gas: 203872)
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 269.22ms (267.15ms CPU time)
+
+Ran 12 tests for test/Listings.t.sol:ListingsTest
+[PASS] testFuzz_engineBDiffersOnlyWhereItRoundsUp(uint32) (runs: 1000, μ: 477419, ~: 455348)
+[PASS] test_changedEngineCannotBeDisproved() (gas: 444784)
+[PASS] test_engineAHasNoDifferenceToFind() (gas: 446364)
+[PASS] test_engineBAgreesWhereRoundingDoesNotMatter() (gas: 446508)
+[PASS] test_engineBIsDisprovedAtSeventeenFenAndTheHunterIsPaid() (gas: 537109)
+[PASS] test_inputLengthIsChecked() (gas: 403484)
+[PASS] test_pauseStopsNewListingsOnly() (gas: 594775)
+[PASS] test_refusesAnEngineOfTheWrongShape() (gas: 151767)
+[PASS] test_revealNeedsOwnCommitmentInAnEarlierBlock() (gas: 585515)
+[PASS] test_topUpAddsToTheBounty() (gas: 454880)
+[PASS] test_withdrawAfterTheDelay() (gas: 388877)
+[PASS] test_withdrawWaitsSevenDaysAndCanStillBeDisproved() (gas: 666137)
+Suite result: ok. 12 passed; 0 failed; 0 skipped; finished in 436.32ms (431.96ms CPU time)
+
+Ran 15 tests for test/SplitVault.t.sol:SplitVaultTest
+[PASS] testFuzz_onlyTheRulesPayoutPasses(uint32,uint8,int8) (runs: 1000, μ: 482811, ~: 464713)
+[PASS] test_changedCircuitStopsClaimsAndKeepsFunds() (gas: 751901)
+[PASS] test_claimForPaysTheHolder() (gas: 502478)
+[PASS] test_createStoresAndPins() (gas: 78972)
+[PASS] test_noSharesNoClaim() (gas: 310198)
+[PASS] test_oneClaimPerHolderPerRound() (gas: 564168)
+[PASS] test_openRoundPaysFeeAndSnapshotsPreviousBlock() (gas: 303843)
+[PASS] test_processorFailureStopsClaimsAndKeepsFunds() (gas: 446642)
+[PASS] test_refusesFeeOnTransferPayToken() (gas: 1432954)
+[PASS] test_refusesTokensWithoutHistory() (gas: 90090)
+[PASS] test_refusesWrongCircuitShapes() (gas: 91949)
+[PASS] test_threeHoldersClaimWhatTheRuleDecides() (gas: 971824)
+[PASS] test_transferAfterSnapshotDoesNotChangeTheRound() (gas: 1185802)
+[PASS] test_windowAndRollOver() (gas: 1192340)
+[PASS] test_wrongPayoutIsRejected() (gas: 545274)
+Suite result: ok. 15 passed; 0 failed; 0 skipped; finished in 442.56ms (453.89ms CPU time)
+
+Ran 1 test for test/SplitVault.t.sol:SplitVaultInvariantTest
+[PASS]
+SplitVaultInvariantTest invariants:
+[PASS] invariant_conservation
+[PASS] invariant_solvent
+ SplitVaultInvariantTest invariants (runs: 256, calls: 16384, reverts: 0)
+
+╭--------------+-----------+-------+---------+----------╮
+| Contract     | Selector  | Calls | Reverts | Discards |
++=======================================================+
+| SplitHandler | claim     | 3294  | 0       | 0        |
+|--------------+-----------+-------+---------+----------|
+| SplitHandler | move      | 3248  | 0       | 0        |
+|--------------+-----------+-------+---------+----------|
+| SplitHandler | openRound | 3239  | 0       | 0        |
+|--------------+-----------+-------+---------+----------|
+| SplitHandler | rollOver  | 3327  | 0       | 0        |
+|--------------+-----------+-------+---------+----------|
+| SplitHandler | wait      | 3276  | 0       | 0        |
+╰--------------+-----------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 5.52s (5.52s CPU time)
+
+Ran 5 test suites in 5.53s (6.67s CPU time): 38 tests passed, 0 failed, 0 skipped (38 total tests)

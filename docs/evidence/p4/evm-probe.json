@@ -1,0 +1,49 @@
+{
+  "rpc": "https://xlayerrpc.okx.com",
+  "block": 76827008,
+  "ranAt": "2026-11-25T08:40:57.004Z",
+  "results": [
+    {
+      "name": "control: RETURN only",
+      "fork": "-",
+      "code": "0x60006000f3",
+      "accepted": true,
+      "detail": "0x"
+    },
+    {
+      "name": "control: INVALID (0xfe)",
+      "fork": "-",
+      "code": "0xfe",
+      "accepted": false,
+      "detail": "eth_call: EVM error: InvalidFEOpcode"
+    },
+    {
+      "name": "PUSH0 (0x5f)",
+      "fork": "Shanghai",
+      "code": "0x5f5ff3",
+      "accepted": true,
+      "detail": "0x"
+    },
+    {
+      "name": "TSTORE/TLOAD (0x5d/0x5c)",
+      "fork": "Cancun",
+      "code": "0x600160005d60005c5060006000f3",
+      "accepted": true,
+      "detail": "0x"
+    },
+    {
+      "name": "MCOPY (0x5e)",
+      "fork": "Cancun",
+      "code": "0x6000600060005e60006000f3",
+      "accepted": true,
+      "detail": "0x"
+    },
+    {
+      "name": "BLOBBASEFEE (0x4a)",
+      "fork": "Cancun",
+      "code": "0x4a5060006000f3",
+      "accepted": true,
+      "detail": "0x"
+    }
+  ]
+}
