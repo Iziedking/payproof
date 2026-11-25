@@ -19,6 +19,8 @@ remappings = [
 ]
 # Fork tests run the real circuits on X Layer; circuit 8 costs about 100 M gas per eval.
 gas_limit = 9223372036854775807
+# script/Attest.s.sol reads its list of attestations from script/attestations.json.
+fs_permissions = [{ access = "read", path = "./script" }]
 
 [fuzz]
 runs = 1000

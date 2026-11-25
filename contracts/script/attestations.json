@@ -1,0 +1,192 @@
+{
+  "count": 17,
+  "items": [
+    {
+      "rule": 2,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 9,
+      "fact": "0x7461782d77697468696e2d626f6e757300000000000000000000000000000000",
+      "factText": "tax-within-bonus",
+      "status": 0,
+      "recordHash": "0x9ee8784300bc198312867a4cfd4438d5e5de31df3adafa2fe49ae124b94ab673",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#cn-bonus-2023-30/tax-within-bonus",
+      "note": "holds by abc-iprove+yosys-sat"
+    },
+    {
+      "rule": 2,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 9,
+      "fact": "0x627265616b646f776e2d616464732d7570000000000000000000000000000000",
+      "factText": "breakdown-adds-up",
+      "status": 0,
+      "recordHash": "0xa01c2cffd6bfffb81206cc6336690a7c945c025c8652ae1179c5d8c7b41888f8",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#cn-bonus-2023-30/breakdown-adds-up",
+      "note": "holds by abc-iprove+smt-bitwuzla"
+    },
+    {
+      "rule": 2,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 9,
+      "fact": "0x72616973652d6e657665722d6c6f776572732d74616b652d686f6d6500000000",
+      "factText": "raise-never-lowers-take-home",
+      "status": 1,
+      "recordHash": "0x0c8e425d7beb34ea57235049d58b581989b2a1f8e75391a4b481f5affcea0942",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#cn-bonus-2023-30/raise-never-lowers-take-home",
+      "note": "fails by trap-finder (abc-iprove)"
+    },
+    {
+      "rule": 3,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 10,
+      "fact": "0x7461782d77697468696e2d696e636f6d65000000000000000000000000000000",
+      "factText": "tax-within-income",
+      "status": 0,
+      "recordHash": "0xdc04057b8306daaaafd7ceed2d52d8672b7efde79913aa64264fa53be0c70389",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#ng-paye-nta2025/tax-within-income",
+      "note": "holds by abc-iprove+yosys-sat"
+    },
+    {
+      "rule": 3,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 10,
+      "fact": "0x6d6f72652d7061792d6d6f72652d746178000000000000000000000000000000",
+      "factText": "more-pay-more-tax",
+      "status": 2,
+      "recordHash": "0x8311567bccf69b3279aa2d217386f074fe1ac14948539509bea57078de4a1254",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#ng-paye-nta2025/more-pay-more-tax",
+      "note": "holds by smt-bitwuzla (one tool: attested as undecided)"
+    },
+    {
+      "rule": 3,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 10,
+      "fact": "0x72616973652d6e657665722d6c6f776572732d74616b652d686f6d6500000000",
+      "factText": "raise-never-lowers-take-home",
+      "status": 1,
+      "recordHash": "0x80e49547fdcc1c938295fe96f85fef9b6e0c65410ad244f127bedabbe2063804",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#ng-paye-nta2025/raise-never-lowers-take-home",
+      "note": "fails by abc-iprove"
+    },
+    {
+      "rule": 3,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 10,
+      "fact": "0x72656c6965662d6e657665722d7261697365732d746178000000000000000000",
+      "factText": "relief-never-raises-tax",
+      "status": 2,
+      "recordHash": "0xba267b2006c2a9aaa6befdd3dd87b8aa706595d50495c2a4d5f3514b61454f0d",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#ng-paye-nta2025/relief-never-raises-tax",
+      "note": "undecided by no tool"
+    },
+    {
+      "rule": 3,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 10,
+      "fact": "0x627265616b646f776e2d616464732d7570000000000000000000000000000000",
+      "factText": "breakdown-adds-up",
+      "status": 0,
+      "recordHash": "0x67e112aad7027823fb7e90711e5e85ef4831dc84c933695fb79f8e8306f224db",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#ng-paye-nta2025/breakdown-adds-up",
+      "note": "holds by abc-iprove+smt-bitwuzla"
+    },
+    {
+      "rule": 1,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 8,
+      "fact": "0x6e657665722d6f76657270617973000000000000000000000000000000000000",
+      "factText": "never-overpays",
+      "status": 0,
+      "recordHash": "0x488ae3b1a0f8d8ecd484f66a5ea5bbb5974fd5ee9d08f68950350642f5a5eca6",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#split-v1/never-overpays",
+      "note": "holds by z3+cvc5"
+    },
+    {
+      "rule": 1,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 8,
+      "fact": "0x61742d6d6f73742d6f6e652d756e69742d73686f727400000000000000000000",
+      "factText": "at-most-one-unit-short",
+      "status": 0,
+      "recordHash": "0x9cc0dabd1f31acf19f9a296021fa3afc85beeb6243c834fe33de30cba49a068e",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#split-v1/at-most-one-unit-short",
+      "note": "holds by z3+cvc5"
+    },
+    {
+      "rule": 1,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 8,
+      "fact": "0x6d6f72652d7368617265732d6e657665722d6c65737300000000000000000000",
+      "factText": "more-shares-never-less",
+      "status": 0,
+      "recordHash": "0xac27032da4b2d7d9de7e50bce5b95de7cb475c781c7f5045574417d20597d75c",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#split-v1/more-shares-never-less",
+      "note": "holds by z3+cvc5"
+    },
+    {
+      "rule": 1,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 8,
+      "fact": "0x6269676765722d706f742d6e657665722d6c6573730000000000000000000000",
+      "factText": "bigger-pot-never-less",
+      "status": 0,
+      "recordHash": "0x72f3d40aab37167d2479e5777b444fcdf0cf02cfb7a2d20743ee4fa304a63db7",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#split-v1/bigger-pot-never-less",
+      "note": "holds by z3+cvc5"
+    },
+    {
+      "rule": 1,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 8,
+      "fact": "0x73706c697474696e672d6e657665722d706179732d6d6f726500000000000000",
+      "factText": "splitting-never-pays-more",
+      "status": 0,
+      "recordHash": "0xe3c6788b171efa4d0e73d2db0701e20ece198b84e11aee9543167aa6838ac903",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#split-v1/splitting-never-pays-more",
+      "note": "holds by z3+cvc5"
+    },
+    {
+      "rule": 1,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 8,
+      "fact": "0x7a65726f2d696e2d7a65726f2d6f757400000000000000000000000000000000",
+      "factText": "zero-in-zero-out",
+      "status": 0,
+      "recordHash": "0xa2c8af0e259e52529fee073f42a8b69974a09ee59dd8e31e1aba1bc96cbc2b47",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#split-v1/zero-in-zero-out",
+      "note": "holds by z3+cvc5"
+    },
+    {
+      "rule": 1,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 17,
+      "fact": "0x6665652d69732d66697865640000000000000000000000000000000000000000",
+      "factText": "fee-is-fixed",
+      "status": 0,
+      "recordHash": "0x3ec05320f28c6347335c91ec50318b16992b0dfaaae54bd798fdfdd735ce4146",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#split-v1/fee-is-fixed",
+      "note": "holds by abc-iprove+smt-bitwuzla"
+    },
+    {
+      "rule": 2,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 15,
+      "fact": "0x657175616c2d746f2d72756c6500000000000000000000000000000000000000",
+      "factText": "equal-to-rule (cn_vendor_a2, SIMULATED)",
+      "status": 0,
+      "recordHash": "0x47b809146e2342ff992f73ed4b3bec9e6d46a5e723bc768579c00078fb5e6448",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#engines/cn_vendor_a2",
+      "note": "equal"
+    },
+    {
+      "rule": 2,
+      "cpu": "0x1900801e311184063b9d9C119C9D98AA4950E12c",
+      "id": 16,
+      "fact": "0x657175616c2d746f2d72756c6500000000000000000000000000000000000000",
+      "factText": "equal-to-rule (cn_vendor_b, SIMULATED)",
+      "status": 1,
+      "recordHash": "0xbef18638bd0ddb3a342e588f3fcfdcfa5349a079fb238932f6e76f8065aec897",
+      "uri": "https://github.com/Iziedking/payproof/blob/main/app/src/proofs/records.json#engines/cn_vendor_b",
+      "note": "differs"
+    }
+  ]
+}

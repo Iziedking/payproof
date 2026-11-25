@@ -731,6 +731,48 @@
               "mutant": "fails"
             }
           ]
+        },
+        {
+          "factId": "fee-is-fixed",
+          "statement": {
+            "en": "The operator fee is exactly 10% of the deposit, rounded down, for every 32-bit deposit",
+            "zh": "对每一笔 32 位存入金额，运营方费用恰好是存入金额的 10%，向下取整"
+          },
+          "status": "holds",
+          "holdsBy": [
+            "abc-iprove",
+            "smt-bitwuzla"
+          ],
+          "failsBy": [],
+          "method": "circuit",
+          "circuits": [
+            "17"
+          ],
+          "counterexample": null,
+          "runs": [
+            {
+              "block": 76829528,
+              "evidence": "docs/evidence/p4/fee-onchain/fee-is-fixed.json",
+              "tools": [
+                {
+                  "tool": "abc-iprove",
+                  "status": "holds",
+                  "seconds": 143
+                },
+                {
+                  "tool": "yosys-sat",
+                  "status": "undecided",
+                  "seconds": 900
+                },
+                {
+                  "tool": "smt-bitwuzla",
+                  "status": "holds",
+                  "seconds": 185.6
+                }
+              ],
+              "mutant": "fails"
+            }
+          ]
         }
       ],
       "chain": {
