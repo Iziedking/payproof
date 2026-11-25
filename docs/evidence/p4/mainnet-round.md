@@ -74,3 +74,33 @@ split-v1 (decision circuit 8, validity circuit 13, 1 decision bit); rule 2 is cn
 Balances after the round: h1 0.42 USDT0, h2 1.25 USDT0, h3 0.17 USDT0; the deployer, as operator,
 holds 0.10 USDT0 of fee plus 0.102 it already had; SplitVault holds 0.06 USDT0; Listings holds 0.
 OKB left: h1 0.000231, h2 0.000286, h3 0.000234, deployer 0.009087.
+
+## Proof attestations
+
+Signed by the deployer on 2026-11-25 with `contracts/script/Attest.s.sol`, from the list in
+`contracts/script/attestations.json` (made by `scripts/p4/attest-plan.mts`; rehearsed on a fork by
+`p4-attest-dryrun`). Read back from the chain: 17 `ProofAttested` events, each matching its list entry
+in rule, circuit, fact, status and record hash. The record hash is keccak256 of the entry in
+`app/src/proofs/records.json` exactly as JSON.stringify writes it. A fact one tool proved is attested
+as undecided (`more-pay-more-tax`, Bitwuzla only).
+
+| Step | Rule | Circuit | Fact | Status | Block | Transaction |
+| --- | --- | --- | --- | --- | --- | --- |
+| Register rule 3 | ng-paye-nta2025 | 10 | | | 76844040 | `0xca192728554ff9e76437ba39af0b475753b3c4f065780d84eed1987cb81506bf` |
+| Attest | cn-bonus-2023-30 | 9 | tax-within-bonus | holds | 76844042 | `0xcb2580ceabdf7e9e14c3ebd2b9a5782afc6245cec02366809bc49405f22e0dcf` |
+| Attest | cn-bonus-2023-30 | 9 | breakdown-adds-up | holds | 76844045 | `0xc04257571df6c17cf0d9fc6347dc73ceca3ccd480aa0ad2167561efcfbaf6e2a` |
+| Attest | cn-bonus-2023-30 | 9 | raise-never-lowers-take-home | fails | 76844048 | `0x8ccd41f5d40a4c9a5ab169532ccc9ff1965639aae776e7f739b22024092d4118` |
+| Attest | ng-paye-nta2025 | 10 | tax-within-income | holds | 76844050 | `0x66fd9459c75809894eb0596a90bce6dbcb60882e60e75c17b7f1e18c96a7a895` |
+| Attest | ng-paye-nta2025 | 10 | more-pay-more-tax | undecided | 76844053 | `0x86840bbabc0c76e2a5119b46a0b379c4a8749b3beddcfe4ce708a97fef8b2276` |
+| Attest | ng-paye-nta2025 | 10 | raise-never-lowers-take-home | fails | 76844055 | `0x3c672d02abf04a8593fdb787df46ad79a8802a84c0908e56008035c04c01231a` |
+| Attest | ng-paye-nta2025 | 10 | relief-never-raises-tax | undecided | 76844058 | `0x3be5f6338afecb9e923837f5aaf5abf8d55b3cc10392b17ba55eb4ef33ad07c0` |
+| Attest | ng-paye-nta2025 | 10 | breakdown-adds-up | holds | 76844061 | `0x73e609ba777f4dae3cb50e9190324f0d21a50333b3b850fc29b52206dc0a2748` |
+| Attest | split-v1 | 8 | never-overpays | holds | 76844064 | `0xf9f37a27764a0e9f75ac98e3e13ca325455a1503772031a148f539f5e5707687` |
+| Attest | split-v1 | 8 | at-most-one-unit-short | holds | 76844067 | `0x3a18aa3b900a84100b1b6017b25ee83635b6cc1204f080f50aad5c5ef2de66fd` |
+| Attest | split-v1 | 8 | more-shares-never-less | holds | 76844069 | `0xf3c4302f056a174a8e24cca10641a9bae50adf145370ebc7a4401babdfbb99c7` |
+| Attest | split-v1 | 8 | bigger-pot-never-less | holds | 76844072 | `0xb038b1032f98fd8eed54ac62d07c48e88cbe96d74eefb67d1ad7537648d99325` |
+| Attest | split-v1 | 8 | splitting-never-pays-more | holds | 76844075 | `0xda5aa3eb5b8ac7b33e884d527f37c20ab0abd7db66d003b9030fef6fcb8b2c65` |
+| Attest | split-v1 | 8 | zero-in-zero-out | holds | 76844077 | `0x0746e3038b0d6037f15bc4df8b2625505251b033c91cb35a44c80af92823467a` |
+| Attest | split-v1 | 17 | fee-is-fixed | holds | 76844080 | `0x276b48734c794544258282d4da93428183e62c3ace09e706a7b7302906bb257a` |
+| Attest | cn-bonus-2023-30 | 15 | equal-to-rule (cn_vendor_a2, SIMULATED) | holds | 76844082 | `0x47c4d7764c41c8846c0e301bc7b8c5562fd0a94b11a0a65795c49842cb733a18` |
+| Attest | cn-bonus-2023-30 | 16 | equal-to-rule (cn_vendor_b, SIMULATED) | fails | 76844085 | `0xfb610614b0ab0ae6035447163bdc9c404a770e82e9b5fca997155469a3de6452` |
