@@ -22,3 +22,13 @@ floor(pot x 85% x shares / total).
 
 OKB used on the fork: the deployer about 0.0003 for everything it signed. Holder 1 about 0.00197
 (transfer and claim), holder 3 about 0.00197 (claim), holder 2 about 0.0023 (claim, commit, reveal).
+
+## Second run: the owner's holders and the funding amounts
+
+Task `p4-round-dryrun-real`, fork block 76834983. Holders h1 `0x6E0A5DD087e451620601C5c03cc0c6AB94b709F5`,
+h2 `0xdbf10E16E30D681f2926546401e7E85869898008`, h3 `0x5AB0bB350C9Dc781C404d9eb5d8C5772411b7E51`
+with 50, 30 and 20 shares; treasury `0xDcDa62b9044911474Bd2A7d00b12A3cb985dF84A`. The deployer's
+real 2.102 USDT0 was used (no simulated USDT0). The deployer sent each holder its OKB with a plain
+transfer, as on mainnet: h1 0.0022, h2 0.0026, h3 0.0022 OKB. Every step passed with the same
+results and gas as the first run. OKB left at the end: h1 0.000231, h2 0.000286, h3 0.000234,
+deployer 0.009087.

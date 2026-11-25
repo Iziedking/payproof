@@ -11,9 +11,10 @@
 #      first tries the payout its new balance would give, which must be refused.
 #   6. Holder 2 commits and reveals a bonus of 17 fen against engine B and is paid the bounty.
 #
-# On the fork only, the deployer is given 2 USDT0 with anvil_dealERC20 and each holder
-# 0.01 OKB with anvil_setBalance; on mainnet the owner funds them. Env: HOLDERS, SHARES (comma
-# lists, 3 entries), TREASURY, FEE_ID. Runs from the workdir root on the test host through the
+# On the fork only, the deployer is given 2 USDT0 with anvil_dealERC20 if it holds less, and each
+# holder receives exactly HOLDER_OKB wei from the deployer (a plain transfer, as on mainnet), so a
+# pass shows those amounts are enough. Env: HOLDERS, SHARES, HOLDER_OKB (comma lists, 3
+# entries), TREASURY, FEE_ID. Runs from the workdir root on the test host through the
 # resource hook.
 set -euo pipefail
 FOUNDRY=ghcr.io/foundry-rs/foundry@sha256:4a16a86f41d30418fbdca47ce2868121bbb0aeaa0a34bde2dd1e2911c4be2464
@@ -28,10 +29,12 @@ DEPOSIT=100        # vault units: 1.00 USDT0
 BOUNTY=1000000     # base units: 1.00 USDT0
 WINDOW=604800      # 7 days
 MOVE=10
+HOLDER_OKB=${HOLDER_OKB:-10000000000000000,10000000000000000,10000000000000000}
 FORK=http://127.0.0.1:8545
 NAME=payproof-p4-round-anvil
 IFS=, read -r H1 H2 H3 <<< "$HOLDERS"
 IFS=, read -r S1 S2 S3 <<< "$SHARES"
+IFS=, read -r O1 O2 O3 <<< "$HOLDER_OKB"
 mkdir -p out logs .home
 cleanup() { docker rm -f "$NAME" >/dev/null 2>&1 || true; }
 trap cleanup EXIT
@@ -47,9 +50,16 @@ echo "fork block $(x "cast block-number --rpc-url $FORK")"
 GASPRICE=$(x "cast gas-price --rpc-url $LIVE")
 echo "live gas price $GASPRICE wei"
 for a in $DEPLOYER $H1 $H2 $H3; do x "cast rpc --rpc-url $FORK anvil_impersonateAccount $a" >/dev/null; done
-for a in $H1 $H2 $H3; do x "cast rpc --rpc-url $FORK anvil_setBalance $a 0x2386f26fc10000" >/dev/null; done
-x "cast rpc --rpc-url $FORK anvil_dealERC20 $DEPLOYER $USDT0 0x1e8480" >/dev/null
-echo "SIMULATED funding on the fork: deployer USDT0 $(x "cast call $USDT0 'balanceOf(address)(uint256)' $DEPLOYER --rpc-url $FORK")"
+for pair in "$H1:$O1" "$H2:$O2" "$H3:$O3"; do   # the deployer funds each holder, as on mainnet
+  x "cast send --unlocked --from $DEPLOYER --rpc-url $FORK --chain 196 --legacy --gas-price $GASPRICE ${pair%%:*} --value ${pair##*:}" | grep -E '^(transactionHash|status|gasUsed) ' | tr -s ' ' | tr '
+' ' '; echo
+done
+if [ "$(x "cast call $USDT0 'balanceOf(address)(uint256)' $DEPLOYER --rpc-url $FORK" | awk '{print $1}')" -lt 2000000 ]; then
+  x "cast rpc --rpc-url $FORK anvil_dealERC20 $DEPLOYER $USDT0 0x1e8480" >/dev/null
+  echo "SIMULATED funding on the fork: deployer USDT0 set to 2000000"
+fi
+echo "deployer USDT0 $(x "cast call $USDT0 'balanceOf(address)(uint256)' $DEPLOYER --rpc-url $FORK"), OKB $(x "cast balance $DEPLOYER --rpc-url $FORK")"
+echo "holder OKB after funding: $O1 $O2 $O3 wei, sent by the deployer"
 
 COMMON="--rpc-url $FORK --chain 196 --legacy --gas-price $GASPRICE"
 send() { # send <from> <to> <sig> [args...]: one transaction, prints its hash, status and gas
