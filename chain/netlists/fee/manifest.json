@@ -1,0 +1,33 @@
+{
+  "circuits": "0x1900801e311184063b9d9c119c9d98aa4950e12c",
+  "note": "split-v1 fee circuit (rules/split-v1/fee.v). TAP-02 netlist for tapeout(bytes,uint32,uint32); made by scripts/p4/fee-prepare.mts",
+  "pieces": [
+    {
+      "name": "split_fee",
+      "label": "split-v1 fee circuit, feeBps 1000",
+      "yosysModule": "split_fee",
+      "file": "netlists/fee/split_fee.bin",
+      "nIn": 32,
+      "nOut": 32,
+      "nandRecords": 575,
+      "refRecords": 0,
+      "bytes": 4025,
+      "keccak256": "0x84edbfbf5cbe2498b40dc8862674641719943c5c78ceecd135f11a1c72def20e",
+      "sha256": "a84e8d5bf23c94f3d0f96b47e6fc835d3c6acb3af92d9473d6b1e717f8145214",
+      "inputs": [
+        {
+          "name": "pot",
+          "offset": 0,
+          "width": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "fee",
+          "offset": 0,
+          "width": 32
+        }
+      ]
+    }
+  ]
+}

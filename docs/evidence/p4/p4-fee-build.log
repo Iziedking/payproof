@@ -1,0 +1,71 @@
+Yosys 0.70+277 (git sha1 77dddbd66, Release, Clang /usr/bin/clang++ 21.1.8)
+split_fee: 346 NAND + 173 NOT
+Warning: Treating undriven bit q.\x [0] like $anyseq.
+Warning: Treating undriven bit q.\x [1] like $anyseq.
+Warning: Treating undriven bit q.\x [2] like $anyseq.
+Warning: Treating undriven bit q.\x [3] like $anyseq.
+Warning: Treating undriven bit q.\x [4] like $anyseq.
+Warning: Treating undriven bit q.\x [5] like $anyseq.
+Warning: Treating undriven bit q.\x [6] like $anyseq.
+Warning: Treating undriven bit q.\x [7] like $anyseq.
+Warning: Treating undriven bit q.\x [8] like $anyseq.
+Warning: Treating undriven bit q.\x [9] like $anyseq.
+Warning: Treating undriven bit q.\x [10] like $anyseq.
+Warning: Treating undriven bit q.\x [11] like $anyseq.
+Warning: Treating undriven bit q.\x [12] like $anyseq.
+Warning: Treating undriven bit q.\x [13] like $anyseq.
+Warning: Treating undriven bit q.\x [14] like $anyseq.
+Warning: Treating undriven bit q.\x [15] like $anyseq.
+Warning: Treating undriven bit q.\x [16] like $anyseq.
+Warning: Treating undriven bit q.\x [17] like $anyseq.
+Warning: Treating undriven bit q.\x [18] like $anyseq.
+Warning: Treating undriven bit q.\x [19] like $anyseq.
+Warning: Treating undriven bit q.\x [20] like $anyseq.
+Warning: Treating undriven bit q.\x [21] like $anyseq.
+Warning: Treating undriven bit q.\x [22] like $anyseq.
+Warning: Treating undriven bit q.\x [23] like $anyseq.
+Warning: Treating undriven bit q.\x [24] like $anyseq.
+Warning: Treating undriven bit q.\x [25] like $anyseq.
+Warning: Treating undriven bit q.\x [26] like $anyseq.
+Warning: Treating undriven bit q.\x [27] like $anyseq.
+Warning: Treating undriven bit q.\x [28] like $anyseq.
+Warning: Treating undriven bit q.\x [29] like $anyseq.
+Warning: Treating undriven bit q.\x [30] like $anyseq.
+Warning: Treating undriven bit q.\x [31] like $anyseq.
+Warning: Treating a total of 32 undriven bits in q like $anyseq.
+Warning: Treating undriven bit q.\x [0] like $anyseq.
+Warning: Treating undriven bit q.\x [1] like $anyseq.
+Warning: Treating undriven bit q.\x [2] like $anyseq.
+Warning: Treating undriven bit q.\x [3] like $anyseq.
+Warning: Treating undriven bit q.\x [4] like $anyseq.
+Warning: Treating undriven bit q.\x [5] like $anyseq.
+Warning: Treating undriven bit q.\x [6] like $anyseq.
+Warning: Treating undriven bit q.\x [7] like $anyseq.
+Warning: Treating undriven bit q.\x [8] like $anyseq.
+Warning: Treating undriven bit q.\x [9] like $anyseq.
+Warning: Treating undriven bit q.\x [10] like $anyseq.
+Warning: Treating undriven bit q.\x [11] like $anyseq.
+Warning: Treating undriven bit q.\x [12] like $anyseq.
+Warning: Treating undriven bit q.\x [13] like $anyseq.
+Warning: Treating undriven bit q.\x [14] like $anyseq.
+Warning: Treating undriven bit q.\x [15] like $anyseq.
+Warning: Treating undriven bit q.\x [16] like $anyseq.
+Warning: Treating undriven bit q.\x [17] like $anyseq.
+Warning: Treating undriven bit q.\x [18] like $anyseq.
+Warning: Treating undriven bit q.\x [19] like $anyseq.
+Warning: Treating undriven bit q.\x [20] like $anyseq.
+Warning: Treating undriven bit q.\x [21] like $anyseq.
+Warning: Treating undriven bit q.\x [22] like $anyseq.
+Warning: Treating undriven bit q.\x [23] like $anyseq.
+Warning: Treating undriven bit q.\x [24] like $anyseq.
+Warning: Treating undriven bit q.\x [25] like $anyseq.
+Warning: Treating undriven bit q.\x [26] like $anyseq.
+Warning: Treating undriven bit q.\x [27] like $anyseq.
+Warning: Treating undriven bit q.\x [28] like $anyseq.
+Warning: Treating undriven bit q.\x [29] like $anyseq.
+Warning: Treating undriven bit q.\x [30] like $anyseq.
+Warning: Treating undriven bit q.\x [31] like $anyseq.
+Warning: Treating a total of 32 undriven bits in q like $anyseq.
+split_fee: 575 gates, 4025 bytes, keccak 0x84edbfbf5cbe2498b40dc8862674641719943c5c78ceecd135f11a1c72def20e
+fee-is-fixed (file): holds (abc-iprove holds 111.9s, yosys-sat undecided 900.0s, smt-bitwuzla holds 188.7s); mutant fails (abc-iprove fails 0.8s, yosys-sat undecided 900.0s, smt-bitwuzla fails 0.9s)
+ALL CHECKS PASSED

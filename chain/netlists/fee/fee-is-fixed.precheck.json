@@ -1,0 +1,50 @@
+{
+  "factId": "fee-is-fixed",
+  "on": "netlist file, before tape-out",
+  "keccak256": "0x84edbfbf5cbe2498b40dc8862674641719943c5c78ceecd135f11a1c72def20e",
+  "status": "holds",
+  "questionSha256": "c13d2a34937cbaae2901f43da5fd62c878baa94e4b1e80fc01e71b48946ac814",
+  "answers": [
+    {
+      "tool": "abc-iprove",
+      "status": "holds",
+      "seconds": 111.92,
+      "x": null
+    },
+    {
+      "tool": "yosys-sat",
+      "status": "undecided",
+      "seconds": 900.02,
+      "x": null
+    },
+    {
+      "tool": "smt-bitwuzla",
+      "status": "holds",
+      "seconds": 188.68,
+      "x": null
+    }
+  ],
+  "mutant": {
+    "status": "fails",
+    "questionSha256": "0ca3eac18e72d51c6c8cd69a083796d2910115e80be2640c21eadde054411966",
+    "answers": [
+      {
+        "tool": "abc-iprove",
+        "status": "fails",
+        "seconds": 0.77
+      },
+      {
+        "tool": "yosys-sat",
+        "status": "undecided",
+        "seconds": 900.01
+      },
+      {
+        "tool": "smt-bitwuzla",
+        "status": "fails",
+        "seconds": 0.88
+      }
+    ]
+  },
+  "timeoutSeconds": 900,
+  "ranAt": "2026-11-25T09:04:48.872Z"
+}
