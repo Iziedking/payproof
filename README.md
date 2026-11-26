@@ -28,6 +28,10 @@ Built for the X Layer TapeOut hackathon. The contracts are **not audited**
 | ShareToken, test shares (PPS) | `0x7845A53c8E5E5352576FbBB821351260B56cFC2c` |
 | Deployer | `0x5c807eA36fC11a72192d83ecff2b3D4746767612` |
 
+The source of RuleRegistry, SplitVault, Listings and ShareToken is verified on the OKLink X Layer
+explorer. The commands and results are in
+[docs/evidence/p4/mainnet-round.md](docs/evidence/p4/mainnet-round.md#source-verification-on-oklink).
+
 | Circuit | What it is |
 | --- | --- |
 | 1, 2 | First tests: an 8-bit adder, and a circuit made of one REF record |

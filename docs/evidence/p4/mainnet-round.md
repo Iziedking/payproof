@@ -27,6 +27,26 @@ split-v1 (decision circuit 8, validity circuit 13, 1 decision bit); rule 2 is cn
 (circuit 9, no validity circuit, 64 decision bits). The split uses fee circuit 17 and REF targets
 3 to 7, all pinned by netlist hash.
 
+### Source verification on OKLink
+
+The source of all four contracts is verified on the OKLink X Layer explorer. Each was submitted
+with `forge verify-contract --verifier oklink` (verifier URL
+`https://www.oklink.com/api/v5/explorer/contract/verify-source-code-plugin/XLAYER`, solc 0.8.28,
+200 optimizer runs, EVM cancun, no API key, as the X Layer "Verifying with Foundry" guide shows).
+Each returned "Pass - Verified", and on 2026-11-26 each contract page showed "Contract source
+code verified".
+
+| Contract | Constructor arguments sent | Explorer page |
+| --- | --- | --- |
+| RuleRegistry | none | [contract](https://www.oklink.com/x-layer/evm/address/0xbc7187e1c31841396962f8498deaa513df28cc50/contract) |
+| SplitVault | registry, treasury | [contract](https://www.oklink.com/x-layer/evm/address/0x19cc6ed93704f8ab4d4fddb6a98d3d5ceff786aa/contract) |
+| Listings | registry, treasury, deployer | [contract](https://www.oklink.com/x-layer/evm/address/0x62b12cc1ce0d2495575087a1bade578fbc33a8c0/contract) |
+| ShareToken | name, symbol, holders h1 h2 h3, shares 50 30 20 | [contract](https://www.oklink.com/x-layer/evm/address/0x7845a53c8e5e5352576fbbb821351260b56cfc2c/contract) |
+
+ShareToken's first attempt used `--guess-constructor-args` and OKLink answered "Fail - Unable to
+verify". The arguments were then encoded by hand, checked to equal the tail of the deploy
+transaction input, and sent with `--constructor-args`, which passed.
+
 ## Transactions
 
 | Step | Sender | Block | Gas | Transaction |
