@@ -68,6 +68,16 @@ Read from https://9-2-425.tapekit.org/sw.js, `/.tape/serve.js` and `/.tape/kerne
   ¥272,660.00, ¥960,000.01 keeps ¥543,160.01) are correct for the 2023 No. 30 table. Only the
   engine column and its label are wrong (A3).
 
+## Owner's decisions (2026-11-27)
+
+| Item | Decision |
+| --- | --- |
+| A4 | "proper page footer for a product we are almost live already" |
+| C1 | No holder button on the landing: "landing page is like an Ad showing the product at a glance not the product it self" |
+| D1 | The X account exists and is the owner's; the link stays |
+| D2 | Keep loading Google Fonts |
+| D3 | The owner adds the Pages mirror and payproof.kingizie.tech as Privy allowed origins |
+
 ## Still to do
 
 - Build the candidate on host-service from the commit that fixes the items above.
