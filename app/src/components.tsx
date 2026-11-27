@@ -1,4 +1,5 @@
-import { useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
+import type { Session } from './auth/session'
 import { useI18n, type Key } from './i18n/i18n'
 import { href } from './router'
 import type { ChartView, CheckView, TrapView } from './check'
@@ -26,45 +27,101 @@ const TABS: { key: Key; path: string }[] = [
   { key: 'nav.how', path: '/how' },
 ]
 
-export function AppBar({ path }: { path: string }) {
+// Guests get a short bar (logo, language, Sign in, Get started) and a banner; the full menu bar
+// with the account menu appears once signed in (owner's flow, 2026-11-27).
+export function AppBar({ path, session }: { path: string; session: Session | null }) {
   const { t, lang, setLang } = useI18n()
   const [open, setOpen] = useState(false)
+  const [acct, setAcct] = useState(false)
+  const acctRef = useRef<HTMLDivElement>(null)
+  useEffect(() => { setOpen(false); setAcct(false) }, [path])
+  useEffect(() => {
+    if (!acct) return
+    const close = (e: MouseEvent) => { if (!acctRef.current?.contains(e.target as Node)) setAcct(false) }
+    const esc = (e: globalThis.KeyboardEvent) => { if (e.key === 'Escape') setAcct(false) }
+    addEventListener('mousedown', close); addEventListener('keydown', esc)
+    return () => { removeEventListener('mousedown', close); removeEventListener('keydown', esc) }
+  }, [acct])
+  const here = `${path}${location.hash.includes('?') ? `?${location.hash.split('?')[1]}` : ''}`
+  const next = path.startsWith('/check') || path.startsWith('/result') || path === '/' ? undefined : { next: here }
   const active = (p: string) => (p === '/check/pay' ? path.startsWith('/check') || path.startsWith('/result')
     : p === '/splits' ? path.startsWith('/splits') || path.startsWith('/run')
     : p === '/engines' ? path.startsWith('/engines') || path.startsWith('/hunt') : path.startsWith(p))
+  const langSwitch = (
+    <div className="lang" role="group" aria-label={t('lang.label')}>
+      <button type="button" aria-pressed={lang === 'en'} onClick={() => setLang('en')}>EN</button>
+      <button type="button" aria-pressed={lang === 'zh'} onClick={() => setLang('zh')} lang="zh-CN">中文</button>
+    </div>
+  )
   return (
-    <header className="bar">
+    <header className={session ? 'bar' : 'bar guest'}>
       <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus() }}>{t('nav.skip')}</a>
       <div className="bar-row">
         <a className="lockup" href={href('/check/pay')} aria-label="Payproof">
           <Mark /> <span>Payproof</span>
         </a>
-        <nav className="tabs" aria-label="Main">
+        {session && (
+          <nav className="tabs" aria-label="Main">
+            {TABS.map((x) => (
+              <a key={x.path} href={href(x.path)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
+            ))}
+          </nav>
+        )}
+        <div className="bar-end">
+          {langSwitch}
+          {session ? (
+            <div className="acct" ref={acctRef}>
+              <button type="button" className="acct-chip" aria-haspopup="menu" aria-expanded={acct} onClick={() => setAcct(!acct)}>
+                <span className="avatar" aria-hidden="true">{session.username.slice(0, 1).toUpperCase()}</span>
+                <span className="acct-name">{session.username}</span>
+                <span aria-hidden="true" className="caret">▾</span>
+              </button>
+              {acct && (
+                <div className="acct-menu" role="menu">
+                  <div className="acct-who"><span className="fine">{t('acct.signedInAs')}</span><strong>{session.email}</strong></div>
+                  <a role="menuitem" href={href('/me')}>{t('acct.profile')}</a>
+                  <a role="menuitem" href={href('/me', { show: 'saved' })}>{t('acct.saved')}</a>
+                  <a role="menuitem" className="danger" href={href('/sign-out')}>{t('acct.signOut')}</a>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <a className="quiet signin" href={href('/sign-in', next)}>{t('nav.signin')}</a>
+              <a className="btn btn-ink small" href={href('/sign-up', next)}>{t('acct.getStarted')}</a>
+            </>
+          )}
+          {session && (
+            <button type="button" className="quiet menu-btn" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(!open)}>
+              {open ? t('nav.close') : t('nav.menu')}
+            </button>
+          )}
+        </div>
+      </div>
+      {session && open && (
+        <nav id="menu" className="menu" aria-label="Main">
           {TABS.map((x) => (
             <a key={x.path} href={href(x.path)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
           ))}
         </nav>
-        <div className="bar-end">
-          <div className="lang" role="group" aria-label={t('lang.label')}>
-            <button type="button" aria-pressed={lang === 'en'} onClick={() => setLang('en')}>EN</button>
-            <button type="button" aria-pressed={lang === 'zh'} onClick={() => setLang('zh')} lang="zh-CN">中文</button>
-          </div>
-          <a className="quiet signin" href={href('/sign-in')}>{t('nav.signin')}</a>
-          <button type="button" className="quiet menu-btn" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(!open)}>
-            {open ? t('nav.close') : t('nav.menu')}
-          </button>
-        </div>
-      </div>
-      {open && (
-        <nav id="menu" className="menu" aria-label="Main">
-          {TABS.map((x) => (
-            <a key={x.path} href={href(x.path)} onClick={() => setOpen(false)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
-          ))}
-          <a href={href('/sign-in')} onClick={() => setOpen(false)}>{t('nav.signin')}</a>
-        </nav>
       )}
     </header>
   )
+}
+
+export function GuestBanner() {
+  const { t } = useI18n()
+  return (
+    <div className="guest-banner" role="note">
+      <i className="dot" aria-hidden="true" />
+      <span>{t('acct.guestBanner')}</span>
+      <a href={href('/sign-up')}>{t('acct.create')}</a>
+    </div>
+  )
+}
+
+export function Toast({ text }: { text: string }) {
+  return <div className="toast" role="status"><i className="dot ok" aria-hidden="true" />{text}</div>
 }
 
 export function Breakdown({ view }: { view: CheckView }) {

@@ -4,6 +4,7 @@ import { href } from '../router'
 import { BandTable, Breakdown, CompareLine, MismatchCard, SourceTag, TrapCard } from '../components'
 import { RULE_ID, formFromQuery, viewCn, viewNg } from '../check'
 import { isSaved, save } from '../saved'
+import { useSession } from '../auth/session'
 import { useEngine } from '../chain/useEngine'
 import { CN_ANSWER, CN_WORKING, NG_ANSWER, NG_WORKING } from '../chain/circuits'
 import { naira } from '../rules/money'
@@ -15,6 +16,7 @@ export function Result({ query }: { query: URLSearchParams }) {
   const view = form ? (form.rule === 'cn' ? viewCn(form.cn, eng.engine) : viewNg(form.ng, eng.engine)) : null
   const [copied, setCopied] = useState(false)
   const [savedNow, setSavedNow] = useState(false)
+  const session = useSession()
 
   if (!form || !view) {
     return (
@@ -64,10 +66,12 @@ export function Result({ query }: { query: URLSearchParams }) {
         </div>
         <div className="acts">
           <button type="button" className="btn btn-soft" onClick={copy}>{copied ? t('act.copied') : t('act.copy')}</button>
-          <button type="button" className="btn btn-ink" disabled={done}
-            onClick={() => setSavedNow(save({ at: new Date().toISOString(), rule: view.rule, query: q, keep: view.keep }))}>
-            {done ? t('act.saved') : t('act.saveLong')}
-          </button>
+          {session ? (
+            <button type="button" className="btn btn-ink" disabled={done}
+              onClick={() => setSavedNow(save({ at: new Date().toISOString(), rule: view.rule, query: q, keep: view.keep }))}>
+              {done ? t('act.saved') : t('act.saveLong')}
+            </button>
+          ) : <a className="btn btn-ink" href={href('/sign-up', { next: `/result?${query.toString()}` })}>{t('act.saveLong')}</a>}
         </div>
       </header>
       {view.mismatch && <MismatchCard />}

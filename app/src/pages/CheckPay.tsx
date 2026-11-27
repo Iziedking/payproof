@@ -9,6 +9,7 @@ import {
 } from '../check'
 import { fen, naira, type Parsed } from '../rules/money'
 import { isSaved, save } from '../saved'
+import { useSession } from '../auth/session'
 
 const STORE = 'payproof.lastRule'
 function firstRule(q: URLSearchParams): RuleKey {
@@ -110,6 +111,7 @@ export function CheckPay({ query }: { query: URLSearchParams }) {
 function Answer({ view, eng }: { view: CheckView | null; eng: EngineState & { retry: () => void } }) {
   const { t } = useI18n()
   const [saved, setSaved] = useState<string | null>(null)
+  const session = useSession()
   const top = (
     <div className="ans-top">
       <h2 id="ans-h">{t('ans.title')}</h2>
@@ -139,7 +141,9 @@ function Answer({ view, eng }: { view: CheckView | null; eng: EngineState & { re
       {view.chart && <Chart chart={view.chart} money={money} />}
       <div className="acts">
         <a className="btn btn-ink" href={href('/result', { ...view.link, at: new Date().toISOString().slice(0, 16) })}>{t('act.open')}</a>
-        <button type="button" className="btn btn-soft" onClick={onSave} disabled={done}>{done ? t('act.saved') : t('act.save')}</button>
+        {session
+          ? <button type="button" className="btn btn-soft" onClick={onSave} disabled={done}>{done ? t('act.saved') : t('act.save')}</button>
+          : <a className="btn btn-soft" href={href('/sign-up', { next: `/check/pay?${q}` })}>{t('act.save')}</a>}
       </div>
     </>
   )
