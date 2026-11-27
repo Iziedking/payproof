@@ -27,8 +27,11 @@ const TABS: { key: Key; path: string }[] = [
   { key: 'nav.how', path: '/how' },
 ]
 
-// Guests get a short bar (logo, language, Sign in, Get started) and a banner; the full menu bar
-// with the account menu appears once signed in (owner's flow, 2026-11-27).
+// The public pages guests can reach without an account (owner, 2026-11-27).
+const GUEST_TABS = TABS.filter((x) => ['/check/pay', '/rules', '/proofs', '/splits'].includes(x.path))
+
+// Guests get a short bar (logo, public pages, language, Sign in, Get started) and a banner; the
+// full menu bar with the account menu appears once signed in (owner's flow, 2026-11-27).
 export function AppBar({ path, session }: { path: string; session: Session | null }) {
   const { t, lang, setLang } = useI18n()
   const [open, setOpen] = useState(false)
@@ -47,6 +50,7 @@ export function AppBar({ path, session }: { path: string; session: Session | nul
   const active = (p: string) => (p === '/check/pay' ? path.startsWith('/check') || path.startsWith('/result')
     : p === '/splits' ? path.startsWith('/splits') || path.startsWith('/run')
     : p === '/engines' ? path.startsWith('/engines') || path.startsWith('/hunt') : path.startsWith(p))
+  const tabs = session ? TABS : GUEST_TABS
   const langSwitch = (
     <div className="lang" role="group" aria-label={t('lang.label')}>
       <button type="button" aria-pressed={lang === 'en'} onClick={() => setLang('en')}>EN</button>
@@ -60,13 +64,11 @@ export function AppBar({ path, session }: { path: string; session: Session | nul
         <a className="lockup" href={href('/check/pay')} aria-label="Payproof">
           <Mark /> <span>Payproof</span>
         </a>
-        {session && (
-          <nav className="tabs" aria-label="Main">
-            {TABS.map((x) => (
-              <a key={x.path} href={href(x.path)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
-            ))}
-          </nav>
-        )}
+        <nav className="tabs" aria-label="Main">
+          {tabs.map((x) => (
+            <a key={x.path} href={href(x.path)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
+          ))}
+        </nav>
         <div className="bar-end">
           {langSwitch}
           {session ? (
@@ -91,18 +93,17 @@ export function AppBar({ path, session }: { path: string; session: Session | nul
               <a className="btn btn-ink small" href={href('/sign-up', next)}>{t('acct.getStarted')}</a>
             </>
           )}
-          {session && (
-            <button type="button" className="quiet menu-btn" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(!open)}>
-              {open ? t('nav.close') : t('nav.menu')}
-            </button>
-          )}
+          <button type="button" className="quiet menu-btn" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(!open)}>
+            {open ? t('nav.close') : t('nav.menu')}
+          </button>
         </div>
       </div>
-      {session && open && (
+      {open && (
         <nav id="menu" className="menu" aria-label="Main">
-          {TABS.map((x) => (
+          {tabs.map((x) => (
             <a key={x.path} href={href(x.path)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
           ))}
+          {!session && <a className="menu-signin" href={href('/sign-in', next)}>{t('nav.signin')}</a>}
         </nav>
       )}
     </header>

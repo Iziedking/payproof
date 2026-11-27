@@ -376,8 +376,10 @@ main { flex: 1; }
   .acct-chip { padding: 4px 8px 4px 4px; }
 }
 @media (max-width: 600px) {
-  .bar.guest .signin { display: inline-block; }
+  .bar.guest .signin { display: none; }
   .bar.guest .lang button { padding: 4px 8px; }
   .bar.guest .lockup span { display: none; }
 }
-.bar.guest .signin { display: inline-block; }
+@media (min-width: 601px) { .bar.guest .signin { display: inline-block; } }
+.menu .menu-signin { display: none; }
+@media (max-width: 600px) { .menu .menu-signin { display: block; } }
