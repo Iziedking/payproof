@@ -28,7 +28,7 @@ export function Rules() {
                 ) : (
                   <>
                     <a className="btn btn-ink" href={href(`/rules/${r.id}`)}>{t('rules.read')}</a>
-                    <span className="btn btn-off" aria-disabled="true">{t('rules.payoutSoon')}</span>
+                    <a className="btn btn-soft" href={href('/check/payout')}>{t('payout.title')}</a>
                   </>
                 )}
               </div>

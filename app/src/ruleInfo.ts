@@ -109,7 +109,7 @@ export const RULES: RuleInfo[] = [
     status: [
       { label: 'rule.s.source', value: 'rule.sp.source' }, { label: 'rule.s.gives', value: 'rule.sp.gives' },
       { label: 'rule.s.works', value: 'rule.sp.works' }, { label: 'rule.s.live', value: 'rule.s.liveYes' },
-      factsRow('split-v1'), { label: 'rule.s.funds', value: 'rule.sp.funds', warn: true },
+      factsRow('split-v1'), { label: 'rule.s.funds', value: 'rule.sp.funds' },
     ],
     plain: ['rule.sp.p1', 'rule.sp.p2', 'rule.sp.p3'], source: 'rule.sp.sourceLong', table: 'split',
     how: 'rule.sp.how', formula: ['valid = total > 0 and shares <= total', 'ok    = valid and payout x total x 10000', '        <= pot x shares x 8500', '        <  (payout + 1) x total x 10000'],
@@ -120,7 +120,7 @@ export const RULES: RuleInfo[] = [
     ],
     traps: { title: 'rule.sp.trapTitle', body: 'rule.sp.trapBody',
       after: Object.values(SPLIT_CHAIN.links).every(Boolean) ? 'rule.sp.trapProved' : 'rule.sp.trapAfter', afterVars: { block: SPLIT_CHAIN.block.toLocaleString('en-US') } },
-    open: [{ label: 'rule.o.units', value: 'rule.sp.units' }, { label: 'rule.o.vault', value: 'rule.sp.vault', warn: true }],
+    open: [{ label: 'rule.o.units', value: 'rule.sp.units' }, { label: 'rule.o.vault', value: 'rule.sp.vault' }],
     details: [...common(SPLIT_INFO.answer, SPLIT_INFO.working),
       { label: 'rule.d.validity', value: '', key: 'rule.d.circuitGates', vars: { id: SPLIT_INFO.validity.id, gates: SPLIT_INFO.validity.gates }, mono: true },
       ...tail(SPLIT_INFO.answer, SPLIT_INFO.working),

@@ -51,6 +51,8 @@ export function AppBar({ path, session }: { path: string; session: Session | nul
     : p === '/splits' ? path.startsWith('/splits') || path.startsWith('/run')
     : p === '/engines' ? path.startsWith('/engines') || path.startsWith('/hunt') : path.startsWith(p))
   const tabs = session ? TABS : GUEST_TABS
+  // How it works lives on the landing page, one level up from the app.
+  const link = (p: string) => (p === '/how' ? '../index.html#how' : href(p))
   const langSwitch = (
     <div className="lang" role="group" aria-label={t('lang.label')}>
       <button type="button" aria-pressed={lang === 'en'} onClick={() => setLang('en')}>EN</button>
@@ -66,7 +68,7 @@ export function AppBar({ path, session }: { path: string; session: Session | nul
         </a>
         <nav className="tabs" aria-label="Main">
           {tabs.map((x) => (
-            <a key={x.path} href={href(x.path)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
+            <a key={x.path} href={link(x.path)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
           ))}
         </nav>
         <div className="bar-end">
@@ -101,7 +103,7 @@ export function AppBar({ path, session }: { path: string; session: Session | nul
       {open && (
         <nav id="menu" className="menu" aria-label="Main">
           {tabs.map((x) => (
-            <a key={x.path} href={href(x.path)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
+            <a key={x.path} href={link(x.path)} aria-current={active(x.path) ? 'page' : undefined}>{t(x.key)}</a>
           ))}
           {!session && <a className="menu-signin" href={href('/sign-in', next)}>{t('nav.signin')}</a>}
         </nav>

@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { useI18n, type Key } from './i18n/i18n'
 import { go, href, useRoute } from './router'
-import { AppBar, GuestBanner, Toast } from './components'
+import { AppBar, GuestBanner, Mark, Toast } from './components'
 import { takeToast, useSession } from './auth/session'
 import { Profile } from './pages/Profile'
 import { CheckPay } from './pages/CheckPay'
@@ -18,9 +18,6 @@ import { Hunt } from './pages/Hunt'
 // Privy is large and contacts its own servers, so it loads only on the account pages (L4).
 const Account = lazy(() => import('./auth/SignIn'))
 
-const SOON: Record<string, Key> = {
-  '/how': 'nav.how', '/settings': 'acct.profile',
-}
 const ACCOUNT = { '/sign-up': 'signup', '/sign-in': 'signin', '/sign-out': 'signout' } as const
 
 export function App() {
@@ -39,8 +36,11 @@ export function App() {
 
   const mode = ACCOUNT[path as keyof typeof ACCOUNT]
   // Signed in already: Sign in and Create account go to the profile; the profile needs an account.
-  const redirect = session && (mode === 'signup' || mode === 'signin') ? '/me' : !session && path === '/me' ? '/sign-in' : null
+  const redirect = session && (mode === 'signup' || mode === 'signin') ? '/me' : !session && path === '/me' ? '/sign-in'
+    : path === '/settings' ? '/me' : null
   useEffect(() => { if (redirect) go(redirect, redirect === '/sign-in' ? { next: '/me' } : undefined) }, [redirect])
+  // "How it works" is the landing page's section of that name; old #/how links go there.
+  useEffect(() => { if (path === '/how') location.replace('../index.html#how') }, [path])
 
   if (mode) {
     const title = t(mode === 'signup' ? 'acct.createTitle' : mode === 'signin' ? 'acct.backTitle' : 'acct.signOut')
@@ -67,13 +67,13 @@ export function App() {
   else if (path === '/rules') { page = <Rules />; title = t('rules.title') }
   else if (path === '/proofs') { page = <Proofs />; title = t('proof.title') }
   else if (path.startsWith('/rules/')) { page = <Rule key={path} id={path.slice('/rules/'.length)} />; title = t('rules.title') }
+  else if (path === '/how' || path === '/settings') page = null
   else {
-    const name = t(SOON[path] ?? SOON[`/${path.split('/')[1]}`] ?? 'nav.check')
-    title = name
+    title = t('nf.title')
     page = (
       <div className="page narrow soon">
-        <h1 className="h2">{t('soon.title', { page: name })}</h1>
-        <p className="lede">{t('soon.body')}</p>
+        <h1 className="h2">{t('nf.title')}</h1>
+        <p className="lede">{t('nf.body')}</p>
         <p><a className="btn btn-ink" href={href('/check/pay')}>{t('soon.back')}</a></p>
       </div>
     )
@@ -89,8 +89,18 @@ export function App() {
       </main>
       {toast && <Toast text={t(toast as Key)} />}
       <footer className="foot">
-        <span>{t('foot.note')}</span>
-        <a href="../index.html">{t('foot.site')}</a>
+        <div className="foot-top">
+          <a className="foot-brand" href="../index.html" aria-label={t('foot.site')}><Mark size={22} /> <span>Payproof</span></a>
+          <nav className="foot-links" aria-label="Footer">
+            <a href={href('/rules')}>{t('nav.rules')}</a>
+            <a href={href('/proofs')}>{t('nav.proofs')}</a>
+            <a href="../index.html#how">{t('nav.how')}</a>
+            <a href="https://github.com/Iziedking/payproof" rel="noopener">{t('foot.github')}</a>
+            <a href="https://x.com/payproofhq" rel="noopener">{t('foot.x')}</a>
+          </nav>
+        </div>
+        <p className="foot-note">{t('foot.note')}</p>
+        <p className="foot-legal">{t('foot.legal')}{t('foot.zhReview') && <> {t('foot.zhReview')}</>}</p>
       </footer>
     </>
   )

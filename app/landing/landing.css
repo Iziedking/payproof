@@ -263,7 +263,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   .f4 { width: 52px; height: 52px; right: -16px; top: auto; bottom: -18px; }
   .tabs { justify-content: flex-start; width: 100%; }
   .view-head h3 { font-size: 22px; }
-  .eng th:nth-child(3), .eng td:nth-child(3) { display: none; }
+  .eng td, .eng th { padding-right: 6px; }
   .values { grid-template-columns: 1fr; }
   .vcard { min-height: 0; padding: 24px; padding-top: 72px; }
   .vcard .vmark { top: 28px; left: 24px; }

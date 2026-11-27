@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Payproof · Were you paid what the rule says?</title>
-<meta name="description" content="Payproof puts tax, bonus and pool payout rules on X Layer where they cannot change, so you can check your own number. Built for X Layer TapeOut Accelerate; not live yet.">
+<meta name="description" content="Payproof puts tax, bonus and pool payout rules on X Layer where they cannot change, so you can check your own number. Built on X Layer for TapeOut Accelerate.">
 <meta name="theme-color" content="#F6F5F1">
 <meta property="og:title" content="Payproof">
 <meta property="og:description" content="Were you paid what the rule says? Check your own number against a rule that cannot change.">
-<meta property="og:image" content="media/poster.jpg">
+<meta property="og:image" content="https://iziedking.github.io/payproof/media/poster.jpg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon-180.png">
@@ -66,7 +66,7 @@
       <svg class="float f2" aria-hidden="true"><use href="#half-coral"/></svg>
       <svg class="float f3" aria-hidden="true"><use href="#half-ink"/></svg>
       <svg class="float f4" aria-hidden="true"><use href="#half-coral"/></svg>
-      <p class="eyebrow"><span class="dots" aria-hidden="true"><i></i><i></i></span>Built for X Layer TapeOut Accelerate · not live yet</p>
+      <p class="eyebrow"><span class="dots" aria-hidden="true"><i></i><i></i></span>Built on X Layer for TapeOut Accelerate</p>
       <h1 class="display">Were you paid what the rule says?</h1>
       <p class="zh" lang="zh-Hans">你拿到的钱，符合规则吗？</p>
       <p class="lede">Tax, bonuses and pool payouts follow written rules. Payproof puts each rule on X Layer where it cannot change, so you can check your own number.</p>
@@ -131,46 +131,45 @@
 
           <!-- View 2: Proofs and traps -->
           <div class="view" role="tabpanel" id="v-proof" aria-labelledby="t-proof" hidden>
-            <div class="view-head"><h3>Facts for the bonus rule <span class="tag">Sample</span></h3></div>
+            <div class="view-head"><h3>Facts for the bonus rule <span class="tag">On X Layer</span></h3></div>
             <ul class="rows">
-              <li><span>Tax never exceeds the bonus</span><span class="st">not yet run</span></li>
-              <li><span>A raise never lowers take-home</span><span class="st bad">fails near the ¥960,000 edge</span></li>
-              <li><span>Breakdown adds up</span><span class="st">not yet run</span></li>
+              <li><span>Tax never exceeds the bonus</span><span class="st strong">holds for every input</span></li>
+              <li><span>Breakdown adds up</span><span class="st strong">holds for every input</span></li>
+              <li><span>A raise never lowers take-home</span><span class="st bad">fails: traps found</span></li>
             </ul>
             <div class="cex">
-              <span class="k">Counterexample from an early test on a draft circuit</span>
-              <p class="mono">¥951,563.55 keeps more than ¥975,850.91</p>
+              <span class="k">First trap the solver returned</span>
+              <p class="mono">¥36,000.01 to ¥38,566.65 keeps less than ¥36,000</p>
             </div>
-            <p class="fine">Sample. The solver found a pair of bonuses either side of ¥960,000 where the larger one keeps less. Published proofs come later.</p>
+            <p class="fine">Proven on circuit 9 and attested on X Layer at blocks 76,844,042 to 76,844,048.</p>
           </div>
 
           <!-- View 3: Pool splits -->
           <div class="view" role="tabpanel" id="v-split" aria-labelledby="t-split" hidden>
-            <div class="view-head"><h3>Round 1 <span class="tag">Planned</span></h3></div>
+            <div class="view-head"><h3>Split 1, round 1 <span class="tag">On X Layer</span></h3></div>
             <div class="split">
-              <div class="pot"><span class="k">Round pot</span><span class="v mono">1,000.00</span></div>
+              <div class="pot"><span class="k">Round pot, USDT0</span><span class="v mono">1.00</span></div>
               <ul class="shares">
-                <li><span>Holder A · 50 shares</span><span class="mono">425.00</span></li>
-                <li><span>Holder B · 30 shares</span><span class="mono">255.00</span></li>
-                <li><span>Holder C · 20 shares</span><span class="mono">170.00</span></li>
-                <li class="fee"><span>Operator fee</span><span class="mono">100.00</span></li>
+                <li><span>Holder 1 · 50 shares</span><span class="mono">0.42</span></li>
+                <li><span>Holder 2 · 30 shares</span><span class="mono">0.25</span></li>
+                <li><span>Holder 3 · 20 shares</span><span class="mono">0.17</span></li>
+                <li class="fee"><span>Operator fee</span><span class="mono">0.10</span></li>
               </ul>
             </div>
-            <p class="fine">Example figures. Shares are read at a fixed block; the circuit decides each payout and the fee. No split is running yet.</p>
+            <p class="fine">A test round with our own wallets. Shares were read at block 76,839,844; circuit 8 checked each claim and circuit 17 set the fee.</p>
           </div>
 
           <!-- View 4: Engines -->
           <div class="view" role="tabpanel" id="v-eng" aria-labelledby="t-eng" hidden>
-            <div class="view-head"><h3>Engine against the rule <span class="tag">Planned</span></h3></div>
+            <div class="view-head"><h3>Engines against the rule <span class="tag">Simulated engines</span></h3></div>
             <table class="eng">
-              <thead><tr><th>Bonus</th><th>You keep, by the rule</th><th>Listed engine</th><th></th></tr></thead>
+              <thead><tr><th>Engine</th><th>Result</th><th>Bounty</th></tr></thead>
               <tbody>
-                <tr><td class="mono">¥120,000</td><td class="mono">¥108,210.00</td><td class="mono">¥108,210.00</td><td class="ok">same</td></tr>
-                <tr><td class="mono">¥360,000</td><td class="mono">¥272,660.00</td><td class="mono">¥272,660.00</td><td class="ok">same</td></tr>
-                <tr><td class="mono">¥960,000.01</td><td class="mono">¥543,160.01</td><td class="mono bad">different</td><td class="bad">bounty paid</td></tr>
+                <tr><td>A · circuit 15</td><td class="ok">equal to the rule for every bonus</td><td>not disproved</td></tr>
+                <tr><td>B · circuit 16</td><td class="bad">differs at a ¥0.17 bonus: tax ¥0.01, rule ¥0.00</td><td class="bad">1.00 USDT0 paid</td></tr>
               </tbody>
             </table>
-            <p class="fine">Example inputs. List a payroll engine against a rule; whoever finds an input where they differ is paid the bounty.</p>
+            <p class="fine">Both engines are simulated, written by us to show the process. The disproof was checked on chain and paid in block 76,839,962.</p>
           </div>
         </div>
       </div>
@@ -244,9 +243,9 @@
           <ul class="rows">
             <li><span>Annual gross</span><span class="mono">₦840,001</span></li>
             <li><span>Pension, NHF, rent relief</span><span class="mono">₦0</span></li>
-            <li><span>Tax by the rule</span><span class="st">under review</span></li>
+            <li><span>Tax by the rule, a year</span><span class="mono">₦6,000</span></li>
           </ul>
-          <p class="fine">Sample. Waiting on a tax practitioner's reading of the minimum wage exemption.</p>
+          <p class="fine">Example. One naira above the minimum wage exemption, as we read it; a tax practitioner has not checked that reading yet.</p>
         </div>
       </div>
     </article>
@@ -262,11 +261,11 @@
         <div class="panel">
           <h4>Facts for the bonus rule</h4>
           <ul class="rows">
-            <li><span>Tax never exceeds the bonus</span><span class="st">not yet run</span></li>
-            <li><span>A raise never lowers take-home</span><span class="st bad">fails near the ¥960,000 edge</span></li>
-            <li><span>Breakdown adds up</span><span class="st">not yet run</span></li>
+            <li><span>Tax never exceeds the bonus</span><span class="st strong">holds</span></li>
+            <li><span>Breakdown adds up</span><span class="st strong">holds</span></li>
+            <li><span>A raise never lowers take-home</span><span class="st bad">fails from ¥36,000.01</span></li>
           </ul>
-          <p class="fine">Sample. From an early test on a draft circuit: the solver found a pair of bonuses either side of ¥960,000 where the larger one keeps less. Published proofs come later.</p>
+          <p class="fine">Results for circuit 9, attested on X Layer at blocks 76,844,042 to 76,844,048.</p>
         </div>
       </div>
     </article>
@@ -280,13 +279,13 @@
       </div>
       <div class="dshot tint-green">
         <div class="panel">
-          <h4>Round 1</h4>
+          <h4>Split 1, round 1</h4>
           <ul class="rows">
-            <li><span>Shares read at block</span><span class="st">not opened yet</span></li>
-            <li><span>Your payout</span><span class="st">not opened yet</span></li>
-            <li><span>Operator fee</span><span class="st strong">set by the circuit</span></li>
+            <li><span>Shares read at block</span><span class="mono">76,839,844</span></li>
+            <li><span>Holder with 50 of 100 shares</span><span class="mono">0.42 USDT0</span></li>
+            <li><span>Operator fee</span><span class="st strong">0.10, set by circuit 17</span></li>
           </ul>
-          <p class="fine">Sample. No split is running yet.</p>
+          <p class="fine">A test round on X Layer with our own wallets and a 1.00 USDT0 pot.</p>
         </div>
       </div>
     </article>
@@ -307,8 +306,8 @@
         <footer><span>Privacy</span><svg class="qm" aria-hidden="true"><use href="#mark"/></svg></footer>
       </article>
       <article class="qcard q3">
-        <h3>Is it live?</h3>
-        <p>Not yet. Payproof is being built for the X Layer TapeOut Accelerate hackathon. Everything on this page marked sample is not real data.</p>
+        <h3>What is live today?</h3>
+        <p>The rules, their proofs and the split and listing contracts are on X Layer mainnet. The first split round was a test with our own wallets, and the two listed engines are simulated.</p>
         <footer><span>Status</span><svg class="qm" aria-hidden="true"><use href="#mark"/></svg></footer>
       </article>
     </div>
@@ -334,14 +333,15 @@
     <svg class="float b2" aria-hidden="true"><use href="#half-coral"/></svg>
     <div class="band-in">
       <h2 id="band-h">Built to be checked</h2>
-      <p>Every result names the rule circuit it ran on, the block it was read at, and the command to run it again yourself.</p>
+      <p>Every result names the rule circuit it ran on, the block it was attested at, and the file that lets you run it again yourself.</p>
       <dl class="receipt mono">
         <div><dt>rule</dt><dd>cn-bonus-2023-30</dd></div>
-        <div><dt>circuit</dt><dd>not yet on X Layer</dd></div>
-        <div><dt>read at block</dt><dd>not yet</dd></div>
-        <div><dt>repeat</dt><dd>payproof prove cn-bonus-2023-30 raise-never-lowers-take-home</dd></div>
+        <div><dt>circuit</dt><dd>9 on X Layer</dd></div>
+        <div><dt>fact</dt><dd>raise-never-lowers-take-home: fails</dd></div>
+        <div><dt>attested at block</dt><dd>76,844,048</dd></div>
+        <div><dt>record</dt><dd>docs/evidence/p3/cn-bonus/raise-never-lowers-take-home.json</dd></div>
       </dl>
-      <p class="fine">Sample. The command and circuit appear here once the rule is on chain.</p>
+      <p class="fine">A real record from the repository.</p>
       <a class="btn btn-paper btn-lg" href="app/index.html#/sign-up"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Get started</a>
     </div>
   </section>
@@ -359,6 +359,6 @@
   </div>
 </footer>
 
-<script src="landing.js?v=2" defer></script>
+<script src="landing.js?v=3" defer></script>
 </body>
 </html>

@@ -97,6 +97,11 @@
       frame.classList.add('film-still');
     } else {
       video.muted = true;
+      // Some hosts serve the file without byte ranges, which iPhone Safari will not play. If the
+      // film cannot play, keep the poster frame and hide the sound and progress controls.
+      const giveUp = () => frame.classList.add('film-still');
+      video.addEventListener('error', giveUp);
+      video.querySelector('source')?.addEventListener('error', giveUp);
       let inView = false;
       const start = () => {
         if (!inView) return;
