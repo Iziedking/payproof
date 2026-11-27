@@ -106,15 +106,14 @@ In Chrome, on 2026-11-27:
   X Layer and showed split 1, round 1, pot 1, fees 0.1, paid out 0.84, open until 2026-12-02.
 - `#/sign-in` loads the sign-in form. All the Privy chunks it fetched came from the gateway with
   status 200.
+- Privy sign-in end to end (PLAN R21): on 2026-11-27 the owner signed in on the gateway with
+  an email and the code Privy sent. It worked. The owner reported the result; no screenshot was
+  kept.
+- The owner pushed `chain/site/` (commit 4af9636) after the update landed, so the mirror follows.
 - The only console error came from a wallet browser extension (`Cannot redefine property:
   ethereum`), not from the app. Privy logs that Coinbase Smart Wallet does not support chain 196.
 
 ## Not done yet
 
-- Privy sign-in end to end (PLAN R21): sending a code and signing in with a real email has not
-  been tried on the gateway. It needs the owner's email and inbox, and
-  `https://9-2-425.tapekit.org` must be an allowed origin in the Privy dashboard.
-- The mirror. It serves `chain/site/` and checks it against SiteRegistry on every push. Now that
-  the live update has landed, `chain/site/` can be committed and pushed.
 - The old P2 files (`assets/index-BchCgAus.js`, `assets/index-J9SKQEqf.css`) stay on chain. The
   new `index.html` no longer loads them.
