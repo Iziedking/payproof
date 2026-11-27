@@ -30,7 +30,7 @@ const SITES = '0xd6EFb7adCc9c83dC4924Ad56f6a8E4e969b9ADB6';
 const DOMAIN = '0x68809Fd2fb343aA57D0aeB7f33Defe477c9666f9';
 const PROCESSOR = 425;
 const CHUNK = 24_000;
-const TYPES: Record<string, string> = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.json': 'application/json', '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json' };
+const TYPES: Record<string, string> = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.json': 'application/json', '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json', '.mp4': 'video/mp4', '.jpg': 'image/jpeg' };
 // Gas per step, measured on the fork (docs/evidence/p2/deweb.md): used for the cost estimate only.
 const GAS_PER_BYTE = 226; // 71,892,818 gas less open and bind, over 316,863 bytes
 const GAS_OPEN = 167_244, GAS_BIND = 185_482, GAS_PER_TX = 60_000;
