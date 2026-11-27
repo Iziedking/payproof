@@ -19,7 +19,9 @@ export PATH="$NODE_DIR/bin:$PATH"
 export npm_config_cache="$ROOT/.npm-cache" npm_config_update_notifier=false npm_config_fund=false npm_config_audit=false
 cd "$ROOT/app"
 echo "node $(node -v) npm $(npm -v)"
-npm ci
+# Install scripts off, as in the container build (scripts/app/build-container.sh): the lockfile
+# now carries Privy and its dependencies, and none of them needs a script to build the app.
+npm ci --ignore-scripts
 echo "--- typecheck"
 npx tsc -v
 npx tsc -p tsconfig.json

@@ -1,0 +1,26 @@
+No files changed, compilation skipped
+Script ran successfully.
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 196
+
+Estimated gas price: 0.020000001 gwei
+
+Estimated total gas used for script: 1804836468
+
+Estimated amount required: 0.036096731164836468 ETH
+
+==========================
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: /w/chain/broadcast/DeWebPublish.s.sol/196/run-latest.json
+
+Sensitive values saved to: /w/chain/cache/DeWebPublish.s.sol/196/run-latest.json
+
