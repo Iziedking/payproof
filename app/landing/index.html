@@ -16,6 +16,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="landing.css?v=3">
+<script>
+  // App links shared before the landing page moved to the root (for example #/splits or
+  // #/check/payout?split=1) open the same page inside the app.
+  if (/^#\/./.test(location.hash)) location.replace('app/index.html' + location.hash);
+</script>
 </head>
 <body>
 
@@ -46,8 +51,8 @@
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-acts">
-      <a class="nav-signin" href="app/#/sign-in">Sign in</a>
-      <a class="btn btn-ink" href="app/#/sign-up"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Get started</a>
+      <a class="nav-signin" href="app/index.html#/sign-in">Sign in</a>
+      <a class="btn btn-ink" href="app/index.html#/sign-up"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Get started</a>
     </div>
   </div>
 </header>
@@ -66,10 +71,10 @@
       <p class="zh" lang="zh-Hans">你拿到的钱，符合规则吗？</p>
       <p class="lede">Tax, bonuses and pool payouts follow written rules. Payproof puts each rule on X Layer where it cannot change, so you can check your own number.</p>
       <div class="actions">
-        <a class="btn btn-ink btn-lg" href="app/#/sign-up"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Get started</a>
-        <a class="btn btn-soft btn-lg" href="app/#/sign-in">Sign in</a>
+        <a class="btn btn-ink btn-lg" href="app/index.html#/sign-up"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Get started</a>
+        <a class="btn btn-soft btn-lg" href="app/index.html#/sign-in">Sign in</a>
       </div>
-      <p class="guest-link"><a href="app/#/check/pay">Or check your pay without an account →</a></p>
+      <p class="guest-link"><a href="app/index.html#/check/pay">Or check your pay without an account →</a></p>
     </div>
   </section>
 
@@ -231,7 +236,7 @@
         <h3>Check my pay</h3>
         <p>China year-end bonus tax and Nigeria 2025 pay tax first. Type your figures, see the rule's answer, the difference from your payslip and the nearest trap.</p>
         <ul class="pills"><li>China bonus tax</li><li>Nigeria pay tax</li><li>Runs on your device</li></ul>
-        <a class="link" href="app/#/check/pay"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Check my pay</a>
+        <a class="link" href="app/index.html#/check/pay"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Check my pay</a>
       </div>
       <div class="dshot tint-coral">
         <div class="panel">
@@ -251,7 +256,7 @@
         <h3>Proofs and traps</h3>
         <p>Each fact about a rule is proven for every input, or the solver returns the input where it fails. Every result says which circuit it ran on and how to run it again.</p>
         <ul class="pills"><li>Every possible input</li><li>Exact failing input</li><li>Repeat it yourself</li></ul>
-        <a class="link" href="app/#/proofs"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>See the proofs</a>
+        <a class="link" href="app/index.html#/proofs"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>See the proofs</a>
       </div>
       <div class="dshot tint-grey">
         <div class="panel">
@@ -271,7 +276,7 @@
         <h3>Pool splits</h3>
         <p>A pool or vault pays out through the circuit. Shares are read at a fixed block, the circuit decides every payout and the fee, and nobody can move the funds.</p>
         <ul class="pills"><li>Snapshot block</li><li>Circuit decides each payout</li><li>No admin path to funds</li></ul>
-        <a class="link" href="app/#/splits"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>See a split</a>
+        <a class="link" href="app/index.html#/splits"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>See a split</a>
       </div>
       <div class="dshot tint-green">
         <div class="panel">
@@ -337,7 +342,7 @@
         <div><dt>repeat</dt><dd>payproof prove cn-bonus-2023-30 raise-never-lowers-take-home</dd></div>
       </dl>
       <p class="fine">Sample. The command and circuit appear here once the rule is on chain.</p>
-      <a class="btn btn-paper btn-lg" href="app/#/sign-up"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Get started</a>
+      <a class="btn btn-paper btn-lg" href="app/index.html#/sign-up"><span class="chip"><svg class="ic"><use href="#i-chev"/></svg></span>Get started</a>
     </div>
   </section>
 </main>

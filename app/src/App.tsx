@@ -90,7 +90,7 @@ export function App() {
       {toast && <Toast text={t(toast as Key)} />}
       <footer className="foot">
         <span>{t('foot.note')}</span>
-        <a href="../">{t('foot.site')}</a>
+        <a href="../index.html">{t('foot.site')}</a>
       </footer>
     </>
   )

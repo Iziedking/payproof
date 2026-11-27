@@ -100,7 +100,7 @@ function Account({ mode, next }: { mode: 'signup' | 'signin'; next: string }) {
   return (
     <div className="auth">
       <aside className="auth-brand" aria-hidden="true">
-        <a className="lockup on-dark" href="../" tabIndex={-1}><Mark /> <span>Payproof</span></a>
+        <a className="lockup on-dark" href="../index.html" tabIndex={-1}><Mark /> <span>Payproof</span></a>
         <p className="auth-line">{t('acct.line')}</p>
         <svg className="auth-mark" viewBox="0 0 256 256">
           <path d="M40 40H156V100H100Z" fill="#F3F2EC" />
