@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-CvftCknt.js";import{O as t}from"./user-DONTX7Nb-DEn_FIjv.js";import{n,t as r}from"./CustomLandingScreenView-BGSyDs0K-DrY6MArT.js";var i=e(),a={component:()=>{let e=t();return e.loginMethodsAndOrder&&e.loginMethodsAndOrder.primary.length>0?(0,i.jsx)(n,{connectOnly:!0}):(0,i.jsx)(r,{connectOnly:!0})}};export{a as ConnectOrCreateScreen,a as default};

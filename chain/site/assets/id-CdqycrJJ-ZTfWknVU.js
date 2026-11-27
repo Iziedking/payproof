@@ -1,0 +1,1 @@
+import{v as e}from"./start-mfa-enrollment-DVLkqFkK-DTEfGukF.js";var t=({address:t,nonce:n,chain:r})=>e({address:t,nonce:n,domain:window.location.host,uri:window.location.origin,chain:r}),n=Symbol(`solana-funding-plugin`),r=Symbol(`solana-ledger-plugin`);export{n,r,t};

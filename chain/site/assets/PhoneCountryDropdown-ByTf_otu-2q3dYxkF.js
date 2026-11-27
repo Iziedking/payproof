@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-CvftCknt.js";import{K as t}from"./start-mfa-enrollment-DVLkqFkK-DTEfGukF.js";var n=e(),r=({value:e,onChange:r,"aria-label":i})=>(0,n.jsx)(`select`,{value:e,onChange:r,"aria-label":i,children:t.map((e=>(0,n.jsxs)(`option`,{value:e.code,children:[e.code,` +`,e.callCode]},e.code)))});export{r as t};
